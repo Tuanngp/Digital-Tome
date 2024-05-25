@@ -1,8 +1,7 @@
-package com.fpt.swp391.group6.DigitalTome.entity;
+package com.fpt.swp391.group6.DigitalTome.entity.Book;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

@@ -1,4 +1,5 @@
 package com.fpt.swp391.group6.DigitalTome.security;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,19 +25,16 @@ public class UserConfiguration {
         JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
         userDetailsManager.setUsersByUsernameQuery("Select username, password, status from account where username = ?");
         userDetailsManager.setAuthoritiesByUsernameQuery("SELECT account.username as username, role.name as role FROM account " +
-                                                            "inner join role on role.id = account.role_id " +
-                                                            "where account.username = ? ");
+                "inner join role on role.id = account.role_id " +
+                "where account.username = ? ");
         return userDetailsManager;
     }
-
-
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
-          configurer -> configurer
-                  .requestMatchers(HttpMethod.GET, "/test").hasRole("ADMIN")
+                configurer -> configurer
+                        .requestMatchers(HttpMethod.GET, "/test").hasRole("ADMIN")
         );
 
         http.httpBasic(Customizer.withDefaults());

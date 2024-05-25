@@ -1,4 +1,11 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
+import com.fpt.swp391.group6.DigitalTome.entity.CommentEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.FavoriteEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.RateEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.ContributionEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.MembershipEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;

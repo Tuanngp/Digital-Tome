@@ -1,13 +1,19 @@
-package com.fpt.swp391.group6.DigitalTome.entity;
+package com.fpt.swp391.group6.DigitalTome.entity.Book;
 
+import com.fpt.swp391.group6.DigitalTome.entity.*;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "book")
-public class BookEntity {
+public class BookEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,27 +61,19 @@ public class BookEntity {
     @Column(name = "download_url")
     private String download_url;
 
-    @OneToMany(mappedBy = "bookEntity",fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ContributionEntity> contributionEntityList;
 
-    @OneToMany(mappedBy = "bookEntity",fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CommentEntity> commentEntityList;
 
-    @OneToMany(mappedBy = "bookEntity",fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RateEntity> rateEntityList;
 
-    @OneToMany(mappedBy = "bookEntity",fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<FavoriteEntity> favoriteEntityList;
 
-    @OneToMany(mappedBy = "bookEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PaymentEntity> paymentEntityList;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
@@ -95,24 +93,4 @@ public class BookEntity {
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private List<AccountEntity> authorEntityList;
-
-    @Column(name = "created_date", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @Column(name = "created_by", updatable = false)
-    private Long createdBy;
-
-    @Column(name = "modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedDate;
-
-    @Column(name = "modified_by")
-    private Long modifiedBy;
-
-
-    public BookEntity() {
-    }
-
-
 }
