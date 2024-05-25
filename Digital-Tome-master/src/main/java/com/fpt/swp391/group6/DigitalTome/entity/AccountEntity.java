@@ -28,7 +28,7 @@ public class AccountEntity extends BaseEntity{
     @Column(name = "name", length = 50)
     private String name;
 
-    @Column(name = "address",length = 255)
+    @Column(name = "address")
     private String address;
 
     @Column(name = "phone",length = 11)
