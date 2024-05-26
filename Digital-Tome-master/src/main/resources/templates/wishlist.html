@@ -2,140 +2,165 @@
 <html lang="en">
 <head th:replace="layout/head :: head"><title>Home</title></head>
 <body>
-	<div class="page-wraper">
-		<div id="loading-area" class="preloader-wrapper-1">
-			<div class="preloader-inner">
-				<div class="preloader-shade"></div>
-				<div class="preloader-wrap"></div>
-				<div class="preloader-wrap wrap2"></div>
-				<div class="preloader-wrap wrap3"></div>
-				<div class="preloader-wrap wrap4"></div>
-				<div class="preloader-wrap wrap5"></div>
-			</div>
-		</div>
+<div class="page-wraper">
+    <div class="preloader-wrapper-1" id="loading-area">
+        <div class="preloader-inner">
+            <div class="preloader-shade"></div>
+            <div class="preloader-wrap"></div>
+            <div class="preloader-wrap wrap2"></div>
+            <div class="preloader-wrap wrap3"></div>
+            <div class="preloader-wrap wrap4"></div>
+            <div class="preloader-wrap wrap5"></div>
+        </div>
+    </div>
 
-		<header th:replace="layout/header :: header"></header>
-
-
-		<div class="page-content">
-			<!-- inner page banner -->
-			<div class="dz-bnr-inr overlay-secondary-dark dz-bnr-inr-sm" style="background-image:url(static/images/background/bg3.jpg);">
-				<div class="container">
-					<div class="dz-bnr-inr-entry">
-						<h1>Wishlist</h1>
-						<nav aria-label="breadcrumb" class="breadcrumb-row">
-							<ul class="breadcrumb">
-								<li class="breadcrumb-item"><a th:href="@{/}"> Home</a></li>
-								<li class="breadcrumb-item">Wishlist</li>
-							</ul>
-						</nav>
-					</div>
-				</div>
-			</div>
-			<!-- inner page banner End-->
-			<div class="content-inner-1">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="table-responsive">
-								<table class="table check-tbl">
-										<thead>
-											<tr>
-												<th>Product</th>
-												<th>Product name</th>
-												<th>Unit Price</th>
-												<th>Quantity</th>
-												<th>Add to cart </th>
-												<th>Close</th>
-											</tr>
-										</thead>
-									<tbody>
-										<tr>
-											<td class="product-item-img"><img th:src="@{../images/books/grid/book3.jpg}" alt=""></td>
-											<td class="product-item-name">Prduct Item 1</td>
-											<td class="product-item-price">$28.00</td>
-											<td class="product-item-quantity">
-												<div class="quantity btn-quantity style-1 me-3">
-													<input id="demo_vertical2" type="text" value="1" name="demo_vertical2"/>
-												</div>
-											</td>
-											<td class="product-item-totle"><a th:href="@{/shop-cart}" class="btn btn-primary btnhover">Add To Cart</a></td>
-											<td class="product-item-close"><a href="javascript:void(0);" class="ti-close"></a></td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img th:src="@{../images/books/grid/book2.jpg}" alt=""></td>
-											<td class="product-item-name">Prduct Item 2</td>
-											<td class="product-item-price">$28.00</td>
-											<td class="product-item-quantity">
-												<div class="quantity btn-quantity style-1 me-3">
-													<input id="demo_vertical3" type="text" value="1" name="demo_vertical2"/>
-												</div>
-											</td>
-											<td class="product-item-totle"><a th:href="@{/shop-cart}" class="btn btn-primary btnhover">Add To Cart</a></td>
-											<td class="product-item-close"><a href="javascript:void(0);" class="ti-close"></a></td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img th:src="@{../images/books/grid/book1.jpg}" alt=""></td>
-											<td class="product-item-name">Prduct Item 3</td>
-											<td class="product-item-price">$28.00</td>
-											<td class="product-item-quantity">
-												<div class="quantity btn-quantity style-1 me-3">
-													<input id="demo_vertical4" type="text" value="1" name="demo_vertical2"/>
-												</div>
-											</td>
-											<td class="product-item-totle"><a th:href="@{/shop-cart}" class="btn btn-primary btnhover">Add To Cart</a></td>
-											<td class="product-item-close"><a href="javascript:void(0);" class="ti-close"></a></td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img th:src="@{../images/books/grid/book4.jpg}" alt=""></td>
-											<td class="product-item-name">Prduct Item 4</td>
-											<td class="product-item-price">$28.00</td>
-											<td class="product-item-quantity">
-												<div class="quantity btn-quantity style-1 me-3">
-													<input id="demo_vertical5" type="text" value="1" name="demo_vertical2"/>
-												</div>
-											</td>
-											<td class="product-item-totle"><a th:href="@{/shop-cart}" class="btn btn-primary btnhover">Add To Cart</a></td>
-											<td class="product-item-close"><a href="javascript:void(0);" class="ti-close"></a></td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img th:src="@{../images/books/grid/book5.jpg}" alt=""></td>
-											<td class="product-item-name">Prduct Item 5</td>
-											<td class="product-item-price">$28.00</td>
-											<td class="product-item-quantity">
-												<div class="quantity btn-quantity style-1 me-3">
-												<input id="demo_vertical6" type="text" value="1" name="demo_vertical2"/>
-											</div>
-											</td>
-											<td class="product-item-totle"><a th:href="@{/shop-cart}" class="btn btn-primary btnhover">Add To Cart</a></td>
-											<td class="product-item-close"><a href="javascript:void(0);" class="ti-close"></a></td>
-										</tr>
-										<tr>
-											<td class="product-item-img"><img th:src="@{../images/books/grid/book6.jpg}" alt=""></td>
-											<td class="product-item-name">Prduct Item 6</td>
-											<td class="product-item-price">$28.00</td>
-											<td class="product-item-quantity">
-												<div class="quantity btn-quantity style-1 me-3">
-												<input id="demo_vertical7" type="text" value="1" name="demo_vertical2"/>
-											</div>
-											</td>
-											<td class="product-item-totle"><a th:href="@{/shop-cart}" class="btn btn-primary btnhover">Add To Cart</a></td>
-											<td class="product-item-close"><a href="javascript:void(0);" class="ti-close"></a></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+    <header th:replace="layout/header :: header"></header>
 
 
-		<footer th:replace="layout/footer :: footer"></footer>
+    <div class="page-content">
+        <!-- inner page banner -->
+        <div class="dz-bnr-inr overlay-secondary-dark dz-bnr-inr-sm"
+             style="background-image:url(static/images/background/bg3.jpg);">
+            <div class="container">
+                <div class="dz-bnr-inr-entry">
+                    <h1>Wishlist</h1>
+                    <nav aria-label="breadcrumb" class="breadcrumb-row">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/}"> Home</a></li>
+                            <li class="breadcrumb-item">Wishlist</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- inner page banner End-->
+        <div class="content-inner-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table check-tbl">
+                                <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Product name</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Add to cart</th>
+                                    <th>Close</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book3.jpg}">
+                                    </td>
+                                    <td class="product-item-name">Prduct Item 1</td>
+                                    <td class="product-item-price">$28.00</td>
+                                    <td class="product-item-quantity">
+                                        <div class="quantity btn-quantity style-1 me-3">
+                                            <input id="demo_vertical2" name="demo_vertical2" type="text" value="1"/>
+                                        </div>
+                                    </td>
+                                    <td class="product-item-totle"><a class="btn btn-primary btnhover"
+                                                                      th:href="@{/shop-cart}">Add To Cart</a>
+                                    </td>
+                                    <td class="product-item-close"><a class="ti-close" href="javascript:void(0);"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book2.jpg}">
+                                    </td>
+                                    <td class="product-item-name">Prduct Item 2</td>
+                                    <td class="product-item-price">$28.00</td>
+                                    <td class="product-item-quantity">
+                                        <div class="quantity btn-quantity style-1 me-3">
+                                            <input id="demo_vertical3" name="demo_vertical2" type="text" value="1"/>
+                                        </div>
+                                    </td>
+                                    <td class="product-item-totle"><a class="btn btn-primary btnhover"
+                                                                      th:href="@{/shop-cart}">Add To Cart</a>
+                                    </td>
+                                    <td class="product-item-close"><a class="ti-close" href="javascript:void(0);"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book1.jpg}">
+                                    </td>
+                                    <td class="product-item-name">Prduct Item 3</td>
+                                    <td class="product-item-price">$28.00</td>
+                                    <td class="product-item-quantity">
+                                        <div class="quantity btn-quantity style-1 me-3">
+                                            <input id="demo_vertical4" name="demo_vertical2" type="text" value="1"/>
+                                        </div>
+                                    </td>
+                                    <td class="product-item-totle"><a class="btn btn-primary btnhover"
+                                                                      th:href="@{/shop-cart}">Add To Cart</a>
+                                    </td>
+                                    <td class="product-item-close"><a class="ti-close" href="javascript:void(0);"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book4.jpg}">
+                                    </td>
+                                    <td class="product-item-name">Prduct Item 4</td>
+                                    <td class="product-item-price">$28.00</td>
+                                    <td class="product-item-quantity">
+                                        <div class="quantity btn-quantity style-1 me-3">
+                                            <input id="demo_vertical5" name="demo_vertical2" type="text" value="1"/>
+                                        </div>
+                                    </td>
+                                    <td class="product-item-totle"><a class="btn btn-primary btnhover"
+                                                                      th:href="@{/shop-cart}">Add To Cart</a>
+                                    </td>
+                                    <td class="product-item-close"><a class="ti-close" href="javascript:void(0);"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book5.jpg}">
+                                    </td>
+                                    <td class="product-item-name">Prduct Item 5</td>
+                                    <td class="product-item-price">$28.00</td>
+                                    <td class="product-item-quantity">
+                                        <div class="quantity btn-quantity style-1 me-3">
+                                            <input id="demo_vertical6" name="demo_vertical2" type="text" value="1"/>
+                                        </div>
+                                    </td>
+                                    <td class="product-item-totle"><a class="btn btn-primary btnhover"
+                                                                      th:href="@{/shop-cart}">Add To Cart</a>
+                                    </td>
+                                    <td class="product-item-close"><a class="ti-close" href="javascript:void(0);"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book6.jpg}">
+                                    </td>
+                                    <td class="product-item-name">Prduct Item 6</td>
+                                    <td class="product-item-price">$28.00</td>
+                                    <td class="product-item-quantity">
+                                        <div class="quantity btn-quantity style-1 me-3">
+                                            <input id="demo_vertical7" name="demo_vertical2" type="text" value="1"/>
+                                        </div>
+                                    </td>
+                                    <td class="product-item-totle"><a class="btn btn-primary btnhover"
+                                                                      th:href="@{/shop-cart}">Add To Cart</a>
+                                    </td>
+                                    <td class="product-item-close"><a class="ti-close" href="javascript:void(0);"></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-		<button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
-	</div>
+    <footer th:replace="layout/footer :: footer"></footer>
+
+
+    <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
+</div>
 </body>
 </html>

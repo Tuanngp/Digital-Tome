@@ -28,7 +28,7 @@ public class UserConfiguration {
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("/css/**", "/js/**", "/images/**", "/icons/**","/vendor/**").permitAll()
+                                .requestMatchers("/css/**", "/js/**", "/images/**", "/icons/**", "/vendor/**").permitAll()
                                 .requestMatchers("/users").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/profile/**").authenticated()
                                 .requestMatchers("/**").permitAll()
@@ -52,10 +52,10 @@ public class UserConfiguration {
     @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         UserDetails admin = User
-                        .withUsername("tuan@gmail.com")
-                        .password("{noop}tuan123")
-                        .roles("admin")
-                        .build();
+                .withUsername("tuan@gmail.com")
+                .password("{noop}tuan123")
+                .roles("admin")
+                .build();
         return new InMemoryUserDetailsManager(admin);
     }
 }

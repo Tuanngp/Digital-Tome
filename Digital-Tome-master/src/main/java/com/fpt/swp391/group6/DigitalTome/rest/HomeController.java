@@ -10,10 +10,12 @@ public class HomeController {
     public String home1() {
         return "index";
     }
-    @GetMapping(value = { "/home"})
+
+    @GetMapping(value = {"/home"})
     public String home2() {
         return "index-2";
     }
+
     @GetMapping("/login")
     public String login() {
         return "shop-login";
