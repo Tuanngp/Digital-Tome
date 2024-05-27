@@ -1,0 +1,147 @@
+ <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/head :: head"><title>Home</title></head>
+
+<style>
+    .my-image {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+    }
+    .my-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Đảm bảo ảnh không bị méo mó */
+    }
+    .account-title {
+        margin-top: 20px;
+    }
+
+</style>
+<body id="bg">
+<div class="page-wraper">
+    <div class="preloader-wrapper-1" id="loading-area">
+        <div class="preloader-inner">
+            <div class="preloader-shade"></div>
+            <div class="preloader-wrap"></div>
+            <div class="preloader-wrap wrap2"></div>
+            <div class="preloader-wrap wrap3"></div>
+            <div class="preloader-wrap wrap4"></div>
+            <div class="preloader-wrap wrap5"></div>
+        </div>
+    </div>
+    <header th:replace="layout/header :: header"></header>
+
+    <!-- Content -->
+    <div class="page-content bg-white">
+        <!-- contact area -->
+        <div class="content-block">
+            <!-- Browse Jobs -->
+            <section class="content-inner bg-white">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4 m-b30">
+                            <div class="sticky-top">
+                                <div class="shop-account">
+                                    <div class="account-detail text-center">
+                                        <div class="my-image">
+                                            <a href="javascript:void(0);">
+                                                <img alt="" th:src="${profileDto.avatarPath}" >
+                                            </a>
+                                        </div>
+                                        <form th:action= "@{/profileUrl}" method="post" enctype="multipart/form-data">
+                                            <div class="account-title">
+                                                <div class="">
+                                                    <input type="file" class="form-control" id="url" name="file" accept="image/*">
+                                                    <br>
+                                                    <button class="btn btn-primary">Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <ul class="account-list">
+                                        <li>
+                                            <a class="active" th:href="@{/my-profile}"><i aria-hidden="true"
+                                                                                          class="far fa-user"></i>
+                                                <span>Profile</span></a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/shop-cart}"><i class="flaticon-shopping-cart-1"></i>
+                                                <span>My Cart</span></a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/wishlist}"><i aria-hidden="true" class="far fa-heart"></i>
+                                                <span>Wishlist</span></a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/books-grid-view}"><i aria-hidden="true"
+                                                                                class="fa fa-briefcase"></i>
+                                                <span>Shop</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/changePassword"><i class="fa-solid fa-unlock" aria-hidden="true"></i>
+                                                <span>Change Password</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/logout"><i aria-hidden="true" class="fas fa-sign-out-alt"></i>
+                                                <span>Log Out</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-8 m-b30">
+                            <div class="shop-bx shop-profile">
+                                <div class="shop-bx-title clearfix">
+                                    <h5 class="text-uppercase">Basic Information</h5>
+                                </div>
+
+                                <form method="post" th:action="@{/profile}" th:object="${profileDto}">
+                                    <input hidden th:field="*{id}"/>
+                                    <div class="row m-b30">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput1" class="form-label">Your Name:</label>
+                                                <input th:field="*{fullName}" type="text" class="form-control" id="formcontrolinput1" placeholder="FullName">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput2" class="form-label">Address:</label>
+                                                <input th:field="*{address}" type="text" class="form-control" id="formcontrolinput2" placeholder="Address">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput3" class="form-label">Phone:</label>
+                                                <input th:field="*{phone}" type="text" class="form-control" id="formcontrolinput3" placeholder="Phone Number">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlTextarea" class="form-label">Description:</label>
+                                                <input type="text" th:field="*{description}" class="form-control" id="exampleFormControlTextarea" placeholder="Description"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btnhover">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Browse Jobs END -->
+        </div>
+    </div>
+    <!-- Content END-->
+
+    <footer th:replace="layout/footer :: footer"></footer>
+    <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
+</div>
+</body>
+</html>

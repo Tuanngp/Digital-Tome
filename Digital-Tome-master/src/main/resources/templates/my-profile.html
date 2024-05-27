@@ -1,7 +1,23 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="layout/head :: head"><title>Home</title></head>
+
+<style>
+    .my-image {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+    }
+    .my-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Đảm bảo ảnh không bị méo mó */
+    }
+    .account-title {
+        margin-top: 20px;
+    }
+</style>
 <body id="bg">
 <div class="page-wraper">
     <div class="preloader-wrapper-1" id="loading-area">
@@ -30,15 +46,18 @@
                                     <div class="account-detail text-center">
                                         <div class="my-image">
                                             <a href="javascript:void(0);">
-                                                <img alt="" th:src="@{../images/profile3.jpg}">
+                                                <img alt="" th:src="${profileDto.avatarPath}" >
                                             </a>
                                         </div>
-                                        <div class="account-title">
-                                            <div class="">
-                                                <h4 class="m-b5"><a href="javascript:void(0);">David Matin</a></h4>
-                                                <p class="m-b0"><a href="javascript:void(0);">Web developer</a></p>
+                                        <form th:action= "@{/profileUrl}" method="post" enctype="multipart/form-data">
+                                            <div class="account-title">
+                                                <div class="">
+                                                    <input type="file" class="form-control" id="url" name="file" accept="image/*">
+                                                    <br>
+                                                    <button class="btn btn-primary">Save</button>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <ul class="account-list">
                                         <li>
@@ -60,6 +79,10 @@
                                                 <span>Shop</span></a>
                                         </li>
                                         <li>
+                                            <a href="/changePassword"><i class="fa-solid fa-unlock" aria-hidden="true"></i>
+                                                <span>Change Password</span></a>
+                                        </li>
+                                        <li>
                                             <a href="/logout"><i aria-hidden="true" class="fas fa-sign-out-alt"></i>
                                                 <span>Log Out</span></a>
                                         </li>
@@ -73,36 +96,39 @@
                                     <h5 class="text-uppercase">Basic Information</h5>
                                 </div>
 
-                                <!--                                <form method="post" th:action="@{/profile}" th:object="${profileDto}">-->
-                                <!--&lt;!&ndash;                                    <input hidden th:field="*{id}"/>&ndash;&gt;-->
-                                <!--                                    <div class="row m-b30">-->
-                                <!--                                        <div class="col-lg-6 col-md-6">-->
-                                <!--                                            <div class="mb-3">-->
-                                <!--                                                <label for="formcontrolinput1" class="form-label">Your Name:</label>-->
-                                <!--                                                <input th:field="*{fullName}" type="text" class="form-control" id="formcontrolinput1" placeholder="FullName">-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                        <div class="col-lg-6 col-md-6">-->
-                                <!--                                            <div class="mb-3">-->
-                                <!--                                                <label for="formcontrolinput2" class="form-label">Address:</label>-->
-                                <!--                                                <input th:field="*{address}" type="text" class="form-control" id="formcontrolinput2" placeholder="Address">-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                        <div class="col-lg-6 col-md-6">-->
-                                <!--                                            <div class="mb-3">-->
-                                <!--                                                <label for="formcontrolinput3" class="form-label">Phone:</label>-->
-                                <!--                                                <input th:field="*{phone}" type="text" class="form-control" id="formcontrolinput3" placeholder="Phone Number">-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                        <div class="col-lg-6 col-md-6">-->
-                                <!--                                            <div class="mb-3">-->
-                                <!--                                                <label for="formcontrolinput4" class="form-label">Age:</label>-->
-                                <!--                                                <input th:field="*{age}" type="text" class="form-control" id="formcontrolinput4" placeholder="Age">-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                    </div>-->
-                                <!--                                    <button class="btn btn-primary btnhover">Save Setting</button>-->
-                                <!--                                </form>-->
+                                <form method="post" th:action="@{/profile}" th:object="${profileDto}">
+                                    <input hidden th:field="*{id}"/>
+                                    <div class="row m-b30">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput1" class="form-label">Your Name:</label>
+                                                <input th:field="*{fullName}" type="text" class="form-control" id="formcontrolinput1" placeholder="FullName">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput2" class="form-label">Address:</label>
+                                                <input th:field="*{address}" type="text" class="form-control" id="formcontrolinput2" placeholder="Address">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput3" class="form-label">Phone:</label>
+                                                <input th:field="*{phone}" type="text" class="form-control" id="formcontrolinput3" placeholder="Phone Number">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlTextarea" class="form-label">Description:</label>
+                                                <input type="text" th:field="*{description}" class="form-control" id="exampleFormControlTextarea" placeholder="Description"></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btnhover">Save</button>
+                                </form>
                             </div>
                         </div>
                     </div>
