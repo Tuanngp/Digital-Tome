@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OTP Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            color: #666;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: calc(100% - 20px);
+        }
+
+        input[type="submit"] {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+
+        .error {
+            color: #d9534f;
+            text-align: center;
+        }
+
+        .error-red {
+            color: #d9534f;
+        }
+
+        #timer {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>OTP Verification</h1>
+    <form th:action="@{/register/verify-otp}" method="post" onsubmit="return verifyOtp()">
+        <label for="otp">Enter OTP:</label>
+        <p th:if="${error}" th:text="${error}" class="error"></p>
+        <input type="text" id="otp" name="otp" required>
+        <input type="submit" value="Verify OTP" id="verifyButton">
+        <a href="#" th:href="@{/register}" class="btn-register">Back to Register</a>
+    </form>
+    <div id="timer">60 seconds remaining</div>
+</div>
+
+<script>
+    var otpDuration = 60;
+    var otpStartTime = parseInt(localStorage.getItem('otpStartTime')) || 0;
+    var otpSent = localStorage.getItem('otpSent') === 'true';
+    var timerId;
+
+    function startTimer() {
+        var currentTime = Math.floor(Date.now() / 1000);
+
+        if (!otpSent || !otpStartTime || (currentTime - otpStartTime) >= otpDuration) {
+            otpStartTime = currentTime;
+            localStorage.setItem('otpStartTime', otpStartTime);
+            otpSent = false; // Reset the status
+            localStorage.setItem('otpSent', otpSent);
+        } else {
+            var timeElapsed = currentTime - otpStartTime;
+            var timeLeft = otpDuration - timeElapsed;
+            updateTimer(timeLeft);
+        }
+
+        timerId = setInterval(countdown, 1000);
+    }
+
+    function countdown() {
+        var currentTime = Math.floor(Date.now() / 1000);
+        var timeElapsed = currentTime - otpStartTime;
+        var timeLeft = otpDuration - timeElapsed;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerId);
+            var expiredMessage = document.getElementById('timer');
+            expiredMessage.innerHTML = 'Token expired';
+            expiredMessage.classList.add('error-red');
+            document.getElementById('otp').disabled = true;
+            localStorage.removeItem('otpStartTime');
+        } else {
+            updateTimer(timeLeft);
+        }
+    }
+
+    function updateTimer(timeLeft) {
+        document.getElementById('timer').innerHTML = timeLeft + ' seconds remaining';
+    }
+
+    function verifyOtp() {
+        // Perform OTP verification here
+
+        otpSent = true;
+        localStorage.setItem('otpSent', otpSent);
+        return true;
+    }
+
+    startTimer(); // Start the timer when the page loads
+</script>
+</body>
+</html>
