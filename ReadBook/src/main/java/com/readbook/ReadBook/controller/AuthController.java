@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import static com.readbook.ReadBook.utils.UserUtils.generateToken;
 import static com.readbook.ReadBook.utils.UserUtils.isTokenExpired;
@@ -49,7 +52,29 @@ public class AuthController {
         return "shop-login";
     }
 
+    @PostMapping("/login")
+    public String login(@RequestParam("username") String email,
+                        @RequestParam("password") String password,
+                        HttpSession session,
+                        RedirectAttributes redirectAttributes) {
 
+        AccountEntity user = userService.findEmailAndPassword(email, password);
+        if(user == null){
+            redirectAttributes.addFlashAttribute("error", "Invalid username or password");
+            return "redirect:/login";
+        }else if(user != null){
+
+            session.setAttribute("user", user);
+            if(user.getRoleEntity().getName().equals("ADMIN")){
+                session.setAttribute("user", user);
+                return "redirect:/admin";
+            }else if(user.getRoleEntity().getName().equals("USER")){
+                session.setAttribute("user", user);
+                return "redirect:/index";
+            }
+        }
+            return "shop-login";
+        }
 
 
     @GetMapping("register")

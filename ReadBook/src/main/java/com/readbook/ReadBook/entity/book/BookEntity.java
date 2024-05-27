@@ -1,5 +1,6 @@
-package com.readbook.ReadBook.entity;
+package com.readbook.ReadBook.entity.book;
 
+import com.readbook.ReadBook.entity.*;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
@@ -97,21 +98,6 @@ public class BookEntity {
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private List<AccountEntity> authorEntityList;
-
-    @Column(name = "created_date", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @Column(name = "created_by", updatable = false)
-    private Long createdBy;
-
-    @Column(name = "modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedDate;
-
-    @Column(name = "modified_by")
-    private Long modifiedBy;
-
 }
 
 

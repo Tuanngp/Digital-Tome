@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,9 +33,11 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests((authorize) ->
                         authorize
                                 .requestMatchers("/users/**").hasAnyRole( "ADMIN")
+                                .requestMatchers("/publisher/**").hasRole("PUBLISHER")
                                 .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
                                 .requestMatchers("/profile/**").authenticated()
                                 .requestMatchers("/**").permitAll()
@@ -62,10 +65,12 @@ public class SpringSecurity {
                                 .defaultSuccessUrl("/index")
                                 .failureUrl("/login?error")
                                 .permitAll())
-                .logout(
-                        logout -> logout
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .permitAll()
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
                 ).exceptionHandling(exceptionHandling ->
                         exceptionHandling
                                 .accessDeniedPage("/404")

@@ -1,4 +1,4 @@
-package com.readbook.ReadBook.entity;
+package com.readbook.ReadBook.entity.book;
 
 import jakarta.persistence.*;
 

@@ -51,6 +51,10 @@ public class UserService {
         return roleRepository.save(role);
     }
 
+    public AccountEntity findEmailAndPassword(String email, String password) {
+        return userRepository.findEmailAndPassword(email, password);
+    }
+
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);

@@ -1,11 +1,11 @@
 package com.readbook.ReadBook.entity;
 
+import com.readbook.ReadBook.entity.book.BookEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Date;
 

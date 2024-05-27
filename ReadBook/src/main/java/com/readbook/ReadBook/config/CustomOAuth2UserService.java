@@ -51,7 +51,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             RoleEntity roleUser = roleRepository.findByName("ROLE_USER");
             if (roleUser == null) {
-                throw new RuntimeException("Role 'ROLE_USER' not found in the database");
+                roleUser = new RoleEntity();
+                roleUser.setName("ROLE_USER");
+                roleRepository.save(roleUser);
             }
             user.setRoleEntity(roleUser);
             userRepository.save(user);

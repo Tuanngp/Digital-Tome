@@ -1,5 +1,6 @@
 package com.readbook.ReadBook.entity;
 
+import com.readbook.ReadBook.entity.book.BookEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
