@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="layout/head :: head"><title>Home</title></head>
+<body>
+<div class="page-wraper">
+    <div class="preloader-wrapper-1" id="loading-area">
+        <div class="preloader-inner">
+            <div class="preloader-shade"></div>
+            <div class="preloader-wrap"></div>
+            <div class="preloader-wrap wrap2"></div>
+            <div class="preloader-wrap wrap3"></div>
+            <div class="preloader-wrap wrap4"></div>
+            <div class="preloader-wrap wrap5"></div>
+        </div>
+    </div>
+
+    <header th:replace="layout/header :: header"></header>
+
+
+    <div class="page-content">
+        <!-- inner page banner -->
+        <div class="dz-bnr-inr overlay-secondary-dark dz-bnr-inr-sm"
+             style="background-image:url(static/images/background/bg3.jpg);">
+            <div class="container">
+                <div class="dz-bnr-inr-entry">
+                    <h1>Contact</h1>
+                    <nav aria-label="breadcrumb" class="breadcrumb-row">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/}"> Home</a></li>
+                            <li class="breadcrumb-item">Contact</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="content-inner-2 pt-0">
+            <div class="map-iframe">
+                <iframe allowfullscreen
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d227748.3825624477!2d75.65046970649679!3d26.88544791796718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4adf4c57e281%3A0xce1c63a0cf22e09!2sJaipur%2C+Rajasthan!5e0!3m2!1sen!2sin!4v1500819483219" style="border:0; width:100%; min-height:100%; margin-bottom: -8px;"></iframe>
+            </div>
+        </div>
+
+        <section class="contact-wraper1" style="background-image: url(static/images/background/bg2.jpg);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="contact-info">
+                            <div class="section-head text-white style-1">
+                                <h3 class="title text-white">Get In Touch</h3>
+                                <p>If you are interested in working with us, please get in touch.</p>
+                            </div>
+                            <ul class="no-margin">
+                                <li class="icon-bx-wraper text-white left m-b30">
+                                    <div class="icon-md">
+											<span class="icon-cell text-primary">
+												<svg class="feather feather-map-pin" fill="none" height="50"
+                                                     stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                     stroke-width="2" viewBox="0 0 24 24" width="50"
+                                                     xmlns="http://www.w3.org/2000/svg"><path
+                                                        d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle
+                                                        cx="12" cy="10" r="3"></circle></svg>
+											</span>
+                                    </div>
+                                    <div class="icon-content">
+                                        <h5 class=" dz-tilte text-white">Our Address</h5>
+                                        <p>1247/Plot No. 39, 15th Phase, Huab Colony, Kukatpally, Hyderabad</p>
+                                    </div>
+                                </li>
+                                <li class="icon-bx-wraper text-white left m-b30">
+                                    <div class="icon-md">
+											<span class="icon-cell text-primary">
+												<svg class="feather feather-mail" fill="none" height="50"
+                                                     stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                     stroke-width="2" viewBox="0 0 24 24" width="50"
+                                                     xmlns="http://www.w3.org/2000/svg"><path
+                                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline
+                                                        points="22,6 12,13 2,6"></polyline></svg>
+											</span>
+                                    </div>
+                                    <div class="icon-content">
+                                        <h5 class="dz-tilte text-white">Our Email</h5>
+                                        <p>info@gmail<br>services@gmail.com</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 m-b40">
+                        <div class="contact-area1 m-r20 m-md-r0">
+                            <div class="section-head style-1">
+                                <h6 class="sub-title text-primary">CONTACT US</h6>
+                                <h3 class="title m-b20">Get In Touch With Us</h3>
+                            </div>
+                            <form action="https://bookland.dexignzone.com/xhtml/script/contact_smtp.php" class="dz-form dzForm"
+                                  method="POST">
+                                <input class="form-control" name="dzToDo" type="hidden" value="Contact">
+                                <div class="dzFormMsg"></div>
+                                <div class="input-group">
+                                    <input class="form-control" name="dzName" placeholder="Full Name" required
+                                           type="text">
+                                </div>
+                                <div class="input-group">
+                                    <input class="form-control" name="dzEmail" placeholder="Email Adress" required
+                                           type="text">
+                                </div>
+                                <div class="input-group">
+                                    <input class="form-control" name="dzPhoneNumber" placeholder="Phone No." required
+                                           type="text">
+                                </div>
+                                <div class="input-group">
+                                    <textarea class="form-control" name="dzMessage" required rows="5">Message</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="g-recaptcha" data-callback="verifyRecaptchaCallback"
+                                         data-expired-callback="expiredRecaptchaCallback"
+                                         data-sitekey="6LefsVUUAAAAADBPsLZzsNnETChealv6PYGzv3ZN"></div>
+                                    <input class="form-control d-none" data-error="Please complete the Captcha" data-recaptcha="true"
+                                           required>
+                                </div>
+                                <div>
+                                    <button class="btn w-100 btn-primary btnhover" name="submit" type="submit"
+                                            value="submit">SUBMIT
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Box -->
+        <section class="content-inner">
+            <div class="container">
+                <div class="row sp15">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="icon-bx-wraper style-2 m-b30 text-center">
+                            <div class="icon-bx-lg">
+                                <i class="fa-solid fa-users icon-cell"></i>
+                            </div>
+                            <div class="icon-content">
+                                <h2 class="dz-title counter m-b0">125,663</h2>
+                                <p class="font-20">Happy Customers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="icon-bx-wraper style-2 m-b30 text-center">
+                            <div class="icon-bx-lg">
+                                <i class="fa-solid fa-book icon-cell"></i>
+                            </div>
+                            <div class="icon-content">
+                                <h2 class="dz-title counter m-b0">50,672</h2>
+                                <p class="font-20">Book Collections</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="icon-bx-wraper style-2 m-b30 text-center">
+                            <div class="icon-bx-lg">
+                                <i class="fa-solid fa-store icon-cell"></i>
+                            </div>
+                            <div class="icon-content">
+                                <h2 class="dz-title counter m-b0">1,562</h2>
+                                <p class="font-20">Our Stores</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                        <div class="icon-bx-wraper style-2 m-b30 text-center">
+                            <div class="icon-bx-lg">
+                                <i class="fa-solid fa-leaf icon-cell"></i>
+                            </div>
+                            <div class="icon-content">
+                                <h2 class="dz-title counter m-b0">457</h2>
+                                <p class="font-20">Famous Writers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Feature Box End -->
+
+        <!-- Newsletter -->
+        <section class="py-5 newsletter-wrapper"
+                 style="background-image: url('static/images/background/bg1.jpg'); background-size: cover;">
+            <div class="container">
+                <div class="subscride-inner">
+                    <div class="row style-1 justify-content-xl-between justify-content-lg-center align-items-center text-xl-start text-center">
+                        <div class="col-xl-7 col-lg-12">
+                            <div class="section-head mb-0">
+                                <h2 class="title text-white my-lg-3 mt-0">Subscribe our newsletter for newest books
+                                    updates</h2>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-6">
+                            <form action="https://bookland.dexignzone.com/xhtml/script/mailchamp.php"
+                                  class="dzSubscribe style-1" method="post">
+                                <div class="dzSubscribeMsg"></div>
+                                <div class="form-group">
+                                    <div class="input-group mb-0">
+                                        <input class="form-control bg-transparent text-white" name="dzEmail" placeholder="Your Email Address"
+                                               required="required"
+                                               type="email">
+                                        <div class="input-group-addon">
+                                            <button class="btn btn-primary btnhover" name="submit" type="submit"
+                                                    value="Submit">
+                                                <span>SUBSCRIBE</span>
+                                                <i class="fa-solid fa-paper-plane"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Newsletter End -->
+
+    </div>
+
+
+    <footer th:replace="layout/footer :: footer"></footer>
+
+
+    <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
+</div>
+<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+</body>
+</html>
