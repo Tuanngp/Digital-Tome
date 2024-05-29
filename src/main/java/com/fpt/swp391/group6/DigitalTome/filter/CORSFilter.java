@@ -1,4 +1,4 @@
-<<<<<<< HEAD:src/main/java/com/fpt/swp391/group6/DigitalTome/filter/CORSFilter.java
+
 package com.fpt.swp391.group6.DigitalTome.filter;
 
 import jakarta.servlet.*;
@@ -35,7 +35,6 @@ public class CORSFilter implements Filter {
     }
 
 }
-=======
 //package com.fpt.swp391.group6.DigitalTome.filter;
 //
 //import jakarta.servlet.*;
@@ -72,4 +71,4 @@ public class CORSFilter implements Filter {
 //    }
 //
 //}
->>>>>>> 9433ed3 (addBook):Digital-Tome-master/src/main/java/com/fpt/swp391/group6/DigitalTome/filter/CORSFilter.java
+

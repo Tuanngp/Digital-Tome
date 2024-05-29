@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,15 +44,16 @@ public class SpringSecurity {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .successHandler((request, response, authentication) -> {
-                                    for (GrantedAuthority auth : authentication.getAuthorities()) {
-                                        if (auth.getAuthority().equals("ROLE_ADMIN")) {
-                                            response.sendRedirect("/admin");
-                                            return;
-                                        }
-                                    }
-                                    response.sendRedirect("/index");
-                                })
+//                                .successHandler((request, response, authentication) -> {
+//                                    for (GrantedAuthority auth : authentication.getAuthorities()) {
+//                                        if (auth.getAuthority().equals("ROLE_ADMIN")) {
+//                                            response.sendRedirect("/admin");
+//                                            return;
+//                                        }
+//                                    }
+//                                    response.sendRedirect("/index");
+//                                })
+                                .successHandler(new CustomAuthenticationSuccessHandler())
                                 .permitAll()
                 ).oauth2Login(oauth2Login ->
                         oauth2Login

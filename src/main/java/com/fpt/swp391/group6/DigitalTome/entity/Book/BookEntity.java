@@ -96,4 +96,7 @@ public class BookEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private List<AccountEntity> authorEntityList;
+
+    @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
+    private int isNew;
 }

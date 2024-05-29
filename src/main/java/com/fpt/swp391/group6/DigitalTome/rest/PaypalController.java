@@ -55,6 +55,7 @@ public class PaypalController {
         return new RedirectView("/payment/error");
     }
 
+
     @GetMapping("/payment/success")
     public String paymentSuccess(
             @RequestParam("paymentId") String paymentId,

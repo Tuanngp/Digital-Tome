@@ -12,9 +12,11 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     boolean existsBookEntityByIsbn(String isbn);
 
-    @Query("SELECT b FROM BookEntity b WHERE b.createdDate >= :creationDate")
-    List<BookEntity> findNewBooks(Date creationDate);
-    List<BookEntity> findByCreatedDateAfter(Date dateTime);
+    @Query("SELECT b FROM BookEntity b WHERE DATE(b.createdDate) = CURRENT_DATE")
+    List<BookEntity> findBooksCreatedToday();
+
+
+
     Optional<BookEntity> findById(Long id);
 
     boolean existsByIsbn(String isbn);

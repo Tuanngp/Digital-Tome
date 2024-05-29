@@ -122,5 +122,7 @@ public class AccountEntity extends BaseEntity
 //            CascadeType.PERSIST, CascadeType.MERGE,
 //            CascadeType.REFRESH, CascadeType.DETACH})
 //    private List<NotitifcationEntity> notitifcationEntityList2;
+    @Column(name = "isNotification", columnDefinition = "BIGINT DEFAULT 0")
+    private Integer isNotification;
 
 }
