@@ -1,6 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.rest;
 
-import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
+import com.fpt.swp391.group6.DigitalTome.dto.RegisterDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
@@ -40,17 +40,21 @@ public class AuthController {
     }
 
 
+    // Trang home
     @GetMapping("index")
     public String home(){
         return "index";
     }
 
 
+    // Trang Login
     @GetMapping("/login")
     public String loginForm() {
         return "shop-login";
     }
 
+
+    // Xử lý login
     @PostMapping("/login")
     public String login(@RequestParam("username") String email,
                         @RequestParam("password") String password,
@@ -75,19 +79,22 @@ public class AuthController {
             return "shop-login";
         }
 
-
+     // Trang đăng kí tài khoản
     @GetMapping("register")
     public String showRegistrationForm(Model model){
-        UserDto user = new UserDto();
+        RegisterDto user = new RegisterDto();
         model.addAttribute("user", user)    ;
         return "shop-registration";
     }
 
 
+    // Trang xử lý validation, nếu error trả lại trang đăng kí, không lỗi --> xác thực OTP
     @PostMapping("/authenOtp")
-    public String saveUser(@Valid @ModelAttribute("user") UserDto userDto,
+    public String saveUser(@Valid @ModelAttribute("user") RegisterDto userDto,
                            BindingResult result,
                            Model model, RedirectAttributes redirectAttributes) {
+
+        // Validation
         if (result.hasErrors()) {
             return "shop-registration";
         }
@@ -104,7 +111,7 @@ public class AuthController {
         String otp = generateToken();
 
         httpSession.setAttribute("otp", otp);
-        httpSession.setAttribute("otpCreationTime", LocalDateTime.now()); // LÆ°u thá»i gian táº¡o OTP
+        httpSession.setAttribute("otpCreationTime", LocalDateTime.now());
         httpSession.setAttribute("tempUserDto", userDto);
 
         try {
@@ -118,12 +125,15 @@ public class AuthController {
         return "redirect:/otp";
     }
 
-
+    // Sau khi hoàn thành những thông tin đăng kí --> xác thực OTP đăng kí tài khoản
     @GetMapping("/otp")
     public String otp(){
         return "otp";
     }
 
+
+
+    // Sau khi submit, kiểm tra mã đăng kí có hợp lệ hay không ?
     @PostMapping("/register/verify-otp")
     public String verifyOtp(@RequestParam("otp") String otp,
                             HttpSession session,
@@ -131,7 +141,7 @@ public class AuthController {
                             RedirectAttributes redirectAttributes) {
         String sessionOtp = (String) session.getAttribute("otp");
         LocalDateTime otpCreationTime = (LocalDateTime) session.getAttribute("otpCreationTime");
-        UserDto userDto = (UserDto) session.getAttribute("tempUserDto");
+        RegisterDto userDto = (RegisterDto) session.getAttribute("tempUserDto");
         if (otpCreationTime == null || isTokenExpired(otpCreationTime)) {
             model.addAttribute("error", "OTP has expired");
             return "otp";
@@ -152,22 +162,15 @@ public class AuthController {
     }
 
 
-    @GetMapping("/users")
-    public String listRegisteredUsers(Model model){
-        List<UserDto> users = userService.findAllUsers();
-        model.addAttribute("users", users);
-        return "users";
-    }
-
-
-
+    // Khi click Forgotpassword thì hiện thị form này
     @GetMapping("/forgotPassword")
     public String forgotPassword() {
         return "forgotPassword";
     }
 
 
-
+    // Sau khi forgotpassword thì kiểm tra email đó có tồn tại không
+    // Nếu nhập email đúng --> gửi mã otp và chuyển tới trang newPassword để nhập mật khẩu mới
     @PostMapping("/sendEmail")
     public String sendEmail(@RequestParam("email") String email, Model model){
 
@@ -187,6 +190,7 @@ public class AuthController {
     }
 
 
+    // Sau khi chuyển tới newPassword, khi submit thì chuyển tới đây để xử lý Validation nếu có xảy ra
     @PostMapping("/reset-password")
     public String resetPass(@RequestParam String token, @RequestParam String password, Model model) {
         try {
@@ -200,6 +204,14 @@ public class AuthController {
             return "newPassword";
         }
         return "redirect:/login";
+    }
+
+
+    @GetMapping("/users")
+    public String listRegisteredUsers(Model model){
+        List<RegisterDto> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        return "users";
     }
 
 }

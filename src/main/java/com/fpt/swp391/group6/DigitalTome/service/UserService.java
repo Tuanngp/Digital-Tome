@@ -1,6 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
-import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
+import com.fpt.swp391.group6.DigitalTome.dto.RegisterDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
 import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
@@ -28,15 +28,15 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public void saveUser(UserDto userDto) {
-        if (userRepository.existsByUsername(userDto.getUsername())) {
+    public void saveUser(RegisterDto registerDto) {
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
             throw new RuntimeException("User exists");
         }
 
-        AccountEntity user = userMapper.toUSer(userDto);
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        AccountEntity user = userMapper.toUSer(registerDto);
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
-        RoleEntity role = roleRepository.findByName("ROLE_ADMIN");
+        RoleEntity role = roleRepository.findByName("ROLE_USER");
         if (role == null) {
             role = checkRoleExist();
         }
@@ -46,7 +46,7 @@ public class UserService {
 
     private RoleEntity checkRoleExist() {
         RoleEntity role = new RoleEntity();
-        role.setName("ROLE_ADMIN");
+        role.setName("ROLE_USER");
         return roleRepository.save(role);
     }
 
@@ -71,7 +71,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public List<UserDto> findAllUsers() {
+    public List<RegisterDto> findAllUsers() {
         List<AccountEntity> users = userRepository.findAll();
         return userMapper.toUserDto(users);
     }

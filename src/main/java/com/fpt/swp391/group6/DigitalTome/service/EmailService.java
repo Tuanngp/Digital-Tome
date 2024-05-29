@@ -1,12 +1,16 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
+import com.fpt.swp391.group6.DigitalTome.entity.Book.BookEntity;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmailService {
@@ -49,5 +53,34 @@ public class EmailService {
         helper.setText(htmlContent, true);
         mailSender.send(message);
     }
+
+    public void sendNewBookNotification(String to, List<BookEntity> newBooks) throws MessagingException {
+        String subject = "New Books Available!";
+        StringBuilder messageContent = new StringBuilder("<html><body>");
+        messageContent.append("<h1>Dear User,</h1>")
+                .append("<p>The following new books are now available:</p>")
+                .append("<ul>");
+
+        for (BookEntity book : newBooks) {
+            messageContent.append("<li>")
+                    .append("<strong>Title:</strong> ").append(book.getTitle()).append("<br>")
+                    .append("<strong>Description:</strong> ").append(book.getDescription())
+                    .append("</li><br>");
+        }
+
+        messageContent.append("</ul>")
+                .append("<p>Best regards,</p>")
+                .append("<p>Digital Tome Team</p>")
+                .append("</body></html>");
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(messageContent.toString(), true);
+
+        mailSender.send(message);
+    }
 }
+
 

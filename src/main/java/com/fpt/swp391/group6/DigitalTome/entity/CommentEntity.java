@@ -2,11 +2,15 @@ package com.fpt.swp391.group6.DigitalTome.entity;
 
 import com.fpt.swp391.group6.DigitalTome.entity.Book.BookEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "comment")
+@Getter
+@Setter
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +33,6 @@ public class CommentEntity {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
     private BookEntity bookEntity;
-
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
