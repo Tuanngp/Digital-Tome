@@ -1,6 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.repository;
 
-import com.fpt.swp391.group6.DigitalTome.dto.ProfileDto;
+import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -28,8 +28,9 @@ public interface UserRepository extends JpaRepository<AccountEntity, Long> {
     @Query("UPDATE AccountEntity u SET u.password = :newPassword WHERE u.username = :username")
     void updatePasswordByUsername(@Param("username") String username, @Param("newPassword") String newPassword);
 
-    @Query("SELECT new com.fpt.swp391.group6.DigitalTome.dto.ProfileDto(u.id, u.email, u.address, u.fullname, u.phone, u.avatarPath, u.description) FROM AccountEntity u WHERE u.username = :username")
-    ProfileDto findByUser(@Param("username") String username);
+    @Query("SELECT new com.fpt.swp391.group6.DigitalTome.dto.UserDto(u.id, u.email, u.address, u.fullname, u.phone, u.avatarPath, u.description, u.point) FROM AccountEntity u WHERE u.username = :username")
+    UserDto findByUser(@Param("username") String username);
+
 
     @Query("SELECT u FROM AccountEntity u WHERE u.email = :email AND u.password = :password")
     AccountEntity findEmailAndPassword(@Param("email") String email, @Param("password") String password);

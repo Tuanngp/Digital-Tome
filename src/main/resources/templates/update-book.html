@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Course </title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Course Tracker</h1>
+    <hr>
+    <h2>Save Course</h2>
+
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>
+    <form action="#" th:action="@{/save}" th:object="${book}" method="POST" enctype="multipart/form-data">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="book-info-tab" data-toggle="tab" href="#book-info" role="tab" aria-controls="book-info" aria-selected="true">Book Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="content-tab" data-toggle="tab" href="#content" role="tab" aria-controls="content" aria-selected="false">Content</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pricing-tab" data-toggle="tab" href="#pricing" role="tab" aria-controls="pricing" aria-selected="false">Pricing</a>
+            </li>
+            <!--            <li class="nav-item">-->
+            <!--                <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Review</a>-->
+            <!--            </li>-->
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="book-info" role="tabpanel" aria-labelledby="book-info-tab">
+                <input type="hidden" th:field="*{id}" placeholder="Title" class="form-control mb-4 col-4">
+                <input type="text" th:field="*{title}" placeholder="Title" class="form-control mb-4 col-4" required>
+                <input type="text" th:field="*{description}" placeholder="Description" class="form-control mb-4 col-4"required>
+                <input type="text" th:field="*{isbn}" placeholder="ISBN" class="form-control mb-4 col-4"required>
+                <input type="text" th:field="*{language}" placeholder="Language" class="form-control mb-4 col-4"required>
+                <input type="text" th:field="*{publicationDate}" placeholder="Publication Date" class="form-control mb-4 col-4"required>
+
+                <td><input type="file" name="image" accept="image/x-png,image/jpeg,image/jpg" required/></td>
+            </div>
+            <div class="tab-pane fade" id="content" role="tabpanel" aria-labelledby="content-tab">
+
+                <td><input type="file" name="bookP" accept="application/pdf" required/></td>
+            </div>
+            <div class="tab-pane fade" id="pricing" role="tabpanel" aria-labelledby="pricing-tab">
+                <input type="number" th:field="*{point}" placeholder="Price" class="form-control mb-4 col-4" required>
+            </div>
+            <!--            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">-->
+            <!--                &lt;!&ndash; Review fields here &ndash;&gt;-->
+            <!--                <h3>Review</h3>-->
+            <!--                <p><strong>Title:</strong> <span th:text="${book.title}"></span></p>-->
+            <!--                <p><strong>Description:</strong> <span th:text="${book.description}"></span></p>-->
+            <!--                <p><strong>ISBN:</strong> <span th:text="${book.isbn}"></span></p>-->
+            <!--                <p><strong>Language:</strong> <span th:text="${book.language}"></span></p>-->
+            <!--                <p><strong>Publication Date:</strong> <span th:text="${book.publicationDate}"></span></p>-->
+            <!--                <p><strong>Book Path:</strong> <span th:text="${book.bookPath}"></span></p>-->
+            <!--                <p><strong>Point:</strong> <span th:text="${book.point}"></span></p>-->
+            <!--            </div>-->
+        </div>
+        <button type="submit" class="btn btn-info mt-3"> Save Book</button>
+    </form>
+
+    <hr>
+
+    <a th:href="@{/books-manage}"> Back to Book List</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -13,9 +13,9 @@
             <div class="preloader-wrap wrap5"></div>
         </div>
     </div>
-    <!-- Header -->
+
     <header th:replace="layout/header :: header"></header>
-    <!-- Header End -->
+
     <div class="page-content bg-grey">
         <section class="content-inner-1">
             <div class="container">
@@ -23,7 +23,7 @@
                     <div class="col">
                         <div class="dz-box">
                             <div class="dz-media">
-                                <img alt="book" th:src="@{../images/books/book16.png}">
+                                <img alt="book" th:src="@{../user/images/books/book16.png}">
                             </div>
                             <div class="dz-content">
                                 <div class="dz-header">
@@ -58,7 +58,7 @@
                                         <ul class="book-info">
                                             <li>
                                                 <div class="writer-info">
-                                                    <img alt="book" th:src="@{../images/profile2.jpg}">
+                                                    <img alt="book" th:src="@{../user/images/profile2.jpg}">
                                                     <div>
                                                         <span>Writen by</span>Kevin Smiley
                                                     </div>
@@ -176,7 +176,7 @@
                                                         <div class="comment-body">
                                                             <div class="comment-author vcard">
                                                                 <img alt="" class="avatar"
-                                                                     th:src="@{../images/profile4.jpg}"/>
+                                                                     th:src="@{../user/images/profile4.jpg}"/>
                                                                 <cite class="fn">Michel Poe</cite> <span class="says">says:</span>
                                                                 <div class="comment-meta">
                                                                     <a href="javascript:void(0);">December 28, 2022 at
@@ -200,7 +200,7 @@
                                                                 <div class="comment-body" id="div-comment-3">
                                                                     <div class="comment-author vcard">
                                                                         <img alt="" class="avatar"
-                                                                             th:src="@{../images/profile3.jpg}"/>
+                                                                             th:src="@{../user/images/profile3.jpg}"/>
                                                                         <cite class="fn">Celesto Anderson</cite> <span
                                                                             class="says">says:</span>
                                                                         <div class="comment-meta">
@@ -228,7 +228,7 @@
                                                         <div class="comment-body" id="div-comment-4">
                                                             <div class="comment-author vcard">
                                                                 <img alt="" class="avatar"
-                                                                     th:src="@{../images/profile2.jpg}"/>
+                                                                     th:src="@{../user/images/profile2.jpg}"/>
                                                                 <cite class="fn">Ryan</cite> <span
                                                                     class="says">says:</span>
                                                                 <div class="comment-meta">
@@ -253,7 +253,7 @@
                                                         <div class="comment-body" id="div-comment-5">
                                                             <div class="comment-author vcard">
                                                                 <img alt="" class="avatar"
-                                                                     th:src="@{../images/profile1.jpg}"/>
+                                                                     th:src="@{../user/images/profile1.jpg}"/>
                                                                 <cite class="fn">Stuart</cite> <span
                                                                     class="says">says:</span>
                                                                 <div class="comment-meta">
@@ -322,7 +322,7 @@
                                 <div class="col-xl-12 col-lg-6">
                                     <div class="dz-shop-card style-5">
                                         <div class="dz-media">
-                                            <img alt="" th:src="@{../images/books/grid/book15.jpg}">
+                                            <img alt="" th:src="@{../user/images/books/grid/book15.jpg}">
                                         </div>
                                         <div class="dz-content">
                                             <h5 class="subtitle">Terrible Madness</h5>
@@ -344,7 +344,7 @@
                                 <div class="col-xl-12 col-lg-6">
                                     <div class="dz-shop-card style-5">
                                         <div class="dz-media">
-                                            <img alt="" th:src="@{../images/books/grid/book3.jpg}">
+                                            <img alt="" th:src="@{../user/images/books/grid/book3.jpg}">
                                         </div>
                                         <div class="dz-content">
                                             <h5 class="subtitle">Battle Drive</h5>
@@ -366,7 +366,7 @@
                                 <div class="col-xl-12 col-lg-6">
                                     <div class="dz-shop-card style-5 mb-0">
                                         <div class="dz-media">
-                                            <img alt="" th:src="@{../images/books/grid/book5.jpg}">
+                                            <img alt="" th:src="@{../user/images/books/grid/book5.jpg}">
                                         </div>
                                         <div class="dz-content">
                                             <h5 class="subtitle">Terrible Madness</h5>
@@ -391,114 +391,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Client Start-->
-        <div class="bg-white py-5">
-            <div class="container">
-                <!--Client Swiper -->
-                <div class="swiper client-swiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img alt="client" th:src="@{../images/client/client1.svg}"></div>
-                        <div class="swiper-slide"><img alt="client" th:src="@{../images/client/client2.svg}"></div>
-                        <div class="swiper-slide"><img alt="client" th:src="@{../images/client/client3.svg}"></div>
-                        <div class="swiper-slide"><img alt="client" th:src="@{../images/client/client4.svg}"></div>
-                        <div class="swiper-slide"><img alt="client" th:src="@{../images/client/client5.svg}"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Client End-->
-
-        <!-- Feature Box -->
-        <section class="content-inner">
-            <div class="container">
-                <div class="row sp15">
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                        <div class="icon-bx-wraper style-2 m-b30 text-center">
-                            <div class="icon-bx-lg">
-                                <i class="fa-solid fa-users icon-cell"></i>
-                            </div>
-                            <div class="icon-content">
-                                <h2 class="dz-title counter m-b0">125,663</h2>
-                                <p class="font-20">Happy Customers</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" col-lg-3 col-md-6 col-sm-6 col-6">
-                        <div class="icon-bx-wraper style-2 m-b30 text-center">
-                            <div class="icon-bx-lg">
-                                <i class="fa-solid fa-book icon-cell"></i>
-                            </div>
-                            <div class="icon-content">
-                                <h2 class="dz-title counter m-b0">50,672</h2>
-                                <p class="font-20">Book Collections</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                        <div class="icon-bx-wraper style-2 m-b30 text-center">
-                            <div class="icon-bx-lg">
-                                <i class="fa-solid fa-store icon-cell"></i>
-                            </div>
-                            <div class="icon-content">
-                                <h2 class="dz-title counter m-b0">1,562</h2>
-                                <p class="font-20">Our Stores</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                        <div class="icon-bx-wraper style-2 m-b30 text-center">
-                            <div class="icon-bx-lg">
-                                <i class="fa-solid fa-leaf icon-cell"></i>
-                            </div>
-                            <div class="icon-content">
-                                <h2 class="dz-title counter m-b0">457</h2>
-                                <p class="font-20">Famous Writers</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Feature Box End -->
-
-        <!-- Newsletter -->
-        <section class="py-5 newsletter-wrapper"
-                 style="background-image: url('static/images/background/bg1.jpg'); background-size: cover;">
-            <div class="container">
-                <div class="subscride-inner">
-                    <div class="row style-1 justify-content-xl-between justify-content-lg-center align-items-center text-xl-start text-center">
-                        <div class="col-xl-7 col-lg-12">
-                            <div class="section-head mb-0">
-                                <h2 class="title text-white my-lg-3 mt-0">Subscribe our newsletter for newest books
-                                    updates</h2>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-lg-6">
-                            <form action="https://bookland.dexignzone.com/xhtml/script/mailchamp.php"
-                                  class="dzSubscribe style-1" method="post">
-                                <div class="dzSubscribeMsg"></div>
-                                <div class="form-group">
-                                    <div class="input-group mb-0">
-                                        <input class="form-control bg-transparent text-white" name="dzEmail" placeholder="Your Email Address"
-                                               required="required"
-                                               type="email">
-                                        <div class="input-group-addon">
-                                            <button class="btn btn-primary btnhover" name="submit" type="submit"
-                                                    value="Submit">
-                                                <span>SUBSCRIBE</span>
-                                                <i class="fa-solid fa-paper-plane"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Newsletter End -->
     </div>
     <!-- Footer -->
     <footer th:replace="layout/footer :: footer"></footer>

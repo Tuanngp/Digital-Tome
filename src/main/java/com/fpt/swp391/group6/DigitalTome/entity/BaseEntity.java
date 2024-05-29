@@ -1,3 +1,4 @@
+
 package com.fpt.swp391.group6.DigitalTome.entity;
 
 import jakarta.persistence.*;
@@ -36,4 +37,3 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private Date modifiedDate;
 }
-

@@ -1,10 +1,15 @@
 package com.fpt.swp391.group6.DigitalTome.utils;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Random;
 
 public class UserUtils {
+
+    private UserUtils(){
+    }
 
     public static String generateToken(){
         Random random = new Random();
@@ -18,4 +23,5 @@ public class UserUtils {
     public static boolean isTokenExpired(LocalDateTime tokenCreationDate){
         return Duration.between(tokenCreationDate, LocalDateTime.now()).toMinutes() > 1;
     }
+
 }

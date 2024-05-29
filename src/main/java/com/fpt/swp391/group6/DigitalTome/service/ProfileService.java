@@ -1,12 +1,15 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
-import com.fpt.swp391.group6.DigitalTome.dto.ProfileDto;
+import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
+import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import static com.fpt.swp391.group6.DigitalTome.utils.DateUtils.*;
 
+import java.sql.Date;
 import java.util.Optional;
 
 @Service
@@ -15,13 +18,15 @@ public class ProfileService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserMapper userMapper;
 
 
-    public ProfileDto findViewProfile(String username) {
+    public UserDto findViewProfile(String username) {
         return userRepository.findByUser(username);
     }
 
-    public void updateProfile(ProfileDto profileDto) {
+    public void updateProfile(UserDto profileDto) {
         Optional<AccountEntity> userOptional = userRepository.findById(profileDto.getId());
         if (userOptional.isPresent()) {
             AccountEntity user = userOptional.get();
@@ -29,6 +34,9 @@ public class ProfileService {
             user.setPhone(profileDto.getPhone());
             user.setAddress(profileDto.getAddress());
             user.setDescription(profileDto.getDescription());
+            user.setPoint(profileDto.getPoint());
+//            java.sql.Date date = convertUtilDateToSqlDate(profileDto.getDateOfBirth());
+//            user.setDateOfBirth(date);
             userRepository.save(user);
         }
     }

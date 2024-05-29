@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/main/java/com/fpt/swp391/group6/DigitalTome/filter/CORSFilter.java
 package com.fpt.swp391.group6.DigitalTome.filter;
 
 import jakarta.servlet.*;
@@ -34,3 +35,41 @@ public class CORSFilter implements Filter {
     }
 
 }
+=======
+//package com.fpt.swp391.group6.DigitalTome.filter;
+//
+//import jakarta.servlet.*;
+//import jakarta.servlet.http.HttpServletResponse;
+//import org.springframework.stereotype.Component;
+//
+//import java.io.IOException;
+//
+//
+//@Component
+//public class CORSFilter implements Filter {
+//
+//    @Override
+//    public void init(FilterConfig filterConfig) throws ServletException {
+//
+//    }
+//
+//    @Override
+//    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+//            throws IOException, ServletException {
+//        HttpServletResponse response = (HttpServletResponse) res;
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+//        response.setHeader("Access-Control-Allow-Credentials", "true");
+//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+//        response.setHeader("Access-Control-Max-Age", "3600");
+//        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, Access-Control-Request-Headers");
+//
+//        chain.doFilter(req, res);
+//    }
+//
+//    @Override
+//    public void destroy() {
+//
+//    }
+//
+//}
+>>>>>>> 9433ed3 (addBook):Digital-Tome-master/src/main/java/com/fpt/swp391/group6/DigitalTome/filter/CORSFilter.java

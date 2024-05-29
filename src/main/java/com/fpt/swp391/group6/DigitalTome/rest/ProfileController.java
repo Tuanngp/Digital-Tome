@@ -1,9 +1,8 @@
 package com.fpt.swp391.group6.DigitalTome.rest;
 
-import com.fpt.swp391.group6.DigitalTome.dto.ProfileDto;
+import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.service.ProfileService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +32,7 @@ public class ProfileController {
 
     }
 
+    //Hiện thị form Update Profile, đồng thời gửi 1 object profileDto để hiện thị thông tin nếu người dùng Update
     @GetMapping("/profile")
     public String formProfile(Model model, Principal principal) {
         String userName = principal.getName();
@@ -40,13 +40,16 @@ public class ProfileController {
         return "my-profile";
     }
 
+
+    // Hiện thị thông tin người dùng sau khi họ Update Profile
     @PostMapping("/profile") // Sau khi UPDATE Profile
-    public String profile(@ModelAttribute("profileDto") ProfileDto profileDto) {
+    public String profile(@ModelAttribute("profileDto") UserDto profileDto) {
         profileService.updateProfile(profileDto);
         return "redirect:/profile";
     }
 
 
+    // Lưu ảnh từ 1 đường dẫn path khi người dùng cập nhập avatar
     @PostMapping("/profileUrl")
     public String updateAvatar(@RequestParam("file") MultipartFile file, Principal principal) {
         if (!file.isEmpty()) {
@@ -65,7 +68,7 @@ public class ProfileController {
     }
 
 
-
+    // Thay đổi mật khẩu
     @GetMapping("changePassword")
     public String changePassword() {
         return "change-password";
