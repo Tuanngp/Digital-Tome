@@ -1,4 +1,4 @@
-package com.fpt.swp391.group6.DigitalTome.entity.Book;
+package com.fpt.swp391.group6.DigitalTome.entity;
 
 import com.fpt.swp391.group6.DigitalTome.entity.*;
 import jakarta.persistence.*;

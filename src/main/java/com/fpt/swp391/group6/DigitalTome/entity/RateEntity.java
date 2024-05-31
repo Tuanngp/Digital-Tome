@@ -1,9 +1,17 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "rate")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class RateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +32,5 @@ public class RateEntity {
     @JoinColumn(name = "book_id")
     private BookEntity bookEntity;
 
-    public RateEntity() {
-    }
+
 }

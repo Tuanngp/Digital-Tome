@@ -37,7 +37,7 @@ public class ProfileService {
             user.setPoint(profileDto.getPoint());
 //            java.sql.Date date = convertUtilDateToSqlDate(profileDto.getDateOfBirth());
 //            user.setDateOfBirth(date);
-            user.setIsNotification(profileDto.getIsNotification());
+//            user.setIsNotification(profileDto.getIsNotification());
             userRepository.save(user);
         }
     }

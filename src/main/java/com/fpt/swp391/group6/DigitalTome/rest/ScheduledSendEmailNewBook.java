@@ -1,7 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.rest;
 
 
-import com.fpt.swp391.group6.DigitalTome.entity.Book.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.BookRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
