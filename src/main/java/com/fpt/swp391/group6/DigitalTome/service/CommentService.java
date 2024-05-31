@@ -13,22 +13,15 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public List<CommentEntity> getCommentByBookId(Long id){
-        List<CommentEntity> commentEntityList = commentRepository.findByBookEntityId(id);
-        if(commentRepository == null){
-            throw new RuntimeException("Not found");
-        }
-        return commentEntityList;
+    public CommentEntity saveComment(CommentEntity comment) {
+        return commentRepository.save(comment);
     }
 
-    public CommentEntity addComment (CommentEntity commentEntity){
-        return commentRepository.save(commentEntity);
+    public List<CommentEntity> getCommentsByBookId(Long bookId) {
+        return commentRepository.findByBookEntityId(bookId);
     }
 
-    public void deleteComment (Long id){
-        commentRepository.deleteById(id);
+    public List<CommentEntity> getReplies(Long parentCommentId) {
+        return commentRepository.findByParentCommentId(parentCommentId);
     }
-
-
-
 }

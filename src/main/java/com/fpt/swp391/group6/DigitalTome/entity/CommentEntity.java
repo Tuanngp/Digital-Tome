@@ -1,17 +1,18 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
-
-import com.fpt.swp391.group6.DigitalTome.entity.Book.BookEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
-@Entity
-@Table(name = "comment")
 @Getter
 @Setter
-public class CommentEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "comment")
+public class CommentEntity extends BaseEntity
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,21 +34,4 @@ public class CommentEntity {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
     private BookEntity bookEntity;
-
-    @Column(name = "created_date", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @Column(name = "created_by", updatable = false)
-    private Long createdBy;
-
-    @Column(name = "modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modifiedDate;
-
-    @Column(name = "modified_by")
-    private Long modifiedBy;
-
-    public CommentEntity() {
-    }
 }

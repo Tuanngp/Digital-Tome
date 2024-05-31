@@ -1,7 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.dto.BookDto;
-import com.fpt.swp391.group6.DigitalTome.entity.Book.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.mapper.BookMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;

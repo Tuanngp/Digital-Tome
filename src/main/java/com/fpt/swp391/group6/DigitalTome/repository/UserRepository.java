@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<AccountEntity, Long> {
-
     AccountEntity findByEmail(String email);
 
     AccountEntity findByToken(String token);

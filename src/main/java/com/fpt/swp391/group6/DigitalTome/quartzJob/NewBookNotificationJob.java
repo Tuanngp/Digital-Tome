@@ -1,6 +1,6 @@
 //package com.fpt.swp391.group6.DigitalTome.quartzJob;
 //
-//import com.fpt.swp391.group6.DigitalTome.entity.Book.BookEntity;
+//import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 //import com.fpt.swp391.group6.DigitalTome.entity.JobExecutionEntity;
 //import com.fpt.swp391.group6.DigitalTome.repository.BookRepository;
 //import com.fpt.swp391.group6.DigitalTome.repository.JobExecutionRepository;

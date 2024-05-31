@@ -1,6 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.rest;
 
-import com.fpt.swp391.group6.DigitalTome.entity.Book.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

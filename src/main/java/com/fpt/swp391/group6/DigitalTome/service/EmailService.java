@@ -1,10 +1,9 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
-import com.fpt.swp391.group6.DigitalTome.entity.Book.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
