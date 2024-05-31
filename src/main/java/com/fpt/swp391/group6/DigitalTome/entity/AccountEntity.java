@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -113,16 +114,23 @@ public class AccountEntity extends BaseEntity
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PaymentEntity> paymentEntityList;
 
-//    @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
-//            CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.REFRESH, CascadeType.DETACH})
-//    private List<NotitifcationEntity> notitifcationEntityList1;
-//
-//    @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
-//            CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.REFRESH, CascadeType.DETACH})
-//    private List<NotitifcationEntity> notitifcationEntityList2;
-    @Column(name = "isNotification", columnDefinition = "BIGINT DEFAULT 0")
-    private Integer isNotification;
+    @OneToMany(mappedBy = "userFirst", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private Set<UserRelationship> relationshipsInitiated;
 
+    @OneToMany(mappedBy = "userSecond", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private Set<UserRelationship> relationshipsReceived;
+
+    @OneToMany(mappedBy = "publisher", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private Set<NotificationEntity> notifications;
+
+    @OneToMany(mappedBy = "user", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private Set<NotificationEntity> notificationsReceived;
 }
