@@ -133,4 +133,14 @@ public class AccountEntity extends BaseEntity
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<NotificationEntity> notificationsReceived;
+
+    @OneToMany(mappedBy = "publisher", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private Set<NotificationEntity> registerations;
+
+    @OneToMany(mappedBy = "user", cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private Set<NotificationEntity>  registerationsReceived;
 }
