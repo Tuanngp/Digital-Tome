@@ -53,33 +53,26 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public void sendNewBookNotification(String to, List<BookEntity> newBooks) throws MessagingException {
+    public void sendNewBookNotification(List<String> toList, String newBookName) throws MessagingException {
         String subject = "New Books Available!";
         StringBuilder messageContent = new StringBuilder("<html><body>");
         messageContent.append("<h1>Dear User,</h1>")
                 .append("<p>The following new books are now available:</p>")
-                .append("<ul>");
-
-        for (BookEntity book : newBooks) {
-            messageContent.append("<li>")
-                    .append("<strong>Title:</strong> ").append(book.getTitle()).append("<br>")
-                    .append("<strong>Description:</strong> ").append(book.getDescription())
-                    .append("</li><br>");
-        }
-
-        messageContent.append("</ul>")
+                .append("<ul>")
+                .append("<li>").append(newBookName).append("</li>")
+                .append("</ul>")
                 .append("<p>Best regards,</p>")
                 .append("<p>Digital Tome Team</p>")
                 .append("</body></html>");
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setTo(to);
+        helper.setTo(toList.toArray(new String[toList.size()]));
         helper.setSubject(subject);
         helper.setText(messageContent.toString(), true);
-
         mailSender.send(message);
     }
+
 }
 
 

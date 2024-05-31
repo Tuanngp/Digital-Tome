@@ -1,9 +1,11 @@
-package com.fpt.swp391.group6.DigitalTome.entity;
+package com.fpt.swp391.group6.DigitalTome.entity.Book;
 
+import com.fpt.swp391.group6.DigitalTome.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -95,6 +97,6 @@ public class BookEntity extends BaseEntity {
     )
     private List<AccountEntity> authorEntityList;
 
-    @OneToMany(mappedBy = "bookEntity", cascade = CascadeType.ALL)
-    private List<CommentEntity> comments;
+    @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
+    private int isNew;
 }

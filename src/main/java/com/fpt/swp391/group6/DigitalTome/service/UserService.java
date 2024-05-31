@@ -36,7 +36,7 @@ public class UserService {
         AccountEntity user = userMapper.toUSer(registerDto);
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
-        RoleEntity role = roleRepository.findByName("ROLE_USER");
+        RoleEntity role = roleRepository.findByName("ROLE_PUBLISHER");
         if (role == null) {
             role = checkRoleExist();
         }
@@ -46,7 +46,7 @@ public class UserService {
 
     private RoleEntity checkRoleExist() {
         RoleEntity role = new RoleEntity();
-        role.setName("ROLE_USER");
+        role.setName("ROLE_PUBLISHER");
         return roleRepository.save(role);
     }
 

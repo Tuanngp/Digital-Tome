@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="layout/head :: head"><title>Home</title></head>
@@ -106,12 +106,12 @@
                                             </div>
                                         </div>
 
-<!--                                        <div class="col-lg-6 col-md-6">-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="formcontrolinput5" class="form-label">DateOfBirth:</label>-->
-<!--                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="formcontrolinput5" placeholder="DateOfBirth" required>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
+                                        <!--                                        <div class="col-lg-6 col-md-6">-->
+                                        <!--                                            <div class="mb-3">-->
+                                        <!--                                                <label for="formcontrolinput5" class="form-label">DateOfBirth:</label>-->
+                                        <!--                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="formcontrolinput5" placeholder="DateOfBirth" required>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
@@ -119,7 +119,6 @@
                                                 <input th:field="*{point}" type="text" class="form-control" id="formcontrolinput2" placeholder="Points" readonly>
                                             </div>
                                         </div>
-
 
 
                                         <div class="col-lg-6 col-md-6">
@@ -137,6 +136,16 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput3" class="form-label">Notification:</label>
+                                                <select th:field="*{isNotification}" class="form-control" id="formcontrolinput5">
+                                                    <option value="0">0</option>
+                                                    <option value="1">1</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-12 col-md-12">
                                             <div class="mb-3">
                                                 <label for="exampleFormControlTextarea" class="form-label">Description:</label>
@@ -145,6 +154,20 @@
                                         </div>
                                     </div>
                                     <button class="btn btn-primary btnhover">Save</button>
+
+                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_PUBLISHER')}"  class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                        th:href="@{/admin}">
+                                        <div>
+                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
+                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                            </svg>
+                                            <span class="ms-2">Add Book</span>
+                                        </div>
+                                    </a>
+
+
                                 </form>
                             </div>
                         </div>

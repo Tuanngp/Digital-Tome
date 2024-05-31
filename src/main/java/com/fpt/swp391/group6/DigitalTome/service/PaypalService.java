@@ -17,52 +17,74 @@ public class PaypalService {
     private final APIContext apiContext;
 
     public Payment createPayment(
-            Double total,
-            String currency,
-            String method,
-            String intent,
-            String description,
-            String cancelUrl,
-            String successUrl
+            Double total,               // Tổng tiền
+            String currency,            // Loại tiền
+            String method,              // Phương thức thanh toán: Paypal
+            String intent,              // Mục đích thanh toán
+            String description,         // Mô tả thanh toán, nội dung ck
+            String cancelUrl,           // Url hủy giao dịch
+            String successUrl           // Url thanh toán thành công
     ) throws PayPalRESTException {
+        // Amount là đối tượng trong thư viện Paypal, đại diện cho số tiền cần thanh toán và loại tiền tệ
         Amount amount = new Amount();
         amount.setCurrency(currency);
         amount.setTotal(String.format(Locale.forLanguageTag(currency), "%.2f", total)); // 9.99$ - 9,99€
 
-        Transaction transaction = new Transaction();
-        transaction.setDescription(description);
-        transaction.setAmount(amount);
 
+        // Transaction đại diện cho giao dịch thanh toán
+        Transaction transaction = new Transaction();
+        transaction.setDescription(description); // mô tả hay nội dung chuyển khoản
+        transaction.setAmount(amount);           // Số tiền giao dịch là bao nhiêu ?
+
+
+        // Tạo danh sách Transaction, để lưu những transaction đã tạo
         List<Transaction> transactions = new ArrayList<>();
         transactions.add(transaction);
 
+
+        // Payer: xác định phương thức thanh toán
         Payer payer = new Payer();
         payer.setPaymentMethod(method);
 
-        Payment payment = new Payment();
-        payment.setIntent(intent);
-        payment.setPayer(payer);
-        payment.setTransactions(transactions);
 
+        // Cấu hình Thanh toán
+        Payment payment = new Payment();
+        payment.setIntent(intent);  // mục đích thanh toán
+        payment.setPayer(payer);    // Thông tin về người thanh toán
+        payment.setTransactions(transactions); // set giao dịch nào để thanh toán
+
+
+        // RedirectUrls: đối tượng dùng để chuyển hướng khi thực hiện giao dịch
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(cancelUrl);
-        redirectUrls.setReturnUrl(successUrl);
+        redirectUrls.setCancelUrl(cancelUrl);  // thất bại
+        redirectUrls.setReturnUrl(successUrl); // thành công
 
         payment.setRedirectUrls(redirectUrls);
 
+        // gửi yêu cầu tạo thanh toán tới PayPal API, sử dụng đối tượng apiContext đã được cấu hình trước đó.
+        //  Kết quả trả về từ phương thức create là một Payment object mới được tạo thành công và đã được cấu hình sẵn
+        // để thực hiện giao dịch thanh toán
         return payment.create(apiContext);
     }
 
-    public Payment executePayment(
-            String paymentId,
-            String payerId
-    ) throws PayPalRESTException {
+
+    // executePayment:  sử dụng để thực hiện một giao dịch thanh toán đã được tạo trước đó trong hệ thống PayPal.
+
+    public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
+        // Tạo một đối tượng Payment mới
         Payment payment = new Payment();
+        // Đặt ID của Payment bằng ID của thanh toán đã được tạo trước đó
         payment.setId(paymentId);
 
+        // Tạo một đối tượng PaymentExecution mới để chỉ định người thanh toán và thực hiện giao dịch
         PaymentExecution paymentExecution = new PaymentExecution();
+        // Đặt ID của người thanh toán cho PaymentExecution. ID này xác định người dùng PayPal mà bạn muốn thực hiện giao dịch thanh toán.
         paymentExecution.setPayerId(payerId);
 
+        // Gửi yêu cầu thực hiện thanh toán tới PayPal API
+        // Sử dụng đối tượng APIContext và đối tượng PaymentExecution đã được tạo trước đó
+        // Kết quả trả về từ phương thức execute là một Payment object đại diện cho kết quả của giao dịch
         return payment.execute(apiContext, paymentExecution);
     }
+
 }

@@ -1,12 +1,16 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "payment")
+@Setter
+@Getter
 public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +39,9 @@ public class PaymentEntity {
 
     @Column(name = "created_by", updatable = false)
     private Long createdBy;
+
+    @Column(name = "transaction status", updatable = false)
+    private boolean success;
 
     @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
