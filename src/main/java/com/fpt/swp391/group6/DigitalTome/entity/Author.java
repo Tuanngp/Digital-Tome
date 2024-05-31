@@ -20,11 +20,8 @@ public class Author {
     @Column(name = "name", length = 50)
     private String name;
 
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "status", columnDefinition = "INT DEFAULT 0")
-    private int status;
+    @Column(name = "bio")
+    private String bio;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
@@ -34,15 +31,4 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private List<BookEntity> bookEntityList;
-
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", status=" + status +
-                ", bookEntityList=" + bookEntityList +
-                '}';
-    }
 }

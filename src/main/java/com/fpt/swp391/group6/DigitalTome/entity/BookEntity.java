@@ -94,4 +94,7 @@ public class BookEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private List<AccountEntity> authorEntityList;
+
+    @OneToMany(mappedBy = "bookEntity", cascade = CascadeType.ALL)
+    private List<CommentEntity> comments;
 }

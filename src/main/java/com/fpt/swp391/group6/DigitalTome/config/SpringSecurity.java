@@ -18,11 +18,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
-    private CustomOAuth2UserService customOAuth2UserService;
+    public SpringSecurity(CustomUserDetailsService customUserDetailsService, CustomOAuth2UserService customOAuth2UserService) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.customOAuth2UserService = customOAuth2UserService;
+    }
 
     @Bean
     public static PasswordEncoder passwordEncoder() {

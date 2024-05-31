@@ -41,8 +41,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (user == null) {
             user = new AccountEntity();
             user.setEmail(email);
-            user.setUsername(oAuth2User.getAttribute("name"));
-
+            user.setUsername(email);
+            user.setFullname(oAuth2User.getAttribute("name"));
             String randomPassword = "123";
             String encodedPassword = passwordEncoder.encode(randomPassword);
             user.setPassword(encodedPassword);
