@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,19 +22,11 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-//    @GetMapping("/test-list")
-//    public String showBooksList(@RequestParam(defaultValue = "0") int page, Model model) {
-//        int pageSize = 16;
-//        Page<BookEntity> bookPage = bookService.getPaginatedBooks(page, pageSize);
-//        model.addAttribute("bookPage", bookPage);
-//        model.addAttribute("currentPage", page);
-//        return "test-list";
-//    }
-
     @GetMapping("/books-view")
     public String bookListView(Model model) {
         return findPaginated(1, "id", "asc", model);
     }
+
     @GetMapping("/books-manage")
     public String bookListManage(Model model) {
         return findPaginatedList(1, "id", "asc", model);
@@ -43,21 +34,15 @@ public class BookController {
 
     @GetMapping("/add")
     public String showAddBookForm(Model model) {
-        model.addAttribute("book", new  BookEntity());
+        model.addAttribute("book", new BookEntity());
         return "new-book";
     }
 
-//    @PostMapping("/save")
-//    public String saveBook(@ModelAttribute("book") BookEntity book){
-//        bookService.saveBook(book);
-//        return "redirect:/books-manage";
-//    }
-
     @PostMapping("/save")
-    public String saveBook(@ModelAttribute("book") BookEntity book,
-                           @RequestParam("image") MultipartFile image,
-                           @RequestParam("bookP") MultipartFile bookP,
-                           Model model) {
+    public String saveBook (@ModelAttribute("book") BookEntity book,
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("bookP") MultipartFile bookP,
+            Model model){
         System.out.println("ID cá»§a sÃ¡ch khi cáº­p nháº­t: " + book.getId());
         if (book.getId() != null) {
 
@@ -110,14 +95,14 @@ public class BookController {
                 book.setBookCover(relativeImagePath);
 
 
-                String relativeBookPath =  bookDir + fileBook;
+                String relativeBookPath = bookDir + fileBook;
                 book.setBookPath(relativeBookPath);
             } catch (IOException e) {
                 e.printStackTrace();
                 model.addAttribute("error", "ÄÃ£ xáº£y ra lá»—i khi lÆ°u sÃ¡ch!");
                 return "new-book";
             }
-        }else {
+        } else {
             model.addAttribute("error", "Vui lÃ²ng chá»n file Ä‘á»ƒ upload!");
             return "new-book";
         }
@@ -126,42 +111,8 @@ public class BookController {
         return "redirect:/books-manage";
     }
 
-
-//    @RequestMapping(value = "/save", method = RequestMethod.POST)
-//    public String saveStore(@ModelAttribute("book") BookEntity book,
-//                            @RequestParam("bookP") MultipartFile bookP) {
-//        if (!bookP.isEmpty()) {
-//            try {
-//                // ÄÆ°á»ng dáº«n nÆ¡i báº¡n sáº½ lÆ°u hÃ¬nh áº£nh
-//                String fileName = bookP.getOriginalFilename();
-//                String uploadDir = "books/";
-//
-//                // Táº¡o thÆ° má»¥c náº¿u chÆ°a tá»“n táº¡i
-//                File uploadDirFile = new File(uploadDir);
-//                if (!uploadDirFile.exists()) {
-//                    uploadDirFile.mkdirs();
-//                }
-//
-//                // LÆ°u tá»‡p hÃ¬nh áº£nh
-//                Path filePath = Paths.get(uploadDir, fileName);
-//                Files.write(filePath, bookP.getBytes());
-//
-//                // Äáº·t Ä‘Æ°á»ng dáº«n vÃ o thuá»™c tÃ­nh imagePath cá»§a Store
-//                book.setBookPath(filePath.toString());
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        // LÆ°u thÃ´ng tin Store
-//        bookService.saveBook(book);
-//
-//        return "redirect:/books-manage";
-//    }
-
-
     @GetMapping("/update/{id}")
-    public String showEditBookForm(@PathVariable ( value = "id") long id, Model model) {
+    public String showEditBookForm ( @PathVariable(value = "id") long id, Model model){
         BookEntity book = bookService.getBookById(id);
         model.addAttribute("book", book);
         return "update-book";
@@ -169,16 +120,16 @@ public class BookController {
 
 
     @GetMapping("/delete/{id}")
-    public String deleteBook(@PathVariable (value = "id") long id) {
+    public String deleteBook ( @PathVariable(value = "id") long id){
         this.bookService.deleteBookById(id);
         return "redirect:/books-manage";
     }
 
     @GetMapping("/books-view/{pageNo}")
-    public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model) {
+    public String findPaginated ( @PathVariable(value = "pageNo") int pageNo,
+    @RequestParam("sortField") String sortField,
+    @RequestParam("sortDir") String sortDir,
+    Model model){
         int pageSize = 12;
 
         Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
@@ -198,10 +149,10 @@ public class BookController {
     }
 
     @GetMapping("/books-manage/{pageNo}")
-    public String findPaginatedList(@PathVariable (value = "pageNo") int pageNo,
-                                    @RequestParam("sortField") String sortField,
-                                    @RequestParam("sortDir") String sortDir,
-                                    Model model) {
+    public String findPaginatedList ( @PathVariable(value = "pageNo") int pageNo,
+    @RequestParam("sortField") String sortField,
+    @RequestParam("sortDir") String sortDir,
+    Model model){
         int pageSize = 12;
 
         Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
@@ -218,16 +169,5 @@ public class BookController {
         model.addAttribute("listBooks", listBooks);
         return "books-list";
     }
-
-//    @PostMapping("/upload")
-//    public ResponseEntity<?> handleFileUpload (@RequestParam("file") MultipartFile file) {
-//        String filename = file.getOriginalFilename();
-//        try {
-//            file.transferTo( new File("D:/Java Web/Digital-Tome-main/books" + filename));
-//        } catch (Exception e) {
-//           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//
-//        }
-//        return ResponseEntity.ok("file upload thanh cong");
-//    }
 }
+

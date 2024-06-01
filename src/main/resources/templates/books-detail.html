@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="layout/head :: head"><title>Home</title></head>
+<head th:replace="layout/head :: head">
+    <title>Home</title>
+</head>
 <body>
 <div class="page-wraper">
     <div class="preloader-wrapper-1" id="loading-area">
@@ -189,9 +191,8 @@
                                                                     enim, egestas ac dui in, aliquam vulputate erat.</p>
                                                             </div>
                                                             <div class="reply">
-                                                                <a class="comment-reply-link" href="javascript:void(0);"
-                                                                   rel="nofollow"><i
-                                                                        class="fa fa-reply"></i> Reply</a>
+                                                                <button class="btn btn-link"  data-bs-toggle="modal" data-bs-target="#replyModal"><span class="me-2"><i
+                                                                        class="fa fa-reply"></i></span>Reply</button>
                                                             </div>
                                                         </div>
                                                         <ol class="children">
@@ -215,102 +216,17 @@
                                                                             aliquam vulputate erat.</p>
                                                                     </div>
                                                                     <div class="reply">
-                                                                        <a class="comment-reply-link"
-                                                                           href="javascript:void(0);"><i
-                                                                                class="fa fa-reply"></i> Reply</a>
+                                                                        <button class="btn btn-link"  data-bs-toggle="modal" data-bs-target="#replyModal"><span class="me-2"><i
+                                                                                class="fa fa-reply"></i></span>Reply</button>
                                                                     </div>
                                                                 </div>
                                                             </li>
                                                         </ol>
                                                     </li>
-                                                    <li class="comment even thread-odd thread-alt depth-1 comment"
-                                                        id="comment-4">
-                                                        <div class="comment-body" id="div-comment-4">
-                                                            <div class="comment-author vcard">
-                                                                <img alt="" class="avatar"
-                                                                     th:src="@{../user/images/profile2.jpg}"/>
-                                                                <cite class="fn">Ryan</cite> <span
-                                                                    class="says">says:</span>
-                                                                <div class="comment-meta">
-                                                                    <a href="javascript:void(0);">December 28, 2022 at
-                                                                        6:14 am</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="comment-content dlab-page-text">
-                                                                <p>Donec suscipit porta lorem eget condimentum. Morbi
-                                                                    vitae mauris in leo venenatis varius. Aliquam nunc
-                                                                    enim, egestas ac dui in, aliquam vulputate erat.</p>
-                                                            </div>
-                                                            <div class="reply">
-                                                                <a class="comment-reply-link"
-                                                                   href="javascript:void(0);"><i
-                                                                        class="fa fa-reply"></i> Reply</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="comment odd alt thread-even depth-1 comment"
-                                                        id="comment-5">
-                                                        <div class="comment-body" id="div-comment-5">
-                                                            <div class="comment-author vcard">
-                                                                <img alt="" class="avatar"
-                                                                     th:src="@{../user/images/profile1.jpg}"/>
-                                                                <cite class="fn">Stuart</cite> <span
-                                                                    class="says">says:</span>
-                                                                <div class="comment-meta">
-                                                                    <a href="javascript:void(0);">December 28, 2022 at
-                                                                        6:14 am</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="comment-content dlab-page-text">
-                                                                <p>Donec suscipit porta lorem eget condimentum. Morbi
-                                                                    vitae mauris in leo venenatis varius. Aliquam nunc
-                                                                    enim, egestas ac dui in, aliquam vulputate erat.</p>
-                                                            </div>
-                                                            <div class="reply">
-                                                                <a class="comment-reply-link" href="javascript:void(0);"
-                                                                   rel="nofollow"><i
-                                                                        class="fa fa-reply"></i> Reply</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
                                                 </ol>
-                                            </div>
-                                            <div class="default-form comment-respond style-1" id="respond">
-                                                <h4 class="comment-reply-title" id="reply-title">LEAVE A REPLY <small>
-                                                    <a href="javascript:void(0)" id="cancel-comment-reply-link"
-                                                       rel="nofollow" style="display:none;">Cancel reply</a>
-                                                </small></h4>
-                                                <div class="clearfix">
-                                                    <form class="comment-form" id="comments_form" method="post"
-                                                          novalidate>
-                                                        <p class="comment-form-author"><input id="name"
-                                                                                              name="author"
-                                                                                              placeholder="Author" type="text"
-                                                                                              value=""></p>
-                                                        <p class="comment-form-email"><input id="email"
-                                                                                             name="email"
-                                                                                             placeholder="Email"
-                                                                                             required="required" type="email"
-                                                                                             value=""></p>
-                                                        <p class="comment-form-comment"><textarea class="form-control4"
-                                                                                                  cols="45"
-                                                                                                  id="comments"
-                                                                                                  name="comment"
-                                                                                                  placeholder="Type Comment Here" required="required"
-                                                                                                  rows="3"></textarea>
-                                                        </p>
-                                                        <p class="col-md-12 col-sm-12 col-xs-12 form-submit">
-                                                            <button class="submit btn btn-primary filled" id="submit"
-                                                                    type="submit">
-                                                                Submit Now <i class="fa fa-angle-right m-l10"></i>
-                                                            </button>
-                                                        </p>
-                                                    </form>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -392,12 +308,83 @@
             </div>
         </section>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="replyModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reply</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <form id="commentForm" method="POST">
+                    <div class="modal-body">
+                        <textarea class="form-control h-50" rows="4" placeholder="Message" id="content" name="content" required></textarea>
+                    </div>
+                    <span id="message"></span>
+                    <input id="parentCommentId" name="parentCommentId" type="hidden" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                        <input class="btn btn-primary light light" data-bs-dismiss="modal" id="submit" name="submit" type="submit" value="Reply"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
     <footer th:replace="layout/footer :: footer"></footer>
     <!-- Footer End -->
 
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
+<script>
+    function showComments() {
+        $.ajax({
+            //Get comment html code
+            url: "http://localhost:8080/api/comments",
+            method: "GET",
+            success: function (response) {
+                $('#showComments').html(response);
+            }
+        })
+    }
+
+    $(document).ready(function () {
+        showComments();
+        $('#commentForm').on('submit', function (event) {
+            event.preventDefault();
+            var formData = $(this).serializeArray();
+            var formDataObject = {};
+            $.each(formData,
+                function (i, v) {
+                    formDataObject[v.name] = v.value;
+                });
+            console.log(formDataObject);
+            $.ajax({
+                //Post comment
+                url: "http://localhost:8080/api/comments",
+                method: "POST",
+                data: formDataObject,
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: false
+                },
+
+                success: function (response) {
+                    showComments();
+                }
+            })
+        });
+        $(document).on('click', '.reply', function () {
+            //Reply to this id
+            const commentId = $(this).attr("id");
+            $('#parentCommentId').val(commentId);
+            $('#name').focus();
+            console.log(commentId);
+            console.log($('#parentCommentId').val());
+        });
+    });
+</script>
 </body>
 </html>
