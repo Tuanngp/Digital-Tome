@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name="users")
-public class AccountEntity extends BaseEntity
-{
+public class AccountEntity extends BaseEntity implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -34,7 +36,7 @@ public class AccountEntity extends BaseEntity
     @Column(name = "fullname", length = 50)
     private String fullname;
 
-    @Column(name = "address",length = 255)
+    @Column(name = "address")
     private String address;
 
     @Column(name = "phone",length = 11)
@@ -82,14 +84,11 @@ public class AccountEntity extends BaseEntity
     @Column(name = "publisher_certificate")
     private String pulisherCertificate;
 
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "role_id")
     private RoleEntity roleEntity;
-
-
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
