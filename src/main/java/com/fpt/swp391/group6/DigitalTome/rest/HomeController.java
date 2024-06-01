@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+//    @GetMapping("/bundle")
+//    public String bundle(Model  model) {
+//        return "bundle";
+//    }
+
     @GetMapping("/comments")
     public String comments() {
         return "comments";
@@ -13,68 +18,67 @@ public class HomeController {
 
     @GetMapping("/about-us")
     public String aboutUs() {
-        return "about-us";
+        return "landing-page/about-us";
     }
 
     @GetMapping("/contact-us")
     public String contact() {
-        return "contact-us";
+        return "landing-page/contact-us";
     }
 
     @GetMapping("/blog-detail")
     public String blogDetail() {
-        return "blog-detail";
+        return "blog/blog-detail";
     }
 
     @GetMapping("/blog-grid")
     public String blogGrid() {
-        return "blog-grid";
+        return "blog/blog-grid";
     }
 
     @GetMapping("/blog-list-sidebar")
     public String blogListSidebar() {
-        return "blog-list-sidebar";
+        return "blog/blog-list-sidebar";
     }
 
     @GetMapping("/blog-large-sidebar")
     public String blogLargeSidebar() {
-        return "blog-large-sidebar";
+        return "blog/blog-large-sidebar";
     }
 
     @GetMapping("/books-detail")
     public String booksDetail() {
-        return "books-detail";
+        return "book-view/books-detail";
     }
 
     @GetMapping("/books-grid-view")
     public String booksGridView() {
-        return "books-grid-view";
+        return "book-view/books-grid-view";
     }
 
     @GetMapping("/books-grid-view-sidebar")
     public String booksGridViewSidebar() {
-        return "books-grid-view-sidebar";
+        return "book-view/books-grid-view-sidebar";
     }
 
     @GetMapping("/books-list")
     public String booksList() {
-        return "books-list";
+        return "book-view/books-list";
     }
 
     @GetMapping("/books-list-view-sidebar")
     public String booksListViewSidebar() {
-        return "books-list-view-sidebar";
+        return "book-view/books-list-view-sidebar";
     }
 
     @GetMapping("/coming-soon")
     public String comingSoon() {
-        return "coming-soon";
+        return "landing-page/coming-soon";
     }
-
 
     @GetMapping("/faq")
     public String faq() {
-        return "faq";
+        return "landing-page/faq";
     }
 
 
@@ -92,12 +96,12 @@ public class HomeController {
 
     @GetMapping("/pricing")
     public String pricing() {
-        return "pricing";
+        return "landing-page/pricing";
     }
 
     @GetMapping("/under-construction")
     public String underConstruction() {
-        return "under-construction";
+        return "error/under-construction";
     }
 
 

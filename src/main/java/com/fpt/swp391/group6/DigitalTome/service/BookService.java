@@ -11,18 +11,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BookService {
 
-    @Autowired
-    private BookRepository bookRepository;
-    @Autowired
-    private BookMapper bookMapper;
+    private final BookRepository bookRepository;
+    private final BookMapper bookMapper;
 
+    @Autowired
+    public BookService(BookRepository bookRepository, BookMapper bookMapper) {
+        this.bookRepository = bookRepository;
+        this.bookMapper = bookMapper;
+    }
 
     public void saveBook(BookDto bookDto){
         boolean existsIsbn = bookRepository.existsBookEntityByIsbn(bookDto.getIsbn());
@@ -33,20 +35,9 @@ public class BookService {
         bookRepository.save(bookEntity);
     }
 
-//    public Optional<BookEntity> getBookById(Long idBook){
-//        Optional<BookEntity> bookEntity = bookRepository.findById(idBook);
-//        if(bookEntity == null){
-//            throw new RuntimeException("Not found");
-//        }
-//        bookEntity.get();
-//        return bookEntity;
-//    }
-
-
-
     public BookEntity getBookById(long id) {
         Optional<BookEntity> optionalBook = bookRepository.findById(id);
-        BookEntity book =null;
+        BookEntity book;
         if (optionalBook.isPresent()) {
             book = optionalBook.get();
         } else {
@@ -55,8 +46,6 @@ public class BookService {
         return book;
     }
 
-
-
     public List<BookEntity> getBooks() {
         return bookRepository.findAll();
     }
@@ -64,7 +53,6 @@ public class BookService {
     public void saveBook(BookEntity book){
         this.bookRepository.save(book);
     }
-
 
 
     public void deleteBookById(long id){

@@ -30,12 +30,12 @@ public class ScheduledSendEmailNewBook {
 
         List<BookEntity> bookEntityList = bookRepository.findBooksCreatedToday();
         if(bookEntityList == null || bookEntityList.isEmpty()){
-            System.out.println("There are no new books");
+//            System.out.println("There are no new books");
             return;
         }
         List<BookEntity> newBooks = bookEntityList.stream().filter(a -> a.getIsNew() == 0).toList();
         if(newBooks == null || newBooks.isEmpty()){
-            System.out.println("No new Books to notify");
+//            System.out.println("No new Books to notify");
             return;
         }
         String newBookNames = newBooks.stream().map(BookEntity::getTitle)
@@ -43,13 +43,12 @@ public class ScheduledSendEmailNewBook {
 
         List<String> listEmail = userRepository.findAllGmailNotification(1);
         if(listEmail == null || listEmail.isEmpty()){
-            System.out.println("No emails to notify");
+//            System.out.println("No emails to notify");
             return;
         }
         try {
-
             emailService.sendNewBookNotification(listEmail, newBookNames);
-            System.out.println("Send Email Success");
+//            System.out.println("Send Email Success");
             
             newBooks.forEach(book -> {
                 book.setIsNew(1);  //  đã gửi email, lần sau không gửi lại nữa

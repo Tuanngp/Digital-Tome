@@ -1,9 +1,14 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,4 +39,15 @@ public class CommentEntity extends BaseEntity
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
     private BookEntity bookEntity;
+
+    @Override
+    public String toString() {
+        return "CommentEntity{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", parentCommentId=" + parentCommentId +
+                ", accountEntity=" + accountEntity +
+                ", bookEntity=" + bookEntity +
+                '}';
+    }
 }

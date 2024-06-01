@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="layout/head :: head"><title>Home</title></head>
+<head th:replace="~{layout/head :: head}"><title>Home</title></head>
 <body>
 <div class="page-wraper">
     <div class="preloader-wrapper-1" id="loading-area">
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <header th:replace="layout/header :: header"></header>
+    <header th:replace="~{layout/header :: header}"></header>
 
 
     <div class="page-content">
@@ -52,7 +52,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book3.jpg}">
+                                    <td class="product-item-img"><img alt="" th:src="@{../user/images/books/grid/book3.jpg}">
                                     </td>
                                     <td class="product-item-name">Prduct Item 1</td>
                                     <td class="product-item-price">$28.00</td>
@@ -68,7 +68,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book2.jpg}">
+                                    <td class="product-item-img"><img alt="" th:src="@{../user/images/books/grid/book2.jpg}">
                                     </td>
                                     <td class="product-item-name">Prduct Item 2</td>
                                     <td class="product-item-price">$28.00</td>
@@ -84,7 +84,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book1.jpg}">
+                                    <td class="product-item-img"><img alt="" th:src="@{../user/images/books/grid/book1.jpg}">
                                     </td>
                                     <td class="product-item-name">Prduct Item 3</td>
                                     <td class="product-item-price">$28.00</td>
@@ -100,7 +100,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book4.jpg}">
+                                    <td class="product-item-img"><img alt="" th:src="@{../user/images/books/grid/book4.jpg}">
                                     </td>
                                     <td class="product-item-name">Prduct Item 4</td>
                                     <td class="product-item-price">$28.00</td>
@@ -116,7 +116,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book5.jpg}">
+                                    <td class="product-item-img"><img alt="" th:src="@{../user/images/books/grid/book5.jpg}">
                                     </td>
                                     <td class="product-item-name">Prduct Item 5</td>
                                     <td class="product-item-price">$28.00</td>
@@ -132,7 +132,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="product-item-img"><img alt="" th:src="@{../images/books/grid/book6.jpg}">
+                                    <td class="product-item-img"><img alt="" th:src="@{../user/images/books/grid/book6.jpg}">
                                     </td>
                                     <td class="product-item-name">Prduct Item 6</td>
                                     <td class="product-item-price">$28.00</td>
@@ -157,7 +157,7 @@
     </div>
 
 
-    <footer th:replace="layout/footer :: footer"></footer>
+    <footer th:replace="~{layout/footer :: footer}"></footer>
 
 
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>

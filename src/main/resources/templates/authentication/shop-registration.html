@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragmets/head :: head"></head>
+
+<body>
+<div class="page-wraper">
+    <div id="loading-area" class="preloader-wrapper-1">
+        <div class="preloader-inner">
+            <div class="preloader-shade"></div>
+            <div class="preloader-wrap"></div>
+            <div class="preloader-wrap wrap2"></div>
+            <div class="preloader-wrap wrap3"></div>
+            <div class="preloader-wrap wrap4"></div>
+            <div class="preloader-wrap wrap5"></div>
+        </div>
+    </div>
+    <!-- Header -->
+    <div th:replace="~{fragmets/header :: header}"></div>
+    <!-- Header End -->
+
+    <div class="page-content">
+        <!-- inner page banner -->
+        <div class="dz-bnr-inr overlay-secondary-dark dz-bnr-inr-sm" style="background-image:url(static/user/images/background/bg3.jpg);">
+            <div class="container">
+                <div class="dz-bnr-inr-entry">
+                    <h1>Registration</h1>
+                    <nav aria-label="breadcrumb" class="breadcrumb-row">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/login"> Home</a></li>
+                            <li class="breadcrumb-item">Registration</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- inner page banner End-->
+        <!-- contact area -->
+        <section class="content-inner shop-account">
+            <!-- Product -->
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <div class="login-area">
+
+                            <!-- Hiển thị thông điệp lỗi -->
+                            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                                <span th:text="${errorMessage}"></span>
+                            </div>
+
+                            <form th:action="@{/authenOtp}" th:object="${user}" method="post">
+                                <h4 class="text-secondary">Registration</h4>
+                                <p class="font-weight-600">If you don't have an account with us, please register.</p>
+
+                                <div class="mb-4">
+                                    <label class="label-title">Username *</label>
+                                    <input th:field="*{username}" id="firstName" name="username" required class="form-control" placeholder="Your Username" type="text">
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="label-title">Email address *</label>
+                                    <input id="email" name="email" placeholder="Enter email address" th:field="*{email}" type="email" class="form-control" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="label-title">Password *</label>
+                                    <input id="password" name="password" placeholder="Enter password" th:field="*{password}" type="password" class="form-control" required>
+                                </div>
+
+                                <div class="mb-5">
+                                    <small>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <a href="/privacy-policy">privacy policy</a>.</small>
+                                </div>
+
+                                <div class="text-left">
+                                    <button class="btn btn-primary w-100 me-2">Register</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product END -->
+        </section>
+        <!-- contact area End-->
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="~{fragmets/footer :: footer}"></div>
+    <!-- Footer End -->
+
+    <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
+</div>
+
+<!-- JAVASCRIPT FILES ========================================= -->
+<div th:replace="~{fragmets/script :: script}"></div>
+
+</body>
+
+</html>

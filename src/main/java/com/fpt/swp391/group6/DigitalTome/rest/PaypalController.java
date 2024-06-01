@@ -21,7 +21,7 @@ public class PaypalController {
 
     @GetMapping("/pay")
     public String home() {
-        return "index-payment";
+        return "payment/index-payment";
     }
 
     @PostMapping("/payment/create")
@@ -64,21 +64,21 @@ public class PaypalController {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")) {
-                return "paymentSuccess";
+                return "payment/paymentSuccess";
             }
         } catch (PayPalRESTException e) {
             log.error("Error occurred:: ", e);
         }
-        return "paymentSuccess";
+        return "payment/paymentSuccess";
     }
 
     @GetMapping("/payment/cancel")
     public String paymentCancel() {
-        return "paymentCancel";
+        return "payment/paymentCancel";
     }
 
     @GetMapping("/payment/error")
     public String paymentError() {
-        return "paymentError";
+        return "payment/paymentError";
     }
 }

@@ -41,6 +41,7 @@ public class SpringSecurity {
                                 .requestMatchers("/publisher/**").hasRole("PUBLISHER")
                                 .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
                                 .requestMatchers("/profile/**").authenticated()
+                                .requestMatchers("/api/**").authenticated()
                                 .requestMatchers("/**").permitAll()
                 )
                 .formLogin(
