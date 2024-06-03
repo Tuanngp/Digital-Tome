@@ -1,5 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -69,7 +70,6 @@ public class AccountEntity extends BaseEntity implements Serializable {
 
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime tokenCreationDate;
-
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
@@ -142,4 +142,7 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<NotificationEntity>  registerationsReceived;
+
+    @Column(name = "isNotification", columnDefinition = "BIGINT DEFAULT 0")
+    private Integer isNotification;
 }

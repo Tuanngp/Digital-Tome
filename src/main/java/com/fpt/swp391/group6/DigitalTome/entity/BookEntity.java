@@ -1,5 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fpt.swp391.group6.DigitalTome.entity.*;
 import jakarta.persistence.*;
 import lombok.*;

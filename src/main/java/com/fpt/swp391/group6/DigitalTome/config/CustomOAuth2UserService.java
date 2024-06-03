@@ -5,6 +5,7 @@ import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public CustomOAuth2UserService( UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
