@@ -7,6 +7,7 @@ import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.Value;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -41,16 +42,16 @@ public class AuthController {
 
 
     // Trang home
-    @GetMapping("index")
+    @GetMapping(value = {"/", "/index"})
     public String home(){
-        return "index";
+        return "landing-page/index";
     }
 
 
     // Trang Login
     @GetMapping("/login")
     public String loginForm() {
-        return "shop-login";
+        return "authentication/shop-login";
     }
 
 
@@ -76,7 +77,7 @@ public class AuthController {
                 return "redirect:/index";
             }
         }
-            return "shop-login";
+            return "authentication/shop-login";
         }
 
      // Trang đăng kí tài khoản
@@ -84,7 +85,7 @@ public class AuthController {
     public String showRegistrationForm(Model model){
         RegisterDto user = new RegisterDto();
         model.addAttribute("user", user)    ;
-        return "shop-registration";
+        return "authentication/shop-registration";
     }
 
 
@@ -96,16 +97,16 @@ public class AuthController {
 
         // Validation
         if (result.hasErrors()) {
-            return "shop-registration";
+            return "authentication/shop-registration";
         }
 
         if (userService.existsByEmail(userDto.getEmail())) {
             model.addAttribute("errorMessage", "Email already exists. Please use a different email.");
-            return "shop-registration";
+            return "authentication/shop-registration";
         }
         if (userService.existsByUsername(userDto.getUsername())) {
             model.addAttribute("errorMessage", "Username already exists. Please use a different username.");
-            return "shop-registration";
+            return "authentication/shop-registration";
         }
 
         String otp = generateToken();
@@ -119,7 +120,7 @@ public class AuthController {
         } catch (MessagingException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to send OTP. Please try again.");
             e.printStackTrace();
-            return "shop-registration";
+            return "authentication/shop-registration";
         }
         model.addAttribute("user", userDto);
         return "redirect:/otp";
@@ -128,7 +129,7 @@ public class AuthController {
     // Sau khi hoàn thành những thông tin đăng kí --> xác thực OTP đăng kí tài khoản
     @GetMapping("/otp")
     public String otp(){
-        return "otp";
+        return "authentication/otp";
     }
 
 
@@ -144,7 +145,7 @@ public class AuthController {
         RegisterDto userDto = (RegisterDto) session.getAttribute("tempUserDto");
         if (otpCreationTime == null || isTokenExpired(otpCreationTime)) {
             model.addAttribute("error", "OTP has expired");
-            return "otp";
+            return "authentication/otp";
         }
 
 
@@ -157,7 +158,7 @@ public class AuthController {
 
         } else {
             model.addAttribute("error", "Invalid OTP! Please try again.");
-            return "otp";
+            return "authentication/otp";
         }
     }
 
@@ -165,7 +166,7 @@ public class AuthController {
     // Khi click Forgotpassword thì hiện thị form này
     @GetMapping("/forgotPassword")
     public String forgotPassword() {
-        return "forgotPassword";
+        return "authentication/forgotPassword";
     }
 
 
@@ -177,7 +178,7 @@ public class AuthController {
         AccountEntity user = userService.findByEmail(email);
         if(user == null){
             model.addAttribute("error", "Email does not exist");
-            return "forgotPassword";
+            return "authentication/forgotPassword";
         }else{
             String token = userService.forgotPass(email);
             try {
@@ -186,7 +187,7 @@ public class AuthController {
                 e.printStackTrace();
             }
         }
-        return "newPassword";
+        return "authentication/newPassword";
     }
 
 
@@ -197,11 +198,11 @@ public class AuthController {
             String result = userService.resetPass(token, password);
             if ("Token expired.".equals(result) || "Invalid token".equals(result)) {
                 model.addAttribute("errorMessage", result);
-                return "newPassword";
+                return "authentication/newPassword";
             }
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "newPassword";
+            return "authentication/newPassword";
         }
         return "redirect:/login";
     }

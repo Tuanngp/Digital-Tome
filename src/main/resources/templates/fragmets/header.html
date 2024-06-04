@@ -5,7 +5,7 @@
         <div class="container clearfix">
             <!-- Website Logo -->
             <div class="logo-header logo-dark">
-                <a href="../index.html"><img src="../user/images/logo.png" alt="logo"></a>
+                <a href="../landing-page/index.html"><img src="../user/images/logo.png" alt="logo"></a>
             </div>
 
             <!-- EXTRA NAV -->
@@ -27,12 +27,12 @@
                                 <li class="cart-item">
                                     <div class="media">
                                         <div class="media-left">
-                                            <a href="../books-detail.html">
+                                            <a href="../book-view/books-detail.html">
                                                 <img alt="" class="media-object" src="../user/images/books/small/pic1.jpg">
                                             </a>
                                         </div>
                                         <div class="media-body">
-                                            <h6 class="dz-title"><a href="../books-detail.html" class="media-heading">Real Life</a></h6>
+                                            <h6 class="dz-title"><a href="../book-view/books-detail.html" class="media-heading">Real Life</a></h6>
                                             <span class="dz-price">$28.00</span>
                                             <span class="item-close">&times;</span>
                                         </div>
@@ -41,12 +41,12 @@
                                 <li class="cart-item">
                                     <div class="media">
                                         <div class="media-left">
-                                            <a href="../books-detail.html">
+                                            <a href="../book-view/books-detail.html">
                                                 <img alt="" class="media-object" src="../user/images/books/small/pic2.jpg">
                                             </a>
                                         </div>
                                         <div class="media-body">
-                                            <h6 class="dz-title"><a href="../books-detail.html" class="media-heading">Home</a></h6>
+                                            <h6 class="dz-title"><a href="../book-view/books-detail.html" class="media-heading">Home</a></h6>
                                             <span class="dz-price">$28.00</span>
                                             <span class="item-close">&times;</span>
                                         </div>
@@ -55,12 +55,12 @@
                                 <li class="cart-item">
                                     <div class="media">
                                         <div class="media-left">
-                                            <a href="../books-detail.html">
+                                            <a href="../book-view/books-detail.html">
                                                 <img alt="" class="media-object" src="../user/images/books/small/pic3.jpg">
                                             </a>
                                         </div>
                                         <div class="media-body">
-                                            <h6 class="dz-title"><a href="../books-detail.html" class="media-heading">Such a fun age</a></h6>
+                                            <h6 class="dz-title"><a href="../book-view/books-detail.html" class="media-heading">Such a fun age</a></h6>
                                             <span class="dz-price">$28.00</span>
                                             <span class="item-close">&times;</span>
                                         </div>
@@ -111,7 +111,7 @@
                                     </a>
                                 </div>
                                 <div class="dropdown-footer">
-                                    <a class="btn btn-primary w-100 btnhover btn-sm" href="shop-login.html">Login</a>
+                                    <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{../index}">Login</a>
                                 </div>
                             </div>
                         </li>
@@ -123,22 +123,24 @@
             <div class="header-search-nav">
                 <form class="header-item-search">
                     <div class="input-group search-input">
-                        <select class="default-select">
-                            <option>Category</option>
-                            <option>Photography </option>
-                            <option>Arts</option>
-                            <option>Adventure</option>
-                            <option>Action</option>
-                            <option>Games</option>
-                            <option>Movies</option>
-                            <option>Comics</option>
-                            <option>Biographies</option>
-                            <option>Children’s Books</option>
-                            <option>Historical</option>
-                            <option>Contemporary</option>
-                            <option>Classics</option>
-                            <option>Education</option>
-                        </select>
+                        <label>
+                            <select class="default-select">
+                                <option>Category</option>
+                                <option>Photography </option>
+                                <option>Arts</option>
+                                <option>Adventure</option>
+                                <option>Action</option>
+                                <option>Games</option>
+                                <option>Movies</option>
+                                <option>Comics</option>
+                                <option>Biographies</option>
+                                <option>Children’s Books</option>
+                                <option>Historical</option>
+                                <option>Contemporary</option>
+                                <option>Classics</option>
+                                <option>Education</option>
+                            </select>
+                        </label>
                         <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search Books Here">
                         <button class="btn" type="button"><i class="flaticon-loupe"></i></button>
                     </div>
@@ -154,7 +156,7 @@
             <div class="container clearfix">
                 <!-- Website Logo -->
                 <div class="logo-header logo-dark">
-                    <a href="../index.html"><img src="../user/images/logo.png" alt="logo"></a>
+                    <a href="../landing-page/index.html"><img src="../user/images/logo.png" alt="logo"></a>
                 </div>
 
                 <!-- Nav Toggle Button -->
@@ -167,14 +169,14 @@
                 <!-- EXTRA NAV -->
                 <div class="extra-nav">
                     <div class="extra-cell">
-                        <a href="../contact-us.html" class="btn btn-primary btnhover">Get In Touch</a>
+                        <a href="../landing-page/contact-us.html" class="btn btn-primary btnhover">Get In Touch</a>
                     </div>
                 </div>
 
                 <!-- Main Nav -->
                 <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
                     <div class="logo-header logo-dark">
-                        <a href="../index.html"><img src="../user/images/logo.png" alt=""></a>
+                        <a href="../landing-page/index.html"><img src="../user/images/logo.png" alt=""></a>
                     </div>
                     <form class="search-input">
                         <div class="input-group">
@@ -186,46 +188,46 @@
                         <li class="sub-menu-down"><a href="javascript:void(0);"><span>Home</span></a>
                             <ul class="sub-menu">
                                 <li><a href="/index">Home 1</a></li>
-                                <li><a href="../index-2.html">Home 2</a></li>
+                                <li><a href="../landing-page/index-2.html">Home 2</a></li>
                             </ul>
                         </li>
-                        <li><a href="../about-us.html"><span>About Us</span></a></li>
+                        <li><a href="../landing-page/about-us.html"><span>About Us</span></a></li>
                         <li class="sub-menu-down"><a href="javascript:void(0);"><span>Pages</span></a>
                             <ul class="sub-menu">
                                 <li><a href="/profile">My Profile</a></li>
                                 <li><a href="../services.html">Services</a></li>
-                                <li><a href="../faq.html">FAQ's</a></li>
+                                <li><a href="../landing-page/faq.html">FAQ's</a></li>
                                 <li><a href="../help-desk.html">Help Desk</a></li>
-                                <li><a href="../coming-soon.html">Coming Soon</a></li>
-                                <li><a href="../pricing.html">Pricing</a></li>
+                                <li><a href="../landing-page/coming-soon.html">Coming Soon</a></li>
+                                <li><a href="../landing-page/pricing.html">Pricing</a></li>
                                 <li><a href="../privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="../under-construction.html">Under Construction</a></li>
+                                <li><a href="../error/under-construction.html">Under Construction</a></li>
                                 <li><a href="../error-404.html">Error 404</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu-down"><a href="javascript:void(0);"><span>Shop</span></a>
                             <ul class="sub-menu">
-                                <li><a href="../books-grid-view.html">Shop Grid</a></li>
-                                <li><a href="../books-grid-view-sidebar.html">Shop Grid Sidebar</a></li>
-                                <li><a href="../books-list.html">Shop List</a></li>
-                                <li><a href="../books-list-view-sidebar.html">Shop List Sidebar</a></li>
-                                <li><a href="../books-detail.html">Shop Detail</a></li>
+                                <li><a href="../book-view/books-grid-view.html">Shop Grid</a></li>
+                                <li><a href="../book-view/books-grid-view-sidebar.html">Shop Grid Sidebar</a></li>
+                                <li><a href="../book-view/books-list.html">Shop List</a></li>
+                                <li><a href="../book-view/books-list-view-sidebar.html">Shop List Sidebar</a></li>
+                                <li><a href="../book-view/books-detail.html">Shop Detail</a></li>
                                 <li><a href="../shop-cart.html">Cart</a></li>
                                 <li><a href="../shop-checkout.html">Checkout</a></li>
                                 <li><a href="../wishlist.html">Wishlist</a></li>
                                 <li><a href="/login">Login</a></li>
-                                <li><a href="../shop-registration.html">Registration</a></li>
+                                <li><a href="../authentication/shop-registration.html">Registration</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu-down"><a href="javascript:void(0);"><span>Blog</span></a>
                             <ul class="sub-menu">
-                                <li><a href="../blog-grid.html">Blog Grid</a></li>
-                                <li><a href="../blog-large-sidebar.html">Blog Large Sidebar</a></li>
+                                <li><a href="../blog/blog-grid.html">Blog Grid</a></li>
+                                <li><a href="../blog/blog-large-sidebar.html">Blog Large Sidebar</a></li>
                                 <li><a href="..blog-list-sidebar.html">Blog List Sidebar</a></li>
-                                <li><a href="../blog-detail.html">Blog Details</a></li>
+                                <li><a href="../blog/blog-detail.html">Blog Details</a></li>
                             </ul>
                         </li>
-                        <li><a href="../contact-us.html"><span>Contact Us</span></a></li>
+                        <li><a href="../landing-page/contact-us.html"><span>Contact Us</span></a></li>
                     </ul>
                     <div class="dz-social-icon">
                         <ul>

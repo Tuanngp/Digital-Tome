@@ -24,9 +24,9 @@ public class RoleEntity {
 
     @Column(name = "name", nullable = false, length = 50, unique = true)
     String name;
-
-    @OneToMany(mappedBy = "roleEntity", fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
-    List<AccountEntity> accountEntities;
+//
+//    @OneToMany(mappedBy = "roleEntity", fetch = FetchType.LAZY, cascade = {
+//            CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.REFRESH, CascadeType.DETACH})
+//    List<AccountEntity> accountEntities;
 }

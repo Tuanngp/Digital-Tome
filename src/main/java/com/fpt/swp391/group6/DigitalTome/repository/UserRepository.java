@@ -32,7 +32,6 @@ public interface UserRepository extends JpaRepository<AccountEntity, Long> {
     @Query("SELECT new com.fpt.swp391.group6.DigitalTome.dto.UserDto(u.id, u.email, u.address, u.fullname, u.phone, u.avatarPath, u.description, u.point, u.isNotification) FROM AccountEntity u WHERE u.username = :username")
     UserDto findByUser(@Param("username") String username);
 
-
     @Query("SELECT u FROM AccountEntity u WHERE u.email = :email AND u.password = :password")
     AccountEntity findEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
