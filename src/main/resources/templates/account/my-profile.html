@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layout/head :: head}"><title>Home</title></head>
+<head th:replace="layout/head :: head"><title>Home</title></head>
 
 <style>
     .my-image {
@@ -14,9 +14,25 @@
         height: 100%;
         object-fit: cover; /* Đảm bảo ảnh không bị méo mó */
     }
-    .account-title {
-        margin-top: 20px;
+
+    .button-wrapper {
+        display: flex;
+        justify-content: center;  /* Center the buttons horizontally */
+        gap: 10px; /* Add some space between buttons */
     }
+
+    .btn-custom {
+        flex: 0 1 auto; /* Allow buttons to resize based on their content */
+        padding: 5px 10px; /* Reduce padding to make buttons smaller */
+        font-size: 14px; /* Optional: Adjust font size if needed */
+    }
+
+    .btn {
+        text-align: center; /* Center text inside buttons */
+    }
+</style>
+
+
 </style>
 <body id="bg">
 <div class="page-wraper">
@@ -30,7 +46,7 @@
             <div class="preloader-wrap wrap5"></div>
         </div>
     </div>
-    <header th:replace="~{layout/header :: header}"></header>
+    <header th:replace="layout/header :: header"></header>
 
     <!-- Content -->
     <div class="page-content bg-white">
@@ -49,15 +65,20 @@
                                                 <img alt="" th:src="${profileDto.avatarPath}" >
                                             </a>
                                         </div>
-                                        <form th:action= "@{/profileUrl}" method="post" enctype="multipart/form-data">
+
+                                        <form th:action="@{/profileUrl}" method="post" enctype="multipart/form-data">
                                             <div class="account-title">
-                                                <div class="">
+                                                <div class="button-container">
                                                     <input type="file" class="form-control" id="url" name="file" accept="image/*">
                                                     <br>
-                                                    <button class="btn btn-primary">Save</button>
+                                                    <div class="button-wrapper">
+                                                        <button type="submit" name="action" value="save" class="btn btn-primary btn-custom">Save</button>
+                                                        <button type="submit" name="action" value="remove" class="btn btn-primary btn-custom">Remove</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
+
                                     </div>
                                     <ul class="account-list">
                                         <li>
@@ -96,81 +117,72 @@
                                     <h5 class="text-uppercase">Basic Information</h5>
                                 </div>
 
-                                <form method="post" th:action="@{/profile}" th:object="${profileDto}">
-                                    <label>
-                                        <input hidden th:field="*{id}"/>
-                                    </label>
+                                <form method="post" th:action="@{/profile}" th:object="${profileDto}" enctype="multipart/form-data">
+                                    <input type="hidden" th:field="*{id}"/>
+                                    <input type="hidden" th:field="*{avatarPath}"/>
+
                                     <div class="row m-b30">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
                                                 <label for="formcontrolinput1" class="form-label">Your Name:</label>
-                                                <input th:field="*{fullName}" type="text" class="form-control" id="formcontrolinput1" placeholder="FullName">
+                                                <input th:field="*{fullName}" type="text" class="form-control" id="formcontrolinput1" placeholder="Full Name">
+                                                <div th:if="${#fields.hasErrors('fullName')}" class="alert alert-danger" th:errors="*{fullName}"></div>
                                             </div>
                                         </div>
 
-                                        <!--                                        <div class="col-lg-6 col-md-6">-->
-                                        <!--                                            <div class="mb-3">-->
-                                        <!--                                                <label for="formcontrolinput5" class="form-label">DateOfBirth:</label>-->
-                                        <!--                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="formcontrolinput5" placeholder="DateOfBirth" required>-->
-                                        <!--                                            </div>-->
-                                        <!--                                        </div>-->
-
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput2" class="form-label">Point:</label>
-                                                <input th:field="*{point}" type="text" class="form-control" id="formcontrolinput2" placeholder="Points" readonly>
+                                                <label for="formcontrolinput2" class="form-label">DateOfBirth:</label>
+                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="formcontrolinput2" placeholder="Date Of Birth ">
+                                                <div th:if="${#fields.hasErrors('dateOfBirth')}" class="alert alert-danger" th:errors="*{dateOfBirth}"></div>
                                             </div>
                                         </div>
 
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput3" class="form-label">Address:</label>
-                                                <input th:field="*{address}" type="text" class="form-control" id="formcontrolinput3" placeholder="Address">
+                                                <label for="formcontrolinput3" class="form-label">Phone:</label>
+                                                <input th:field="*{phone}" type="text" class="form-control" id="formcontrolinput3" placeholder="Phone Number">
+                                                <div th:if="${#fields.hasErrors('phone')}" class="alert alert-danger" th:errors="*{phone}"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput7" class="form-label">Point</label>
+                                                <input th:field="*{point}" type="number" class="form-control" id="formcontrolinput7" placeholder="Point" readonly>
                                             </div>
                                         </div>
 
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput4" class="form-label">Phone:</label>
-                                                <input th:field="*{phone}" type="text" class="form-control" id="formcontrolinput4" placeholder="Phone Number">
+                                                <label for="formcontrolinput4" class="form-label">Address:</label>
+                                                <input th:field="*{address}" type="text" class="form-control" id="formcontrolinput4" placeholder="Address">
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="mb-3">
-                                                <label for="formcontrolinput5" class="form-label">Notification:</label>
-                                               <select th:field="*{isNotification}" class="form-control" id="formcontrolinput5">
-                                                    <option value="0">0</option>
-                                                    <option value="1">1</option>
-                                               </select>
-                                            </div>
-                                        </div>
+
+<!--                                        <div class="col-lg-6 col-md-6">-->
+<!--                                            <div class="mb-3">-->
+<!--                                                <label for="formcontrolinput6" class="form-label">Notification:</label>-->
+<!--                                                <select th:field="*{isNotification}" class="form-control" id="formcontrolinput6">-->
+<!--                                                    <option value="0">Turn Off</option>-->
+<!--                                                    <option value="1">Turn On</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
 
                                         <div class="col-lg-12 col-md-12">
                                             <div class="mb-3">
                                                 <label for="exampleFormControlTextarea" class="form-label">Description:</label>
-                                                <input type="text" th:field="*{description}" class="form-control" id="exampleFormControlTextarea" placeholder="Description">
+                                                <input type="text" th:field="*{description}" class="form-control" id="exampleFormControlTextarea" placeholder="Description"></input>
                                             </div>
                                         </div>
                                     </div>
                                     <button class="btn btn-primary btnhover">Save</button>
-
-                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_PUBLISHER')}"  class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
-                                        th:href="@{/admin}">
-                                        <div>
-                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
-                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M0 0h24v24H0V0z" fill="none"/>
-                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                                            </svg>
-                                            <span class="ms-2">Add Book</span>
-                                        </div>
-                                    </a>
-
-
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -180,8 +192,14 @@
         </div>
     </div>
     <!-- Content END-->
+    <footer th:replace="layout/footer :: footer"></footer>
 
-    <footer th:replace="~{layout/footer :: footer}"></footer>
+    <script type="text/javascript">
+        function trimFullName() {
+            var fullNameInput = document.getElementById("formcontrolinput1");
+            fullNameInput.value = fullNameInput.value.trim().replace(/\s{2,}/g, ' ');
+        }
+    </script>
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
 </body>

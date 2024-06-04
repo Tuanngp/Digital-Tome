@@ -1,5 +1,5 @@
 <!-- Header -->
-<header class="site-header mo-left header style-1" th:fragment="head">
+<header class="site-header mo-left header style-1" th:fragment="head" xmlns:sec="http://www.w3.org/1999/xhtml">
     <!-- Main Header -->
     <div class="header-info-bar">
         <div class="container clearfix">
@@ -62,20 +62,21 @@
                         <li class="nav-item dropdown profile-dropdown  ms-4">
                             <a aria-expanded="false" class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);"
                                role="button">
-                                <img alt="/" th:src="@{../user/images/profile1.jpg}">
+
+                                <img alt="/" th:src="${profileDto != null and profileDto.avatarPath != null ? profileDto.avatarPath : '/user/images/profile1.jpg'}" />
                                 <div class="profile-info">
                                     <h6 class="title"></h6>
-                                    <span>info@gmail.com</span>
+                                    <span th:text="${#authentication.name}">info@gmail.com</span>
                                 </div>
                             </a>
 
                             <div class="dropdown-menu py-0 dropdown-menu-end">
                                 <div class="dropdown-header">
-                                    <h6 class="m-0">Brian</h6>
-                                    <span>info@gmail.com</span>
+                                    <h6 class="m-0" th:text="${#authentication.name}">Brian</h6>
                                 </div>
 
                                 <div class="dropdown-body">
+
                                     <a class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
                                        th:href="@{/profile}">
                                         <div>
@@ -109,6 +110,39 @@
                                             <span class="ms-2">Wishlist</span>
                                         </div>
                                     </a>
+
+
+                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_PUBLISHER')}"
+                                        class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                        th:href="@{/add}">
+                                        <div>
+                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
+                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                            </svg>
+                                            <span class="ms-2">Add Book</span>
+                                        </div>
+                                    </a>
+
+
+                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
+                                        class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                        th:href="@{/buypoint}">
+                                        <div>
+                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
+                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                            </svg>
+                                            <span
+                                                    class="ms-2">Buy Point
+                                                 <span th:text="${points}"></span>
+                                            </span>
+                                        </div>
+
+                                    </a>
+
                                 </div>
                                 <div class="dropdown-footer">
                                     <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{login}">Login</a>

@@ -142,7 +142,4 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<NotificationEntity>  registerationsReceived;
-
-    @Column(name = "isNotification", columnDefinition = "BIGINT DEFAULT 0")
-    private Integer isNotification;
 }

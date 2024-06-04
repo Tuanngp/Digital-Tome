@@ -12,18 +12,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity {
 
-    private final CustomUserDetailsService customUserDetailsService;
-    private final CustomOAuth2UserService customOAuth2UserService;
+    private CustomUserDetailsService customUserDetailsService;
+    private CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
-    public SpringSecurity(CustomUserDetailsService customUserDetailsService, CustomOAuth2UserService customOAuth2UserService) {
-        this.customUserDetailsService = customUserDetailsService;
+    public SpringSecurity(CustomOAuth2UserService customOAuth2UserService, CustomUserDetailsService customUserDetailsService) {
         this.customOAuth2UserService = customOAuth2UserService;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
@@ -34,49 +33,38 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-                .authorizeHttpRequests((authorize) ->
-                        authorize
-                                .requestMatchers("/users/**").hasAnyRole( "ADMIN")
-                                .requestMatchers("/publisher/**").hasRole("PUBLISHER")
-                                .requestMatchers("/admin/**").hasAnyRole( "ADMIN")
-                                .requestMatchers("/profile/**").authenticated()
-                                .requestMatchers("/api/**").authenticated()
-                                .requestMatchers("/**").permitAll()
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
+                        .requestMatchers("/publisher/**").hasRole("PUBLISHER")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/profile/**").authenticated()
+                        .requestMatchers("/buypoint/**").authenticated()
+                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/**").permitAll()
                 )
-                .formLogin(
-                        form -> form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
-//                                .successHandler((request, response, authentication) -> {
-//                                    for (GrantedAuthority auth : authentication.getAuthorities()) {
-//                                        if (auth.getAuthority().equals("ROLE_ADMIN")) {
-//                                            response.sendRedirect("/admin");
-//                                            return;
-//                                        }
-//                                    }
-//                                    response.sendRedirect("/index");
-//                                })
-                                .successHandler(new CustomAuthenticationSuccessHandler())
-                                .permitAll()
-                ).oauth2Login(oauth2Login ->
-                        oauth2Login
-                                .loginPage("/login")
-                                .userInfoEndpoint(userInfoEndpoint ->
-                                        userInfoEndpoint
-                                                .userService(customOAuth2UserService))
-                                .defaultSuccessUrl("/index")
-                                .failureUrl("/login?error")
-                                .permitAll())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .successHandler(new CustomAuthenticationSuccessHandler())
+                        .permitAll()
+                )
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .loginPage("/login")
+                        .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+                                .userService(customOAuth2UserService))
+                        .defaultSuccessUrl("/index")
+                        .failureUrl("/login?error")
+                        .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()
-                ).exceptionHandling(exceptionHandling ->
-                        exceptionHandling
-                                .accessDeniedPage("/404")
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedPage("/404")
                 );
         return http.build();
     }
@@ -88,4 +76,3 @@ public class SpringSecurity {
                 .passwordEncoder(passwordEncoder());
     }
 }
-
