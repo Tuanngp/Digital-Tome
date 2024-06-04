@@ -1,4 +1,4 @@
-package com.fpt.swp391.group6.DigitalTome.rest;
+package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.service.BookService;

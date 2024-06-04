@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragmets/head :: head">
+<head th:replace="layout/head :: head">
     <title>Registration</title>
 </head>
 
@@ -18,7 +18,7 @@
         </div>
     </div>
     <!-- Header -->
-    <div th:replace="~{fragmets/header :: header}"></div>
+    <div th:replace="~{layout/header :: header}"></div>
     <!-- Header End -->
 
     <div class="page-content">
@@ -88,14 +88,14 @@
     </div>
 
     <!-- Footer -->
-    <div th:replace="~{fragmets/footer :: footer}"></div>
+    <div th:replace="~{layout/footer :: footer}"></div>
     <!-- Footer End -->
 
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
 
 <!-- JAVASCRIPT FILES ========================================= -->
-<div th:replace="~{fragmets/script :: script}"></div>
+<div th:replace="~{layout/script :: script}"></div>
 
 </body>
 

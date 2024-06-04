@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fpt.swp391.group6.DigitalTome.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -69,6 +70,7 @@ public class BookEntity extends BaseEntity {
     private List<ContributionEntity> contributionEntityList;  // Một sách có nhiều đóng góp
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<CommentEntity> commentEntityList;   // Một sách có nhiều bình luận
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

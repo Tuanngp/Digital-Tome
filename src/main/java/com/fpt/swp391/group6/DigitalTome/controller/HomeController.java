@@ -1,15 +1,10 @@
-package com.fpt.swp391.group6.DigitalTome.rest;
+package com.fpt.swp391.group6.DigitalTome.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-
-//    @GetMapping("/bundle")
-//    public String bundle(Model  model) {
-//        return "bundle";
-//    }
 
     @GetMapping("/comments")
     public String comments() {
@@ -81,18 +76,15 @@ public class HomeController {
         return "landing-page/faq";
     }
 
-
     @GetMapping("/shop-cart")
     public String shopCart() {
         return "shop-cart";
     }
 
-
     @GetMapping("/wishlist")
     public String shopWishlist() {
         return "wishlist";
     }
-
 
     @GetMapping("/pricing")
     public String pricing() {
@@ -103,6 +95,5 @@ public class HomeController {
     public String underConstruction() {
         return "error/under-construction";
     }
-
 
 }

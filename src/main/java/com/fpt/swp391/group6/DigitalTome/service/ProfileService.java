@@ -7,6 +7,9 @@ import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
 import static com.fpt.swp391.group6.DigitalTome.utils.DateUtils.*;
 
 import java.sql.Date;
@@ -26,6 +29,7 @@ public class ProfileService {
         return userRepository.findByUser(username);
     }
 
+
     public void updateProfile(UserDto profileDto) {
         Optional<AccountEntity> userOptional = userRepository.findById(profileDto.getId());
         if (userOptional.isPresent()) {
@@ -35,9 +39,8 @@ public class ProfileService {
             user.setAddress(profileDto.getAddress());
             user.setDescription(profileDto.getDescription());
             user.setPoint(profileDto.getPoint());
-//            java.sql.Date date = convertUtilDateToSqlDate(profileDto.getDateOfBirth());
-//            user.setDateOfBirth(date);
-//            user.setIsNotification(profileDto.getIsNotification());
+            user.setDateOfBirth(profileDto.getDateOfBirth());
+
             userRepository.save(user);
         }
     }

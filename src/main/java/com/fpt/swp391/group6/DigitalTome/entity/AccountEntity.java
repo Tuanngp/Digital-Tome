@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -93,6 +94,7 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
+    @JsonManagedReference
     private List<CommentEntity> commentEntityList;
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
@@ -142,7 +144,4 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<NotificationEntity>  registerationsReceived;
-
-    @Column(name = "isNotification", columnDefinition = "BIGINT DEFAULT 0")
-    private Integer isNotification;
 }
