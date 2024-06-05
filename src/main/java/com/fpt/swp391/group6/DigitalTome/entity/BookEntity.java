@@ -102,4 +102,5 @@ public class BookEntity extends BaseEntity {
 
     @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
     private int isNew;
+
 }

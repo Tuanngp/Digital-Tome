@@ -40,7 +40,7 @@ public class SpringSecurity {
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
-//                        .requestMatchers("/api/comments").authenticated()
+                        .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/**").permitAll()
                 )
                 .formLogin(form -> form

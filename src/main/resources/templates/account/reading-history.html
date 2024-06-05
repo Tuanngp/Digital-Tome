@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading History</title>
+    <style>
+        /* General Layout */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Reading History Styles */
+        .list-group-item {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .list-group-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .list-group-item h5 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #007bff;
+        }
+
+        .list-group-item p {
+            margin: 5px 0 10px;
+            color: #6c757d;
+        }
+
+        .list-group-item small {
+            color: #6c757d;
+        }
+
+        /* User ID, Book Name, Read Date Styles */
+        .user-id {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .book-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .read-date {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Remove Button Styles */
+        .remove-button {
+            margin-top: 10px;
+            align-self: flex-end;
+        }
+
+        .remove-button form {
+            display: inline;
+        }
+
+        /* Header and Footer */
+        header, footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header a, footer a {
+            color: #ffc107;
+            text-decoration: none;
+        }
+
+        header a:hover, footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <!-- Replace with your header content -->
+    <h1>Header</h1>
+</header>
+<div class="container">
+    <h2>Reading History</h2>
+    <div class="list-group">
+        <div th:each="history : ${readingHistory}">
+            <a th:href="@{/book-detail/{id}(id=${history.book.id})}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <div class="book-name">
+                        <h5 class="mb-1" th:text="${history.book.title}">Book Title</h5>
+                    </div>
+                    <div class="read-date">
+                        <small th:text="${#temporals.format(history.readDate, 'yyyy-MM-dd HH:mm')}">Read Date</small>
+                    </div>
+                </div>
+                <p class="mb-1" th:text="${history.book.description}">Book Description</p>
+                <div class="user-id">
+                    <small th:text="${history.user.id}">User ID</small>
+                </div>
+                <div class="remove-button">
+                    <form th:action="@{/favorites/remove}" method="post">
+                        <input type="hidden" name="favoriteId" th:value="${history.id}" />
+                        <button type="submit" class="btn btn-danger">Remove</button>
+                    </form>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<footer>
+    <!-- Replace with your footer content -->
+    <p>Footer</p>
+</footer>
+</body>
+</html>

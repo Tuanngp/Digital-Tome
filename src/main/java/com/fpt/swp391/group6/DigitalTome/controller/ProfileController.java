@@ -17,9 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 
+import static com.fpt.swp391.group6.DigitalTome.service.UserService.DEFAULT_AVATAR_URL;
+
 @Controller
 public class ProfileController {
-    private static final String DEFAULT_AVATAR_URL = "/user/images/profile1.jpg";
+
     private final ProfileService profileService;
     private final UserService userService;
 
@@ -64,12 +66,13 @@ public class ProfileController {
                     userService.updateImage(imageUrl, principal.getName());
                 }
             } else if ("remove".equals(action)) {
-                // Set URL mặc định khi xóa ảnh
+                String imageUrl = userService.getImage(principal.getName());
+                userService.destroyImage(imageUrl);
+
                 userService.updateImage(DEFAULT_AVATAR_URL, principal.getName());
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Failed to upload file to Cloudinary.");
         }
         return "redirect:/profile";
     }

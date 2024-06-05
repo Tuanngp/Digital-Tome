@@ -21,9 +21,6 @@ public class ProfileService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserMapper userMapper;
-
 
     public UserDto findViewProfile(String username) {
         return userRepository.findByUser(username);
@@ -39,6 +36,7 @@ public class ProfileService {
             user.setAddress(profileDto.getAddress());
             user.setDescription(profileDto.getDescription());
             user.setPoint(profileDto.getPoint());
+            user.setGender(profileDto.getGender());
             user.setDateOfBirth(profileDto.getDateOfBirth());
 
             userRepository.save(user);

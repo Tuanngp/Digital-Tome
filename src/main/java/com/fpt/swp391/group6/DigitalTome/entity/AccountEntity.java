@@ -38,6 +38,9 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @Column(name = "fullname", length = 50)
     private String fullname;
 
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
     @Column(name = "address")
     private String address;
 
@@ -144,4 +147,5 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<NotificationEntity>  registerationsReceived;
+
 }
