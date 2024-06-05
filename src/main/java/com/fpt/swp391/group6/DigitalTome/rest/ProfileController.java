@@ -3,7 +3,6 @@ package com.fpt.swp391.group6.DigitalTome.rest;
 import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.service.ProfileService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
+
+import static com.fpt.swp391.group6.DigitalTome.service.UserService.DEFAULT_AVATAR_URL;
 
 @Controller
 public class ProfileController {
-    private static String DEFAULT_AVATAR_URL = "/user/images/profile1.jpg";
 
     private final ProfileService profileService;
     private final UserService userService;
@@ -70,12 +66,13 @@ public class ProfileController {
                     userService.updateImage(imageUrl, principal.getName());
                 }
             } else if ("remove".equals(action)) {
-                // Set URL mặc định khi xóa ảnh
+                String imageUrl = userService.getImage(principal.getName());
+                userService.destroyImage(imageUrl);
+
                 userService.updateImage(DEFAULT_AVATAR_URL, principal.getName());
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Failed to upload file to Cloudinary.");
         }
         return "redirect:/profile";
     }

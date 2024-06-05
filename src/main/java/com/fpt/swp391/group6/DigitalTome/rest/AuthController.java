@@ -20,6 +20,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.fpt.swp391.group6.DigitalTome.service.UserService.DEFAULT_AVATAR_URL;
 import static com.fpt.swp391.group6.DigitalTome.utils.UserUtils.generateToken;
 import static com.fpt.swp391.group6.DigitalTome.utils.UserUtils.isTokenExpired;
 
@@ -73,11 +74,6 @@ public class AuthController {
         if (result.hasErrors())
             return "authentication/shop-registration";
 
-        if (result.hasErrors()) {
-            return "authentication/shop-registration";
-        }
-
-
         if (userService.existsByEmail(userDto.getEmail())) {
             model.addAttribute("errorMessage", "Email already exists. Please use a different email.");
             return "authentication/shop-registration";
@@ -88,7 +84,6 @@ public class AuthController {
         }
 
         String otp = generateToken();
-
         httpSession.setAttribute("otp", otp);
         httpSession.setAttribute("otpCreationTime", LocalDateTime.now());
         httpSession.setAttribute("tempUserDto", userDto);
@@ -118,8 +113,8 @@ public class AuthController {
     @PostMapping("/register/verify-otp")
     public String verifyOtp(@RequestParam("otp") String otp,
                             HttpSession session,
-                            Model model,
-                            RedirectAttributes redirectAttributes) {
+                            Model model
+                            ) {
 
         String sessionOtp = (String) session.getAttribute("otp");
         LocalDateTime otpCreationTime = (LocalDateTime) session.getAttribute("otpCreationTime");
@@ -131,6 +126,7 @@ public class AuthController {
         }
 
         if (sessionOtp != null && sessionOtp.equals(otp) && userDto != null) {
+
             userService.saveUser(userDto);
             session.removeAttribute("otp");
             session.removeAttribute("otpCreationTime");
@@ -178,10 +174,12 @@ public class AuthController {
     public String resetPassword(@RequestParam String token, @RequestParam String password, Model model) {
         try {
             String result = userService.resetPass(token, password);
+
             if ("Token expired.".equals(result) || "Invalid token".equals(result)) {
                 model.addAttribute("errorMessage", result);
                 return "authentication/newPassword";
             }
+
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "authentication/newPassword";

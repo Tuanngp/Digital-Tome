@@ -17,18 +17,26 @@
 
     .button-wrapper {
         display: flex;
-        justify-content: center;  /* Center the buttons horizontally */
-        gap: 10px; /* Add some space between buttons */
+        justify-content: space-between; /* Giúp cân đối khoảng cách giữa các nút */
+        gap: 10px; /* Khoảng cách giữa các nút */
     }
 
     .btn-custom {
-        flex: 0 1 auto; /* Allow buttons to resize based on their content */
-        padding: 5px 10px; /* Reduce padding to make buttons smaller */
-        font-size: 14px; /* Optional: Adjust font size if needed */
+        flex: 1;
+        max-width: 150px;
+        text-align: center;
     }
 
-    .btn {
-        text-align: center; /* Center text inside buttons */
+    /* Đảm bảo các nút có cùng chiều cao */
+    .btn-custom {
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Căn giữa nội dung trong container */
     }
 </style>
 
@@ -147,6 +155,26 @@
                                             </div>
                                         </div>
 
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput5" class="form-label">Gender:</label>
+                                                <select th:field="*{gender}" class="form-control" id="formcontrolinput5">
+                                                    <!-- Kiểm tra gender chưa được cập nhật -->
+                                                    <option th:if="${profileDto.gender eq null}" value="" selected>Choice</option>
+                                                    <!-- Các lựa chọn giới tính -->
+                                                    <option value="MALE">Male</option>
+                                                    <option value="FEMALE">Female</option>
+                                                    <option value="OTHER">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
                                                 <label for="formcontrolinput7" class="form-label">Point</label>
@@ -182,6 +210,14 @@
                                     </div>
                                     <button class="btn btn-primary btnhover">Save</button>
                                 </form>
+                                <br>
+
+
+                                <form method="get" th:action="@{/favorites/{userId}(userId=${profileDto.id})}">
+                                    <input type="hidden" name="userId" th:value="${profileDto.id}" />
+                                    <button type="submit" class="btn btn-primary btnhover">View Favorites</button>
+                                </form>
+
 
                             </div>
                         </div>
