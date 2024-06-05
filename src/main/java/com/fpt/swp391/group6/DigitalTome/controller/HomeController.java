@@ -101,4 +101,9 @@ public class HomeController {
         return "error/under-construction";
     }
 
+    @GetMapping("/check-out")
+    public String home() {
+        return "shop-checkout";
+    }
+
 }

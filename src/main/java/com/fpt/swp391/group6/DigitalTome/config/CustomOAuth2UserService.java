@@ -58,7 +58,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         session.setAttribute("user", account);
         session.setAttribute("role", authorities.stream().map(GrantedAuthority::getAuthority).toList());
 
-
         return new CustomOAuth2User(oAuth2User, authorities);
     }
 

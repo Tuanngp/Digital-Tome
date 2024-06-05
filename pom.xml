@@ -29,18 +29,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-        <!-- 		<dependency> -->
-        <!-- 			<groupId>org.springframework.boot</groupId> -->
-        <!-- 			<artifactId>spring-boot-starter-oauth2-authorization-server</artifactId> -->
-        <!-- 		</dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
-        <!-- 		<dependency> -->
-        <!-- 			<groupId>org.springframework.boot</groupId> -->
-        <!-- 			<artifactId>spring-boot-starter-quartz</artifactId> -->
-        <!-- 		</dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -57,22 +49,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- 		<dependency> -->
-        <!-- 			<groupId>com.google.cloud</groupId> -->
-        <!-- 			<artifactId>spring-cloud-gcp-starter</artifactId> -->
-        <!-- 		</dependency> -->
-        <!-- 		<dependency> -->
-        <!-- 			<groupId>org.springframework.ai</groupId> -->
-        <!-- 			<artifactId>spring-ai-openai-spring-boot-starter</artifactId> -->
-        <!-- 		</dependency> -->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
-        <!-- 		<dependency> -->
-        <!-- 			<groupId>org.springframework.session</groupId> -->
-        <!-- 			<artifactId>spring-session-jdbc</artifactId> -->
-        <!-- 		</dependency> -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -132,6 +112,12 @@
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <version>3.3.0</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>

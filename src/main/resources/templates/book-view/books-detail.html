@@ -118,13 +118,15 @@
                                         <h4 class="comments-title">4 COMMENTS</h4>
                                         <div id="comment">
                                             <ol class="comment-list">
-                                                <li class="comment even thread-even depth-1 comment" id="showComments">
-
+                                                <li class="comment even thread-even depth-1 comment">
+                                                    <div id="showComments"></div>
                                                 </li>
                                                 <div class="reply-box">
                                                     <form id="commentForm" method="POST">
                                                         <div class="form-group" style="margin: 12px 0">
+                                                            <label for="content"></label>
                                                             <input class="form-control" id="content" name="content" placeholder="Enter Comment" required rows="5"/>
+                                                            <input id="accountEntity" name="accountEntity" th:object="${account}"  type="hidden">
                                                             <input id="parentCommentId" name="parentCommentId" type="hidden" />
                                                             <input id="commentId" name="commentId" type="hidden" />
 

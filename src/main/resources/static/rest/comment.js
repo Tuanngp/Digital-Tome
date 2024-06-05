@@ -1,7 +1,7 @@
 function showComments() {
     $.ajax({
         //Get comment html code
-        url: "http://localhost:8080/api/comments/test",
+        url: `/api/comments/test`,
         method: "GET",
         success: function (response) {
             $('#showComments').html(response);
@@ -9,15 +9,7 @@ function showComments() {
     })
 }
 
-function showNotification(message) {
-    toastr.success(message);
-}
-
 $(document).ready(function () {
-    if (performance.navigation.type === 1) {
-        showSpinningAnimation();
-    }
-
     showComments();
     $('#commentForm').on('submit', function (event) {
         event.preventDefault();
@@ -53,6 +45,9 @@ $(document).ready(function () {
                 $('#commentId').val('');
                 showComments();
                 // reloadPageWithoutScrollEffect();
+            },
+            error: function () {
+                console.error('Failed to post comment');
             }
         })
     });
@@ -64,6 +59,7 @@ $(document).ready(function () {
         $content.val('');
         $parentCommentId.val($(this).attr("id"));
         console.log('Hidden Input Value:', $parentCommentId.val()); // Debugging: Check if the value is set
+
         $('.reply-box').insertAfter($(this).closest('.comment-body, .reply')).show();
         $content.focus();
     });
@@ -76,6 +72,7 @@ $(document).ready(function () {
         $content.val(content);
         $('#commentId').val(commentId);
         $('#submit').val('Edit Comment');
+
         $('.reply-box').insertAfter($(this).closest('.comment-body, .reply')).show();
         $content.focus();
     });
@@ -109,16 +106,4 @@ function reloadPageWithoutScrollEffect() {
         localStorage.removeItem('scrollPosition'); // Xóa vị trí cuộn đã lưu sau khi sử dụng
     }
     location.reload();
-}
-
-// Function to show spinning animation
-function showSpinningAnimation() {
-    // Add a class to the element you want to animate
-    $('#loading-spinner').addClass('rotate');
-}
-
-// Function to hide spinning animation
-function hideSpinningAnimation() {
-    // Remove the class added for animation
-    $('#loading-spinner').removeClass('rotate');
 }

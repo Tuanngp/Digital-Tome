@@ -6,15 +6,17 @@
 <body>
 <header th:replace="~{layout/header :: header}"></header>
 <div class="container">
-    <h1>OTP Verification</h1>
-    <form th:action="@{/register/verify-otp}" method="post" onsubmit="return verifyOtp()">
-        <label for="otp">Enter OTP:</label>
-        <p th:if="${error}" th:text="${error}" class="error"></p>
-        <input type="text" id="otp" name="otp" required>
-        <input type="submit" value="Verify OTP" id="verifyButton">
-        <a href="#" th:href="@{/register}" class="btn-register">Back to Register</a>
-    </form>
-    <div id="timer">60 seconds remaining</div>
+    <div class="row justify-content-center align-items-center min-vh-50">
+        <h1>OTP Verification</h1>
+        <form th:action="@{/register/verify-otp}" method="post" onsubmit="return verifyOtp()">
+            <label for="otp">Enter OTP:</label>
+            <p th:if="${error}" th:text="${error}" class="error"></p>
+            <input type="text" id="otp" name="otp" required>
+            <input type="submit" value="Verify OTP" id="verifyButton">
+            <a href="#" th:href="@{/register}" class="btn-register">Back to Register</a>
+        </form>
+        <div id="timer">60 seconds remaining</div>
+    </div>
 </div>
 <footer th:replace="~{layout/footer :: footer}"></footer>
 <script>
