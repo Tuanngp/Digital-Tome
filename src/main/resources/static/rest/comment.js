@@ -52,10 +52,7 @@ $(document).ready(function () {
                 $('#parentCommentId').val('');
                 $('#commentId').val('');
                 showComments();
-                // saveScrollPosition();
-                reloadPageWithoutScrollEffect();
-                hideSpinningAnimation(); // Hide spinning animation after comment submission
-                showNotification("Comment posted successfully!"); // Show notification after comment submission
+                // reloadPageWithoutScrollEffect();
             }
         })
     });

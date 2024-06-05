@@ -1,15 +1,14 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.dto.RegisterDto;
-import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
-import com.fpt.swp391.group6.DigitalTome.service.ProfileService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,43 +30,29 @@ public class AuthController {
 
     private final EmailService emailService;
     private final HttpSession httpSession;
-    private final UserService userService;
-    private final ProfileService profileService;
+    private UserService userService;
 
-    @Autowired
-    public AuthController(UserService userService, EmailService emailService, HttpSession httpSession, ProfileService profileService) {
+    public AuthController(UserService userService, EmailService emailService, HttpSession httpSession) {
         this.userService = userService;
         this.emailService = emailService;
         this.httpSession = httpSession;
-        this.profileService = profileService;
     }
 
 
     @GetMapping(value = {"/","home", "index"})
-    public String defaultHome(Model model, Principal principal) {
-        if (principal != null) {
-            String username = principal.getName();
-            AccountEntity accountEntity = userService.findUserByUsername(username);
-            model.addAttribute("account", accountEntity);
-            model.addAttribute("username", username);
-        }
-        return "landing-page/index";
-    }
+    public String defaultHome() { return "landing-page/index"; }
 
     @GetMapping("/login")
     public String loginForm() {
         return "authentication/shop-login";
     }
 
-
     @GetMapping("register")
     public String showRegistrationForm(Model model){
         RegisterDto user = new RegisterDto();
-        model.addAttribute("user", user);
+        model.addAttribute("user", user)    ;
         return "authentication/shop-registration";
     }
-
-
 
     @PostMapping("/authenOtp")
     public String registerUser(@Valid @ModelAttribute("user") RegisterDto userDto,
@@ -77,11 +62,6 @@ public class AuthController {
         // Validation
         if (result.hasErrors())
             return "authentication/shop-registration";
-
-        if (result.hasErrors()) {
-            return "authentication/shop-registration";
-        }
-
 
         if (userService.existsByEmail(userDto.getEmail())) {
             model.addAttribute("errorMessage", "Email already exists. Please use a different email.");
@@ -93,7 +73,6 @@ public class AuthController {
         }
 
         String otp = generateToken();
-
         httpSession.setAttribute("otp", otp);
         httpSession.setAttribute("otpCreationTime", LocalDateTime.now());
         httpSession.setAttribute("tempUserDto", userDto);
@@ -110,21 +89,16 @@ public class AuthController {
         return "redirect:/otp";
     }
 
-
-
     @GetMapping("/otp")
     public String otp(){
         return "authentication/otp";
     }
 
-
-
-
     @PostMapping("/register/verify-otp")
     public String verifyOtp(@RequestParam("otp") String otp,
                             HttpSession session,
-                            Model model,
-                            RedirectAttributes redirectAttributes) {
+                            Model model
+                            ) {
 
         String sessionOtp = (String) session.getAttribute("otp");
         LocalDateTime otpCreationTime = (LocalDateTime) session.getAttribute("otpCreationTime");
@@ -136,6 +110,7 @@ public class AuthController {
         }
 
         if (sessionOtp != null && sessionOtp.equals(otp) && userDto != null) {
+
             userService.saveUser(userDto);
             session.removeAttribute("otp");
             session.removeAttribute("otpCreationTime");
@@ -149,14 +124,10 @@ public class AuthController {
         }
     }
 
-
-
     @GetMapping("/forgotPassword")
     public String forgotPassword() {
         return "authentication/forgotPassword";
     }
-
-
 
     @PostMapping("/sendEmail")
     public String sendResetPasswordEmail(@RequestParam("email") String email, Model model){
@@ -183,10 +154,12 @@ public class AuthController {
     public String resetPassword(@RequestParam String token, @RequestParam String password, Model model) {
         try {
             String result = userService.resetPass(token, password);
+
             if ("Token expired.".equals(result) || "Invalid token".equals(result)) {
                 model.addAttribute("errorMessage", result);
                 return "authentication/newPassword";
             }
+
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "authentication/newPassword";

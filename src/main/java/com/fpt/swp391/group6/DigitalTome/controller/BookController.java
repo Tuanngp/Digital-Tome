@@ -35,7 +35,7 @@ public class BookController {
     @GetMapping("/add")
     public String showAddBookForm(Model model) {
         model.addAttribute("book", new BookEntity());
-        return "new-book";
+        return "book-upload/update-book";
     }
 
     @PostMapping("/save")

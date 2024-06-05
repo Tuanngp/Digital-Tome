@@ -9,37 +9,32 @@ import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
+    public static String DEFAULT_AVATAR_URL = "/user/images/avatar_default.jpg";
+
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private Cloudinary cloudinary;
+    private final Cloudinary cloudinary;
 
-    public UserService(PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserRepository userRepository, UserMapper userMapper) {
-        this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
+    public UserService(Cloudinary cloudinary, UserMapper userMapper, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.cloudinary = cloudinary;
         this.userMapper = userMapper;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
-
-    public AccountEntity findUserByUsername(String username){
-        return userRepository.findByUsername(username);
-    }
-
     public void saveUser(RegisterDto registerDto) {
         if (userRepository.existsByUsername(registerDto.getUsername())) {
             throw new RuntimeException("User exists");
@@ -47,6 +42,7 @@ public class UserService {
 
         AccountEntity user = userMapper.toUSer(registerDto);
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setAvatarPath(DEFAULT_AVATAR_URL);
 
         RoleEntity role = roleRepository.findByName("ROLE_USER");
         if (role == null) {
@@ -112,7 +108,7 @@ public class UserService {
         return "Your password successfully updated.";
     }
 
-    // Nháº­n tá»‡p tin tá»« ngÆ°á»i dÃ¹ng vÃ  tráº£ vá» url
+
     public String uploadImage(MultipartFile file) throws IOException {
         try{
             var result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
@@ -128,20 +124,6 @@ public class UserService {
         }
     }
 
-
-
-    public Boolean destroyImage(String nameOfImage){
-        try {
-            var result  = cloudinary.uploader().destroy( nameOfImage, ObjectUtils.asMap(
-                    "folder", "/avatar",
-                    "resource_type","image"
-            ));
-        }catch (IOException io){
-            throw new RuntimeException("Image destroy fail");
-        }
-        return true;
-    }
-
     public void updateImage(String url, String username) {
         AccountEntity user = userRepository.findByUsername(username);
         if (user != null) {
@@ -152,6 +134,26 @@ public class UserService {
         }
     }
 
+    public String getImage(String username){
+        AccountEntity account = userRepository.findByUsername(username);
+        if (account != null) {
+            return account.getAvatarPath();
+        }
+        return DEFAULT_AVATAR_URL;
+    }
+
+
+    public void destroyImage(String nameOfImage) {
+        try {
+            var result = cloudinary.uploader().destroy(nameOfImage, ObjectUtils.asMap(
+                    "folder", "/avatar",
+                    "resource_type", "image"
+            ));
+            System.out.println(result.get("result"));
+        } catch (IOException io) {
+            throw new RuntimeException("Image destroy failed", io);
+        }
+    }
 
 
     public  void  updatePoint (AccountEntity accountEntity){

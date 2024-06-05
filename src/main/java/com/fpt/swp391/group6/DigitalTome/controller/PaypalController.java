@@ -11,6 +11,7 @@ import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,7 +76,7 @@ public class PaypalController {
     ) {
         PaymentEntity paymentEntity = new PaymentEntity();
         String username = principal.getName();
-        AccountEntity accountEntity = userService.findUserByUsername(username);
+        AccountEntity accountEntity = userService.findByUsername(username);
 
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
