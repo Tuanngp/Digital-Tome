@@ -22,10 +22,7 @@ import static com.fpt.swp391.group6.DigitalTome.controller.ProfileController.DEF
 @Service
 public class UserService {
 
-<<<<<<< HEAD
     public static String DEFAULT_AVATAR_URL = "/user/images/profile1.jpg";
-=======
->>>>>>> 8d11a83 (update gender)
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
@@ -135,8 +132,6 @@ public class UserService {
         }
     }
 
-<<<<<<< HEAD
-=======
 
     public Boolean destroyImage(String nameOfImage){
         try {
@@ -150,7 +145,7 @@ public class UserService {
         return true;
     }
 
->>>>>>> 8d11a83 (update gender)
+
     public void updateImage(String url, String username) {
         AccountEntity user = userRepository.findByUsername(username);
         if (user != null) {
@@ -161,7 +156,7 @@ public class UserService {
         }
     }
 
-<<<<<<< HEAD
+
     public String getImage(String username){
         AccountEntity account = userRepository.findByUsername(username);
         if (account != null) {
@@ -171,21 +166,7 @@ public class UserService {
     }
 
 
-    public void destroyImage(String nameOfImage) {
-        try {
-            var result = cloudinary.uploader().destroy(nameOfImage, ObjectUtils.asMap(
-                    "folder", "/avatar",
-                    "resource_type", "image"
-            ));
-            System.out.println(result.get("result"));
-        } catch (IOException io) {
-            throw new RuntimeException("Image destroy failed", io);
-        }
-    }
 
-
-=======
->>>>>>> 8d11a83 (update gender)
     public  void  updatePoint (AccountEntity accountEntity){
         userRepository.save(accountEntity);
     }

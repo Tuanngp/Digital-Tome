@@ -55,9 +55,7 @@
                             <div class="tab-content nav">
 
 
-                                <div th:if="${param.error}">
-                                    <p style="color: red;">Email or password does not exist</p>
-                                </div>
+
 
                                 <form id="login"   method="post" th:action="@{/login}" class="tab-pane active col-12">
                                     <h4 class="text-secondary">LOGIN</h4>
@@ -73,6 +71,10 @@
                                     <div class="text-left">
                                         <button class="btn btn-primary btnhover me-2">login</button>
                                         <a  th:href="@{/forgotPassword}" class="m-l5"><i class="fas fa-unlock-alt"></i> Forgot Password</a>
+                                    </div>
+
+                                    <div th:if="${param.error}">
+                                        <p style="color: red;">Email or password does not exist</p>
                                     </div>
 
                                     <div class="col-md-12">

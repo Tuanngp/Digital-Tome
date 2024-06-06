@@ -11,15 +11,15 @@ import java.util.Optional;
 
 @Service
 public class ProfileService {
-    @Autowired
+
     private UserRepository userRepository;
-    @Autowired
     private PasswordEncoder passwordEncoder;
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 8d11a83 (update gender)
+    @Autowired
+    public ProfileService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+    }
 
     public UserDto findViewProfile(String username) {
         return userRepository.findByUser(username);

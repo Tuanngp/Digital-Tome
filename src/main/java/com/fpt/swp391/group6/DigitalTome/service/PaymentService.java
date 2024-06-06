@@ -17,14 +17,14 @@ public class PaymentService {
     @Autowired
     private PaymentMapper paymentMapper;
 
-
-    @Transactional
-    public PaymentEntity savePayment(PaymentDto paymentDto){
-        boolean isPaymentSuccesfull = paymentDto.isSuccess();
-
-        PaymentEntity paymentEntity = paymentMapper.toEntity(paymentDto);
-        paymentEntity.setSuccess(isPaymentSuccesfull);
-        return paymentRepository.save(paymentEntity);
-    }
+//
+//    @Transactional
+//    public PaymentEntity savePayment(PaymentDto paymentDto){
+//        boolean isPaymentSuccesfull = paymentDto.isSuccess();
+//
+//        PaymentEntity paymentEntity = paymentMapper.toEntity(paymentDto);
+//        paymentEntity.setSuccess(isPaymentSuccesfull);
+//        return paymentRepository.save(paymentEntity);
+//    }
 
 }

@@ -57,10 +57,6 @@ public class AuthController {
     }
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8d11a83 (update gender)
     @GetMapping("/login")
     public String loginForm() {
         return "authentication/shop-login";
@@ -85,10 +81,6 @@ public class AuthController {
         if (result.hasErrors())
             return "authentication/shop-registration";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8d11a83 (update gender)
         if (userService.existsByEmail(userDto.getEmail())) {
             model.addAttribute("errorMessage", "Email already exists. Please use a different email.");
             return "authentication/shop-registration";
