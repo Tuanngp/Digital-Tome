@@ -38,7 +38,7 @@ $(document).ready(function () {
                 withCredentials: false
             },
 
-            success: function (response) {
+            success: function () {
                 $('#submit').val('Post Comment');
                 $('#content').val('');
                 $('#parentCommentId').val('');
