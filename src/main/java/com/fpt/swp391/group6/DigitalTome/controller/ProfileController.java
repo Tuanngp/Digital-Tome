@@ -21,7 +21,11 @@ import static com.fpt.swp391.group6.DigitalTome.service.UserService.DEFAULT_AVAT
 
 @Controller
 public class ProfileController {
+<<<<<<< HEAD
 
+=======
+    public static final String DEFAULT_AVATAR_URL = "/user/images/profile1.jpg";
+>>>>>>> 8d11a83 (update gender)
     private final ProfileService profileService;
     private final UserService userService;
 

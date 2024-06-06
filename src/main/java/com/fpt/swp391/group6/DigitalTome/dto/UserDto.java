@@ -34,6 +34,10 @@ public class UserDto {
     private long point;
 
     private Gender gender;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d11a83 (update gender)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    @PastOrPresent(message = "Date of birth must be greater than 1950 and less than current")
     @ValidDateOfBirth

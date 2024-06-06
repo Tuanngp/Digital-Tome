@@ -1,6 +1,5 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,6 +37,11 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @Column(name = "fullname", length = 50)
     private String fullname;
 
+<<<<<<< HEAD
+=======
+    // Trong AccountEntity
+    @Column(name = "gender")
+>>>>>>> 8d11a83 (update gender)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,8 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    private CustomUserDetailsService customUserDetailsService;
-    private CustomOAuth2UserService customOAuth2UserService;
+    private static final String[] PUBLIC_ENDPOINT = {"/", "/index", "/home", "/register", "/forgotPassword"};
+
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
     public SpringSecurity(CustomOAuth2UserService customOAuth2UserService, CustomUserDetailsService customUserDetailsService) {
@@ -32,7 +35,7 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
@@ -40,8 +43,14 @@ public class SpringSecurity {
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
+<<<<<<< HEAD
                         .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/**").permitAll()
+=======
+                        .requestMatchers("/changePassword").authenticated()
+//                        .requestMatchers("/api/comments").authenticated()
+                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+>>>>>>> 8d11a83 (update gender)
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -53,7 +62,7 @@ public class SpringSecurity {
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
                                 .userService(customOAuth2UserService))
-                        .defaultSuccessUrl("/index")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/login?error")
                         .permitAll())
                 .logout(logout -> logout

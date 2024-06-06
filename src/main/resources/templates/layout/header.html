@@ -62,16 +62,17 @@
                         <li class="nav-item dropdown profile-dropdown  ms-4">
                             <a aria-expanded="false" class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);"
                                role="button">
-                                <img alt="/" th:src="${account != null && account.avatarPath != null ? account.avatarPath: '../user/images/avatar_default.png'}" />
-                                <div class="profile-info" th:if="${account != null}">
+                                <img alt="/" th:src="${profileDto != null and profileDto.avatarPath != null ? profileDto.avatarPath : '/user/images/profile1.jpg'}" />
+
+                                <div class="profile-info">
                                     <h6 class="title"></h6>
-                                    <span th:text="${account.email}">Email user</span>
+                                    <span th:text="${#authentication.name}">info@gmail.com</span>
                                 </div>
                             </a>
 
-                            <div class="dropdown-menu py-0 dropdown-menu-end" style="min-width: 270px">
-                                <div class="dropdown-header" th:if="${account != null}">
-                                    <h6 class="m-0" th:text="${account.fullname}">Name</h6>
+                            <div class="dropdown-menu py-0 dropdown-menu-end">
+                                <div class="dropdown-header">
+                                    <h6 class="m-0" th:text="${#authentication.name}">Brian</h6>
                                 </div>
 
                                 <div class="dropdown-body">
@@ -134,19 +135,24 @@
                                                 <path d="M0 0h24v24H0V0z" fill="none"/>
                                                 <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                                             </svg>
-                                            <span class="ms-2" th:if="${account != null}">Buy Point
-                                                 <span th:text="${account.point}"></span>
+                                            <span
+                                                    class="ms-2">Buy Point
+                                                 <span th:text="${points}"></span>
                                             </span>
                                         </div>
 
                                     </a>
 
                                 </div>
-                                <div class="dropdown-footer" th:if="${account == null}">
-                                    <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{login}">Login</a>
-                                </div>
-                                <div class="dropdown-footer" th:unless="${account == null}">
-                                    <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{logout}">Log out</a>
+                                <div class="dropdown-footer">
+                                    <!-- Hiển thị nút Login khi người dùng chưa đăng nhập -->
+                                    <div th:if="${#authorization.expression('!isAuthenticated()')}">
+                                        <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{/login}">Login</a>
+                                    </div>
+                                    <!-- Hiển thị nút Logout khi người dùng đã đăng nhập -->
+                                    <div th:if="${#authorization.expression('isAuthenticated()')}">
+                                        <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{/logout}">Log out</a>
+                                    </div>
                                 </div>
                             </div>
                         </li>

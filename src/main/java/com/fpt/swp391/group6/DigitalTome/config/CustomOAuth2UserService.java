@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.fpt.swp391.group6.DigitalTome.controller.ProfileController.DEFAULT_AVATAR_URL;
+
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
@@ -50,7 +52,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         AccountEntity account = userRepository.findByEmail(email);
         if (account == null) account = createUser(oAuth2User);
 
-
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
@@ -71,6 +72,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String encodePassword = passwordEncoder.encode(password);
         account.setPassword(encodePassword);
+        account.setAvatarPath(DEFAULT_AVATAR_URL);
 
         RoleEntity role = roleRepository.findByName("ROLE_USER");
         if (role == null) {

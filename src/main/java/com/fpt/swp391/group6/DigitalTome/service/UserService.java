@@ -17,10 +17,15 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static com.fpt.swp391.group6.DigitalTome.controller.ProfileController.DEFAULT_AVATAR_URL;
+
 @Service
 public class UserService {
 
+<<<<<<< HEAD
     public static String DEFAULT_AVATAR_URL = "/user/images/profile1.jpg";
+=======
+>>>>>>> 8d11a83 (update gender)
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
@@ -54,6 +59,7 @@ public class UserService {
             role = checkRoleExist();
         }
         user.setRoleEntity(role);
+        user.setAvatarPath(DEFAULT_AVATAR_URL);
         userRepository.save(user);
     }
 
@@ -97,8 +103,8 @@ public class UserService {
         if (!userOptional.isPresent()) {
             return "Invalid token";
         }
-        LocalDateTime tokenCreationDate = userOptional.get().getTokenCreationDate();
 
+        LocalDateTime tokenCreationDate = userOptional.get().getTokenCreationDate();
 
         if (UserUtils.isTokenExpired(tokenCreationDate)) {
             return "Token expired.";
@@ -129,6 +135,22 @@ public class UserService {
         }
     }
 
+<<<<<<< HEAD
+=======
+
+    public Boolean destroyImage(String nameOfImage){
+        try {
+            var result  = cloudinary.uploader().destroy( nameOfImage, ObjectUtils.asMap(
+                    "folder", "/avatar",
+                    "resource_type","image"
+            ));
+        }catch (IOException io){
+            throw new RuntimeException("Image destroy fail");
+        }
+        return true;
+    }
+
+>>>>>>> 8d11a83 (update gender)
     public void updateImage(String url, String username) {
         AccountEntity user = userRepository.findByUsername(username);
         if (user != null) {
@@ -139,6 +161,7 @@ public class UserService {
         }
     }
 
+<<<<<<< HEAD
     public String getImage(String username){
         AccountEntity account = userRepository.findByUsername(username);
         if (account != null) {
@@ -161,6 +184,8 @@ public class UserService {
     }
 
 
+=======
+>>>>>>> 8d11a83 (update gender)
     public  void  updatePoint (AccountEntity accountEntity){
         userRepository.save(accountEntity);
     }

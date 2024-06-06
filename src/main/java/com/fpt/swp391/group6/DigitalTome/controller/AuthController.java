@@ -46,13 +46,21 @@ public class AuthController {
         if (principal != null) {
             String username = principal.getName();
             AccountEntity accountEntity = userService.findUserByUsername(username);
-            model.addAttribute("account", accountEntity);
             model.addAttribute("username", username);
+            if (accountEntity != null) {
+                model.addAttribute("points", accountEntity.getPoint());
+            } else {
+                model.addAttribute("points", 0);
+            }
         }
         return "landing-page/index";
     }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d11a83 (update gender)
     @GetMapping("/login")
     public String loginForm() {
         return "authentication/shop-login";
@@ -68,7 +76,7 @@ public class AuthController {
 
 
 
-    @PostMapping("/authenOtp")
+    @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") RegisterDto userDto,
                                BindingResult result,
                                Model model, RedirectAttributes redirectAttributes) {
@@ -77,6 +85,10 @@ public class AuthController {
         if (result.hasErrors())
             return "authentication/shop-registration";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d11a83 (update gender)
         if (userService.existsByEmail(userDto.getEmail())) {
             model.addAttribute("errorMessage", "Email already exists. Please use a different email.");
             return "authentication/shop-registration";
