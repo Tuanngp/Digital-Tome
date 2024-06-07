@@ -16,8 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    private CustomUserDetailsService customUserDetailsService;
-    private CustomOAuth2UserService customOAuth2UserService;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
     public SpringSecurity(CustomOAuth2UserService customOAuth2UserService, CustomUserDetailsService customUserDetailsService) {
@@ -40,7 +40,7 @@ public class SpringSecurity {
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
-                        .requestMatchers("/api/**").authenticated()
+//                        .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/**").permitAll()
                 )
                 .formLogin(form -> form

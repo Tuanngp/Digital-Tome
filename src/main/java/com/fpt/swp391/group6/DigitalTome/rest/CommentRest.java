@@ -64,20 +64,21 @@ public class CommentRest {
         List<CommentEntity> comments = commentService.getAllComments();
         for (CommentEntity comment : comments) {
             if (comment.getParentCommentId() == null) {
-                buildCommentHtml(htmlBuilder, comment, 0, true);
+                appendCommentHtml(htmlBuilder, comment, 0);
+                parser(htmlBuilder, comment, 0, true);
             }
         }
         return ResponseEntity.ok(htmlBuilder.toString());
     }
 
-    private void buildCommentHtml(StringBuilder htmlBuilder, CommentEntity comment, int level, boolean root) {
+    private void parser(StringBuilder htmlBuilder, CommentEntity comment, int level, boolean root) {
         if (!root) {
             appendCommentHtml(htmlBuilder, comment, level);
         }
         List<CommentEntity> replies = commentService.getReplies(comment.getId());
         if (!replies.isEmpty()) {
             for (CommentEntity reply : replies) {
-                buildCommentHtml(htmlBuilder, reply, level + 1, false);
+                parser(htmlBuilder, reply, level + 1, false);
             }
         }
     }
@@ -106,6 +107,12 @@ public class CommentRest {
                 .append("<span class='me-2'><i class='fa fa-reply'></i></span>Reply")
                 .append("</button>")
                 .append("</div>")
+                .append("<div class='reply-session'></div>")
                 .append("</div>");
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Integer> countComment() {
+        return ResponseEntity.ok(commentService.getAllComments().size());
     }
 }

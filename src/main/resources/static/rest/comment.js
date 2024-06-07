@@ -5,12 +5,24 @@ function showComments() {
         method: "GET",
         success: function (response) {
             $('#showComments').html(response);
+            getTotalComments()
+        }
+    })
+}
+
+function getTotalComments() {
+    $.ajax({
+        url: `/api/comments/count`,
+        method: "GET",
+        success: function (response) {
+            $('#totalComments').text(response + ' COMMENTS');
         }
     })
 }
 
 $(document).ready(function () {
     showComments();
+    //POST/PUT comment
     $('#commentForm').on('submit', function (event) {
         event.preventDefault();
         const formData = $(this).serializeArray();
@@ -44,26 +56,74 @@ $(document).ready(function () {
                 $('#parentCommentId').val('');
                 $('#commentId').val('');
                 showComments();
+                alert('Comment posted successfully');
                 // reloadPageWithoutScrollEffect();
             },
             error: function () {
                 console.error('Failed to post comment');
+                alert('Failed to post comment');
             }
         })
     });
 
+    //show reply-box
     $(document).on('click', '.reply', function () {
-        let $parentCommentId = $('#parentCommentId');
-        let $content = $('#content');
 
-        $content.val('');
-        $parentCommentId.val($(this).attr("id"));
-        console.log('Hidden Input Value:', $parentCommentId.val()); // Debugging: Check if the value is set
+        const thisClicked = $(this);
+        const parentCommentId = thisClicked.closest('.comment-body .reply').attr('id');
 
-        $('.reply-box').insertAfter($(this).closest('.comment-body, .reply')).show();
-        $content.focus();
+        $('.reply-session').html("");
+        thisClicked.closest('.comment-body').find('.reply-session')
+            .html('<div class="reply-box">\n' +
+                '<form id="commentForm" method="POST">\n' +
+                '<div class="form-group" style="margin: 12px 0">\n' +
+                '<label for="content"></label>\n' +
+                '<input class="form-control" id="content" name="content" placeholder="Enter Comment" required/>\n' +
+                `<input id="parentCommentId" name="parentCommentId" type="hidden" value="${parentCommentId}" />\n` +
+                '</div>\n' +
+                '<span id="message"></span>\n' +
+                '<div class="form-group">\n' +
+                '<input class="btn btn-primary reply-add-btn" id="submit" name="submit" type="submit" value="Post Comment" required/>\n' +
+                '<button class="btn btn-danger reply-cancel-btn" id="cancel" name="cancel" type="button">Cancel</button>\n' +
+                '</div>\n' +
+                '</form>\n' +
+                '</div>');
     });
 
+    //cancel reply-box
+    $(document).on('click', '.reply-cancel-btn', function () {
+        $('.reply-session').html("");
+    });
+
+    //reply comment
+    $(document).on('click', '.reply-add-btn', function (e) {
+        e.preventDefault();
+        const formData = $(this).closest('form').serializeArray();
+        const formDataObject = {};
+        $.each(formData,
+            function (i, v) {
+                formDataObject[v.name] = v.value;
+            });
+        console.log(formDataObject);
+
+        $.ajax({
+            //Post comment
+            url: `/api/comments`,
+            method: "POST",
+            data: formDataObject,
+            success: function () {
+                showComments();
+                alert('Comment posted successfully');
+                // reloadPageWithoutScrollEffect();
+            },
+            error: function () {
+                console.error('Failed to post comment');
+                alert('Failed to post comment');
+            }
+        })
+    });
+
+    //edit comment
     $(document).on('click', '.edit', function () {
         const commentId = $(this).closest('.comment-body').find('.reply').attr('id');
         const content = $(this).closest('.comment-body').find('.comment-content p').text();
@@ -77,6 +137,7 @@ $(document).ready(function () {
         $content.focus();
     });
 
+    //delete comment
     $(document).on('click', '.delete', function () {
         const commentId = $(this).attr("id");
         console.log('Delete comment with ID:', commentId);
