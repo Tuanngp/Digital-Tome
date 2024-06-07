@@ -19,11 +19,11 @@ public class ImageUtils {
         this.cloudinary = cloudinary;
     }
 
-    public static String uploadImage(MultipartFile file) {
+    public static String uploadImage(MultipartFile file, String directoryName) {
 
         try{
             Map<String, String> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
-                    "folder", "student_management/avatar",
+                    "folder", "digital_tome/"+directoryName,
                     "use_filename", true,
                     "unique_filename", true,
                     "resource_type","auto"
@@ -34,10 +34,10 @@ public class ImageUtils {
         }
     }
 
-    public static Boolean destroyImage(String nameOfImage){
+    public static Boolean destroyImage(String nameOfImage, String directoryName){
         try {
             Map result  = cloudinary.uploader().destroy(nameOfImage, ObjectUtils.asMap(
-                    "folder", "student_management/avatar",
+                    "folder", "digital_tome/"+directoryName,
                     "resource_type","image"
             ));
         }catch (IOException io){
