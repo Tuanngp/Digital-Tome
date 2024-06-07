@@ -1,0 +1,24 @@
+{
+  "originalText": "chửi thề tục tĩu bậy bạ đụ cút cặc địt đéo",
+  "normalizedText": "chửi thề tục tĩu bậy bạ đụ cút cặc địt đéo",
+  "status": {
+    "code": 3000,
+    "description": "OK"
+  },
+  "language": "vie",
+  "terms": [
+    {
+      "index": 24,
+      "originalIndex": 24,
+      "listId": 0,
+      "term": "đụ"
+    },
+    {
+      "index": 31,
+      "originalIndex": 31,
+      "listId": 0,
+      "term": "cặc"
+    }
+  ],
+  "trackingId": "543132ac-5392-4691-8556-ac44b3b6fa66"
+}

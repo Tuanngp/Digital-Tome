@@ -4,15 +4,31 @@ package com.fpt.swp391.group6.DigitalTome.service;
 import com.fpt.swp391.group6.DigitalTome.entity.CommentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CommentService {
+    private static final int MIN_LENGTH = 5;
+    private static final int MAX_LENGTH = 500;
+    private static final List<String> BANNED_KEYWORDS = Arrays.asList(
+            "chửi thề", "tục tĩu", "bậy bạ", "đụ", "cút", "cặc", "địt", "má", "con",
+            "chó", "chết", "vãi", "bậy", "lồn", "phò", "điếm", "đĩ", "gà", "vú",
+            "kỳ thị", "phân biệt", "bọn", "tụi", "da đen", "châu Phi", "Châu Á", "da trắng",
+            "giết", "đánh", "bom", "khủng bố", "hại", "hành hạ", "đâm", "súng", "dao",
+            "súng ống", "bắn", "chết chóc", "ngu", "dốt", "khùng", "điên", "bại", "bất tài",
+            "bất tài", "bất lực", "bất lực", "điên rồ", "điên loạn", "điên cuồng", "điên dại",
+            "lừa đảo", "thằng", "con", "khốn nạn", "mất dạy", "vô học", "ngu xuẩn", "bẩn thỉu",
+            "ma túy", "cần sa", "thuốc phiện", "mại dâm", "hối lộ", "tham nhũng", "lừa đảo",
+            "trộm cắp", "cờ bạc", "đánh bạc", "mại dâm", "buôn người", "bán người", "bắt cóc",
+            "giết người", "đánh nhau", "đánh ghen", "ganh ghét", "ghen tị", "ganh tị", "ganh ghét",
+            "gian lận", "lừa dối", "lừa đảo", "lừa", "dối", "lừa lọc", "lừa bịp", "lừa gạt"
+    );
+
+    private final Map<String, Integer> commentFrequencyMap = new HashMap<>();
+    private static final int COMMENT_THRESHOLD = 3; // Số lần xuất hiện tối thiểu của một bình luận trước khi bị coi là spam
+
     @Autowired
     private CommentRepository commentRepository;
 
@@ -54,4 +70,27 @@ public class CommentService {
         }
         commentRepository.deleteById(id);
     }
+
+
+    public boolean isSpam(String comment) {
+        commentFrequencyMap.put(comment, commentFrequencyMap.getOrDefault(comment, 0) + 1);
+        // Kiểm tra nếu số lần xuất hiện vượt quá ngưỡng
+        return commentFrequencyMap.getOrDefault(comment, 0) >= COMMENT_THRESHOLD;
+    }
+    public boolean isValidComment(String comment) {
+        // Kiểm tra độ dài bình luận
+        if (comment.length() < MIN_LENGTH || comment.length() > MAX_LENGTH) {
+            return false;
+        }
+
+        // Kiểm tra từ khóa cấm
+        for (String keyword : BANNED_KEYWORDS) {
+            if (comment.toLowerCase().contains(keyword.toLowerCase())) {
+                return false;
+            }
+        }
+
+        return !comment.trim().isEmpty();
+    }
+
 }

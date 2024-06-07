@@ -1,6 +1,8 @@
 package com.fpt.swp391.group6.DigitalTome.rest;
 
+import com.fpt.swp391.group6.DigitalTome.dto.CommentDto;
 import com.fpt.swp391.group6.DigitalTome.entity.CommentEntity;
+import com.fpt.swp391.group6.DigitalTome.mapper.CommentMapper;
 import com.fpt.swp391.group6.DigitalTome.service.CommentService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +19,35 @@ import java.util.List;
 public class CommentRest {
     private final UserService userService;
     private final CommentService commentService;
+    private final CommentMapper commentMapper;
+
     @Autowired
-    public CommentRest(UserService userService, CommentService commentService) {
+    public CommentRest(UserService userService, CommentService commentService, CommentMapper commentMapper) {
         this.userService = userService;
         this.commentService = commentService;
+        this.commentMapper = commentMapper;
     }
 
     @GetMapping
-    public ResponseEntity<List<CommentEntity>> getAllComments() {
-        return ResponseEntity.ok(commentService.getAllComments());
+    public ResponseEntity<List<CommentDto>> getAllComments() {
+        List<CommentEntity> comments = commentService.getAllComments();
+        return ResponseEntity.ok(commentMapper.toCommentDto(comments));
     }
 
+//    @GetMapping("/{id}")
+//    public ResponseEntity<List<CommentDto>> getNoteById(@PathVariable(value = "id") Long id) {
+//        List<CommentEntity> comment = commentService.getCommentsByBookId(id);
+//        return ResponseEntity.ok(commentMapper.toCommentDto(comment));
+//    }
+
     @PostMapping
-    public ResponseEntity<CommentEntity> createComment(@AuthenticationPrincipal OAuth2User OAuth, CommentEntity comment, Principal principal) {
+    public ResponseEntity<CommentEntity> createComment(@AuthenticationPrincipal OAuth2User OAuth, Principal principal, CommentDto comment) {
         if (principal == null) {
             comment.setAccountEntity(userService.findByUsername(OAuth.getAttribute("email")));
         } else {
             comment.setAccountEntity(userService.findByUsername(principal.getName()));
         }
-        CommentEntity savedComment = commentService.saveComment(comment);
+        CommentEntity savedComment = commentService.saveComment(commentMapper.toCommentEntity(comment));
         return ResponseEntity.ok(savedComment);
     }
 
@@ -46,23 +58,17 @@ public class CommentRest {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommentEntity> updateComment(@PathVariable Long id, CommentEntity updatedComment) {
-        CommentEntity comment = commentService.updateComment(id, updatedComment);
+    public ResponseEntity<CommentEntity> updateComment(@PathVariable Long id, CommentDto updatedComment) {
+        CommentEntity comment = commentService.updateComment(id, commentMapper.toCommentEntity(updatedComment));
         return ResponseEntity.ok(comment);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommentEntity> getNoteById(@PathVariable(value = "id") Long commentId) {
-        CommentEntity comment = commentService.getById(commentId);
-        return ResponseEntity.ok(comment);
-    }
-
-    @GetMapping("/test")
     @ResponseBody
-    public ResponseEntity<String> test() {
+    public ResponseEntity<String> showComment(@PathVariable(value = "id") Long id) {
         StringBuilder htmlBuilder = new StringBuilder();
-        List<CommentEntity> comments = commentService.getAllComments();
-        for (CommentEntity comment : comments) {
+        List<CommentDto> comments = commentMapper.toCommentDto(commentService.getCommentsByBookId(id));
+        for (CommentDto comment : comments) {
             if (comment.getParentCommentId() == null) {
                 appendCommentHtml(htmlBuilder, comment, 0);
                 parser(htmlBuilder, comment, 0, true);
@@ -71,19 +77,19 @@ public class CommentRest {
         return ResponseEntity.ok(htmlBuilder.toString());
     }
 
-    private void parser(StringBuilder htmlBuilder, CommentEntity comment, int level, boolean root) {
+    private void parser(StringBuilder htmlBuilder, CommentDto comment, int level, boolean root) {
         if (!root) {
             appendCommentHtml(htmlBuilder, comment, level);
         }
-        List<CommentEntity> replies = commentService.getReplies(comment.getId());
+        List<CommentDto> replies = commentMapper.toCommentDto(commentService.getReplies(comment.getId()));
         if (!replies.isEmpty()) {
-            for (CommentEntity reply : replies) {
+            for (CommentDto reply : replies) {
                 parser(htmlBuilder, reply, level + 1, false);
             }
         }
     }
 
-    private void appendCommentHtml(StringBuilder htmlBuilder, CommentEntity comment, int level) {
+    private void appendCommentHtml(StringBuilder htmlBuilder, CommentDto comment, int level) {
         htmlBuilder.append("<div class='comment-body row' style='margin-left:").append(level * 48).append("px'>")
                 .append("<div class='comment-author vcard col-sm-10'>")
                 .append("<img alt='' class='avatar' src='").append(comment.getAccountEntity().getAvatarPath()).append("' style='width: 85px; height: 85px; border-radius: 10%;'/>")
@@ -111,8 +117,8 @@ public class CommentRest {
                 .append("</div>");
     }
 
-    @GetMapping("/count")
-    public ResponseEntity<Integer> countComment() {
-        return ResponseEntity.ok(commentService.getAllComments().size());
+    @GetMapping("/count/{id}")
+    public ResponseEntity<Integer> countComment(@PathVariable(value = "id") Long id) {
+        return ResponseEntity.ok(commentService.getCommentsByBookId(id).size());
     }
 }
