@@ -1,4 +1,4 @@
-package com.fpt.swp391.group6.DigitalTome.rest;
+package com.fpt.swp391.group6.DigitalTome.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

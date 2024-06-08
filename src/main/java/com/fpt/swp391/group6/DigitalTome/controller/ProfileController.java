@@ -1,4 +1,4 @@
-package com.fpt.swp391.group6.DigitalTome.rest;
+package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.service.ProfileService;
@@ -6,6 +6,8 @@ import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
+
+import static com.fpt.swp391.group6.DigitalTome.service.UserService.DEFAULT_AVATAR_URL;
 
 @Controller
 public class ProfileController {
@@ -29,46 +29,54 @@ public class ProfileController {
     public ProfileController(ProfileService profileService, UserService userService) {
         this.profileService = profileService;
         this.userService = userService;
-
     }
 
-    //Hiện thị form Update Profile, đồng thời gửi 1 object profileDto để hiện thị thông tin nếu người dùng Update
     @GetMapping("/profile")
     public String formProfile(Model model, Principal principal) {
         String userName = principal.getName();
-        model.addAttribute("profileDto", profileService.findViewProfile(userName));
+        UserDto userProfile = profileService.findViewProfile(userName);
+        model.addAttribute("profileDto", userProfile);
         return "account/my-profile";
     }
 
+    @PostMapping("/profile")
+    public String profile(@Validated @ModelAttribute("profileDto") UserDto profileDto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "account/my-profile";
+        }
 
-    // Hiện thị thông tin người dùng sau khi họ Update Profile
-    @PostMapping("/profile") // Sau khi UPDATE Profile
-    public String profile(@ModelAttribute("profileDto") UserDto profileDto) {
+        String cleanedFullName = profileDto.getFullName().replaceAll("\\s+", " ").trim();
+        profileDto.setFullName(cleanedFullName);
+
+        String cleanedPhone = profileDto.getPhone().replaceAll("\\D+", "").trim();
+        profileDto.setPhone(cleanedPhone);
+
         profileService.updateProfile(profileDto);
         return "redirect:/profile";
     }
 
-
-    // Lưu ảnh từ 1 đường dẫn path khi người dùng cập nhập avatar
     @PostMapping("/profileUrl")
-    public String updateAvatar(@RequestParam("file") MultipartFile file, Principal principal) {
-        if (!file.isEmpty()) {
-            String fileName = "/user/images/avatar" + file.getOriginalFilename();
+    public String updateAvatar(@RequestParam("file") MultipartFile file,
+                               @RequestParam("action") String action,
+                               Principal principal) {
+        try {
+            if ("save".equals(action)) {
+                if (!file.isEmpty()) {
+                    String imageUrl = userService.uploadImage(file);
+                    userService.updateImage(imageUrl, principal.getName());
+                }
+            } else if ("remove".equals(action)) {
+                String imageUrl = userService.getImage(principal.getName());
+                userService.destroyImage(imageUrl);
 
-            Path path = Paths.get("src/main/resources/static" + fileName);
-            try (OutputStream os = Files.newOutputStream(path)) {
-                os.write(file.getBytes());
-                userService.updateImage(fileName, principal.getName());
-            } catch (IOException e) {
-//                e.printStackTrace();
-                System.out.println("Failed to save file.");
+                userService.updateImage(DEFAULT_AVATAR_URL, principal.getName());
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return "redirect:/profile";
     }
 
-
-    // Thay đổi mật khẩu
     @GetMapping("changePassword")
     public String changePassword() {
         return "authentication/change-password";
@@ -79,8 +87,7 @@ public class ProfileController {
                                @RequestParam("new_password") String newPassword,
                                @RequestParam("confirm_password") String confirmPassword,
                                Principal principal,
-                               Model model
-    ) {
+                               Model model) {
         String username = principal.getName();
 
         if (!profileService.confirmPassword(username, oldPassword)) {
@@ -98,9 +105,7 @@ public class ProfileController {
             return "authentication/change-password";
         }
 
-
         profileService.newPassword(username, newPassword);
         return "redirect:/profile";
     }
-
 }

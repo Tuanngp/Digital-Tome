@@ -1,6 +1,5 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
-import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,58 +20,13 @@ public class EmailService {
     }
 
     @Async
-    public void sendHtmlEmail(String to, String code) throws MessagingException {
-        String htmlContent = "<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n" +
-                "    <title>Email Verification</title>\n" +
-                "    <!-- Bootstrap CSS -->\n" +
-                "    <link href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css\" rel=\"stylesheet\">\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "    <div class=\"container\">\n" +
-                "        <div class=\"row justify-content-center\">\n" +
-                "            <div class=\"col-md-6 mt-5\">\n" +
-                "                <div class=\"card\">\n" +
-                "                    <div class=\"card-body\">\n" +
-                "                        <p class=\"card-text\">Mã xác nhận của bạn là:  <b>"+code+"</b> </p>\n" +
-                "                    </div>\n" +
-                "                </div>\n" +
-                "            </div>\n" +
-                "        </div>\n" +
-                "    </div>\n" +
-                "</body>\n" +
-                "</html>";
+    public void sendEmail(String subject, String htmlContent, List<String> toList) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
+
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setTo(to);
-        helper.setSubject("Mã xác nhận");
+        helper.setTo(toList.toArray(new String[0]));
+        helper.setSubject(subject);
         helper.setText(htmlContent, true);
         mailSender.send(message);
     }
-
-    public void sendNewBookNotification(List<String> toList, String newBookName) throws MessagingException {
-        String subject = "New Books Available!";
-        StringBuilder messageContent = new StringBuilder("<html><body>");
-        messageContent.append("<h1>Dear User,</h1>")
-                .append("<p>The following new books are now available:</p>")
-                .append("<ul>")
-                .append("<li>").append(newBookName).append("</li>")
-                .append("</ul>")
-                .append("<p>Best regards,</p>")
-                .append("<p>Digital Tome Team</p>")
-                .append("</body></html>");
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setTo(toList.toArray(new String[toList.size()]));
-        helper.setSubject(subject);
-        helper.setText(messageContent.toString(), true);
-        mailSender.send(message);
-    }
-
 }
-
-

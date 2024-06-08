@@ -62,20 +62,20 @@
                         <li class="nav-item dropdown profile-dropdown  ms-4">
                             <a aria-expanded="false" class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);"
                                role="button">
-                                <img alt="/" th:src="@{../user/images/profile1.jpg}">
-                                <div class="profile-info">
+                                <img alt="/" th:src="${account != null && account.avatarPath != null ? account.avatarPath: '../user/images/avatar_default.png'}" />
+                                <div class="profile-info" th:if="${account != null}">
                                     <h6 class="title"></h6>
-                                    <span>info@gmail.com</span>
+                                    <span th:text="${account.email}">Email user</span>
                                 </div>
                             </a>
 
-                            <div class="dropdown-menu py-0 dropdown-menu-end">
-                                <div class="dropdown-header">
-                                    <h6 class="m-0">Brian</h6>
-                                    <span>info@gmail.com</span>
+                            <div class="dropdown-menu py-0 dropdown-menu-end" style="min-width: 270px">
+                                <div class="dropdown-header" th:if="${account != null}">
+                                    <h6 class="m-0" th:text="${account.fullname}">Name</h6>
                                 </div>
 
                                 <div class="dropdown-body">
+
                                     <a class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
                                        th:href="@{/profile}">
                                         <div>
@@ -109,11 +109,43 @@
                                             <span class="ms-2">Wishlist</span>
                                         </div>
                                     </a>
+
+
+                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_PUBLISHER')}"
+                                        class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                        th:href="@{/add}">
+                                        <div>
+                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
+                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                            </svg>
+                                            <span class="ms-2">Add Book</span>
+                                        </div>
+                                    </a>
+
+
+                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
+                                        class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                        th:href="@{/buypoint}">
+                                        <div>
+                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
+                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                            </svg>
+                                            <span class="ms-2" th:if="${account != null}">Buy Point
+                                                 <span th:text="${account.point}"></span>
+                                            </span>
+                                        </div>
+
+                                    </a>
+
                                 </div>
-                                <div class="dropdown-footer">
+                                <div class="dropdown-footer" th:if="${account == null}">
                                     <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{login}">Login</a>
                                 </div>
-                                <div class="dropdown-footer">
+                                <div class="dropdown-footer" th:unless="${account == null}">
                                     <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{logout}">Log out</a>
                                 </div>
                             </div>
@@ -192,48 +224,11 @@
                         </div>
                     </form>
                     <ul class="nav navbar-nav">
-                        <li class="sub-menu-down"><a href="javascript:void(0);"><span>Home</span></a>
-                            <ul class="sub-menu">
-                                <li><a th:href="@{/}">Home 1</a></li>
-                                <li><a th:href="@{/home}">Home 2</a></li>
-                            </ul>
-                        </li>
+                        <li><a th:href="@{/}"><span>Home</span></a></li>
                         <li><a th:href="@{about-us}"><span>About Us</span></a></li>
-                        <li class="sub-menu-down"><a href="javascript:void(0);"><span>Pages</span></a>
-                            <ul class="sub-menu">
-                                <li><a th:href="@{../my-profile}">My Profile</a></li>
-                                <li><a th:href="@{services}">Services</a></li>
-                                <li><a th:href="@{faq}">FAQ's</a></li>
-                                <li><a th:href="@{help-desk}">Help Desk</a></li>
-                                <li><a th:href="@{coming-soon}">Coming Soon</a></li>
-                                <li><a th:href="@{pricing}">Pricing</a></li>
-                                <li><a th:href="@{privacy-policy}">Privacy Policy</a></li>
-                                <li><a th:href="@{under-construction}">Under Construction</a></li>
-                                <li><a th:href="@{error-404}">Error 404</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu-down"><a href="javascript:void(0);"><span>Shop</span></a>
-                            <ul class="sub-menu">
-                                <li><a th:href="@{books-grid-view}">Shop Grid</a></li>
-                                <li><a th:href="@{books-grid-view-sidebar}">Shop Grid Sidebar</a></li>
-                                <li><a th:href="@{books-list}">Shop List</a></li>
-                                <li><a th:href="@{books-list-view-sidebar}">Shop List Sidebar</a></li>
-                                <li><a th:href="@{books-detail}">Shop Detail</a></li>
-                                <li><a th:href="@{shop-cart}">Cart</a></li>
-                                <li><a th:href="@{shop-checkout}">Checkout</a></li>
-                                <li><a th:href="@{wishlist}">Wishlist</a></li>
-                                <li><a th:href="@{login}">Login</a></li>
-                                <li><a th:href="@{register}">Registration</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu-down"><a href="javascript:void(0);"><span>Blog</span></a>
-                            <ul class="sub-menu">
-                                <li><a th:href="@{blog-grid}">Blog Grid</a></li>
-                                <li><a th:href="@{blog-large-sidebar}">Blog Large Sidebar</a></li>
-                                <li><a th:href="@{blog-list-sidebar}">Blog List Sidebar</a></li>
-                                <li><a th:href="@{blog-detail}">Blog Details</a></li>
-                            </ul>
-                        </li>
+                        <li><a th:href="@{books-list-view-sidebar}"><span>Bookshelves</span></a></li>
+                        <li><a th:href="@{blog-list-sidebar}"><span>Blog</span></a></li>
+<!--                        <li><a th:href="@{pricing}"><span>Pricing</span></a></li>-->
                         <li><a th:href="@{contact-us}"><span>Contact Us</span></a></li>
                     </ul>
                     <div class="dz-social-icon">

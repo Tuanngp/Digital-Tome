@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
-<head th:replace="fragmets/head :: head"></head>
+<head th:replace="~{layout/head :: head}"></head>
 <!--    <meta charset="UTF-8">-->
     <title>Paypal Integration</title>
 
@@ -15,7 +15,7 @@
 <!--</head>-->
 <body>
 <div class="container">
-    <div th:replace="~{fragmets/header :: header}"></div>
+    <div th:replace="~{layout/header :: header}"></div>
     <h1 class="text-center mt-5">Paypal Payment Integration</h1>
     <form method="post" action="/payment/create" class="mt-5 card p-3">
         <div class="mb-3">
@@ -50,7 +50,7 @@
             </button>
         </div>
     </form>
-    <div th:replace="~{fragmets/footer :: footer}"></div>
+    <div th:replace="~{layout/footer :: footer}"></div>
 </div>
 
 </body>

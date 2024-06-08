@@ -97,7 +97,7 @@ public class BookEntity extends BaseEntity {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private List<Author> authorEntityList;
+    private List<AuthorEntity> authorEntityList;
 
     @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
     private int isNew;

@@ -32,22 +32,13 @@ public class CommentEntity extends BaseEntity
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "account_id")
+    @JsonBackReference
     private AccountEntity accountEntity;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
+    @JsonBackReference
     private BookEntity bookEntity;
-
-    @Override
-    public String toString() {
-        return "CommentEntity{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", parentCommentId=" + parentCommentId +
-                ", accountEntity=" + accountEntity +
-                ", bookEntity=" + bookEntity +
-                '}';
-    }
 }

@@ -29,5 +29,7 @@ public class RegisterDto
     @NotEmpty(message = "Password should not be empty")
     private String password;
 
+    private String avatarPath;
+
 }
 

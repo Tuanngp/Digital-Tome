@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragmets/head :: head"></head>
+<head th:replace="~{layout/head :: head}"><title>Login</title></head>
 
 <body>
 <div class="page-wraper">
-    <div id="loading-area" class="preloader-wrapper-1">
+    <div id="loading-area" class="preloader-wrapper-Login">
         <div class="preloader-inner">
             <div class="preloader-shade"></div>
             <div class="preloader-wrap"></div>
@@ -16,7 +16,7 @@
         </div>
     </div>
     <!-- Header -->
-    <div th:replace="~{fragmets/header :: header}"></div>
+    <div th:replace="~{layout/header :: header}"></div>
     <!-- Header End -->
 
     <div class="page-content">
@@ -94,16 +94,11 @@
     </div>
 
     <!-- Footer -->
-    <div th:replace="~{fragmets/footer :: footer}"></div>
+    <div th:replace="~{layout/footer :: footer}"></div>
     <!-- Footer End -->
 
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
-
-<!-- JAVASCRIPT FILES ========================================= -->
-<div th:replace="~{fragmets/script :: script}"></div>
-
-
 </body>
 
 </html>

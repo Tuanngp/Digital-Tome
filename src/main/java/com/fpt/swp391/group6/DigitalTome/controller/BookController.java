@@ -1,7 +1,7 @@
-package com.fpt.swp391.group6.DigitalTome.rest;
+package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fpt.swp391.group6.DigitalTome.entity.Author;
+import com.fpt.swp391.group6.DigitalTome.entity.AuthorEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
 import com.fpt.swp391.group6.DigitalTome.service.AuthorService;
@@ -45,7 +45,7 @@ public class BookController {
 
     @GetMapping("/upload")
     public String showAddBookForm( Model model) {
-        List<Author> existingAuthors = authorService.getAllAuthors();
+        List<AuthorEntity> existingAuthors = authorService.getAllAuthors();
         model.addAttribute("book", new BookEntity());
         model.addAttribute("authors", existingAuthors);
         return "books-upload";
@@ -76,10 +76,10 @@ public class BookController {
         if (!image.isEmpty() && !bookP.isEmpty()) {
             try {
                 // Upload image to Cloudinary
-                String imageUrl = ImageUtils.uploadImage(image);
+                String imageUrl = ImageUtils.uploadImage(image,"image/books/");
 
                 // Upload book to Cloudinary
-                String bookUrl = BookUtils.uploadBook(bookP);
+                String bookUrl = BookUtils.uploadBook(bookP,"books/");
 
                 // Đặt đường dẫn vào thuộc tính coverBook
                 book.setBookCover(imageUrl);
@@ -97,18 +97,18 @@ public class BookController {
         }
 
         // Xử lý danh sách tác giả
-        List<Author> authors = new ArrayList<>();
+        List<AuthorEntity> authors = new ArrayList<>();
         String[] authorIdArray = authorIds.split(",");
         for (String authorId : authorIdArray) {
             if (authorId.startsWith("new-")) {
                 String authorName = authorId.substring(4);
-                Author newAuthor = new Author();
+                AuthorEntity newAuthor = new AuthorEntity();
                 newAuthor.setName(authorName);
                 newAuthor = authorService.save(newAuthor); // Lưu tác giả mới vào cơ sở dữ liệu
                 authors.add(newAuthor);
             } else {
                 Long id = Long.valueOf(authorId);
-                Optional<Author> authorOptional = authorService.findById(id);
+                Optional<AuthorEntity> authorOptional = authorService.findById(id);
                 authorOptional.ifPresent(authors::add);
             }
         }
@@ -133,7 +133,7 @@ public class BookController {
     public String showEditBookForm ( @PathVariable(value = "id") long id, Model model){
         List<CategoryEntity> categories = categoryService.getAllCategories();
         BookEntity book = bookService.getBookById(id);
-        List<Author> authors = book.getAuthorEntityList();
+        List<AuthorEntity> authors = book.getAuthorEntityList();
         model.addAttribute("authors", authors);
         model.addAttribute("categories", categories);
         model.addAttribute("book", book);
