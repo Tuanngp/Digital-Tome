@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-
     @GetMapping("/comments")
     public String comments() {
         return "comments";
@@ -94,6 +93,11 @@ public class HomeController {
     @GetMapping("/under-construction")
     public String underConstruction() {
         return "error/under-construction";
+    }
+
+    @GetMapping("/check-out")
+    public String home() {
+        return "shop-checkout";
     }
 
 }

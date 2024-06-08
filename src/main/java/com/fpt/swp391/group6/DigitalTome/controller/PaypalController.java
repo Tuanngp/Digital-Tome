@@ -76,7 +76,7 @@ public class PaypalController {
     ) {
         PaymentEntity paymentEntity = new PaymentEntity();
         String username = principal.getName();
-        AccountEntity accountEntity = userService.findUserByUsername(username);
+        AccountEntity accountEntity = userService.findByUsername(username);
 
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);

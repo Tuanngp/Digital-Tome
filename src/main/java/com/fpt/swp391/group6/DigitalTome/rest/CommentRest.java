@@ -5,6 +5,8 @@ import com.fpt.swp391.group6.DigitalTome.service.CommentService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -27,8 +29,12 @@ public class CommentRest {
     }
 
     @PostMapping
-    public ResponseEntity<CommentEntity> createComment(CommentEntity comment, Principal principal) {
-        comment.setAccountEntity(userService.findByUsername(principal.getName()));
+    public ResponseEntity<CommentEntity> createComment(@AuthenticationPrincipal OAuth2User OAuth, CommentEntity comment, Principal principal) {
+        if (principal == null) {
+            comment.setAccountEntity(userService.findByUsername(OAuth.getAttribute("email")));
+        } else {
+            comment.setAccountEntity(userService.findByUsername(principal.getName()));
+        }
         CommentEntity savedComment = commentService.saveComment(comment);
         return ResponseEntity.ok(savedComment);
     }

@@ -52,14 +52,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         AccountEntity account = userRepository.findByEmail(email);
         if (account == null) account = createUser(oAuth2User);
 
-
+        account.setAvatarPath("../user/images/avatar_default.png");
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         HttpSession session = request.getSession();
         session.setAttribute("user", account);
         session.setAttribute("role", authorities.stream().map(GrantedAuthority::getAuthority).toList());
-
 
         return new CustomOAuth2User(oAuth2User, authorities);
     }

@@ -7,6 +7,8 @@ import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,26 +40,12 @@ public class AuthController {
 
 
     @GetMapping(value = {"/","home", "index"})
-    public String defaultHome(Model model, Principal principal) {
-        if (principal != null) {
-            String username = principal.getName();
-            AccountEntity accountEntity = userService.findUserByUsername(username);
-            model.addAttribute("username", username);
-            if (accountEntity != null) {
-                model.addAttribute("points", accountEntity.getPoint());
-            } else {
-                model.addAttribute("points", 0);
-            }
-        }
-        return "landing-page/index";
-    }
-
+    public String defaultHome() { return "landing-page/index"; }
 
     @GetMapping("/login")
     public String loginForm() {
         return "authentication/shop-login";
     }
-
 
     @GetMapping("register")
     public String showRegistrationForm(Model model){
@@ -66,9 +54,7 @@ public class AuthController {
         return "authentication/shop-registration";
     }
 
-
-
-    @PostMapping("/register")
+    @PostMapping("/authenOtp")
     public String registerUser(@Valid @ModelAttribute("user") RegisterDto userDto,
                                BindingResult result,
                                Model model, RedirectAttributes redirectAttributes) {
@@ -103,15 +89,10 @@ public class AuthController {
         return "redirect:/otp";
     }
 
-
-
     @GetMapping("/otp")
     public String otp(){
         return "authentication/otp";
     }
-
-
-
 
     @PostMapping("/register/verify-otp")
     public String verifyOtp(@RequestParam("otp") String otp,
@@ -143,14 +124,10 @@ public class AuthController {
         }
     }
 
-
-
     @GetMapping("/forgotPassword")
     public String forgotPassword() {
         return "authentication/forgotPassword";
     }
-
-
 
     @PostMapping("/sendEmail")
     public String sendResetPasswordEmail(@RequestParam("email") String email, Model model){

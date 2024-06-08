@@ -1,13 +1,10 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fpt.swp391.group6.DigitalTome.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -98,7 +95,7 @@ public class BookEntity extends BaseEntity {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private List<AccountEntity> authorEntityList;
+    private List<AuthorEntity> authorEntityList;
 
     @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
     private int isNew;

@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    public static String DEFAULT_AVATAR_URL = "/user/images/profile1.jpg";
+    public static String DEFAULT_AVATAR_URL = "/user/images/avatar_default.jpg";
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
@@ -35,11 +35,6 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-    public AccountEntity findUserByUsername(String username){
-        return userRepository.findByUsername(username);
-    }
-
     public void saveUser(RegisterDto registerDto) {
         if (userRepository.existsByUsername(registerDto.getUsername())) {
             throw new RuntimeException("User exists");

@@ -1,5 +1,5 @@
 <!-- Header -->
-<header class="site-header mo-left header style-1" th:fragment="head" xmlns:sec="http://www.w3.org/1999/xhtml">
+<header class="site-header mo-left header style-1" th:fragment="head">
     <!-- Main Header -->
     <div class="header-info-bar">
         <div class="container clearfix">
@@ -228,48 +228,11 @@
                         </div>
                     </form>
                     <ul class="nav navbar-nav">
-                        <li class="sub-menu-down"><a href="javascript:void(0);"><span>Home</span></a>
-                            <ul class="sub-menu">
-                                <li><a th:href="@{/}">Home 1</a></li>
-                                <li><a th:href="@{/home}">Home 2</a></li>
-                            </ul>
-                        </li>
+                        <li><a th:href="@{/}"><span>Home</span></a></li>
                         <li><a th:href="@{about-us}"><span>About Us</span></a></li>
-                        <li class="sub-menu-down"><a href="javascript:void(0);"><span>Pages</span></a>
-                            <ul class="sub-menu">
-                                <li><a th:href="@{../my-profile}">My Profile</a></li>
-                                <li><a th:href="@{services}">Services</a></li>
-                                <li><a th:href="@{faq}">FAQ's</a></li>
-                                <li><a th:href="@{help-desk}">Help Desk</a></li>
-                                <li><a th:href="@{coming-soon}">Coming Soon</a></li>
-                                <li><a th:href="@{pricing}">Pricing</a></li>
-                                <li><a th:href="@{privacy-policy}">Privacy Policy</a></li>
-                                <li><a th:href="@{under-construction}">Under Construction</a></li>
-                                <li><a th:href="@{error-404}">Error 404</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu-down"><a href="javascript:void(0);"><span>Shop</span></a>
-                            <ul class="sub-menu">
-                                <li><a th:href="@{books-grid-view}">Shop Grid</a></li>
-                                <li><a th:href="@{books-grid-view-sidebar}">Shop Grid Sidebar</a></li>
-                                <li><a th:href="@{books-list}">Shop List</a></li>
-                                <li><a th:href="@{books-list-view-sidebar}">Shop List Sidebar</a></li>
-                                <li><a th:href="@{books-detail}">Shop Detail</a></li>
-                                <li><a th:href="@{shop-cart}">Cart</a></li>
-                                <li><a th:href="@{shop-checkout}">Checkout</a></li>
-                                <li><a th:href="@{wishlist}">Wishlist</a></li>
-                                <li><a th:href="@{login}">Login</a></li>
-                                <li><a th:href="@{register}">Registration</a></li>
-                            </ul>
-                        </li>
-                        <li class="sub-menu-down"><a href="javascript:void(0);"><span>Blog</span></a>
-                            <ul class="sub-menu">
-                                <li><a th:href="@{blog-grid}">Blog Grid</a></li>
-                                <li><a th:href="@{blog-large-sidebar}">Blog Large Sidebar</a></li>
-                                <li><a th:href="@{blog-list-sidebar}">Blog List Sidebar</a></li>
-                                <li><a th:href="@{blog-detail}">Blog Details</a></li>
-                            </ul>
-                        </li>
+                        <li><a th:href="@{books-list-view-sidebar}"><span>Bookshelves</span></a></li>
+                        <li><a th:href="@{blog-list-sidebar}"><span>Blog</span></a></li>
+<!--                        <li><a th:href="@{pricing}"><span>Pricing</span></a></li>-->
                         <li><a th:href="@{contact-us}"><span>Contact Us</span></a></li>
                     </ul>
                     <div class="dz-social-icon">
