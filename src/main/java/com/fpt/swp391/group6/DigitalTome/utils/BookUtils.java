@@ -19,10 +19,10 @@ public class BookUtils {
         this.cloudinary = cloudinary;
     }
 
-    public static String uploadBook(MultipartFile file) {
+    public static String uploadBook(MultipartFile file, String directoryName) {
         try {
             Map<String, String> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
-                    "folder", "student_management/books",
+                    "folder", "digital_tome/"+directoryName,
                     "use_filename", true,
                     "unique_filename", true,
                     "resource_type", "auto",
