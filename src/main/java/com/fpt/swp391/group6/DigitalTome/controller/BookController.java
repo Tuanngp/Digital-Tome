@@ -1,7 +1,14 @@
-package com.fpt.swp391.group6.DigitalTome.controller;
+package com.fpt.swp391.group6.DigitalTome.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fpt.swp391.group6.DigitalTome.entity.Author;
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
+import com.fpt.swp391.group6.DigitalTome.service.AuthorService;
 import com.fpt.swp391.group6.DigitalTome.service.BookService;
+import com.fpt.swp391.group6.DigitalTome.service.CategoryService;
+import com.fpt.swp391.group6.DigitalTome.utils.BookUtils;
+import com.fpt.swp391.group6.DigitalTome.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -9,18 +16,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BookController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private AuthorService authorService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/books-view")
     public String bookListView(Model model) {
@@ -32,90 +43,101 @@ public class BookController {
         return findPaginatedList(1, "id", "asc", model);
     }
 
-    @GetMapping("/add")
-    public String showAddBookForm(Model model) {
+    @GetMapping("/upload")
+    public String showAddBookForm( Model model) {
+        List<Author> existingAuthors = authorService.getAllAuthors();
         model.addAttribute("book", new BookEntity());
-        return "book-upload/update-book";
+        model.addAttribute("authors", existingAuthors);
+        return "books-upload";
     }
 
     @PostMapping("/save")
-    public String saveBook (@ModelAttribute("book") BookEntity book,
-            @RequestParam("image") MultipartFile image,
-            @RequestParam("bookP") MultipartFile bookP,
-            Model model){
-        System.out.println("ID cá»§a sÃ¡ch khi cáº­p nháº­t: " + book.getId());
+    public String saveBook(@ModelAttribute("book") BookEntity book,
+                           @RequestParam("image") MultipartFile image,
+                           @RequestParam("bookP") MultipartFile bookP,
+                           @RequestParam("authorIds") String authorIds,
+                           @RequestParam("categoryEntityList") List<Long> categoryIds,
+                           Model model) throws JsonProcessingException {
+        System.out.println("ID của sách khi cập nhật: " + book.getId());
         if (book.getId() != null) {
-
             BookEntity existingBook = bookService.findByIsbn(book.getIsbn());
             if (existingBook != null && !existingBook.getId().equals(book.getId())) {
-
-                model.addAttribute("error", "ISBN Ä‘Ã£ tá»“n táº¡i 1!");
-                return "update-book";
+                model.addAttribute("error", "ISBN đã tồn tại!");
+                return "book-upload/update-book";
             }
         } else {
-
             if (bookService.isISBNAlreadyExists(book.getIsbn())) {
-                model.addAttribute("error", "ISBN Ä‘Ã£ tá»“n táº¡i!");
-                return "new-book";
+                model.addAttribute("error", "ISBN đã tồn tại!");
+                return "books-upload";
             }
         }
 
-
+        // Lưu file ảnh và sách
         if (!image.isEmpty() && !bookP.isEmpty()) {
             try {
-                String fileImage = image.getOriginalFilename();
-                String imageDir = "Digital-Tome-master/src/main/resources/static/images/books/grid/";
+                // Upload image to Cloudinary
+                String imageUrl = ImageUtils.uploadImage(image);
 
+                // Upload book to Cloudinary
+                String bookUrl = BookUtils.uploadBook(bookP);
 
-                String fileBook = bookP.getOriginalFilename();
-                String bookDir = "books/";
+                // Đặt đường dẫn vào thuộc tính coverBook
+                book.setBookCover(imageUrl);
 
-
-                File imageDirFile = new File(imageDir);
-                if (!imageDirFile.exists()) {
-                    imageDirFile.mkdirs();
-                }
-
-
-                File bookDirFile = new File(bookDir);
-                if (!bookDirFile.exists()) {
-                    bookDirFile.mkdirs();
-                }
-
-
-                Path filePathImage = Paths.get(imageDir, fileImage);
-                Files.write(filePathImage, image.getBytes());
-
-
-                Path filePathBook = Paths.get(bookDir, fileBook);
-                Files.write(filePathBook, bookP.getBytes());
-
-
-                String relativeImagePath = "../images/books/grid/" + fileImage;
-                book.setBookCover(relativeImagePath);
-
-
-                String relativeBookPath = bookDir + fileBook;
-                book.setBookPath(relativeBookPath);
-            } catch (IOException e) {
+                // Đặt đường dẫn vào thuộc tính bookPath
+                book.setBookPath(bookUrl);
+            } catch (RuntimeException e) {
                 e.printStackTrace();
-                model.addAttribute("error", "ÄÃ£ xáº£y ra lá»—i khi lÆ°u sÃ¡ch!");
-                return "new-book";
+                model.addAttribute("error", "Đã xảy ra lỗi khi lưu sách!");
+                return "books-upload";
             }
         } else {
-            model.addAttribute("error", "Vui lÃ²ng chá»n file Ä‘á»ƒ upload!");
-            return "new-book";
+            model.addAttribute("error", "Vui lòng chọn file để upload!");
+            return "books-upload";
         }
 
+        // Xử lý danh sách tác giả
+        List<Author> authors = new ArrayList<>();
+        String[] authorIdArray = authorIds.split(",");
+        for (String authorId : authorIdArray) {
+            if (authorId.startsWith("new-")) {
+                String authorName = authorId.substring(4);
+                Author newAuthor = new Author();
+                newAuthor.setName(authorName);
+                newAuthor = authorService.save(newAuthor); // Lưu tác giả mới vào cơ sở dữ liệu
+                authors.add(newAuthor);
+            } else {
+                Long id = Long.valueOf(authorId);
+                Optional<Author> authorOptional = authorService.findById(id);
+                authorOptional.ifPresent(authors::add);
+            }
+        }
+        book.setAuthorEntityList(authors);
+
+        List<CategoryEntity> categories = new ArrayList<>();
+        for (Long categoryId : categoryIds) {
+            Optional<CategoryEntity> categoryOptional = categoryService.findById(categoryId);
+            categoryOptional.ifPresent(categories::add);
+        }
+        book.setCategoryEntityList(categories);
+
+        // Lưu sách
         bookService.saveBook(book);
         return "redirect:/books-manage";
     }
 
+
+
+
     @GetMapping("/update/{id}")
     public String showEditBookForm ( @PathVariable(value = "id") long id, Model model){
+        List<CategoryEntity> categories = categoryService.getAllCategories();
         BookEntity book = bookService.getBookById(id);
+        List<Author> authors = book.getAuthorEntityList();
+        model.addAttribute("authors", authors);
+        model.addAttribute("categories", categories);
         model.addAttribute("book", book);
-        return "update-book";
+        return "book-upload/update-book";
     }
 
 
@@ -167,7 +189,7 @@ public class BookController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("listBooks", listBooks);
-        return "books-list";
+        return "books-manage";
     }
 }
 
