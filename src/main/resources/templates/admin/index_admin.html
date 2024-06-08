@@ -39,7 +39,7 @@
         Nav header start
     ***********************************-->
         <div class="nav-header">
-            <a href="landing-page/index.html" class="brand-logo">
+            <a href="../landing-page/index.html" class="brand-logo">
                 <svg class="logo-abbr" width="51" height="51" viewBox="0 0 51 51" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path class="logo-react"
@@ -971,7 +971,7 @@
                                                     <i class="fas fa-moon moon"></i>
                                                 </div>
                                             </div>
-                                            <a href="authentication/shop-login.html" class="ai-icon">
+                                            <a href="../authentication/shop-login.html" class="ai-icon">
                                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path
@@ -1023,8 +1023,8 @@
                         <ul aria-expanded="false">
                             <li class="mini-dashboard">Dashboard</li>
                             <li><a th:href="@{/index}">Home</a></li>
-                            <li><a href="landing-page/index.html">Dashboard Light</a></li>
-                            <li><a href="landing-page/index-2.html">Dashboard Dark</a></li>
+                            <li><a href="../landing-page/index.html">Dashboard Light</a></li>
+                            <li><a href="../index-2.html">Dashboard Dark</a></li>
                             <li><a href="index-3.html">Dashboard 3</a></li>
                             <li><a href="index-4.html">Dashboard 4</a></li>
                             <li><a href="crm.html">CRM</a></li>
@@ -1102,17 +1102,10 @@
                         <span class="nav-text">Apps</span>
                     </a>
                         <ul aria-expanded="false">
-                            <li class="mini-dashboard">Users Manager</li>
-                            <li><a href="chat.html">Chat</a></li>
-                            <li><a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Users Manager</a>
-                                <ul aria-expanded="false">
+                            <ul aria-expanded="false">
+                                <li><a href="/manager">Users Manager</a></li>
+                            </ul>
 
-                                    <li><a href="app-profile-1.html">Profile 1</a></li>
-                                    <li><a href="app-profile-2.html">Profile 2</a></li>
-                                    <li><a href="edit-profile.html">Edit Profile</a></li>
-                                    <li><a href="post-details.html">Post Details</a></li>
-                                </ul>
-                            </li>
                             <li><a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Email</a>
                                 <ul aria-expanded="false">
                                     <li><a href="email-compose.html">Compose</a></li>
@@ -3105,7 +3098,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel-1">Add To Do Items</h5>
+                        <h5 class="modal-title" id="exampleModalLabel-2">Add To Do Items</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <i class="fa-solid fa-xmark"></i></button>
                     </div>
@@ -3131,30 +3124,9 @@
     ***********************************-->
 
 
-        <!--**********************************
-        Footer start
-    ***********************************-->
-        <!--**********************************
-        Footer end
-    ***********************************-->
-
-        <!--**********************************
-       Support ticket button start
-    ***********************************-->
-
-        <!--**********************************
-       Support ticket button end
-    ***********************************-->
-
 
     </div>
-    <!--**********************************
-    Main wrapper end
-***********************************-->
 
-    <!--**********************************
-    Scripts
-***********************************-->
     <!-- Required vendors -->
     <script src="/admin/vendor/global/global.min.js"></script>
     <script src="/admin/vendor/chart.js/Chart.bundle.min.js"></script>

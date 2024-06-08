@@ -50,7 +50,7 @@ public class BookController {
             if (existingBook != null && !existingBook.getId().equals(book.getId())) {
 
                 model.addAttribute("error", "ISBN Ä‘Ã£ tá»“n táº¡i 1!");
-                return "update-book";
+                return "book-upload/update-book";
             }
         } else {
 
@@ -64,7 +64,7 @@ public class BookController {
         if (!image.isEmpty() && !bookP.isEmpty()) {
             try {
                 String fileImage = image.getOriginalFilename();
-                String imageDir = "Digital-Tome-master/src/main/resources/static/images/books/grid/";
+                String imageDir = "Digital-Tome-master/src/main/resources/static/user/images/books/grid/";
 
 
                 String fileBook = bookP.getOriginalFilename();
@@ -91,7 +91,7 @@ public class BookController {
                 Files.write(filePathBook, bookP.getBytes());
 
 
-                String relativeImagePath = "../images/books/grid/" + fileImage;
+                String relativeImagePath = "../user/images/books/grid/" + fileImage;
                 book.setBookCover(relativeImagePath);
 
 
@@ -115,7 +115,7 @@ public class BookController {
     public String showEditBookForm ( @PathVariable(value = "id") long id, Model model){
         BookEntity book = bookService.getBookById(id);
         model.addAttribute("book", book);
-        return "update-book";
+        return "book-upload/update-book";
     }
 
 
@@ -145,7 +145,7 @@ public class BookController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("listBooks", listBooks);
-        return "books-grid-view";
+        return "book-view/books-grid-view";
     }
 
     @GetMapping("/books-manage/{pageNo}")
@@ -167,7 +167,7 @@ public class BookController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("listBooks", listBooks);
-        return "books-list";
+        return "book-view/books-list";
     }
 }
 

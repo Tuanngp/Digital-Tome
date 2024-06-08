@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static com.fpt.swp391.group6.DigitalTome.controller.ProfileController.DEFAULT_AVATAR_URL;
-
 @Service
 public class UserService {
 
@@ -51,7 +49,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         user.setAvatarPath(DEFAULT_AVATAR_URL);
 
-        RoleEntity role = roleRepository.findByName("ROLE_USER");
+        RoleEntity role = roleRepository.findByName("ROLE_PUBLISHER");
         if (role == null) {
             role = checkRoleExist();
         }
@@ -62,7 +60,7 @@ public class UserService {
 
     private RoleEntity checkRoleExist() {
         RoleEntity role = new RoleEntity();
-        role.setName("ROLE_USER");
+        role.setName("ROLE_PUBLISHER");
         return roleRepository.save(role);
     }
 
@@ -80,6 +78,11 @@ public class UserService {
 
     public AccountEntity findByUsername(String username){
         return userRepository.findByUsername(username);
+    }
+
+    public String getUserEmailById(Long userId) {
+        AccountEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getEmail();
     }
 
 

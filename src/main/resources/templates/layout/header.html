@@ -126,6 +126,20 @@
                                     </a>
 
 
+                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_ADMIN')}"
+                                        class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                        th:href="@{/admin}">
+                                        <div>
+                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
+                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M0 0h24v24H0V0z" fill="none"/>
+                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                            </svg>
+                                            <span class="ms-2">Admin</span>
+                                        </div>
+                                    </a>
+
+
                                     <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
                                         class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
                                         th:href="@{/buypoint}">
@@ -140,7 +154,6 @@
                                                  <span th:text="${points}"></span>
                                             </span>
                                         </div>
-
                                     </a>
 
                                 </div>
@@ -162,29 +175,14 @@
 
             <!-- header search nav -->
             <div class="header-search-nav">
-                <form class="header-item-search">
+                <form class="header-item-search" action="/search" method="GET" onsubmit="searchBooks(event)">
                     <div class="input-group search-input">
-                        <label>
-                            <select class="default-select">
-                                <option>Category</option>
-                                <option>Photography</option>
-                                <option>Arts</option>
-                                <option>Adventure</option>
-                                <option>Action</option>
-                                <option>Games</option>
-                                <option>Movies</option>
-                                <option>Comics</option>
-                                <option>Biographies</option>
-                                <option>Children’s Books</option>
-                                <option>Historical</option>
-                                <option>Contemporary</option>
-                                <option>Classics</option>
-                                <option>Education</option>
-                            </select>
-                        </label>
-                        <input aria-label="Text input with dropdown button" class="form-control" placeholder="Search Books Here"
-                               type="text">
-                        <button class="btn" type="button"><i class="flaticon-loupe"></i></button>
+                        <select class="default-select" name="searchBy" id="searchBy">
+                            <option value="title">Title</option>
+                            <option value="content">Content</option>
+                        </select>
+                        <input aria-label="Text input with dropdown button" class="form-control" name="keyword" id="searchKeyword" placeholder="Search Books Here" type="text">
+                        <button class="btn" type="submit"><i class="flaticon-loupe"></i></button>
                     </div>
                 </form>
             </div>

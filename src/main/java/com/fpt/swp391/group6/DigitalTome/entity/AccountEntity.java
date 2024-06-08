@@ -37,7 +37,6 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @Column(name = "fullname", length = 50)
     private String fullname;
 
-    // Trong AccountEntity
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;

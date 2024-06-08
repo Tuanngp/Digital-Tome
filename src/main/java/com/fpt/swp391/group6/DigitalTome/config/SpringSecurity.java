@@ -17,7 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    private static final String[] PUBLIC_ENDPOINT = {"/", "/index", "/home", "/register", "/forgotPassword"};
+    private static final String[] PUBLIC_ENDPOINT = {"/**", "/index", "/home", "/register", "/forgotPassword", "/books-list"};
 
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -35,29 +35,26 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
-                        .requestMatchers("/publisher/**").hasRole("PUBLISHER")
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
-                        .requestMatchers("/profile/**").authenticated()
-                        .requestMatchers("/buypoint/**").authenticated()
-<<<<<<< HEAD
-                        .requestMatchers("/api/**").authenticated()
-                        .requestMatchers("/**").permitAll()
-=======
-                        .requestMatchers("/changePassword").authenticated()
-//                        .requestMatchers("/api/comments").authenticated()
-                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
->>>>>>> 8d11a83 (update gender)
+                                .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
+                                .requestMatchers("/publisher/**").hasAnyRole("PUBLISHER", "ADMIN")
+                                .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                                .requestMatchers("/profile/**").authenticated()
+                                .requestMatchers("/buypoint/**").authenticated()
+                                .requestMatchers("/api/**").authenticated()
+                                .requestMatchers("/changePassword").authenticated()
+//                      .requestMatchers("/api/comments").authenticated()
+                                .requestMatchers(PUBLIC_ENDPOINT).permitAll()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .successHandler(new CustomAuthenticationSuccessHandler())
-                        .permitAll()
-                )
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .successHandler(new CustomAuthenticationSuccessHandler())
+                .permitAll()
+        )
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint

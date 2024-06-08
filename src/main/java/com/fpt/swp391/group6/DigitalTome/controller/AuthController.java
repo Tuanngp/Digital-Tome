@@ -1,15 +1,12 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.dto.RegisterDto;
-import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
-import com.fpt.swp391.group6.DigitalTome.service.ProfileService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +20,6 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.fpt.swp391.group6.DigitalTome.service.UserService.DEFAULT_AVATAR_URL;
 import static com.fpt.swp391.group6.DigitalTome.utils.UserUtils.generateToken;
 import static com.fpt.swp391.group6.DigitalTome.utils.UserUtils.isTokenExpired;
 
