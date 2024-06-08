@@ -26,7 +26,7 @@ public class ImageUtils {
                     "folder", "student_management/avatar",
                     "use_filename", true,
                     "unique_filename", true,
-                    "resource_type","auto"
+                    "resource_type","image"
             ));
             return  result.get("secure_url");
         }catch (IOException io){

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fpt.swp391.group6.DigitalTome.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
@@ -96,7 +97,7 @@ public class BookEntity extends BaseEntity {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private List<AccountEntity> authorEntityList;
+    private List<Author> authorEntityList;
 
     @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
     private int isNew;

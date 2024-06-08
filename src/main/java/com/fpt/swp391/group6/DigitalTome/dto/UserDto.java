@@ -17,7 +17,7 @@ public class UserDto {
     private String avatarPath;
     private String description;
     private long point;
-    private Integer isNotification;
+//    private Integer isNotification;
 
 //    private Date dateOfBirth;
 }
