@@ -60,7 +60,7 @@ public class SpringSecurity {
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
                                 .userService(customOAuth2UserService))
                         .defaultSuccessUrl("/")
-                        .failureUrl("/login?error")
+                        .failureUrl("/login")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")

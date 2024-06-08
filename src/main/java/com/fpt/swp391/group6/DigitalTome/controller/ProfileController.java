@@ -20,7 +20,7 @@ import java.security.Principal;
 @Controller
 public class ProfileController {
 
-    public static final String DEFAULT_AVATAR_URL = "/user/images/profile1.jpg";
+    public static final String DEFAULT_AVATAR_URL = "/user/images/avatar_default.png";
     private final ProfileService profileService;
     private final UserService userService;
 

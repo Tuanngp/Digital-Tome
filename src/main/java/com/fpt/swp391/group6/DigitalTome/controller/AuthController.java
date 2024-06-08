@@ -47,6 +47,28 @@ public class AuthController {
         return "authentication/shop-login";
     }
 
+
+    @PostMapping("/login")
+    public String checkLogin(@RequestParam("username") String email, @RequestParam("password") String password,
+                             Model model, RedirectAttributes redirectAttributes) {
+        AccountEntity user = userService.findByEmail(email);
+        if (user == null) {
+            redirectAttributes.addFlashAttribute("error", "Email does not exist.");
+            return "redirect:/login";
+        }
+        if (user.getStatus() == 1) {
+            redirectAttributes.addFlashAttribute("error", "Account is banned");
+            return "redirect:/login";
+        }
+        if (!userService.checkLogin(email, password)) {
+            redirectAttributes.addFlashAttribute("error", "Invalid password.");
+            return "redirect:/login";
+        }
+
+        return "redirect:/";
+    }
+
+
     @GetMapping("register")
     public String showRegistrationForm(Model model){
         RegisterDto user = new RegisterDto();
@@ -54,7 +76,7 @@ public class AuthController {
         return "authentication/shop-registration";
     }
 
-    @PostMapping("/authenOtp")
+    @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") RegisterDto userDto,
                                BindingResult result,
                                Model model, RedirectAttributes redirectAttributes) {

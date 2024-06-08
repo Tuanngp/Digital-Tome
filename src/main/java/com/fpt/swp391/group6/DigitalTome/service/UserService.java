@@ -59,6 +59,11 @@ public class UserService {
         return roleRepository.save(role);
     }
 
+    public boolean checkLogin(String email, String password){
+        AccountEntity user = userRepository.findByEmail(email);
+        return user != null && passwordEncoder.matches(password, user.getPassword());
+    }
+
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
