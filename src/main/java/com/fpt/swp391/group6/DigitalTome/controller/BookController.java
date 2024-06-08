@@ -1,4 +1,4 @@
-package com.fpt.swp391.group6.DigitalTome.controller;
+package com.fpt.swp391.group6.DigitalTome.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fpt.swp391.group6.DigitalTome.entity.AuthorEntity;
