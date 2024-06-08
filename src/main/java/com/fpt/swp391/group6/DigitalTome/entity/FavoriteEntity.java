@@ -1,9 +1,17 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "favorite")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class FavoriteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +28,4 @@ public class FavoriteEntity {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
     private BookEntity bookEntity;
-
-    public FavoriteEntity() {
-    }
 }

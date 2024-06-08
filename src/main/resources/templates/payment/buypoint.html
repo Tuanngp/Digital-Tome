@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recharge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/recharge/css/style.css">
+
+    <script>
+        function showConfirm(amount, points) {
+            document.getElementById('confirm-section').style.display = 'block';
+            document.getElementById('selected-product').innerText = `Point × ${points}`;
+            document.getElementById('selected-price').innerText = `${amount} USD`;
+            var inputElement = document.getElementById('amount');
+            inputElement.value = amount;
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="radio"] {
+            display: none;
+        }
+
+        .form-group input[type="radio"] + label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .form-group input[type="radio"]:checked + label {
+            background-color: #4CAF50;
+            color: #fff;
+            border-color: #4CAF50;
+        }
+
+        .form-group input[type="radio"] + label i {
+            margin-right: 10px;
+        }
+
+        .confirm {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .confirm button {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .confirm button:hover {
+            background-color: #45a049;
+        }
+
+        .transaction-details {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .transaction-details p {
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .transaction-details p strong {
+            margin-right: 10px;
+        }
+
+        .transaction-details p i {
+            margin-right: 10px;
+            color: #4CAF50;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>Nạp tiền</h1>
+    <form id="recharge-form" action="/payment/create" method="POST">
+        <div class="form-group">
+            <label for="amount50">Chọn mức nạp:</label>
+            <div>
+                <input type="radio" id="amount50" name="amount" value="50" onclick="showConfirm('50', '1')">
+                <label for="amount50">
+                    <span><i class="fas fa-dollar-sign"></i> 50 USD</span>
+                    <span><i class="fas fa-coins"></i> Point × 1</span>
+                </label>
+            </div>
+            <div>
+                <input type="radio" id="amount100" name="amount" value="100" onclick="showConfirm('100', '1')">
+                <label for="amount100">
+                    <span><i class="fas fa-dollar-sign"></i> 100 USD</span>
+                    <span><i class="fas fa-coins"></i> Point × 2</span>
+                </label>
+            </div>
+            <div>
+                <input type="radio" id="amount150" name="amount" value="150" onclick="showConfirm('150', '1')">
+                <label for="amount150">
+                    <span><i class="fas fa-dollar-sign"></i> 150 USD</span>
+                    <span><i class="fas fa-coins"></i> Point × 3</span>
+                </label>
+            </div>
+            <div>
+                <input type="radio" id="amount200" name="amount" value="200" onclick="showConfirm('200', '1')">
+                <label for="amount200">
+                    <span><i class="fas fa-dollar-sign"></i> 200 USD</span>
+                    <span><i class="fas fa-coins"></i> Point × 4</span>
+                </label>
+            </div>
+            <div>
+                <input type="radio" id="amount350" name="amount" value="350" onclick="showConfirm('350', '1')">
+                <label for="amount350">
+                    <span><i class="fas fa-dollar-sign"></i> 350 USD</span>
+                    <span><i class="fas fa-coins"></i> Point × 7</span>
+                </label>
+            </div>
+            <div>
+                <input type="radio" id="amount500" name="amount" value="500" onclick="showConfirm('500', '1')">
+                <label for="amount500">
+                    <span><i class="fas fa-dollar-sign"></i> 500 USD</span>
+                    <span><i class="fas fa-coins"></i> Point × 10</span>
+                </label>
+            </div>
+        </div>
+
+        <input type="hidden" name="method" value="Paypal">
+        <input type="hidden" name="currency" value="USD">
+        <input type="hidden" name="description" value="Buy point">
+
+        <div id="confirm-section" class="confirm" style="display: none;">
+            <div class="transaction-details">
+                <p><i class="fas fa-gift"></i> <strong>Sản phẩm được chọn:</strong> <span id="selected-product">Point × 1</span></p>
+                <p><i class="fas fa-money-bill-wave"></i> <strong>Giá:</strong> <span id="selected-price">50.00 USD</span></p>
+                <p><i class="fas fa-wallet"></i> <strong>Phương thức thanh toán:</strong> Paypal</p>
+                <p><i class="fas fa-user"></i> <strong>Tên tài khoản:</strong> <input type="text" name="usernameAccount" th:value="${#authentication.name}"></p>
+            </div>
+            <button type="submit">Xác nhận</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

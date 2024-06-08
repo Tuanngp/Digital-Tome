@@ -1,5 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.fpt.swp391.group6.DigitalTome.dto.RegisterDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
@@ -9,25 +11,30 @@ import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.utils.UserUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
+    public static String DEFAULT_AVATAR_URL = "/user/images/avatar_default.jpg";
+
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final Cloudinary cloudinary;
 
-    public UserService(PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserRepository userRepository, UserMapper userMapper) {
-        this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
+    public UserService(Cloudinary cloudinary, UserMapper userMapper, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.cloudinary = cloudinary;
         this.userMapper = userMapper;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
-
     public void saveUser(RegisterDto registerDto) {
         if (userRepository.existsByUsername(registerDto.getUsername())) {
             throw new RuntimeException("User exists");
@@ -35,8 +42,9 @@ public class UserService {
 
         AccountEntity user = userMapper.toUSer(registerDto);
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setAvatarPath(DEFAULT_AVATAR_URL);
 
-        RoleEntity role = roleRepository.findByName("ROLE_PUBLISHER");
+        RoleEntity role = roleRepository.findByName("ROLE_USER");
         if (role == null) {
             role = checkRoleExist();
         }
@@ -46,14 +54,9 @@ public class UserService {
 
     private RoleEntity checkRoleExist() {
         RoleEntity role = new RoleEntity();
-        role.setName("ROLE_PUBLISHER");
+        role.setName("ROLE_USER");
         return roleRepository.save(role);
     }
-
-    public AccountEntity findEmailAndPassword(String email, String password) {
-        return userRepository.findEmailAndPassword(email, password);
-    }
-
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
@@ -67,14 +70,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public AccountEntity findByUsername(String username) {
+    public AccountEntity findByUsername(String username){
         return userRepository.findByUsername(username);
     }
 
-    public List<RegisterDto> findAllUsers() {
-        List<AccountEntity> users = userRepository.findAll();
-        return userMapper.toUserDto(users);
-    }
 
     public String forgotPass(String email) {
         Optional<AccountEntity> userOptional = Optional.ofNullable(userRepository.findByEmail(email));
@@ -110,10 +109,55 @@ public class UserService {
     }
 
 
+    public String uploadImage(MultipartFile file) throws IOException {
+        try{
+            var result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
+                    "folder", "/avatar",
+                    "use_filename", true,
+                    "unique_filename", true,
+                    "resource_type","auto"
+            ));
+
+            return  result.get("secure_url").toString();
+        } catch (IOException io){
+            throw new RuntimeException("Image upload fail");
+        }
+    }
+
     public void updateImage(String url, String username) {
         AccountEntity user = userRepository.findByUsername(username);
-        user.setAvatarPath(url);
-        userRepository.save(user);
+        if (user != null) {
+            user.setAvatarPath(url);
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
+    public String getImage(String username){
+        AccountEntity account = userRepository.findByUsername(username);
+        if (account != null) {
+            return account.getAvatarPath();
+        }
+        return DEFAULT_AVATAR_URL;
+    }
+
+
+    public void destroyImage(String nameOfImage) {
+        try {
+            var result = cloudinary.uploader().destroy(nameOfImage, ObjectUtils.asMap(
+                    "folder", "/avatar",
+                    "resource_type", "image"
+            ));
+            System.out.println(result.get("result"));
+        } catch (IOException io) {
+            throw new RuntimeException("Image destroy failed", io);
+        }
+    }
+
+
+    public  void  updatePoint (AccountEntity accountEntity){
+        userRepository.save(accountEntity);
     }
 }
 
