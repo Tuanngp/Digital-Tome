@@ -1,11 +1,16 @@
 package com.fpt.swp391.group6.DigitalTome.rest;
 
 import com.fpt.swp391.group6.DigitalTome.dto.CommentDto;
+import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.CommentEntity;
 import com.fpt.swp391.group6.DigitalTome.mapper.CommentMapper;
+import com.fpt.swp391.group6.DigitalTome.service.BookService;
 import com.fpt.swp391.group6.DigitalTome.service.CommentService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -19,12 +24,14 @@ import java.util.List;
 public class CommentRest {
     private final UserService userService;
     private final CommentService commentService;
+    private final BookService bookService;
     private final CommentMapper commentMapper;
 
     @Autowired
-    public CommentRest(UserService userService, CommentService commentService, CommentMapper commentMapper) {
+    public CommentRest(UserService userService, CommentService commentService, BookService bookService, CommentMapper commentMapper) {
         this.userService = userService;
         this.commentService = commentService;
+        this.bookService = bookService;
         this.commentMapper = commentMapper;
     }
 
@@ -34,19 +41,23 @@ public class CommentRest {
         return ResponseEntity.ok(commentMapper.toCommentDto(comments));
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<List<CommentDto>> getNoteById(@PathVariable(value = "id") Long id) {
-//        List<CommentEntity> comment = commentService.getCommentsByBookId(id);
-//        return ResponseEntity.ok(commentMapper.toCommentDto(comment));
-//    }
+    @GetMapping("/count/{id}")
+    public ResponseEntity<Integer> countComment(@PathVariable(value = "id") Long id) {
+        return ResponseEntity.ok(commentService.getCommentsByBookId(id).size());
+    }
 
-    @PostMapping
-    public ResponseEntity<CommentEntity> createComment(@AuthenticationPrincipal OAuth2User OAuth, Principal principal, CommentDto comment) {
-        if (principal == null) {
-            comment.setAccountEntity(userService.findByUsername(OAuth.getAttribute("email")));
-        } else {
-            comment.setAccountEntity(userService.findByUsername(principal.getName()));
+    @PostMapping("/{bookId}")
+    public ResponseEntity<CommentEntity> createComment(@PathVariable Long bookId, CommentDto comment) {
+        AccountEntity account;
+        BookEntity book;
+        try {
+            account = userService.findById(comment.getAccountId());
+            book = bookService.getBookById(bookId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
+        comment.setAccountEntity(account);
+        comment.setBookEntity(book);
         CommentEntity savedComment = commentService.saveComment(commentMapper.toCommentEntity(comment));
         return ResponseEntity.ok(savedComment);
     }
@@ -63,17 +74,27 @@ public class CommentRest {
         return ResponseEntity.ok(comment);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{bookId}")
     @ResponseBody
-    public ResponseEntity<String> showComment(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<String> showComment(
+            @PathVariable(value = "bookId") Long bookId,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size
+    ) {
         StringBuilder htmlBuilder = new StringBuilder();
-        List<CommentDto> comments = commentMapper.toCommentDto(commentService.getCommentsByBookId(id));
-        for (CommentDto comment : comments) {
-            if (comment.getParentCommentId() == null) {
-                appendCommentHtml(htmlBuilder, comment, 0);
-                parser(htmlBuilder, comment, 0, true);
+        try {
+            Page<CommentEntity> pageComment = commentService.getCommentsByBookId(bookId, page, size);
+            List<CommentDto> comments = commentMapper.toCommentDto(pageComment.getContent());
+            for (CommentDto comment : comments) {
+                if (comment.getParentCommentId() == null) {
+                    appendCommentHtml(htmlBuilder, comment, 0);
+                    parser(htmlBuilder, comment, 0, true);
+                }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
+
         return ResponseEntity.ok(htmlBuilder.toString());
     }
 
@@ -115,10 +136,5 @@ public class CommentRest {
                 .append("</div>")
                 .append("<div class='reply-session'></div>")
                 .append("</div>");
-    }
-
-    @GetMapping("/count/{id}")
-    public ResponseEntity<Integer> countComment(@PathVariable(value = "id") Long id) {
-        return ResponseEntity.ok(commentService.getCommentsByBookId(id).size());
     }
 }

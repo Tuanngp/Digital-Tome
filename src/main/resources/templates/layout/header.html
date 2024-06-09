@@ -143,10 +143,10 @@
 
                                 </div>
                                 <div class="dropdown-footer" th:if="${account == null}">
-                                    <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{login}">Login</a>
+                                    <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{/login}">Login</a>
                                 </div>
                                 <div class="dropdown-footer" th:unless="${account == null}">
-                                    <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{logout}">Log out</a>
+                                    <a class="btn btn-primary w-100 btnhover btn-sm" th:href="@{/logout}">Log out</a>
                                 </div>
                             </div>
                         </li>

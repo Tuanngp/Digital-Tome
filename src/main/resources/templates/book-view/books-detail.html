@@ -2,6 +2,7 @@
 <html lang="en">
 <head th:replace="~{layout/head :: head}">
     <title>Home</title>
+
 </head>
 <body>
 <div class="page-wraper">
@@ -18,9 +19,9 @@
 
     <header th:replace="~{layout/header :: header}"></header>
 
-    <div class="page-content bg-grey">
+    <div class="page-content bg-grey" >
         <section class="content-inner-1">
-            <div class="container">
+            <div class="container" th:object="${book}">
                 <div class="row book-grid-row style-4 m-b60">
                     <div class="col">
                         <div class="dz-box">
@@ -123,7 +124,8 @@
                                                 <div class="form-group" style="margin: 12px 0">
                                                     <label for="content"></label>
                                                     <input class="form-control" id="content" name="content" placeholder="Enter Comment" required/>
-                                                    <input id="parentCommentId" name="parentCommentId" type="hidden" />
+                                                    <input th:if="${book!=null}" id="bookId" name="bookId" type="hidden" th:value="${book.id}">
+                                                    <input th:if="${account!=null}" id="accountId" name="accountId" type="hidden" th:value="${account.id}">                                                    <input id="parentCommentId" name="parentCommentId" type="hidden" />
                                                     <input id="commentId" name="commentId" type="hidden" />
                                                 </div>
                                                 <span id="message"></span>
@@ -135,6 +137,25 @@
                                             <ol class="comment-list">
                                                 <li class="comment even thread-even depth-1 comment">
                                                     <div id="showComments"></div>
+                                                    <div class="row page">
+                                                        <div class="col-md-6">
+                                                            <p class="page-text">Showing 12 from 50 data</p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <nav aria-label="Blog Pagination">
+                                                                <ul class="pagination style-1 p-t20">
+                                                                    <li class="page-item"><a class="page-link prev"
+                                                                                             href="javascript:void(0);">Prev</a></li>
+                                                                    <li class="page-item"><a class="page-link active"
+                                                                                             href="javascript:void(0);">1</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                                                    <li class="page-item"><a class="page-link next"
+                                                                                             href="javascript:void(0);">Next</a></li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                    </div>
                                                 </li>
                                             </ol>
                                         </div>

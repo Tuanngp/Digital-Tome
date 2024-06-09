@@ -126,9 +126,6 @@ public class BookController {
         return "redirect:/books-manage";
     }
 
-
-
-
     @GetMapping("/update/{id}")
     public String showEditBookForm ( @PathVariable(value = "id") long id, Model model){
         List<CategoryEntity> categories = categoryService.getAllCategories();
@@ -148,33 +145,33 @@ public class BookController {
     }
 
     @GetMapping("/books-view/{pageNo}")
-    public String findPaginated ( @PathVariable(value = "pageNo") int pageNo,
-    @RequestParam("sortField") String sortField,
-    @RequestParam("sortDir") String sortDir,
-    Model model){
-        int pageSize = 12;
+    public String findPaginated (   @PathVariable(value = "pageNo") int pageNo,
+                                    @RequestParam("sortField") String sortField,
+                                    @RequestParam("sortDir") String sortDir,
+                                    Model model){
+                                        int pageSize = 12;
 
-        Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<BookEntity> listBooks = page.getContent();
+                                        Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
+                                        List<BookEntity> listBooks = page.getContent();
 
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
+                                        model.addAttribute("pageSize", pageSize);
+                                        model.addAttribute("currentPage", pageNo);
+                                        model.addAttribute("totalPages", page.getTotalPages());
+                                        model.addAttribute("totalItems", page.getTotalElements());
 
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+                                        model.addAttribute("sortField", sortField);
+                                        model.addAttribute("sortDir", sortDir);
+                                        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
-        model.addAttribute("listBooks", listBooks);
-        return "books-grid-view";
-    }
+                                        model.addAttribute("listBooks", listBooks);
+                                        return "books-grid-view";
+                                    }
 
     @GetMapping("/books-manage/{pageNo}")
-    public String findPaginatedList ( @PathVariable(value = "pageNo") int pageNo,
-    @RequestParam("sortField") String sortField,
-    @RequestParam("sortDir") String sortDir,
-    Model model){
+    public String findPaginatedList (   @PathVariable(value = "pageNo") int pageNo,
+                                        @RequestParam("sortField") String sortField,
+                                        @RequestParam("sortDir") String sortDir,
+                                        Model model){
         int pageSize = 12;
 
         Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
@@ -191,5 +188,13 @@ public class BookController {
         model.addAttribute("listBooks", listBooks);
         return "books-manage";
     }
+
+    @GetMapping("/books/{id}")
+    public String showBookDetail(@PathVariable(value = "id") long id, Model model) {
+        BookEntity book = bookService.getBookById(id);
+        model.addAttribute("book", book);
+        return "book-view/books-detail";
+    }
+
 }
 
