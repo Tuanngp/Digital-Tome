@@ -36,7 +36,7 @@ public class ContentModeratorQuickstart {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
             while ((line = inputStream.readLine()) != null) {
-                if (line.length() > 0) {
+                if (!line.isEmpty()) {
                     textResults = client.textModerations().screenText("text/plain", line.getBytes(), null);
 //                    Uncomment below line to print in console
 //                    System.out.println(gson.toJson(textResults).toString());

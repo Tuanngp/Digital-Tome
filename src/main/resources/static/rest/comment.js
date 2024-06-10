@@ -61,6 +61,13 @@ $(document).ready(function () {
     //POST && PUT comment
     $('#commentForm').on('submit', function (event) {
         event.preventDefault();
+
+        if ( $('#accountId').length === 0) {
+            // Nếu chưa đăng nhập, hiển thị modal
+            $('#loginModal').modal('show');
+            return;
+        }
+
         const formData = $(this).serializeArray();
         const formDataObject = {};
         $.each(formData, function (i, v) {
@@ -85,23 +92,24 @@ $(document).ready(function () {
             $('#parentCommentId').val('');
             $('#commentId').val('');
             showComments(0);
-        }, function () {
+            toastr.success('Comment added successfully');
+        }, function (jqXHR) { // jqXHR is the first argument to the error callback
+            // Handle error
+            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                toastr.error(jqXHR.responseJSON.error);
+            } else {
+                toastr.error('Failed to comment');
+            }
         });
     });
 
-    //show reply-box
-    // $(document).on('click', '.reply', function () {
-    //     const thisClicked = $(this);
-    //     const parentCommentId = thisClicked.closest('.comment-body .reply').attr('id');
-    //     const replyBoxHtml = generateReplyBox('', parentCommentId, '', 'Post Reply');
-    //
-    //     $('.reply-session').html("");
-    //     thisClicked.closest('.comment-body').find('.reply-session').html(replyBoxHtml);
-    //     const replyName = $(this).closest('.comment-body').find('.comment-author').find('.fn').val();
-    //     $(this).closest('.comment-body').find('.reply-session').find('#content').attr('value', replyName);
-    //     $(this).closest('.comment-body').find('.reply-session').find('#content').focus();
-    // });
+    //show reply form
     $(document).on('click', '.reply', function () {
+        if ( $('#accountId').length === 0) {
+            // Nếu chưa đăng nhập, hiển thị modal
+            $('#loginModal').modal('show');
+            return;
+        }
         const thisClicked = $(this);
         const parentCommentId = thisClicked.closest('.comment-body').find('.reply').attr('id');
         const replyBoxHtml = generateReplyBox('', parentCommentId, '', 'Post Reply');
@@ -131,9 +139,17 @@ $(document).ready(function () {
 
         console.log(formDataObject);
 
-        sendAjaxRequest(`/api/comments/${bookId}`, "POST", formDataObject, function () {
+        sendAjaxRequest(`/api/comments/${bookId}`, "POST", formDataObject,
+            function () {
             showComments(currentPage);
-        }, function () {
+            toastr.success('Reply added successfully');
+        },
+            function () {
+            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                toastr.error(jqXHR.responseJSON.error);
+            } else {
+                toastr.error('Failed to reply comment');
+            }
         });
     });
 
@@ -157,9 +173,13 @@ $(document).ready(function () {
         console.log('Delete comment with ID:', commentId);
         sendAjaxRequest(`/api/comments/${commentId}`, "DELETE", null, function () {
             showComments(currentPage);
+            toastr.success('Comment deleted successfully');
         }, function () {
-            console.error('Failed to delete comment');
-
+            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                toastr.error(jqXHR.responseJSON.error);
+            } else {
+                toastr.error('Failed to delete comment');
+            }
         });
     });
 });

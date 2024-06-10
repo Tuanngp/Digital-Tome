@@ -1,24 +1,38 @@
 {
-  "originalText": "chửi thề tục tĩu bậy bạ đụ cút cặc địt đéo",
-  "normalizedText": "chửi thề tục tĩu bậy bạ đụ cút cặc địt đéo",
+  "originalText": "You are so lzay! Questions? email me at somename@microsoft.com or call me at 1(800)642-7676 You are so full of crap!",
+  "normalizedText": "You   lzay! Questions? email   somename@microsoft.com     1(800)642-7676 You     crap!",
   "status": {
     "code": 3000,
     "description": "OK"
   },
-  "language": "vie",
+  "pII": {
+    "email": [
+      {
+        "detected": "somename@microsoft.com",
+        "subType": "Regular",
+        "text": "somename@microsoft.com",
+        "index": 40
+      }
+    ],
+    "sSN": [],
+    "iPA": [],
+    "phone": [
+      {
+        "countryCode": "US",
+        "text": "1(800)642-7676",
+        "index": 77
+      }
+    ],
+    "address": []
+  },
+  "language": "eng",
   "terms": [
     {
-      "index": 24,
-      "originalIndex": 24,
+      "index": 81,
+      "originalIndex": 111,
       "listId": 0,
-      "term": "đụ"
-    },
-    {
-      "index": 31,
-      "originalIndex": 31,
-      "listId": 0,
-      "term": "cặc"
+      "term": "crap"
     }
   ],
-  "trackingId": "543132ac-5392-4691-8556-ac44b3b6fa66"
+  "trackingId": "f70b1519-27d3-4ec4-8076-60b252b2445a"
 }
