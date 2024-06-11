@@ -1,12 +1,8 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fpt.swp391.group6.DigitalTome.entity.AuthorEntity;
-import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
-import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
-import com.fpt.swp391.group6.DigitalTome.service.AuthorService;
-import com.fpt.swp391.group6.DigitalTome.service.BookService;
-import com.fpt.swp391.group6.DigitalTome.service.CategoryService;
+import com.fpt.swp391.group6.DigitalTome.entity.*;
+import com.fpt.swp391.group6.DigitalTome.service.*;
 import com.fpt.swp391.group6.DigitalTome.utils.BookUtils;
 import com.fpt.swp391.group6.DigitalTome.utils.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.security.Principal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,12 @@ public class BookController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private ContributionService contributionService;
+
     @GetMapping("/books-view")
     public String bookListView(Model model) {
         return findPaginated(1, "id", "asc", model);
@@ -44,7 +51,7 @@ public class BookController {
     }
 
     @GetMapping("/upload")
-    public String showAddBookForm( Model model) {
+    public String showAddBookForm(Model model) {
         List<AuthorEntity> existingAuthors = authorService.getAllAuthors();
         model.addAttribute("book", new BookEntity());
         model.addAttribute("authors", existingAuthors);
@@ -57,6 +64,8 @@ public class BookController {
                            @RequestParam("bookP") MultipartFile bookP,
                            @RequestParam("authorIds") String authorIds,
                            @RequestParam("categoryEntityList") List<Long> categoryIds,
+                           @RequestParam("pricing") double pricing,
+                           Principal principal,
                            Model model) throws JsonProcessingException {
 
         List<AuthorEntity> existingAuthors = authorService.getAllAuthors();
@@ -77,17 +86,25 @@ public class BookController {
                 return "books-upload";
             }
         }
+        // check publication_date
+        LocalDate currentDate = LocalDate.now();
+        Date publicationDate = book.getPublicationDate();
+        if (publicationDate != null) {
+            LocalDate localPublicationDate = Instant.ofEpochMilli(publicationDate.getTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            if (localPublicationDate.isAfter(currentDate)) {
+                model.addAttribute("error", "Ngày xuất bản phải nhỏ hơn ngày hiện tại!");
+                return "books-upload";
+            }
+        }
 
         // Lưu file ảnh và sách
         if (!image.isEmpty() && !bookP.isEmpty()) {
             try {
-                // Upload image to Cloudinary
-                String imageUrl = ImageUtils.uploadImage(image,"image/books/");
-                // Upload book to Cloudinary
-                String bookUrl = BookUtils.uploadBook(bookP,"books/");
-                // Đặt đường dẫn vào thuộc tính coverBook
+                String imageUrl = ImageUtils.uploadImage(image, "image/books/");
+                String bookUrl = BookUtils.uploadBook(bookP, "books/");
                 book.setBookCover(imageUrl);
-                // Đặt đường dẫn vào thuộc tính bookPath
                 book.setBookPath(bookUrl);
             } catch (RuntimeException e) {
                 e.printStackTrace();
@@ -117,6 +134,7 @@ public class BookController {
         }
         book.setAuthorEntityList(authors);
 
+        // Xử lý danh sách category
         List<CategoryEntity> categories = new ArrayList<>();
         for (Long categoryId : categoryIds) {
             Optional<CategoryEntity> categoryOptional = categoryService.findById(categoryId);
@@ -124,15 +142,33 @@ public class BookController {
         }
         book.setCategoryEntityList(categories);
 
+        // Xử lý cho ContributionEntity
+        AccountEntity accountEntity = accountService.findByUsername(principal.getName());
+//            Long accountId = accountEntity.getId();
+
+        ContributionEntity contribution = new ContributionEntity();
+//            contribution.setId(accountId);
+        contribution.setAccountEntity(accountEntity);
+        contribution.setBookEntity(book);
+        contribution.setBookCertificate("Book uploaded by " + principal.getName());
+
+        contributionService.saveContribution(contribution);
+
+        // pricing và set free
+        if (pricing == 0) {
+            book.setRestricted(false);
+        } else {
+            book.setRestricted(true);
+        }
+
         book.setStatus(1);
         bookService.saveBook(book);
         return "redirect:/books-manage";
     }
 
 
-
     @GetMapping("/update/{id}")
-    public String showEditBookForm ( @PathVariable(value = "id") long id, Model model){
+    public String showEditBookForm(@PathVariable(value = "id") long id, Model model) {
         List<CategoryEntity> categories = categoryService.getAllCategories();
         BookEntity book = bookService.getBookById(id);
         List<AuthorEntity> authors = book.getAuthorEntityList();
@@ -144,16 +180,16 @@ public class BookController {
 
 
     @GetMapping("/delete/{id}")
-    public String deleteBook ( @PathVariable(value = "id") long id){
+    public String deleteBook(@PathVariable(value = "id") long id) {
         this.bookService.deleteBookById(id);
         return "redirect:/books-manage";
     }
 
     @GetMapping("/books-view/{pageNo}")
-    public String findPaginated ( @PathVariable(value = "pageNo") int pageNo,
-    @RequestParam("sortField") String sortField,
-    @RequestParam("sortDir") String sortDir,
-    Model model){
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
         int pageSize = 12;
 
         Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
@@ -173,10 +209,10 @@ public class BookController {
     }
 
     @GetMapping("/books-manage/{pageNo}")
-    public String findPaginatedList ( @PathVariable(value = "pageNo") int pageNo,
-    @RequestParam("sortField") String sortField,
-    @RequestParam("sortDir") String sortDir,
-    Model model){
+    public String findPaginatedList(@PathVariable(value = "pageNo") int pageNo,
+                                    @RequestParam("sortField") String sortField,
+                                    @RequestParam("sortDir") String sortDir,
+                                    Model model) {
         int pageSize = 12;
 
         Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
