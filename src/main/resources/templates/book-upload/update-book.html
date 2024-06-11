@@ -1137,9 +1137,8 @@
                                                                 as currency on our website, allowing users to
                                                                 purchase books using points.</p>
                                                             <div class="input-group">
-                                                                <input type="number" class="form-control"
-                                                                       th:field="*{point}">
-                                                                <span class="input-group-text">poin</span>
+                                                                <input type="number" id="pricing" name="pricing" class="form-control" th:value="*{point}" required />
+                                                                <span class="input-group-text">point</span>
                                                             </div>
                                                         </div>
                                                     </div>
