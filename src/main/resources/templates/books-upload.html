@@ -1016,9 +1016,9 @@
                                                         <div class="col-lg-6 mb-2">
                                                             <div class="mb-3">
                                                                 <label class="text-label form-label">ISBN*</label>
-                                                                <input type="text" th:field="*{isbn}"
+                                                                <input type="number" th:field="*{isbn}"
                                                                        class="form-control"
-                                                                       placeholder="ISBN" required >
+                                                                       placeholder="ISBN" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6 mb-2">
@@ -1127,8 +1127,9 @@
                                                                 as currency on our website, allowing users to
                                                                 purchase books using points.</p>
                                                             <div class="input-group">
-                                                                <input type="number" id="pricing" name="pricing" class="form-control" th:value="*{point}" required />
-                                                                <span class="input-group-text">point</span>
+                                                                <input type="number" class="form-control"
+                                                                       th:field="*{point}">
+                                                                <span class="input-group-text">poin</span>
                                                             </div>
                                                         </div>
                                                     </div>
