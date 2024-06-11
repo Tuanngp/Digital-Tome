@@ -1,5 +1,6 @@
-package com.fpt.swp391.group6.DigitalTome.config;
+package com.fpt.swp391.group6.DigitalTome.service;
 
+import com.fpt.swp391.group6.DigitalTome.config.CustomOAuth2User;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
@@ -64,8 +65,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private AccountEntity createUser(OAuth2User oAuth2User) {
         AccountEntity account = new AccountEntity();
         account.setEmail(oAuth2User.getAttribute("email"));
-        account.setUsername(oAuth2User.getAttribute("name"));
-
+        account.setUsername(oAuth2User.getAttribute("email"));
+        account.setFullname(oAuth2User.getAttribute("name"));
         String password = UserUtils.generateToken();
 
         String encodePassword = passwordEncoder.encode(password);
