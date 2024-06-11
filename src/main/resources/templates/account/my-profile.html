@@ -31,9 +31,6 @@
         text-align: center; /* Center text inside buttons */
     }
 </style>
-
-
-</style>
 <body id="bg">
 <div class="page-wraper">
     <div class="preloader-wrapper-1" id="loading-area">
@@ -46,7 +43,7 @@
             <div class="preloader-wrap wrap5"></div>
         </div>
     </div>
-    <header th:replace="layout/header :: header"></header>
+    <header th:replace="~{layout/header :: header}"></header>
 
     <!-- Content -->
     <div class="page-content bg-white">
@@ -181,7 +178,7 @@
         </div>
     </div>
     <!-- Content END-->
-    <footer th:replace="layout/footer :: footer"></footer>
+    <footer th:replace="~{layout/footer :: footer}"></footer>
 
     <script type="text/javascript">
         function trimFullName() {

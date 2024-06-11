@@ -15,7 +15,8 @@
     </div>
     <div class="error-page overlay-secondary-dark" style="background-image: url(static/user/images/background/bg3.jpg);">
         <div class="error-inner text-center">
-            <div class="dz_error" data-text="404">404</div>
+            <div class="dz_error" th:data-text="${status}" th:text="${status}">Status</div>
+            <h2 class="error-head" th:text="${errorMessage}"></h2>
             <h2 class="error-head">We are sorry. But the page you are looking for cannot be found.</h2>
             <a class="btn btn-primary btn-border btnhover white-border" th:href="@{/index}">BACK TO HOMEPAGE</a>
         </div>

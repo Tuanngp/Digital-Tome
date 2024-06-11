@@ -5,27 +5,23 @@ import com.fpt.swp391.group6.DigitalTome.entity.CommentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CommentService {
+
     @Autowired
     private CommentRepository commentRepository;
 
-    public CommentEntity saveComment(CommentEntity comment) {
-        return commentRepository.save(comment);
+    public CommentEntity getCommentById(Long id) {
+        return commentRepository.findById(id).orElse(null);
     }
 
     public List<CommentEntity> getCommentsByBookId(Long bookId) {
         return commentRepository.findByBookEntityId(bookId);
-    }
-
-    public CommentEntity getById(Long id) {
-        return commentRepository.findById(id).orElse(null);
     }
 
     public List<CommentEntity> getReplies(Long parentCommentId) {
@@ -34,6 +30,10 @@ public class CommentService {
 
     public List<CommentEntity> getAllComments() {
         return commentRepository.findAll();
+    }
+
+    public CommentEntity saveComment(CommentEntity comment) {
+        return commentRepository.save(comment);
     }
 
     public CommentEntity updateComment(Long id, CommentEntity updatedComment) {
@@ -53,5 +53,9 @@ public class CommentService {
             deleteComment(child.getId());
         }
         commentRepository.deleteById(id);
+    }
+
+    public Page<CommentEntity> getCommentsByBookId(Long bookId, int page, int size) {
+        return commentRepository.findByBookEntityIdOrderByCreatedDateDesc(bookId, PageRequest.of(page, size));
     }
 }

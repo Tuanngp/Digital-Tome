@@ -1,93 +1,157 @@
-function showComments() {
+const bookId = $('#bookId').val();
+let currentPage = 0;
+let size = 5;
+
+function sendAjaxRequest(url, method, data, successCallback, errorCallback) {
     $.ajax({
-        //Get comment html code
-        url: `/api/comments/test`,
-        method: "GET",
-        success: function (response) {
-            $('#showComments').html(response);
-            getTotalComments()
-        }
-    })
+        url: url,
+        method: method,
+        data: data,
+        success: successCallback,
+        error: errorCallback
+    });
 }
 
-function getTotalComments() {
-    $.ajax({
-        url: `/api/comments/count`,
-        method: "GET",
-        success: function (response) {
-            $('#totalComments').text(response + ' COMMENTS');
+function showComments(page) {
+    currentPage = page;
+    sendAjaxRequest(`/api/comments/${bookId}?page=${page}`, "GET", null, function (response) {
+        $('#showComments').html(response);
+        getTotalComments(bookId).then(totalComments => {
+            $('#totalComments').text(totalComments + ' COMMENTS');
+            $('.page-text').text(`Showing ${ Math.min((currentPage + 1) * size, totalComments)} from ${totalComments} data`);
+            updatePaginationLinks(currentPage, Math.ceil(totalComments / size));
+        }).catch(error => {
+            console.error('Failed to get total comments:', error);
+        });
+    }, function () {
+        console.log('Failed to load comments');
+    });
+}
+
+function getTotalComments(bookId) {
+    return new Promise((resolve, reject) => {
+        sendAjaxRequest(`/api/comments/count/${bookId}`, "GET", null, function (response) {
+            resolve(response);
+        }, function (error) {
+            reject(error);
+        });
+    });
+}
+
+function updatePaginationLinks(currentPage, totalPages) {
+    let html = '';
+    if (currentPage+1 > 1) {
+        html += `<li class="page-item"><a class="page-link prev" href="javascript:showComments(${currentPage - 1});">Prev</a></li>`;
+    }
+    for (let i = 0; i < totalPages; i++) {
+        if (i === currentPage) {
+            html += `<li class="page-item"><a class="page-link active" href="javascript:void(0);">${i+1}</a></li>`;
+        } else {
+            html += `<li class="page-item"><a class="page-link" href="javascript:showComments(${i});">${i+1}</a></li>`;
         }
-    })
+    }
+    if (currentPage+1 < totalPages) {
+        html += `<li class="page-item"><a class="page-link next" href="javascript:showComments(${currentPage + 1});">Next</a></li>`;
+    }
+    $('.pagination').html(html);
 }
 
 $(document).ready(function () {
-    showComments();
-    //POST/PUT comment
+    showComments(currentPage);
+
+    //POST && PUT comment
     $('#commentForm').on('submit', function (event) {
         event.preventDefault();
+
+        if ( $('#accountId').length === 0) {
+            // Nếu chưa đăng nhập, hiển thị modal
+            $('#loginModal').modal('show');
+            return;
+        }
+
         const formData = $(this).serializeArray();
         const formDataObject = {};
-        $.each(formData,
-            function (i, v) {
-                formDataObject[v.name] = v.value;
-            });
-        console.log(formDataObject);
+        $.each(formData, function (i, v) {
+            formDataObject[v.name] = v.value;
+        });
 
-        let url = `/api/comments`;
+        // Thêm bookId và accountId vào formDataObject
+        formDataObject['bookId'] = $('#bookId').val();
+        formDataObject['accountId'] = $('#accountId').val();
+
+        let url = `/api/comments/${bookId}`;
         let method = "POST";
         if ($('#submit').val() === "Edit Comment") {
             const commentId = $('#commentId').val();
             url = `/api/comments/${commentId}`;
             method = "PUT";
         }
-        $.ajax({
-            //Post comment
-            url: url,
-            method: method,
-            data: formDataObject,
-            dataType: 'json',
-            xhrFields: {
-                withCredentials: false
-            },
 
-            success: function () {
-                $('#submit').val('Post Comment');
-                $('#content').val('');
-                $('#parentCommentId').val('');
-                $('#commentId').val('');
-                showComments();
-                alert('Comment posted successfully');
-                // reloadPageWithoutScrollEffect();
-            },
-            error: function () {
-                console.error('Failed to post comment');
-                alert('Failed to post comment');
+        sendAjaxRequest(url, method, formDataObject, function () {
+            $('#submit').val('Post Comment');
+            $('#content').val('');
+            $('#parentCommentId').val('');
+            $('#commentId').val('');
+            showComments(0);
+            toastr.success('Comment added successfully');
+        }, function (jqXHR) { // jqXHR is the first argument to the error callback
+            // Handle error
+            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                toastr.error(jqXHR.responseJSON.error);
+            } else {
+                toastr.error('Failed to comment');
             }
-        })
+        });
     });
 
-    //show reply-box
+    //show reply form
     $(document).on('click', '.reply', function () {
-
+        if ( $('#accountId').length === 0) {
+            // Nếu chưa đăng nhập, hiển thị modal
+            $('#loginModal').modal('show');
+            return;
+        }
         const thisClicked = $(this);
-        const parentCommentId = thisClicked.closest('.comment-body .reply').attr('id');
+        const parentCommentId = thisClicked.closest('.comment-body').find('.reply').attr('id');
+        const replyBoxHtml = generateReplyBox('', parentCommentId, '', 'Post Reply');
 
         $('.reply-session').html("");
-        thisClicked.closest('.comment-body').find('.reply-session')
-            .html('<div class="reply-box">\n' +
-                '<form id="commentForm" method="POST">\n' +
-                '<div class="form-group" style="margin: 12px 0">\n' +
-                '<label for="content"></label>\n' +
-                '<input class="form-control" id="content" name="content" placeholder="Enter Comment" required/>\n' +
-                `<input id="parentCommentId" name="parentCommentId" type="hidden" value="${parentCommentId}" />\n` +
-                '</div>\n' +
-                '<span id="message"></span>\n' +
-                '<div class="form-group">\n' +
-                '<input class="btn btn-primary reply-add-btn" id="submit" name="submit" type="submit" value="Post Comment" required/>\n' +
-                '<button class="btn btn-danger reply-cancel-btn" id="cancel" name="cancel" type="button">Cancel</button>\n' +
-                '</div>\n' +
-                '</form>\n' +
-                '</div>');
+        thisClicked.closest('.comment-body').find('.reply-session').html(replyBoxHtml);
+
+        const replyName = thisClicked.closest('.comment-body').find('.comment-author').find('.fn').text().trim();
+        const contentValue = `<b>${replyName}</b> `;
+        const replySessionContentField = thisClicked.closest('.comment-body').find('.reply-session').find('#content');
+
+        replySessionContentField.val(contentValue);
+        replySessionContentField.focus();
+    });
+
+    //add reply
+    $(document).on('click', '.reply-add-btn', function (e) {
+        e.preventDefault();
+        const formData = $(this).closest('form').serializeArray();
+        const formDataObject = {};
+        $.each(formData, function (i, v) {
+            formDataObject[v.name] = v.value;
+        });
+        // Thêm bookId và accountId vào formDataObject
+        formDataObject['bookId'] = $('#bookId').val();
+        formDataObject['accountId'] = $('#accountId').val();
+
+        console.log(formDataObject);
+
+        sendAjaxRequest(`/api/comments/${bookId}`, "POST", formDataObject,
+            function () {
+            showComments(currentPage);
+            toastr.success('Reply added successfully');
+        },
+            function () {
+            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                toastr.error(jqXHR.responseJSON.error);
+            } else {
+                toastr.error('Failed to reply comment');
+            }
+        });
     });
 
     //cancel reply-box
@@ -95,76 +159,48 @@ $(document).ready(function () {
         $('.reply-session').html("");
     });
 
-    //reply comment
-    $(document).on('click', '.reply-add-btn', function (e) {
-        e.preventDefault();
-        const formData = $(this).closest('form').serializeArray();
-        const formDataObject = {};
-        $.each(formData,
-            function (i, v) {
-                formDataObject[v.name] = v.value;
-            });
-        console.log(formDataObject);
-
-        $.ajax({
-            //Post comment
-            url: `/api/comments`,
-            method: "POST",
-            data: formDataObject,
-            success: function () {
-                showComments();
-                alert('Comment posted successfully');
-                // reloadPageWithoutScrollEffect();
-            },
-            error: function () {
-                console.error('Failed to post comment');
-                alert('Failed to post comment');
-            }
-        })
-    });
-
     //edit comment
     $(document).on('click', '.edit', function () {
         const commentId = $(this).closest('.comment-body').find('.reply').attr('id');
         const content = $(this).closest('.comment-body').find('.comment-content p').text();
-        let $content = $('#content');
-        console.log('Edit comment with ID:', commentId);
-        $content.val(content);
-        $('#commentId').val(commentId);
-        $('#submit').val('Edit Comment');
+        const replyBoxHtml = generateReplyBox(commentId,'', content, 'Edit Comment');
 
-        $('.reply-box').insertAfter($(this).closest('.comment-body, .reply')).show();
-        $content.focus();
+        $(this).closest('.comment-body').find('.reply-session').html(replyBoxHtml);
     });
 
     //delete comment
     $(document).on('click', '.delete', function () {
         const commentId = $(this).attr("id");
         console.log('Delete comment with ID:', commentId);
-        $.ajax({
-            url: `/api/comments/${commentId}`,
-            method: 'DELETE',
-            success: function () {
-                showComments();
-            },
-            error: function () {
-                console.error('Failed to delete comment');
+        sendAjaxRequest(`/api/comments/${commentId}`, "DELETE", null, function () {
+            showComments(currentPage);
+            toastr.success('Comment deleted successfully');
+        }, function () {
+            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                toastr.error(jqXHR.responseJSON.error);
+            } else {
+                toastr.error('Failed to delete comment');
             }
         });
     });
 });
 
-// Lưu vị trí cuộn hiện tại trước khi reload
-function saveScrollPosition() {
-    localStorage.setItem('scrollPosition', window.scrollY);
-}
-
-// Load trang mà không có hiệu ứng cuộn
-function reloadPageWithoutScrollEffect() {
-    const scrollPosition = localStorage.getItem('scrollPosition');
-    if (scrollPosition) {
-        window.scrollTo(0, scrollPosition);
-        localStorage.removeItem('scrollPosition'); // Xóa vị trí cuộn đã lưu sau khi sử dụng
-    }
-    location.reload();
+// Generate the reply box HTML
+function generateReplyBox(commentId, parentCommentId, content, value) {
+    return `
+        <div class="reply-box">
+            <form id="commentForm" method="POST">
+                <div class="form-group" style="margin: 12px 0">
+                    <label for="content"></label>
+                    <input class="form-control" id="content" name="content" placeholder="Enter Comment" value="${content}" required/>
+                    <input id="commentId" name="commentId" type="hidden" value="${commentId}" />
+                    <input id="parentCommentId" name="parentCommentId" type="hidden" value="${parentCommentId}" />
+                </div>
+                <span id="message"></span>
+                <div class="form-group">
+                    <input class="btn btn-primary reply-add-btn" id="submit" name="submit" type="submit" value="${value}" required/>
+                    <button class="btn btn-danger reply-cancel-btn" id="cancel" name="cancel" type="button">Cancel</button>
+                </div>
+            </form>
+        </div>`;
 }

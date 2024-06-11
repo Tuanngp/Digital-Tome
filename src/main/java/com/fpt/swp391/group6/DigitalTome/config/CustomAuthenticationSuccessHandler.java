@@ -20,7 +20,6 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         List<String> roles = new ArrayList<>();
-
         boolean isAdmin = false;
 
         for(GrantedAuthority grantedAuthority : authentication.getAuthorities()){

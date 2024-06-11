@@ -1,10 +1,13 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fpt.swp391.group6.DigitalTome.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -67,7 +70,6 @@ public class BookEntity extends BaseEntity {
     private List<ContributionEntity> contributionEntityList;  // Một sách có nhiều đóng góp
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<CommentEntity> commentEntityList;   // Một sách có nhiều bình luận
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -99,5 +101,4 @@ public class BookEntity extends BaseEntity {
 
     @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
     private int isNew;
-
 }
