@@ -1,8 +1,10 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
+import com.fpt.swp391.group6.DigitalTome.rest.input.EmailRequest;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -28,5 +30,13 @@ public class EmailService {
         helper.setSubject(subject);
         helper.setText(htmlContent, true);
         mailSender.send(message);
+    }
+
+    public void sendEmail(EmailRequest emailRequest) {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(emailRequest.getEmailTo());
+        mailMessage.setSubject(emailRequest.getSubject());
+        mailMessage.setText(emailRequest.getMessage());
+        mailSender.send(mailMessage);
     }
 }

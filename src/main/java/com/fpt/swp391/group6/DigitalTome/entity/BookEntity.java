@@ -1,5 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,8 +8,7 @@ import lombok.*;
 import java.sql.Date;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,7 +25,7 @@ public class BookEntity extends BaseEntity {
     @Column(name = "title", nullable = false)
     private String title;  // Tiêu đề sách, không được phép trống
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;  // Mô tả sách, không được phép trống
 
     @Column(name = "edition")
@@ -67,7 +67,6 @@ public class BookEntity extends BaseEntity {
     private List<ContributionEntity> contributionEntityList;  // Một sách có nhiều đóng góp
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<CommentEntity> commentEntityList;   // Một sách có nhiều bình luận
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
