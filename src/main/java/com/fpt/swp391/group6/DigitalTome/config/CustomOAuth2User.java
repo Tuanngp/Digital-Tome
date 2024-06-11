@@ -8,8 +8,8 @@ import java.util.Map;
 public class CustomOAuth2User implements OAuth2User {
 
 
-    private OAuth2User oAuth2User;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final OAuth2User oAuth2User;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     public CustomOAuth2User(OAuth2User oAuth2User, Collection<? extends GrantedAuthority> authorities) {
         this.oAuth2User = oAuth2User;

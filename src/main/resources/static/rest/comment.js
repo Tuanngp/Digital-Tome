@@ -58,7 +58,6 @@ function updatePaginationLinks(currentPage, totalPages) {
 
 $(document).ready(function () {
     showComments(currentPage);
-
     //POST && PUT comment
     $('#commentForm').on('submit', function (event) {
         event.preventDefault();
@@ -81,11 +80,6 @@ $(document).ready(function () {
 
         let url = `/api/comments/${bookId}`;
         let method = "POST";
-        if ($('#submit').val() === "Edit Comment") {
-            const commentId = $('#commentId').val();
-            url = `/api/comments/${commentId}`;
-            method = "PUT";
-        }
 
         sendAjaxRequest(url, method, formDataObject, function () {
             $('#submit').val('Post Comment');
@@ -139,19 +133,26 @@ $(document).ready(function () {
         formDataObject['accountId'] = $('#accountId').val();
 
         console.log(formDataObject);
+        let url = `/api/comments/${bookId}`;
+        let method = "POST";
+        if ($('.reply-add-btn').val() === "Edit Comment") {
+            const commentId = $('#commentId').val();
+            url = `/api/comments/${commentId}`;
+            method = "PUT";
+        }
 
-        sendAjaxRequest(`/api/comments/${bookId}`, "POST", formDataObject,
+        sendAjaxRequest(url, method, formDataObject,
             function () {
-            showComments(currentPage);
-            toastr.success('Reply added successfully');
-        },
+                showComments(currentPage);
+                toastr.success('Reply added successfully');
+            },
             function () {
-            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
-                toastr.error(jqXHR.responseJSON.error);
-            } else {
-                toastr.error('Failed to reply comment');
-            }
-        });
+                if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                    toastr.error(jqXHR.responseJSON.error);
+                } else {
+                    toastr.error('Failed to reply comment');
+                }
+            });
     });
 
     //cancel reply-box

@@ -30,6 +30,31 @@
     .btn {
         text-align: center; /* Center text inside buttons */
     }
+
+    .button-wrapper {
+        display: flex;
+        justify-content: space-between; /* Giúp cân đối khoảng cách giữa các nút */
+        gap: 10px; /* Khoảng cách giữa các nút */
+    }
+
+    .btn-custom {
+        flex: 1; /* Đảm bảo các nút có cùng kích thước */
+        max-width: 150px; /* Giới hạn chiều rộng tối đa để tránh các nút quá lớn */
+        text-align: center;
+    }
+
+    /* Đảm bảo các nút có cùng chiều cao */
+    .btn-custom {
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Căn giữa nội dung trong container */
+    }
+
 </style>
 <body id="bg">
 <div class="page-wraper">
@@ -143,6 +168,24 @@
                                                 <div th:if="${#fields.hasErrors('phone')}" class="alert alert-danger" th:errors="*{phone}"></div>
                                             </div>
                                         </div>
+
+
+
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="mb-3">
+                                                <label for="formcontrolinput5" class="form-label">Gender:</label>
+                                                <select th:field="*{gender}" class="form-control" id="formcontrolinput5">
+                                                    <!-- Kiểm tra gender chưa được cập nhật -->
+                                                    <option th:if="${profileDto.gender eq null}" value="" selected>Choice</option>
+                                                    <!-- Các lựa chọn giới tính -->
+                                                    <option value="MALE">Male</option>
+                                                    <option value="FEMALE">Female</option>
+                                                    <option value="OTHER">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">

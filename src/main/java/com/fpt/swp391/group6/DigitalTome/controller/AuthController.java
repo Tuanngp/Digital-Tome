@@ -28,7 +28,7 @@ public class AuthController {
 
     private final EmailService emailService;
     private final HttpSession httpSession;
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public AuthController(UserService userService, EmailService emailService, HttpSession httpSession) {
@@ -53,12 +53,11 @@ public class AuthController {
         return "authentication/shop-registration";
     }
 
-    @PostMapping("/authenOtp")
+    @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") RegisterDto userDto,
                                BindingResult result,
                                Model model, RedirectAttributes redirectAttributes) {
 
-        // Validation
         if (result.hasErrors())
             return "authentication/shop-registration";
 

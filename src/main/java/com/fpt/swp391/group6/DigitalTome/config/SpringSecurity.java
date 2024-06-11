@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,8 +18,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurity {
 
+    private static final String[] PUBLIC_ENDPOINT = {"/**", "/index", "/home", "/register", "/forgotPassword", "/books-list", "/register-publisher"};
+
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Autowired
     public SpringSecurity(CustomOAuth2UserService customOAuth2UserService, CustomUserDetailsService customUserDetailsService) {
@@ -41,7 +45,6 @@ public class SpringSecurity {
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
-//                        .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/**").permitAll()
                 )
                 .formLogin(form -> form

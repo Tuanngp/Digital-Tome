@@ -19,7 +19,7 @@ import java.util.*;
 public class ContentModeratorService {
     private static final String subscriptionKey = "a5b0c787cc3b40ffbe2c2aa88efa4c38";
     private static final String endpoint = "https://digital-tome-swp301.cognitiveservices.azure.com/";
-    private static final int MIN_LENGTH = 1;
+    private static final int MIN_LENGTH = 2;
     private static final int MAX_LENGTH = 500;
     private final Map<String, Integer> commentFrequencyMap = new HashMap<>();
     private static final int COMMENT_THRESHOLD = 3;
@@ -32,6 +32,9 @@ public class ContentModeratorService {
     }
 
     public boolean isContentInappropriate(String content) throws IOException {
+        if (!isValidComment(content)) {
+            return true;
+        }
         Screen textResults = client.textModerations().screenText("text/plain", content.getBytes(), null);
         List<DetectedTerms> terms = textResults.terms();
         PII pII = textResults.pII();
@@ -39,8 +42,7 @@ public class ContentModeratorService {
                 (pII != null &&
                     (!pII.email().isEmpty() ||
                     !pII.phone().isEmpty() ||
-                    !pII.address().isEmpty())) ||
-                !isValidComment(content);
+                    !pII.address().isEmpty()));
     }
 
     public boolean isSpam(String comment) {
@@ -51,7 +53,7 @@ public class ContentModeratorService {
     public boolean isValidComment(String comment) throws IOException {
         loadBannedKeywordsFromFile();
         // Kiểm tra độ dài bình luận
-        if (comment.isEmpty() || comment.length() > MAX_LENGTH) {
+        if (comment.length() < MIN_LENGTH || comment.length() > MAX_LENGTH) {
             return false;
         }
 

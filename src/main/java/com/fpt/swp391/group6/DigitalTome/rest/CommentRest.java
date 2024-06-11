@@ -31,6 +31,7 @@ public class CommentRest {
     private final BookService bookService;
     private final CommentMapper commentMapper;
     private final ContentModeratorService contentModeratorService;
+
     @Autowired
     public CommentRest(UserService userService, CommentService commentService, BookService bookService, CommentMapper commentMapper, ContentModeratorService contentModeratorService) {
         this.userService = userService;
@@ -177,7 +178,7 @@ public class CommentRest {
                 .append("</div>");
     }
 
-    private AccountEntity getAccount(Principal principal, OAuth2User oAuth2User) {
+    private AccountEntity getAccount(Principal principal,@AuthenticationPrincipal OAuth2User oAuth2User) {
         String username = null;
         if (principal != null) {
             username = principal.getName();

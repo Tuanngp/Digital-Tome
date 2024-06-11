@@ -5,6 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+// Đại diện cho thông tin cần thiết của người dùng
+
 public class CustomUserDetails implements UserDetails {
 
     private final String username;

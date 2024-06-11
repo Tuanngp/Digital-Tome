@@ -188,9 +188,9 @@ public class BookController {
         return "books-manage";
     }
 
-    @GetMapping("/books/{id}")
-    public String showBookDetail(@PathVariable(value = "id") long id, Model model) {
-        BookEntity book = bookService.getBookById(id);
+    @GetMapping("/books/{isbn}")
+    public String showBookDetail(@PathVariable(value = "isbn") String isbn, Model model) {
+        BookEntity book = bookService.getBookByIsbn(isbn);
         model.addAttribute("book", book);
         return "book-view/books-detail";
     }
