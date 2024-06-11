@@ -20,8 +20,11 @@
                 <a th:href="@{/}"><img alt="" th:src="@{../user/images/logo.png}"></a>
             </div>
             <div class="dz-content">
-                <h2 class="dz-title">Site Is Down <br/>For <span class="text-primary">Maintenance</span></h2>
-                <p>This is the Technical Problems Page. <br> Or any other page.</p>
+                <h2 class="dz-title">Something went wrong<br/>Error <span class="text-primary" th:data-text="${status}" th:text="${status}">Maintenance</span></h2>
+                <p th:text="${errorMessage}"></p>
+                <!--                <p>This is the Technical Problems Page. <br> Or any other page.</p>-->
+                <!--                <div class="dz_error" th:data-text="${status}" th:text="${status}">Status</div>-->
+                <a class="btn btn-primary btn-border btnhover white-border" th:href="@{/index}">BACK TO HOMEPAGE</a>
             </div>
         </div>
         <img alt="" class="uc-bg" th:src="@{../user/images/background/uc.jpg}"/>

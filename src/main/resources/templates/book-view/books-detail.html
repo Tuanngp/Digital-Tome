@@ -18,9 +18,9 @@
 
     <header th:replace="~{layout/header :: header}"></header>
 
-    <div class="page-content bg-grey">
+    <div class="page-content bg-grey" >
         <section class="content-inner-1">
-            <div class="container">
+            <div class="container" th:object="${book}">
                 <div class="row book-grid-row style-4 m-b60">
                     <div class="col">
                         <div class="dz-box">
@@ -61,43 +61,40 @@
                                             <li>
                                                 <div class="writer-info">
                                                     <img alt="book" th:src="@{../user/images/profile2.jpg}">
-                                                    <div>
-                                                        <span>Writen by</span>Kevin Smiley
+                                                    <div >
+                                                        <span>Writen by</span>
+                                                        <span th:field="${book.authorEntityList.getFirst().name}"></span>
                                                     </div>
                                                 </div>
                                             </li>
                                             <li><span>Publisher</span>Printarea Studios</li>
-                                            <li><span>Year</span>2019</li>
+                                            <li><span>Year</span>${book.publicationDate}</li>
                                         </ul>
                                     </div>
-                                    <p class="text-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    <p class="text-1" th:text="${book.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                                         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
                                         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                                         consequat. Duis aute irure dolor in reprehenderit.</p>
-                                    <p class="text-2">Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
-                                        inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                                        enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-                                        consequuntur magni dolores eos qui ratione voluptatem</p>
+
                                     <div class="book-footer">
                                         <div class="price">
-                                            <h5>$54.78</h5>
+                                            <h5 th:text="${book.point}">$54.78</h5>
                                             <p class="p-lr10">$70.00</p>
                                         </div>
-                                        <div class="product-num">
-                                            <div class="quantity btn-quantity style-1 me-3">
-                                                <label for="demo_vertical2"></label>
-                                                <input id="demo_vertical2" name="demo_vertical2" type="text" value="1"/>
-                                            </div>
-                                            <a class="btn btn-primary btnhover btnhover2" th:href="@{shop-cart}"><i
-                                                    class="flaticon-shopping-cart-1"></i> <span>Add to cart</span></a>
-                                            <div class="bookmark-btn style-1 d-none d-sm-block">
-                                                <input class="form-check-input" id="flexCheckDefault1" type="checkbox">
-                                                <label class="form-check-label" for="flexCheckDefault1">
-                                                    <i class="flaticon-heart"></i>
-                                                </label>
-                                            </div>
-                                        </div>
+<!--                                        <div class="product-num">-->
+<!--                                            <div class="quantity btn-quantity style-1 me-3">-->
+<!--                                                <label for="demo_vertical2"></label>-->
+<!--                                                <input id="demo_vertical2" name="demo_vertical2" type="number" value="1"/>-->
+<!--                                            </div>-->
+<!--                                            <a class="btn btn-primary btnhover btnhover2" th:href="@{shop-cart}"><i-->
+<!--                                                    class="flaticon-shopping-cart-1"></i> <span>Add to cart</span></a>-->
+<!--                                            <div class="bookmark-btn style-1 d-none d-sm-block">-->
+<!--                                                <input class="form-check-input" id="flexCheckDefault1" type="checkbox">-->
+<!--                                                <label class="form-check-label" for="flexCheckDefault1">-->
+<!--                                                    <i class="flaticon-heart"></i>-->
+<!--                                                </label>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -109,36 +106,53 @@
                     <div class="col-xl-8">
                         <div class="product-description tabs-site-button">
                             <ul class="nav nav-tabs">
-                                <li><a data-bs-toggle="tab" href="#developement-1">Customer Reviews</a></li>
-                                <li><a class="active" data-bs-toggle="tab" href="#graphic-design-1">Details Product</a></li>
+                                <li><a class="active" data-bs-toggle="tab" href="#development-1">Customer Reviews</a></li>
+                                <li><a                data-bs-toggle="tab" href="#graphic-design-1">Details Product</a></li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane show active" id="developement-1">
+                                <div class="tab-pane show active" id="development-1">
                                 <div class="clear" id="comment-list">
                                     <div class="post-comments comments-area style-1 clearfix">
-                                        <h4 class="comments-title">4 COMMENTS</h4>
+                                        <h4 class="comments-title" id="totalComments">4 COMMENTS</h4>
                                         <div id="comment">
+                                            <div class="reply-box">
+                                            <form id="commentForm" method="POST" style="margin-bottom: 32px">
+                                                <div class="form-group" style="margin: 12px 0">
+                                                    <label for="content"></label>
+                                                    <input class="form-control" id="content" name="content" placeholder="Enter Comment"/>
+                                                    <input th:if="${book!=null}" id="bookId" name="bookId" type="hidden" th:value="${book.id}">
+                                                    <input th:if="${account!=null}" id="accountId" name="accountId" type="hidden" th:value="${account.id}">                                                    <input id="parentCommentId" name="parentCommentId" type="hidden" />
+                                                    <input id="commentId" name="commentId" type="hidden" />
+                                                </div>
+                                                <span id="message"></span>
+                                                <div class="form-group">
+                                                    <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Post Comment"/>
+                                                </div>
+                                            </form>
+                                        </div>
                                             <ol class="comment-list">
                                                 <li class="comment even thread-even depth-1 comment">
                                                     <div id="showComments"></div>
+                                                    <div class="row page">
+                                                        <div class="col-md-6">
+                                                            <p class="page-text">Showing 12 from 50 data</p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <nav aria-label="Blog Pagination">
+                                                                <ul class="pagination style-1 p-t20">
+                                                                    <li class="page-item"><a class="page-link prev"
+                                                                                             href="javascript:void(0);">Prev</a></li>
+                                                                    <li class="page-item"><a class="page-link active"
+                                                                                             href="javascript:void(0);">1</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                                                    <li class="page-item"><a class="page-link next"
+                                                                                             href="javascript:void(0);">Next</a></li>
+                                                                </ul>
+                                                            </nav>
+                                                        </div>
+                                                    </div>
                                                 </li>
-                                                <div class="reply-box">
-                                                    <form id="commentForm" method="POST">
-                                                        <div class="form-group" style="margin: 12px 0">
-                                                            <label for="content"></label>
-                                                            <input class="form-control" id="content" name="content" placeholder="Enter Comment" required/>
-                                                            <input id="accountEntity" name="accountEntity" th:object="${account}"  type="hidden">
-                                                            <input id="parentCommentId" name="parentCommentId" type="hidden" />
-                                                            <input id="commentId" name="commentId" type="hidden" />
-
-                                                        </div>
-                                                        <span id="message"></span>
-                                                        <div class="form-group">
-
-                                                            <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Post Comment"/>
-                                                        </div>
-                                                    </form>
-                                                </div>
                                             </ol>
                                         </div>
                                     </div>
@@ -148,11 +162,11 @@
                                     <table class="table border book-overview">
                                         <tr>
                                             <th>Book Title</th>
-                                            <td>Think and Grow Rich</td>
+                                            <td th:text="${book.title}"></td>
                                         </tr>
                                         <tr>
                                             <th>Author</th>
-                                            <td>Napoleon Rich</td>
+                                            <td th:field="${book.authorEntityList.getFirst().name}"></td>
                                         </tr>
                                         <tr>
                                             <th>ISBN</th>
@@ -279,14 +293,29 @@
             </div>
         </section>
     </div>
-
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Thông báo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn cần đăng nhập để gửi bình luận.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <a href="/login" class="btn btn-primary">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
     <footer th:replace="~{layout/footer :: footer}"></footer>
     <!-- Footer End -->
 
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
-
 <script src="/rest/comment.js"></script>
 </body>
 </html>

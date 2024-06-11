@@ -1,8 +1,10 @@
 package com.fpt.swp391.group6.DigitalTome.repository;
 
+import com.fpt.swp391.group6.DigitalTome.entity.AuthorEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import jakarta.transaction.Transactional;
 import org.hibernate.sql.Update;
+import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
