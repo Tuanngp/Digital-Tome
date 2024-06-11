@@ -17,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +52,7 @@ public class CommentRest {
     }
 
     @PostMapping("/{bookId}")
-    public ResponseEntity<Map<String, Object>> createComment(@PathVariable Long bookId, CommentDto comment) {
+    public ResponseEntity<Map<String, Object>> createComment(@PathVariable Long bookId, CommentDto comment) throws IOException {
         Map<String, Object> response = new HashMap<>();
         if (contentModeratorService.isContentInappropriate(comment.getContent())) {
             response.put("error", "Content is inappropriate");
