@@ -62,11 +62,6 @@ public class UserService {
         userRepository.save(accountEntity);
     }
 
-    public String getUsernameById(Long userId) {
-        return userRepository.findById(userId)
-                .map(AccountEntity::getUsername)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
 
     public String getEmailById(Long userId) {
         return userRepository.findById(userId)
@@ -208,19 +203,5 @@ public class UserService {
             return null;
     }
 
-    public AccountEntity registerPublisher(Long id) {
-        Optional<AccountEntity> account = userRepository.findById(id);
-        AccountEntity user = null;
-        if (account.isPresent()) {
-            user = account.get();
-            user.setRoleEntity(roleRepository.findByName("ROLE_PUBLISHER"));
-        }
-        assert user != null;
-        return userRepository.save(user);
-    }
-
-    public List<AccountEntity> getAdminUsers() {
-        return userRepository.findByRoleName("ADMIN");
-    }
 }
 
