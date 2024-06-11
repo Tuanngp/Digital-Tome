@@ -3,7 +3,6 @@
 
 <head th:replace="~{layout/head-admin :: head-admin}">
     <title>Manager</title>
-
 </head>
 
 <style>
@@ -146,7 +145,7 @@
         Nav header start
     ***********************************-->
     <div class="nav-header">
-        <a href="index.html" class="brand-logo">
+        <a href="/admin" class="brand-logo">
             <svg class="logo-abbr" width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="logo-react" d="M35.1455 0.990723H15.1455C6.86124 0.990723 0.145508 7.70645 0.145508 15.9907V35.9907C0.145508 44.275 6.86124 50.9907 15.1455 50.9907H35.1455C43.4298 50.9907 50.1455 44.275 50.1455 35.9907V15.9907C50.1455 7.70645 43.4298 0.990723 35.1455 0.990723Z" fill="white"/>
                 <path d="M15.6963 36.6899L6.64551 19.4641H11.0249C11.4921 19.4641 11.9981 19.8534 12.1928 20.048C13.7499 23.065 17.0394 29.3908 17.7401 30.5587C18.4408 31.7265 18.2267 32.4078 18.032 32.6024L15.6963 36.6899Z" fill="var(--primary)"/>
@@ -170,6 +169,15 @@
 
     <div class="deznav">
         <ul class="metismenu" id="menu">
+
+            <li>
+                <a class="" aria-expanded="false" href="#" onclick="goBack()">
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-tent-arrow-turn-left"></i>
+                    </div>
+                </a>
+            </li>
+
             <li>
                 <a href="/dashboard" class="" aria-expanded="false">
                     <div class="menu-icon">
@@ -185,10 +193,7 @@
             <li>
                 <a href="/user-manager" class="" aria-expanded="false">
                     <div class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="7" r="4"></circle>
-                            <path d="M12 11c-2.21 0-4 1.79-4 4s1.79 4 4 4s4-1.79 4-4s-1.79-4-4-4zm6 7a7.5 7.5 0 0 1-6 2.5a7.5 7.5 0 0 1-6-2.5"></path>
-                        </svg>
+                        <i class="fa-solid fa-users" style="font-size: 20px"></i>
                     </div>
                     <span class="nav-text">Users</span>
                 </a>
@@ -197,11 +202,7 @@
             <li>
                 <a href="/publisher-manager" class="" aria-expanded="false">
                     <div class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
-                            <line x1="12" y1="8" x2="12" y2="16"></line>
-                            <line x1="8" y1="12" x2="16" y2="12"></line>
-                        </svg>
+                        <i class="fa-solid fa-address-book" style="font-size: 18px"></i>
                     </div>
                     <span class="nav-text">Publishers</span>
                 </a>
@@ -209,24 +210,26 @@
             <li>
                 <a href="/employee-manager" class="" aria-expanded="false">
                     <div class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="4" r="4"></circle>
-                            <line x1="12" y1="16" x2="12" y2="12"></line>
-                            <line x1="12" y1="20" x2="12" y2="20"></line>
-                        </svg>
+                        <i class="fa-solid fa-building-user" style="font-size: 18px"></i>
                     </div>
                     <span class="nav-text">Employees</span>
+                </a>
+            </li>
+
+
+            <li>
+                <a href="/register-publisher-details" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <i class="fa-solid fa-registered" style="font-size: 18px"></i>
+                    </div>
+                    <span class="nav-text">Register Publisher</span>
                 </a>
             </li>
 
             <li>
                 <a href="#" class="" aria-expanded="false">
                     <div class="menu-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 9v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"></path>
-                            <polyline points="3 9 12 15 21 9"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
+                        <i class="fa-solid fa-sack-dollar" style="font-size: 18px"></i>
                     </div>
                     <span class="nav-text">Monthly Revenue</span>
                 </a>
@@ -281,8 +284,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Dashboard Content End -->
 
+                    <!-- Dashboard Content End -->
                     <!-- Điều kiện hiển thị bảng dữ liệu người dùng -->
                     <div th:if="${page == 'user-manager' || page == 'publisher-manager' || page == 'employee-manager'}">
                         <div class="row">
@@ -294,6 +297,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Name</th>
+                                                    <th>Avatar</th>
                                                     <th>Email</th>
                                                     <th>Phone</th>
                                                     <th>Status</th>
@@ -303,6 +307,9 @@
                                                 <tbody id="customers">
                                                 <tr th:each="user : ${users}">
                                                     <td th:text="${user.username}"></td>
+                                                    <td>
+                                                        <img th:src="${user.avatarPath}" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%;">
+                                                    </td>
                                                     <td th:text="${user.email}"></td>
                                                     <td th:text="${user.phone}"></td>
                                                     <td th:class="${user.status == 0} ? 'status-active' : 'status-inactive'" th:text="${user.status == 0 ? 'Active' : 'IsActive'}"></td>
@@ -321,11 +328,63 @@
                         </div>
                     </div>
 
+                    <div th:if="${page == 'register-publisher'}">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm mb-0 table-striped publisher-tbl">
+                                                <thead>
+                                                <tr>
+                                                    <th>User ID</th>
+                                                    <th>Email</th>
+                                                    <th>Username</th>
+                                                    <th>Name Publisher</th>
+                                                    <th>Certificate Number</th>
+                                                    <th>Approved</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="pub : ${publisher}">
+                                                    <td th:text="${pub.userId}"></td>
+                                                    <td th:text="${pub.email}"></td>
+                                                    <td th:text="${pub.username}"></td>
+                                                    <td th:text="${pub.namePublisher}"></td>
+                                                    <td th:text="${pub.certificateNumber}"></td>
+                                                    <td th:text="${pub.approved == true ? 'Active' : 'IsActive'}"></td>
+
+                                                    <td>
+                                                        <button type="button" class="btn btn-success btn-sm"
+                                                                th:onclick="'confirmActionApprove(' + ${pub.id} + ', true)'">Approve</button>
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                                th:onclick="'confirmActionApprove(' + ${pub.id} + ', false)'">Not Approve</button>
+                                                    </td>
+
+
+
+                                                </tr>
+                                                <tr th:if="${#lists.isEmpty(publisher)}">
+                                                    <td colspan="7">No publisher information available.</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <script>
+                        function goBack() {
+                            window.history.back();
+                        }
+
                         let userIdToBan, userEmailToBan, actionType, roleType;
 
                         function confirmAction(action, page, userId, userEmail) {
-                            console.log(page)
                             userIdToBan = userId;
                             userEmailToBan = userEmail;
                             actionType = action;
@@ -355,12 +414,13 @@
                                 }
                             });
                         }
-                        function sendActionRequest(reason,action,role) {
+
+                        function sendActionRequest(reason, action, role) {
                             const userDto = {
                                 id: userIdToBan,
                                 reason: reason,
                             };
-
+                            console.log(`Sending request to /${role}/${action} with data:`, JSON.stringify(userDto));
                             fetch(`/${role}/${action}`, {
                                 method: "POST",
                                 headers: {
@@ -368,12 +428,9 @@
                                 },
                                 body: JSON.stringify(userDto)
                             })
-                                .then(response => {
-                                        response.text()
-
-                                    }
-                                )
+                                .then(response => response.text())
                                 .then(data => {
+                                    console.log('Response:', data);
                                     Swal.fire({
                                         title: 'Success!',
                                         text: data,
@@ -383,6 +440,7 @@
                                         document.location.reload(true);
                                     });
                                 }).catch(error => {
+                                console.log('Error:', error);
                                 Swal.fire({
                                     title: 'Error!',
                                     text: 'Request failed. Please try again.',
@@ -397,6 +455,7 @@
         </div>
     </div>
 </div>
+
 <script src="/admin/vendor/global/global.min.js"></script>
 <script src="/admin/vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="/admin/vendor/apexchart/apexchart.js"></script>
@@ -406,6 +465,40 @@
 <script src="/admin/js/deznav-init.js"></script>
 <script src="/admin/js/demo.js"></script>
 <script src="/admin/js/styleSwitcher.js"></script>
+
+<script>
+    function confirmActionApprove(userId, isApproved) {
+        let action = isApproved ? "Approve" : "Not Approve";
+
+        Swal.fire({
+            title: `Are you sure you want to ${action} this user?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/api/approve',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ userId: userId, action: action }),
+                    success: function(data) {
+                        Swal.fire('Success', data.message, 'success').then(() => {
+                            window.location.reload();
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                        Swal.fire('Error', 'An error occurred', 'error');
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+
 
 </body>
 </html>

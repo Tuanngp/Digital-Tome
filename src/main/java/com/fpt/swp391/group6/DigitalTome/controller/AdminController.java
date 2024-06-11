@@ -1,10 +1,12 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
+import com.fpt.swp391.group6.DigitalTome.dto.PublisherDTO;
 import com.fpt.swp391.group6.DigitalTome.dto.UserBanDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.service.AdminService;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
+import com.fpt.swp391.group6.DigitalTome.service.PublisherService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -24,17 +27,25 @@ public class AdminController {
     private final EmailService emailService;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final PublisherService publisherService;
 
-    public AdminController(AdminService adminService, EmailService emailService, UserRepository userRepository, UserService userService) {
+    public AdminController(AdminService adminService, EmailService emailService, UserRepository userRepository, UserService userService, PublisherService publisherService) {
         this.adminService = adminService;
         this.emailService = emailService;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.publisherService = publisherService;
     }
 
     @GetMapping("/admin")
-    public String admin() {
+    public String homeAdmin() {
         return "admin/index_admin";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+        model.addAttribute("page", "dashboard");
+        return "admin/manager";
     }
 
     @GetMapping("/manager")
@@ -45,16 +56,16 @@ public class AdminController {
 
     @GetMapping("/user-manager")
     public String userManager(Model model) {
-        List<AccountEntity> user = userRepository.findByRoleName("ROLE_USER");
-        model.addAttribute("users", user);
+        List<AccountEntity> users = userRepository.findByRoleName("ROLE_USER");
+        model.addAttribute("users", users);
         model.addAttribute("page", "user-manager");
         return "admin/manager";
     }
 
     @GetMapping("/publisher-manager")
     public String publisherManager(Model model) {
-        List<AccountEntity> publisher = userRepository.findByRoleName("ROLE_PUBLISHER");
-        model.addAttribute("users", publisher);
+        List<AccountEntity> publishers = userRepository.findByRoleName("ROLE_PUBLISHER");
+        model.addAttribute("users", publishers);
         model.addAttribute("page", "publisher-manager");
         return "admin/manager";
     }
@@ -67,17 +78,11 @@ public class AdminController {
         return "admin/manager";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard(Model model) {
-        model.addAttribute("page", "dashboard");
-        return "admin/manager";
-    }
-
     @PostMapping("/user/ban")
     @ResponseBody
     public String banUser(@RequestBody UserBanDto userDto) {
         adminService.banUser(userDto.getId());
-        String userEmail = userService.getUserEmailById(userDto.getId());
+        String userEmail = userService.getEmailById(userDto.getId());
         try {
             String subject = "Account Banned Notification";
             emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
@@ -92,7 +97,7 @@ public class AdminController {
     @ResponseBody
     public String unbanUser(@RequestBody UserBanDto userDto) {
         adminService.unbanUser(userDto.getId());
-        String userEmail = userService.getUserEmailById(userDto.getId());
+        String userEmail = userService.getEmailById(userDto.getId());
         try {
             String subject = "Account Unbanned Notification";
             emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
@@ -103,12 +108,11 @@ public class AdminController {
         }
     }
 
-
     @PostMapping("/publisher/ban")
     @ResponseBody
     public String banPublisher(@RequestBody UserBanDto userDto) {
-        adminService.banUser(userDto.getId());
-        String userEmail = userService.getUserEmailById(userDto.getId());
+        adminService.banPublisher(userDto.getId());
+        String userEmail = userService.getEmailById(userDto.getId());
         try {
             String subject = "Account Banned Notification";
             emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
@@ -123,13 +127,13 @@ public class AdminController {
     @ResponseBody
     public String unbanPublisher(@RequestBody UserBanDto userDto) {
         adminService.unbanPublisher(userDto.getId());
-        String userEmail = userService.getUserEmailById(userDto.getId());
+
+        String userEmail = userService.getEmailById(userDto.getId());
         try {
             String subject = "Account Unbanned Notification";
             emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
             return "Publisher unbanned successfully";
         } catch (Exception e) {
-            e.printStackTrace();
             return "Email sending failed.";
         }
     }
@@ -138,7 +142,7 @@ public class AdminController {
     @ResponseBody
     public String banEmployee(@RequestBody UserBanDto userDto) {
         adminService.banEmployee(userDto.getId());
-        String userEmail = userService.getUserEmailById(userDto.getId());
+        String userEmail = userService.getEmailById(userDto.getId());
         try {
             String subject = "Account Banned Notification";
             emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
@@ -153,7 +157,7 @@ public class AdminController {
     @ResponseBody
     public String unbanEmployee(@RequestBody UserBanDto userDto) {
         adminService.unbanEmployee(userDto.getId());
-        String userEmail = userService.getUserEmailById(userDto.getId());
+        String userEmail = userService.getEmailById(userDto.getId());
         try {
             String subject = "Account Unbanned Notification";
             emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
@@ -162,5 +166,13 @@ public class AdminController {
             e.printStackTrace();
             return "Email sending failed.";
         }
+    }
+
+    @GetMapping("/register-publisher-details")
+    public String showRegisterPublisherDetails(Model model) {
+        List<PublisherDTO> publisherList = publisherService.getAllPublisherDetails();
+        model.addAttribute("publisher", publisherList);
+        model.addAttribute("page", "register-publisher");
+        return "admin/manager";
     }
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register Publisher</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/user/images/favicon.png}">
+    <link th:href="@{/admin/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body class="vh-100">
+<div class="authincation h-100">
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-lg-6 col-md-7 col-sm-12 mx-auto align-self-center">
+                <div class="login-form">
+                    <div class="text-center">
+                        <h3 class="title">Register to become a publisher</h3>
+                        <p>Sign up as a publisher to start using W3Publisher</p>
+                    </div>
+
+                    <div th:if="${success}">
+                        <div class="alert alert-success" th:text="${success}"></div>
+                    </div>
+                    <div th:if="${error}">
+                        <div class="alert alert-danger" th:text="${error}"></div>
+                    </div>
+
+
+                    <form action="/submit-register-publisher" method="post">
+                        <div class="mb-4">
+                            <label class="mb-1 text-dark">Id</label>
+                            <input type="text" class="form-control form-control" name="userId" th:value="${id}" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-1 text-dark">Email</label>
+                            <input type="email" class="form-control form-control" name="email" th:value="${email}" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-1 text-dark">Username</label>
+                            <input type="text" class="form-control form-control" name="username" th:value="${username}" readonly>
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-1 text-dark">Name Publisher</label>
+                            <input type="text" class="form-control form-control" name="namePublisher">
+                        </div>
+                        <div class="mb-4">
+                            <label class="mb-1 text-dark">Certificate Number</label>
+                            <input type="text" class="form-control form-control" name="certificateNumber">
+                        </div>
+                        <div class="text-center mb-4">
+                            <button type="submit" class="btn btn-primary light btn-block">Sign Up</button>
+                        </div>
+
+                        <div class="text-center mb-4">
+                            <button type="button" class="btn btn-secondary light btn-block" onclick="back()">Back</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <div class="pages-left h-100">
+                    <div class="login-content">
+                        <a href="index.html"><img th:src="@{/admin/images/logo-full.png}" class="mb-3" alt=""></a>
+                        <p>Your true value is determined by how much more you give in value than you take in payment. ...</p>
+                    </div>
+                    <div class="login-media text-center">
+                        <img th:src="@{/admin/images/login.png}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/admin/vendor/global/global.min.js}"></script>
+<script th:src="@{/admin/js/custom.js}"></script>
+<script th:src="@{/admin/js/deznav-init.js}"></script>
+
+<script>
+    function back() {
+        window.history.back();
+    }
+</script>
+
+</body>
+</html>

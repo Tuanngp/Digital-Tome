@@ -2,6 +2,7 @@ package com.fpt.swp391.group6.DigitalTome.security;
 
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
+import com.fpt.swp391.group6.DigitalTome.exception.AccountBannedException;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,11 +30,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException(String.format("Email %s does not exist!", email));
         }
+        if (user.getStatus() == 1) {
+            throw new AccountBannedException(String.format("Account with email %s is banned!", email));
+        }
         return new CustomUserDetails(mapRolesToAuthorities(user.getRoleEntity()),
-                                      user.getUsername(),
-                                      user.getEmail(),
-                                      user.getPassword()
-                                        );
+                user.getUsername(),
+                user.getEmail(),
+                user.getPassword()
+        );
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(RoleEntity roles){

@@ -1,7 +1,10 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -10,18 +13,30 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "notification")
-public class NotificationEntity extends BaseEntity {
-    @Column(name = "content", nullable = false)
-    private String content;
-
+public class NotificationEntity {
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_id", nullable = false)
-    private AccountEntity publisher;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private AccountEntity user;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "publisher_id", nullable = false)
+//    private AccountEntity publisher;
+
+    private String title;
+
+    @Lob
+    private String message;
+
+    private Boolean isRead;
+
+    private String url;
+
+    private String avatarUrl;
+
+    private LocalDateTime createdAt;
 }

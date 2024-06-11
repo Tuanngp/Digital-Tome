@@ -7,8 +7,6 @@ import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class AuthController {
 
     private final EmailService emailService;
     private final HttpSession httpSession;
-    private UserService userService;
+    private final UserService userService;
 
     public AuthController(UserService userService, EmailService emailService, HttpSession httpSession) {
         this.userService = userService;
@@ -48,26 +45,6 @@ public class AuthController {
     }
 
 
-    @PostMapping("/login")
-    public String checkLogin(@RequestParam("username") String email, @RequestParam("password") String password,
-                             Model model, RedirectAttributes redirectAttributes) {
-        AccountEntity user = userService.findByEmail(email);
-        if (user == null) {
-            redirectAttributes.addFlashAttribute("error", "Email does not exist.");
-            return "redirect:/login";
-        }
-        if (user.getStatus() == 1) {
-            redirectAttributes.addFlashAttribute("error", "Account is banned");
-            return "redirect:/login";
-        }
-        if (!userService.checkLogin(email, password)) {
-            redirectAttributes.addFlashAttribute("error", "Invalid password.");
-            return "redirect:/login";
-        }
-
-        return "redirect:/";
-    }
-
 
     @GetMapping("register")
     public String showRegistrationForm(Model model){
@@ -81,7 +58,6 @@ public class AuthController {
                                BindingResult result,
                                Model model, RedirectAttributes redirectAttributes) {
 
-        // Validation
         if (result.hasErrors())
             return "authentication/shop-registration";
 
@@ -120,7 +96,7 @@ public class AuthController {
     public String verifyOtp(@RequestParam("otp") String otp,
                             HttpSession session,
                             Model model
-                            ) {
+    ) {
 
         String sessionOtp = (String) session.getAttribute("otp");
         LocalDateTime otpCreationTime = (LocalDateTime) session.getAttribute("otpCreationTime");
@@ -189,6 +165,3 @@ public class AuthController {
         return "redirect:/login";
     }
 }
-
-
-

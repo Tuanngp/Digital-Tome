@@ -1,4 +1,4 @@
-package com.fpt.swp391.group6.DigitalTome.entity;
+package com.fpt.swp391.group6.DigitalTome.enums;
 
 public enum Gender {
     MALE,

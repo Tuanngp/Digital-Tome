@@ -1,9 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.dto;
 
 import com.fpt.swp391.group6.DigitalTome.Validation.ValidDateOfBirth;
-import com.fpt.swp391.group6.DigitalTome.entity.Gender;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
+import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

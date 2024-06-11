@@ -3,6 +3,12 @@
     Header start
 ***********************************-->
 <div class="header" th:fragment="header-admin">
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+    <!-- Thêm thư viện STOMP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+
     <div class="header-content">
         <nav class="navbar navbar-expand">
             <div class="collapse navbar-collapse justify-content-between">
@@ -36,153 +42,30 @@
                             </svg>
                         </a>
                     </li>
+
+                    <!--     Thông báo   -->
                     <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" id="notificationDropdown">
                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M18 8.5C18 6.9087 17.3679 5.38258 16.2426 4.25736C15.1174 3.13214 13.5913 2.5 12 2.5C10.4087 2.5 8.88258 3.13214 7.75736 4.25736C6.63214 5.38258 6 6.9087 6 8.5C6 15.5 3 17.5 3 17.5H21C21 17.5 18 15.5 18 8.5Z" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M13.73 21.5C13.5542 21.8031 13.3019 22.0547 12.9982 22.2295C12.6946 22.4044 12.3504 22.4965 12 22.4965C11.6496 22.4965 11.3054 22.4044 11.0018 22.2295C10.6982 22.0547 10.4458 21.8031 10.27 21.5" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
+                            <span class="badge badge-pill badge-danger" id="notificationCount"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
-                                <ul class="timeline">
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2">
-                                                <img alt="image" width="50" src="/admin/images/avatar/1.jpg">
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-info">
-                                                KG
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Resport created successfully</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-success">
-                                                <i class="fa fa-home"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2">
-                                                <img alt="image" width="50" src="/admin/images/avatar/1.jpg">
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-danger">
-                                                KG
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Resport created successfully</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-primary">
-                                                <i class="fa fa-home"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2">
-                                                <img alt="image" width="50" src="/admin/images/avatar/1.jpg">
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-info">
-                                                KG
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Resport created successfully</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-success">
-                                                <i class="fa fa-home"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2">
-                                                <img alt="image" width="50" src="/admin/images/avatar/1.jpg">
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-danger">
-                                                KG
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Resport created successfully</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-panel">
-                                            <div class="media me-2 media-primary">
-                                                <i class="fa fa-home"></i>
-                                            </div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                            </div>
-                                        </div>
-                                    </li>
+
+                                <ul class="timeline notification-items" id="notificationList">
+                                    <!-- Các thông báo sẽ được thêm vào đây bằng JavaScript -->
                                 </ul>
                             </div>
-                            <a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
+                            <a class="all-notification" href="/admin/notifications">See all notifications <i class="ti-arrow-end"></i></a>
                         </div>
                     </li>
+                    <audio id="notificationSound" src="/admin/notificationsound/notification.mp3" preload="auto"></audio>
+
+
+
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link bell-link" href="javascript:void(0);">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -262,4 +145,105 @@
             </div>
         </nav>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var socket = new SockJS('/ws');
+            var stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/user/queue/notifications', function (notification) {
+                    let newNotification = JSON.parse(notification.body);
+                    addNotificationToUI(newNotification);
+                    updateNotificationCount();
+                    playNotificationSound();
+                });
+            });
+
+            fetchNotifications();
+
+            document.querySelector('#notificationList').addEventListener('click', function (e) {
+                const notificationId = e.target.getAttribute('data-notification-id');
+                if (notificationId) {
+                    markNotificationAsRead(notificationId);
+                }
+            });
+        });
+
+        function fetchNotifications() {
+            fetch('/api/notifications/current')
+                .then(response => response.json())
+                .then(data => {
+                    updateNotificationUI(data);
+                })
+                .catch(error => console.error('Error fetching notifications:', error));
+        }
+
+        function updateNotificationUI(notifications) {
+            const notificationItemsContainer = document.querySelector('#notificationList');
+            notificationItemsContainer.innerHTML = '';
+
+            notifications.forEach(notification => {
+                addNotificationToUI(notification);
+            });
+
+            updateNotificationCount();
+        }
+
+        function updateNotificationCount() {
+            const countSpan = document.querySelector('#notificationCount');
+            const notifications = document.querySelectorAll('.notification-item');
+            let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
+            countSpan.textContent = unreadCount;
+        }
+
+        function addNotificationToUI(notification) {
+            const notificationItemsContainer = document.querySelector('#notificationList');
+
+            const notificationElement = document.createElement('li');
+            notificationElement.className = notification.isRead ? 'notification-item' : 'notification-item unread';
+            notificationElement.setAttribute('data-notification-id', notification.id);
+            notificationElement.setAttribute('data-notification-url', notification.url);
+
+            notificationElement.innerHTML = `
+            <div class="notification-body">
+                <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
+                <div class="notification-text">
+                    <p class="notification-message">${truncateText(notification.message, 100)}</p>
+                </div>
+            </div>
+        `;
+            notificationItemsContainer.prepend(notificationElement);
+
+            notificationElement.onclick = () => {
+                if (notification.url) {
+                    window.location.href = notification.url;
+                    markNotificationAsRead(notification.id);
+                }
+            };
+        }
+
+        function markNotificationAsRead(notificationId) {
+            fetch(`/api/notifications/mark-as-read/${notificationId}`, {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    document.querySelector(`[data-notification-id="${notificationId}"]`).classList.remove('unread');
+                    updateNotificationCount();
+                }
+            }).catch(error => console.error('Error marking notification as read:', error));
+        }
+
+        function truncateText(text, maxLength) {
+            if (text.length > maxLength) {
+                return text.substring(0, maxLength) + '...';
+            }
+            return text;
+        }
+
+        function playNotificationSound() {
+            var sound = document.getElementById("notificationSound");
+            sound.play();
+        }
+    </script>
 </div>
