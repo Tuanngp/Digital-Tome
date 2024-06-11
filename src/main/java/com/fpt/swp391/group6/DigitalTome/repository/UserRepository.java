@@ -7,19 +7,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<AccountEntity, Long> {
     AccountEntity findByEmail(String email);
 
-
     AccountEntity findByToken(String token);
 
-
     AccountEntity findByUsername(String username);
+
+
 
     boolean existsByEmail(String email);
 
     boolean existsByUsername(String username);
+
+
+    @Query("SELECT u FROM AccountEntity u WHERE u.roleEntity.name = :roleName")
+    List<AccountEntity> findByRoleName(@Param("roleName") String roleName);
 
     @Query("SELECT u.password FROM AccountEntity u WHERE u.username = :username")
     String findPasswordByUsername(@Param("username") String username);

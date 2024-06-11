@@ -1,9 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.dto;
 
 import com.fpt.swp391.group6.DigitalTome.Validation.ValidDateOfBirth;
-import com.fpt.swp391.group6.DigitalTome.entity.Gender;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
+import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +32,7 @@ public class UserDto {
     private long point;
 
     private Gender gender;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    @PastOrPresent(message = "Date of birth must be greater than 1950 and less than current")
     @ValidDateOfBirth

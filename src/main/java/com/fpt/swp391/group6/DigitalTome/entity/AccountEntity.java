@@ -1,7 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +38,7 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @Column(name = "fullname", length = 50)
     private String fullname;
 
+    @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -128,24 +129,26 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<UserRelationship> relationshipsReceived;
 
-    @OneToMany(mappedBy = "publisher", cascade = {
+
+//    @OneToMany(mappedBy = "publisher", cascade = {
+//            CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+//    private Set<NotificationEntity> registerations;
+
+//    @OneToMany(mappedBy = "publisher", cascade = {
+//            CascadeType.PERSIST, CascadeType.MERGE,
+//            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+//    private Set<NotificationEntity> notifications;
+
+    @OneToMany(mappedBy = "user", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    private Set<NotificationEntity> registrationsReceived;
+
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
+            CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REFRESH, CascadeType.DETACH})
+    @JsonManagedReference
     private Set<NotificationEntity> notifications;
-
-    @OneToMany(mappedBy = "user", cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-    private Set<NotificationEntity> notificationsReceived;
-
-    @OneToMany(mappedBy = "publisher", cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-    private Set<NotificationEntity> registerations;
-
-    @OneToMany(mappedBy = "user", cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-    private Set<NotificationEntity>  registerationsReceived;
-
 }

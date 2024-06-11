@@ -45,20 +45,19 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Transactional
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
         String email = oAuth2User.getAttribute("email");
 
         AccountEntity account = userRepository.findByEmail(email);
         if (account == null) account = createUser(oAuth2User);
 
-//        account.setAvatarPath("../user/images/avatar_default.png");
+        account.setUsername(email);
+        account.setAvatarPath(oAuth2User.getAttribute("picture"));
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         HttpSession session = request.getSession();
         session.setAttribute("user", account);
         session.setAttribute("role", authorities.stream().map(GrantedAuthority::getAuthority).toList());
-
         return new CustomOAuth2User(oAuth2User, authorities);
     }
 
@@ -67,9 +66,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         account.setEmail(oAuth2User.getAttribute("email"));
         account.setUsername(oAuth2User.getAttribute("email"));
         account.setFullname(oAuth2User.getAttribute("name"));
+        account.setAvatarPath(oAuth2User.getAttribute("picture"));
         String password = UserUtils.generateToken();
 
-        account.setAvatarPath("../user/images/avatar_default.png");
         String encodePassword = passwordEncoder.encode(password);
         account.setPassword(encodePassword);
 

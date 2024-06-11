@@ -84,7 +84,7 @@ public class PaypalController {
             List<Transaction> transactions = payment.getTransactions();
             String total = transactions.get(0).getAmount().getTotal();
 
-            long point =  Math.round(Double.parseDouble(total) / 50);
+            long point =  Math.round(Double.parseDouble(total) / 5);
             accountEntity.setPoint(accountEntity.getPoint() + point);
             userService.updatePoint(accountEntity);
 
