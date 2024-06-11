@@ -13,14 +13,16 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<AccountEntity, Long> {
     AccountEntity findByEmail(String email);
 
-
     AccountEntity findByToken(String token);
 
     AccountEntity findByUsername(String username);
 
+
+
     boolean existsByEmail(String email);
 
     boolean existsByUsername(String username);
+
 
     @Query("SELECT u FROM AccountEntity u WHERE u.roleEntity.name = :roleName")
     List<AccountEntity> findByRoleName(@Param("roleName") String roleName);

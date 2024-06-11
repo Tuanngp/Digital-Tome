@@ -73,12 +73,14 @@
                                         <p style="color: red;">Email or password does not exist</p>
                                     </div>
 
+                                    <div th:if="${param.banned}">
+                                        <p style="color: red;">Your account has been locked, please contact us for support</p>
+                                    </div>
+
                                     <div class="text-left">
                                         <button class="btn btn-primary btnhover me-2">login</button>
                                         <a  th:href="@{/forgotPassword}" class="m-l5"><i class="fas fa-unlock-alt"></i> Forgot Password</a>
                                     </div>
-
-
 
                                     <div class="col-md-12">
                                         <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" th:href="@{/oauth2/authorization/google}">

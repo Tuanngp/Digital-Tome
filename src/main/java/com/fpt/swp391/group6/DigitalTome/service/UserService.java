@@ -9,18 +9,23 @@ import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.utils.UserUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+
+import static com.fpt.swp391.group6.DigitalTome.controller.ProfileController.DEFAULT_AVATAR_URL;
 
 @Service
 public class UserService {
 
-    public static String DEFAULT_AVATAR_URL = "/user/images/avatar_default.jpg";
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
@@ -35,34 +40,7 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
-    public void saveUser(RegisterDto registerDto) {
-        if (userRepository.existsByUsername(registerDto.getUsername())) {
-            throw new RuntimeException("User exists");
-        }
 
-        AccountEntity user = userMapper.toUSer(registerDto);
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setAvatarPath(DEFAULT_AVATAR_URL);
-
-        RoleEntity role = roleRepository.findByName("ROLE_PUBLISHER");
-        if (role == null) {
-            role = checkRoleExist();
-        }
-        user.setRoleEntity(role);
-        user.setAvatarPath(DEFAULT_AVATAR_URL);
-        userRepository.save(user);
-    }
-
-    private RoleEntity checkRoleExist() {
-        RoleEntity role = new RoleEntity();
-        role.setName("ROLE_PUBLISHER");
-        return roleRepository.save(role);
-    }
-
-    public boolean checkLogin(String email, String password){
-        AccountEntity user = userRepository.findByEmail(email);
-        return user != null && passwordEncoder.matches(password, user.getPassword());
-    }
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
@@ -80,9 +58,57 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public String getUserEmailById(Long userId) {
-        AccountEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        return user.getEmail();
+    public  void  updatePoint (AccountEntity accountEntity){
+        userRepository.save(accountEntity);
+    }
+
+    public String getUsernameById(Long userId) {
+        return userRepository.findById(userId)
+                .map(AccountEntity::getUsername)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public String getEmailById(Long userId) {
+        return userRepository.findById(userId)
+                .map(AccountEntity::getEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+
+    public void saveUser(RegisterDto registerDto) {
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
+            throw new RuntimeException("User exists");
+        }
+
+        AccountEntity user = userMapper.toUSer(registerDto);
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setAvatarPath(DEFAULT_AVATAR_URL);
+
+        RoleEntity role = roleRepository.findByName("ROLE_USER");
+        if (role == null) {
+            role = checkRoleExist();
+        }
+        user.setRoleEntity(role);
+        user.setAvatarPath(DEFAULT_AVATAR_URL);
+        userRepository.save(user);
+    }
+
+    private RoleEntity checkRoleExist() {
+        RoleEntity role = new RoleEntity();
+        role.setName("ROLE_USER");
+        return roleRepository.save(role);
+    }
+
+    public void updateUserRole(Long userId, String roleName) {
+        Optional<AccountEntity> accountOptional = userRepository.findById(userId);
+        if (accountOptional.isPresent()) {
+            AccountEntity account = accountOptional.get();
+            RoleEntity role = roleRepository.findByName(roleName);
+            if (role != null) {
+                account.setRoleEntity(role);
+                userRepository.save(account);
+            }
+        }
     }
 
 
@@ -168,10 +194,33 @@ public class UserService {
         return DEFAULT_AVATAR_URL;
     }
 
+    public AccountEntity getCurrentLogin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = null;
+        if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
+            username = ((UserDetails) authentication.getPrincipal()).getUsername();
+        }else if(authentication != null && authentication.getPrincipal() != null){
+            username = authentication.getPrincipal().toString();
+        }
+        if(username != null){
+            return userRepository.findByUsername(username);
+        }
+            return null;
+    }
 
+    public AccountEntity registerPublisher(Long id) {
+        Optional<AccountEntity> account = userRepository.findById(id);
+        AccountEntity user = null;
+        if (account.isPresent()) {
+            user = account.get();
+            user.setRoleEntity(roleRepository.findByName("ROLE_PUBLISHER"));
+        }
+        assert user != null;
+        return userRepository.save(user);
+    }
 
-    public  void  updatePoint (AccountEntity accountEntity){
-        userRepository.save(accountEntity);
+    public List<AccountEntity> getAdminUsers() {
+        return userRepository.findByRoleName("ADMIN");
     }
 }
 

@@ -17,10 +17,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    private static final String[] PUBLIC_ENDPOINT = {"/**", "/index", "/home", "/register", "/forgotPassword", "/books-list"};
+    private static final String[] PUBLIC_ENDPOINT = {"/**", "/index", "/home", "/register", "/forgotPassword", "/books-list", "/register-publisher"};
 
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;
+    @Autowired
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Autowired
     public SpringSecurity(CustomOAuth2UserService customOAuth2UserService, CustomUserDetailsService customUserDetailsService) {
@@ -35,26 +37,25 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
-                                .requestMatchers("/publisher/**").hasAnyRole("PUBLISHER", "ADMIN")
-                                .requestMatchers("/admin/**").hasAnyRole("ADMIN")
-                                .requestMatchers("/profile/**").authenticated()
-                                .requestMatchers("/buypoint/**").authenticated()
-                                .requestMatchers("/api/**").authenticated()
-                                .requestMatchers("/changePassword").authenticated()
-//                      .requestMatchers("/api/comments").authenticated()
-                                .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+                        .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
+                        .requestMatchers("/publisher/**").hasAnyRole("PUBLISHER", "ADMIN")
+                        .requestMatchers("/admin/").hasAnyRole("ADMIN")
+                        .requestMatchers("/admin/**").permitAll()
+                        .requestMatchers("/profile/**").authenticated()
+                        .requestMatchers("/buypoint/**").authenticated()
+                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers(PUBLIC_ENDPOINT).permitAll()
                 )
                 .formLogin(form -> form
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .successHandler(new CustomAuthenticationSuccessHandler())
-                .permitAll()
-        )
+                        .loginPage("/login") 
+                        .loginProcessingUrl("/login")
+                        .failureHandler(customAuthenticationFailureHandler)
+                        .successHandler(new CustomAuthenticationSuccessHandler())
+                        .permitAll()
+                )
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
@@ -67,18 +68,14 @@ public class SpringSecurity {
                         .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .permitAll()
-                )
+                        .permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/404")
-                );
+                        .accessDeniedPage("/404"));
         return http.build();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(customUserDetailsService)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
     }
 }

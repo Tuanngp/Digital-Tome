@@ -26,6 +26,4 @@ public class GlobalControllerAdvice {
         }
         model.addAttribute("account", accountEntity);
     }
-
-
 }
