@@ -74,6 +74,9 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    public AccountEntity findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
     public String forgotPass(String email) {
         Optional<AccountEntity> userOptional = Optional.ofNullable(userRepository.findByEmail(email));
@@ -108,7 +111,6 @@ public class UserService {
         return "Your password successfully updated.";
     }
 
-
     public String uploadImage(MultipartFile file) throws IOException {
         try{
             var result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
@@ -142,7 +144,6 @@ public class UserService {
         return DEFAULT_AVATAR_URL;
     }
 
-
     public void destroyImage(String nameOfImage) {
         try {
             var result = cloudinary.uploader().destroy(nameOfImage, ObjectUtils.asMap(
@@ -155,9 +156,9 @@ public class UserService {
         }
     }
 
-
     public  void  updatePoint (AccountEntity accountEntity){
         userRepository.save(accountEntity);
     }
+
 }
 

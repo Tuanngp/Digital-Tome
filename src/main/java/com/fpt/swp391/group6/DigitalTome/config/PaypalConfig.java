@@ -1,4 +1,4 @@
-package com.fpt.swp391.group6.DigitalTome.config.payment;
+package com.fpt.swp391.group6.DigitalTome.config;
 
 
 import com.paypal.base.rest.APIContext;
