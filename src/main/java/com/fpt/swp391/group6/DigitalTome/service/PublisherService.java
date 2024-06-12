@@ -90,7 +90,6 @@ public class PublisherService {
     public boolean existsByUserId(Long id){
         return publisherRepository.existsByUserId(id);
     }
-
     // Xóa khi bị từ chối
     public void removePublisherRequests(Long requestId) {
         Optional<PublisherEntity> entityOptional = publisherRepository.findById(requestId);
@@ -98,6 +97,5 @@ public class PublisherService {
         if(entityOptional.isPresent()){
             publisherRepository.deleteById(requestId);
         }
-
     }
 }

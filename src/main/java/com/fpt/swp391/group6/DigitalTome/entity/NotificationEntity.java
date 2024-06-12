@@ -29,7 +29,7 @@ public class NotificationEntity {
 
     private String title;
 
-    @Lob
+    @Lob 
     private String message;
 
     private Boolean isRead;
