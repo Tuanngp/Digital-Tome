@@ -69,8 +69,8 @@ public class BookRest {
     @PostMapping("/search")
     public AbstractOutput<BookDetailDto> getBookByTitle(@RequestBody SearchPageableRequest request) {
         AbstractOutput<BookDetailDto> result = new AbstractOutput<>();
-
-        Pageable pageable = PageRequest.of(request.getPage()-1, request.getSize());
+        Sort sort = Sort.by((request.getSortDirValue().equals("asc"))?Sort.Direction.ASC:Sort.Direction.DESC,request.getSortByValue() );
+        Pageable pageable = PageRequest.of(request.getPage()-1, request.getSize(),sort);
         SearchRequest searchRequest = new SearchRequest(
                 request.getKeyword(),
                 request.getCategories(),

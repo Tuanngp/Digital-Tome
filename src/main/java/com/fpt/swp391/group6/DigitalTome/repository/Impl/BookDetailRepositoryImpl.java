@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -90,6 +91,7 @@ public class BookDetailRepositoryImpl implements IBookDetailRepository {
         Predicate orPredicate = cb.or(keyworkPredicates.toArray(new Predicate[0]));
 
         List<Predicate> optionsPredicate = new ArrayList<>();
+        optionsPredicate.add(cb.equal(root.get("status"),2));
 
         if(searchRequest.getMinPoint() != null){
             optionsPredicate.add(cb.greaterThanOrEqualTo(root.get("point"), searchRequest.getMinPoint()));
@@ -109,14 +111,24 @@ public class BookDetailRepositoryImpl implements IBookDetailRepository {
            optionsPredicate.add(categoryEntityJoin.get("name").in(searchRequest.getCategories()));
         }
 
+
         List<Predicate> criteriaPredicates = new ArrayList<>();
         criteriaPredicates.add(orPredicate);
         criteriaPredicates.addAll(optionsPredicate);
 
         cq.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));
+        List<Order> orders = new ArrayList<>();
+        for (Sort.Order order : pageable.getSort()) {
+            Path<Object> sortByPath = root.get(order.getProperty());
+            orders.add(order.isAscending() ? cb.asc(sortByPath) : cb.desc(sortByPath));
+        }
+        if (!orders.isEmpty()) {
+            cq.orderBy(orders);
+        }
         TypedQuery<BookEntity> query = entityManager.createQuery(cq);
 
         int total = query.getResultList().size();
+
 
         query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());

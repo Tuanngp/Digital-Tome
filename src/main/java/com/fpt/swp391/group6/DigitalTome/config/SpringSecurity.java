@@ -39,6 +39,7 @@ public class SpringSecurity {
                         .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
                         .requestMatchers("/publisher/**").hasRole("PUBLISHER")
                         .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/censor/**").hasAnyRole("CENSOR")
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
 //                        .requestMatchers("/api/**").authenticated()

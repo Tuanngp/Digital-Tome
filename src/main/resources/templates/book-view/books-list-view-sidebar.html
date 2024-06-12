@@ -410,6 +410,23 @@
                                     </ul>
                                 </div>
                             </div>
+                            <div class="category">
+                                <div class="filter-category">
+                                    <i class="fas fa-list me-2"></i>
+                                    <select id="sortBy" class="default-select">
+                                        <option value="point">Point</option>
+                                        <option value="publicationDate">Date</option>
+                                        <option value="title">Title</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <i class="fas fa-sort-amount-down me-2 text-secondary"></i>
+                                    <select id="sortDir" class="default-select">
+                                        <option value="asc">Up</option>
+                                        <option value="desc">Down</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="acod-content collapse" id="collapseExample">
                             <div class="widget widget_services style-2">
@@ -709,6 +726,8 @@
             const maxPoint = $('#maxPoint').val();
             const keyword = $('#keyword').val();
             const size = limit;
+            var sortByValue = $('#sortBy').val();
+            var sortDirValue = $('#sortDir').val();
 
             // Collect data from the 'Category' section
             const categories = [];
@@ -730,7 +749,9 @@
                 categories: categories,
                 years: years,
                 page: page,
-                size: size
+                size: size,
+                sortByValue:sortByValue,
+                sortDirValue:sortDirValue
             };
 
             return data;
@@ -774,7 +795,7 @@
                                             <ul class="dz-tags">
                                                 ${book.categories.map(category => `<li style="margin-left: 4px">${category}</li>`).join(', ')}
                                             </ul>
-                                            <h4 class="title mb-0"><a href="/books-list-view-sidebar">${book.title}</a></h4>
+                                            <h4 class="title mb-0"><a href="/books/${book.isbn}">${book.title}</a></h4>
                                         </div>
                                         <div class="price">
                                             <span class="price-num text-primary">${book.point + " Point"}</span>

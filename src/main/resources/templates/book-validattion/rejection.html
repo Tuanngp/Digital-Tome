@@ -20,12 +20,12 @@
 
 
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" th:href="@{../admin/images/favicon.png}">
+    <link rel="shortcut icon" type="image/png" th:href="@{../images/favicon.png}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-    <link th:href="@{../admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
-    <link th:href="@{../admin/vendor/lightgallery/css/lightgallery.min.css}" rel="stylesheet">
-    <link th:href="@{../admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
-    <link th:href="@{../admin/css/style.css}" rel="stylesheet">
+    <link th:href="@{../vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
+    <link th:href="@{../vendor/lightgallery/css/lightgallery.min.css}" rel="stylesheet">
+    <link th:href="@{../vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
+    <link th:href="@{../css/style.css}" rel="stylesheet">
 
     <!--Bootstrap-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -33,7 +33,7 @@
 
 
     <!-- Custom Stylesheet -->
-    <link  th:href="@{../admin/css/style.css}" rel="stylesheet">
+    <link  th:href="@{../censor/css/style.css}" rel="stylesheet">
 
 
 </head>
@@ -878,243 +878,8 @@
                 </a>
                     <ul aria-expanded="false">
                         <li class="mini-dashboard">Dashboard</li>
-                        <li><a href="index.html">Dashboard Light</a></li>
-                        <li><a href="index-2.html">Dashboard Dark</a></li>
-                        <li><a href="index-3.html">Dashboard 3</a></li>
-                        <li><a href="index-4.html">Dashboard 4</a></li>
-                        <li><a href="crm.html">CRM</a></li>
-                        <li><a href="analytics.html">Analytics</a></li>
-                    </ul>
-                </li>
-                <li><a href="contacts.html" class="" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.13908 12.3145V16.0594" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M11.0498 14.1863H7.22864" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M15.6568 12.4285H15.5498" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M17.4704 16.0027H17.3634" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M8.36292 2C8.36292 2.74048 8.9754 3.34076 9.73093 3.34076H10.7874C11.953 3.34492 12.8972 4.27026 12.9025 5.41266V6.08771" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.7191 21.9623C13.7139 22.0132 10.7638 22.0111 7.86352 21.9623C4.64427 21.9623 2.29077 19.666 2.29077 16.5109V11.8614C2.29077 8.70627 4.64427 6.41005 7.86352 6.41005C10.7797 6.3602 13.7319 6.36123 16.7191 6.41005C19.9383 6.41005 22.2908 8.70731 22.2908 11.8614V16.5109C22.2908 19.666 19.9383 21.9623 16.7191 21.9623Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <span class="nav-text">Contacts</span>
-                </a>
-                </li>
-                <li><a href="blog.html" class="" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7379 2.76181H8.08493C6.00493 2.75381 4.29993 4.41181 4.25093 6.49081V17.2038C4.20493 19.3168 5.87993 21.0678 7.99293 21.1148C8.02393 21.1148 8.05393 21.1158 8.08493 21.1148H16.0739C18.1679 21.0298 19.8179 19.2998 19.8029 17.2038V8.03781L14.7379 2.76181Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M14.4751 2.75V5.659C14.4751 7.079 15.6231 8.23 17.0431 8.234H19.7981" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M14.2882 15.3585H8.88818" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12.2432 11.606H8.88721" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-                    </div>
-                    <span class="nav-text">Blog</span>
-                </a>
-                </li>
-                <li class="menu-title">OUR FEATURES</li>
-                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.11086 10.2878V13.7208" stroke="#252525" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M8.86244 12.0045H5.35974" stroke="#252525" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M13.0856 10.3924H12.9875" stroke="#252525" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M14.748 13.6691H14.6499" stroke="#252525" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M6.39948 0.833328C6.39948 1.5121 6.96092 2.06236 7.65349 2.06236H8.62193C9.69042 2.06617 10.5559 2.9144 10.5608 3.9616V4.5804" stroke="#252525" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.0593 19.1324C11.3045 19.1791 8.60026 19.1771 5.94166 19.1324C2.99069 19.1324 0.833313 17.0275 0.833313 14.1354V9.87325C0.833313 6.98107 2.99069 4.8762 5.94166 4.8762C8.61483 4.83051 11.321 4.83146 14.0593 4.8762C17.0102 4.8762 19.1666 6.98203 19.1666 9.87325V14.1354C19.1666 17.0275 17.0102 19.1324 14.0593 19.1324Z" stroke="#252525" stroke-linecap="round" stroke-width="1.5" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <span class="nav-text">Apps</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li class="mini-dashboard">Users Manager</li>
-                        <li><a href="chat.html">Chat</a></li>
-                        <li><a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Users Manager</a>
-                            <ul aria-expanded="false">
-
-                                <li><a href="app-profile-1.html">Profile 1</a></li>
-                                <li><a href="app-profile-2.html">Profile 2</a></li>
-                                <li><a href="edit-profile.html">Edit Profile</a></li>
-                                <li><a href="post-details.html">Post Details</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Email</a>
-                            <ul aria-expanded="false">
-                                <li><a href="email-compose.html">Compose</a></li>
-                                <li><a href="email-inbox.html">Inbox</a></li>
-                                <li><a href="email-read.html">Read</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="app-calender.html">Calendar</a></li>
-                        <li><a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Shop</a>
-                            <ul aria-expanded="false">
-                                <li><a href="ecom-product-grid.html">Product Grid</a></li>
-                                <li><a href="ecom-product-list.html">Product List</a></li>
-                                <li><a href="ecom-product-detail.html">Product Details</a></li>
-                                <li><a href="ecom-product-order.html">Order</a></li>
-                                <li><a href="ecom-checkout.html">Checkout</a></li>
-                                <li><a href="ecom-invoice.html">Invoice</a></li>
-                                <li><a href="ecom-customers.html">Customers</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5687 13.8887C18.2435 13.8887 18.8098 14.4455 18.7066 15.1118C18.1013 19.0318 14.7456 21.9423 10.6982 21.9423C6.22029 21.9423 2.59082 18.3129 2.59082 13.836C2.59082 10.1476 5.39293 6.71181 8.54766 5.93497C9.22556 5.7676 9.92029 6.24445 9.92029 6.94234C9.92029 11.6708 10.0792 12.8939 10.9771 13.5592C11.875 14.2244 12.9308 13.8887 17.5687 13.8887Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M21.9834 9.95121C22.0371 6.91331 18.3055 2.01647 13.7581 2.10068C13.4045 2.107 13.1213 2.40173 13.1055 2.75437C12.9908 5.25226 13.1455 8.4891 13.2318 9.95647C13.2581 10.4133 13.6171 10.7723 14.0729 10.7986C15.5813 10.8849 18.936 11.0028 21.3981 10.6302C21.7329 10.5796 21.9781 10.2891 21.9834 9.95121Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-
-                    </div>
-                    <span class="nav-text">Charts</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li class="mini-dashboard">Charts</li>
-                        <li><a href="chart-flot.html">Flot</a></li>
-                        <li><a href="chart-morris.html">Morris</a></li>
-                        <li><a href="chart-chartjs.html">Chartjs</a></li>
-                        <li><a href="chart-chartist.html">Chartist</a></li>
-                        <li><a href="chart-sparkline.html">Sparkline</a></li>
-                        <li><a href="chart-peity.html">Peity</a></li>
-                    </ul>
-                </li>
-                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.395 4.17701L15.2224 7.82776C15.4015 8.18616 15.7472 8.43467 16.1481 8.49218L20.2361 9.08062C21.2461 9.22644 21.6481 10.4505 20.9171 11.1519L17.961 13.9924C17.6704 14.2718 17.5382 14.6733 17.6069 15.0676L18.3046 19.0778C18.4764 20.0698 17.4205 20.8267 16.5178 20.3574L12.864 18.4627C12.5058 18.2768 12.0768 18.2768 11.7176 18.4627L8.06378 20.3574C7.161 20.8267 6.10517 20.0698 6.27801 19.0778L6.97462 15.0676C7.04334 14.6733 6.9111 14.2718 6.62059 13.9924L3.66445 11.1519C2.93349 10.4505 3.33541 9.22644 4.34544 9.08062L8.43342 8.49218C8.83431 8.43467 9.18105 8.18616 9.36014 7.82776L11.1865 4.17701C11.6384 3.27433 12.9431 3.27433 13.395 4.17701Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <span class="nav-text">Bootstrap</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li class="mini-dashboard">Bootstrap</li>
-                        <li><a href="ui-accordion.html">Accordion</a></li>
-                        <li><a href="ui-alert.html">Alert</a></li>
-                        <li><a href="ui-badge.html">Badge</a></li>
-                        <li><a href="ui-button.html">Button</a></li>
-                        <li><a href="ui-modal.html">Modal</a></li>
-                        <li class="extra-menu-li">
-                            <ul id="collapseExample" class="pt-0 extra-menu-links extra-menu-area">
-                                <li><a href="ui-button-group.html">Button Group</a></li>
-                                <li><a href="ui-list-group.html">List Group</a></li>
-                                <li><a href="ui-card.html">Cards</a></li>
-                                <li><a href="ui-carousel.html">Carousel</a></li>
-                                <li><a href="ui-dropdown.html">Dropdown</a></li>
-                                <li><a href="ui-popover.html">Popover</a></li>
-                                <li><a href="ui-progressbar.html">Progressbar</a></li>
-                                <li><a href="ui-tab.html">Tab</a></li>
-                                <li><a href="ui-typography.html">Typography</a></li>
-                                <li><a href="ui-pagination.html">Pagination</a></li>
-                                <li><a href="ui-grid.html">Grid</a></li>
-                            </ul>
-                            <a class="btn show-more-btn border-0" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <span class="show-more">Show More + </span>
-                                <span class="show-less">Show Less - </span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M21.7097 15.732C21.7097 19.31 19.6006 21.419 16.0226 21.419H8.24065C4.65365 21.419 2.54065 19.31 2.54065 15.732V7.932C2.54065 4.359 3.85465 2.25 7.43365 2.25H9.43365C10.1516 2.251 10.8276 2.588 11.2576 3.163L12.1706 4.377C12.6026 4.951 13.2786 5.289 13.9966 5.29H16.8266C20.4136 5.29 21.7376 7.116 21.7376 10.767L21.7097 15.732Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M7.77173 14.4629H16.5067" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-                    </div>
-                    <span class="nav-text">Plugins</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li class="mini-dashboard">Plugins</li>
-                        <li><a href="uc-select2.html">Select 2</a></li>
-                        <li><a href="uc-nestable.html">Nestable</a></li>
-                        <li><a href="uc-noui-slider.html">Noui Slider</a></li>
-                        <li><a href="uc-sweetalert.html">Sweet Alert</a></li>
-                        <li><a href="uc-toastr.html">Toastr</a></li>
-                        <li><a href="map-jqvmap.html">Jqv Map</a></li>
-                        <li><a href="uc-lightgallery.html">Light Gallery</a></li>
-                    </ul>
-                </li>
-                <li><a href="widget-basic.html" class="" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.29077 6.5C3.29077 3.87479 3.31888 3 6.79077 3C10.2627 3 10.2908 3.87479 10.2908 6.5C10.2908 9.12521 10.3018 10 6.79077 10C3.2797 10 3.29077 9.12521 3.29077 6.5Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2908 6.5C14.2908 3.87479 14.3189 3 17.7908 3C21.2627 3 21.2908 3.87479 21.2908 6.5C21.2908 9.12521 21.3018 10 17.7908 10C14.2797 10 14.2908 9.12521 14.2908 6.5Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.29077 17.5C3.29077 14.8748 3.31888 14 6.79077 14C10.2627 14 10.2908 14.8748 10.2908 17.5C10.2908 20.1252 10.3018 21 6.79077 21C3.2797 21 3.29077 20.1252 3.29077 17.5Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M14.2908 17.5C14.2908 14.8748 14.3189 14 17.7908 14C21.2627 14 21.2908 14.8748 21.2908 17.5C21.2908 20.1252 21.3018 21 17.7908 21C14.2797 21 14.2908 20.1252 14.2908 17.5Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-                    </div>
-                    <span class="nav-text">Widget</span>
-                </a>
-                </li>
-                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16.007 16.2236H8.78699" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M16.007 12.0371H8.78699" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M11.5421 7.86035H8.78711" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.1994 2.75C16.1994 2.75 8.52238 2.754 8.51038 2.754C5.75038 2.771 4.04138 4.587 4.04138 7.357V16.553C4.04138 19.337 5.76338 21.16 8.54738 21.16C8.54738 21.16 16.2234 21.157 16.2364 21.157C18.9964 21.14 20.7064 19.323 20.7064 16.553V7.357C20.7064 4.573 18.9834 2.75 16.1994 2.75Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-
-                    <span class="nav-text">Forms</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li class="mini-dashboard">Forms</li>
-                        <li><a href="form-element.html">Form Elements</a></li>
-                        <li><a href="form-wizard.html">Wizard</a></li>
-                        <li><a href="form-ckeditor.html">CkEditor</a></li>
-                        <li><a href="form-pickers.html">Pickers</a></li>
-                        <li><a href="form-validation.html">Form Validate</a></li>
-                    </ul>
-                </li>
-                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.6209 16.593H4.32019" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M13.4313 6.90066H19.732" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.01706 6.84625C9.01706 5.5506 7.9589 4.5 6.65392 4.5C5.34893 4.5 4.29077 5.5506 4.29077 6.84625C4.29077 8.14191 5.34893 9.19251 6.65392 9.19251C7.9589 9.19251 9.01706 8.14191 9.01706 6.84625Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.2907 16.5533C20.2907 15.2576 19.2334 14.207 17.9284 14.207C16.6226 14.207 15.5645 15.2576 15.5645 16.5533C15.5645 17.8489 16.6226 18.8995 17.9284 18.8995C19.2334 18.8995 20.2907 17.8489 20.2907 16.5533Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-                    </div>
-                    <span class="nav-text">Table</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li class="mini-dashboard">Table</li>
-                        <li><a href="table-bootstrap-basic.html">Bootstrap</a></li>
-                        <li><a href="table-datatable-basic.html">Datatable</a></li>
-                    </ul>
-                </li>
-                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
-                    <div class="menu-icon">
-                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.148 20.417C20.021 20.417 21.54 18.899 21.541 17.026V17.024V14.324C20.304 14.324 19.302 13.322 19.301 12.085C19.301 10.849 20.303 9.846 21.54 9.846H21.541V7.146C21.543 5.272 20.026 3.752 18.153 3.75H18.147H6.43502C4.56102 3.75 3.04202 5.268 3.04102 7.142V7.143V9.933C4.23502 9.891 5.23602 10.825 5.27802 12.019C5.27902 12.041 5.28002 12.063 5.28002 12.085C5.28102 13.32 4.28202 14.322 3.04702 14.324H3.04102V17.024C3.04002 18.897 4.55902 20.417 6.43202 20.417H6.43302H18.148Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.6621 9.06303L13.2781 10.31C13.3381 10.432 13.4541 10.517 13.5891 10.537L14.9661 10.738C15.3071 10.788 15.4421 11.206 15.1961 11.445L14.2001 12.415C14.1021 12.51 14.0581 12.647 14.0801 12.782L14.3151 14.152C14.3731 14.491 14.0181 14.749 13.7141 14.589L12.4831 13.942C12.3621 13.878 12.2181 13.878 12.0971 13.942L10.8671 14.589C10.5621 14.749 10.2071 14.491 10.2651 14.152L10.5001 12.782C10.5231 12.647 10.4781 12.51 10.3801 12.415L9.38511 11.445C9.13911 11.206 9.27411 10.788 9.61411 10.738L10.9911 10.537C11.1261 10.517 11.2431 10.432 11.3031 10.31L11.9181 9.06303C12.0701 8.75503 12.5101 8.75503 12.6621 9.06303Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-                    </div>
-                    <span class="nav-text">Pages</span>
-                </a>
-                    <ul aria-expanded="false">
-                        <li><a href="page-login.html">Login</a></li>
-                        <li><a href="page-register.html">Register</a></li>
-                        <li><a class="has-arrow" href="javascript:void(0);" aria-expanded="false">Error</a>
-                            <ul aria-expanded="false">
-                                <li><a href="page-error-400.html">Error 400</a></li>
-                                <li><a href="page-error-403.html">Error 403</a></li>
-                                <li><a href="page-error-404.html">Error 404</a></li>
-                                <li><a href="page-error-500.html">Error 500</a></li>
-                                <li><a href="page-error-503.html">Error 503</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="page-lock-screen.html">Lock Screen</a></li>
-                        <li><a href="empty-page.html">Empty Page</a></li>
-                        <li class="mini-dashboard">Pages</li>
+                        <li><a href="/censor/contribution">Contribution List</a></li>
+                        <li><a href="/censor/contribution/acception">Acception List</a></li>
                     </ul>
                 </li>
             </ul>
@@ -1403,13 +1168,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Required vendors -->
-<script src="/admin/vendor/global/global.min.js"></script>
-<script src="/admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="/censor/vendor/global/global.min.js"></script>
+<script src="/censor/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 
-<script src="/admin/js/custom.js"></script>
-<script src="/admin/js/deznav-init.js"></script>
-<script src="/admin/js/demo.js"></script>
-<script src="/admin/js/styleSwitcher.js"></script>
+<script src="/censor/js/custom.js"></script>
+<script src="/censor/js/deznav-init.js"></script>
+<script src="/censor/js/demo.js"></script>
+<script src="/censor/js/styleSwitcher.js"></script>
 
 <script th:src="@{../pagination/jquery.twbsPagination.js}" type="text/javascript"></script>
 
@@ -1459,7 +1224,7 @@
                         const row = $('<tr>');
                         row.append('<td><div class="form-check custom-checkbox checkbox-success check-lg me-3"><input type="checkbox" class="form-check-input" id="customCheckBox' + index + '" required=""><label class="form-check-label" for="customCheckBox' + index + '"></label></div></td>');
                         row.append('<td><strong>' + (book.isbn || 'N/A') + '</strong></td>');
-                        row.append('<td class="bookTitleCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#bookModal"><div class="d-flex align-items-center"><img id="bookImg" class="rounded-lg me-2" width="24" alt=""><span id="bookTitle" class="w-space-no">' + (book.title || 'N/A') + '</span></div></a></td>');
+                        row.append('<td class="bookTitleCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#bookModal"><div class="d-flex align-items-center"><img id="bookImg" class="rounded-lg me-2" width="24" alt="" src="'+book.bookCoverPath+'"><span id="bookTitle" class="w-space-no">' + (book.title || 'N/A') + '</span></div></a></td>');
                         row.append('<td id="bookDes" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">' + (book.description || 'N/A') + '</td>');
                         row.append('<td id="publishedDate">' + (book.publicationDate ? formatDate(book.publicationDate) : 'N/A') + '</td>');
                         row.append('<td class="authorCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#profileModal"><div class="d-flex align-items-center"><img id="publisherImg" ' + "src={" + book.publisherAvatarPath + "}" + ' class="rounded-lg me-2" width="24" alt=""><span id="publisherName" class="w-space-no">' + (book.publisherName || 'N/A') + '</span></div></a></td>');

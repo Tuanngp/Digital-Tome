@@ -21,4 +21,6 @@ public class SearchPageableRequest {
     Integer maxPoint;
     int page;
     int size;
+    String sortByValue;
+    String sortDirValue;
 }

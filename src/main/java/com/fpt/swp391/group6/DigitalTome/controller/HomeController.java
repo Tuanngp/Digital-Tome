@@ -65,6 +65,12 @@ public class HomeController {
         return "book-view/books-list-view-sidebar";
     }
 
+    //Test
+    @GetMapping("/books-test")
+    public String booksListViewSidebarTest() {
+        return "book-view/books-list-view-sidebarCopy";
+    }
+
     @GetMapping("/coming-soon")
     public String comingSoon() {
         return "landing-page/coming-soon";

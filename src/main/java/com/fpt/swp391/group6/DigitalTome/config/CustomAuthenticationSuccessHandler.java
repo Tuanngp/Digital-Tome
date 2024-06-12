@@ -21,11 +21,16 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         List<String> roles = new ArrayList<>();
         boolean isAdmin = false;
+        boolean isCensor = false;
 
         for(GrantedAuthority grantedAuthority : authentication.getAuthorities()){
             roles.add(grantedAuthority.getAuthority());
             if(grantedAuthority.getAuthority().equals("ROLE_ADMIN")){
                 isAdmin = true;
+                break;
+            }
+            if(grantedAuthority.getAuthority().equals("ROLE_CENSOR")){
+                isCensor = true;
                 break;
             }
         }
@@ -36,6 +41,8 @@ public class CustomAuthenticationSuccessHandler extends SavedRequestAwareAuthent
         }
         if(isAdmin){
             response.sendRedirect("/admin");
+        }else if(isCensor){
+            response.sendRedirect("/censor/contribution");
         }else{
             response.sendRedirect("/index");
         }
