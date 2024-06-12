@@ -139,10 +139,20 @@ $(document).ready(function () {
 
         console.log(formDataObject);
 
-        sendAjaxRequest(`/api/comments/${bookId}`, "POST", formDataObject,
+        let url = `/api/comments/${bookId}`;
+        let method = "POST";
+        let msg = "Reply added successfully";
+        if ($('.reply-add-btn').val() === "Edit Comment") {
+            const commentId = formDataObject.commentId;
+            url = `/api/comments/${commentId}`;
+            method = "PUT";
+            msg = "Comment edited successfully";
+        }
+
+        sendAjaxRequest(url, method, formDataObject,
             function () {
             showComments(currentPage);
-            toastr.success('Reply added successfully');
+            toastr.success(msg);
         },
             function () {
             if (jqXHR.responseJSON && jqXHR.responseJSON.error) {

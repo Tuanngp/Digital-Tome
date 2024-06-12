@@ -25,11 +25,11 @@
                     <div class="col">
                         <div class="dz-box">
                             <div class="dz-media">
-                                <img alt="book" th:src="@{../user/images/books/book16.png}">
+                                <img alt="book" th:src="${book.bookCover}">
                             </div>
                             <div class="dz-content">
                                 <div class="dz-header">
-                                    <h3 class="title">Think and Grow Rich</h3>
+                                    <h3 class="title" th:text="${book.title}">Think and Grow Rich</h3>
                                     <div class="shop-item-rating">
                                         <div class="d-lg-flex d-sm-inline-flex d-flex align-items-center">
                                             <ul class="dz-rating">
@@ -60,7 +60,7 @@
                                         <ul class="book-info">
                                             <li>
                                                 <div class="writer-info">
-                                                    <img alt="book" th:src="@{../user/images/profile2.jpg}">
+<!--                                                    <img alt="book" th:src="@{../user/images/profile2.jpg}">-->
                                                     <div >
                                                         <span>Writen by</span>
                                                         <span th:field="${book.authorEntityList.getFirst().name}"></span>
@@ -68,7 +68,10 @@
                                                 </div>
                                             </li>
                                             <li><span>Publisher</span>Printarea Studios</li>
-                                            <li><span>Year</span>${book.publicationDate}</li>
+                                            <li>
+                                                <span>Year</span>
+                                                <span th:field="${book.publicationDate}"></span>
+                                            </li>
                                         </ul>
                                     </div>
                                     <p class="text-1" th:text="${book.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

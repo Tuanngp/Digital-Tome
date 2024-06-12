@@ -32,6 +32,9 @@ public class ContentModeratorService {
     }
 
     public boolean isContentInappropriate(String content) throws IOException {
+        if (!isValidComment(content)) {
+            return true;
+        }
         Screen textResults = client.textModerations().screenText("text/plain", content.getBytes(), null);
         List<DetectedTerms> terms = textResults.terms();
         PII pII = textResults.pII();
@@ -39,8 +42,7 @@ public class ContentModeratorService {
                 (pII != null &&
                     (!pII.email().isEmpty() ||
                     !pII.phone().isEmpty() ||
-                    !pII.address().isEmpty())) ||
-                !isValidComment(content);
+                    !pII.address().isEmpty()));
     }
 
     public boolean isSpam(String comment) {
