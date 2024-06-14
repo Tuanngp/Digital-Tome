@@ -353,17 +353,13 @@
                                                     <td th:text="${pub.username}"></td>
                                                     <td th:text="${pub.namePublisher}"></td>
                                                     <td th:text="${pub.certificateNumber}"></td>
-                                                    <td th:text="${pub.approved == true ? 'Active' : 'IsActive'}"></td>
-
+                                                    <td th:text="${pub.approved == false ? 'Pending' : 'Approved'}"></td>
                                                     <td>
                                                         <button type="button" class="btn btn-success btn-sm"
-                                                                th:onclick="'confirmActionApprove(' + ${pub.id} + ', true)'">Approve</button>
+                                                                th:onclick="'confirmActionApprove(\'' + ${pub.userId} + '\', true)'">Approve</button>
                                                         <button type="button" class="btn btn-danger btn-sm"
-                                                                th:onclick="'confirmActionApprove(' + ${pub.id} + ', false)'">Not Approve</button>
+                                                                th:onclick="'confirmActionApprove(\'' + ${pub.userId} + '\',false)'">Reject</button>
                                                     </td>
-
-
-
                                                 </tr>
                                                 <tr th:if="${#lists.isEmpty(publisher)}">
                                                     <td colspan="7">No publisher information available.</td>
@@ -376,6 +372,7 @@
                             </div>
                         </div>
                     </div>
+
 
                     <script>
                         function goBack() {
@@ -468,7 +465,7 @@
 
 <script>
     function confirmActionApprove(userId, isApproved) {
-        let action = isApproved ? "Approve" : "Not Approve";
+        let action = isApproved ? "Approve" : "Reject";
 
         Swal.fire({
             title: `Are you sure you want to ${action} this user?`,
@@ -482,7 +479,7 @@
                     url: '/api/approve',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ userId: userId, action: action }),
+                    data: JSON.stringify({ id: userId, action: isApproved }),
                     success: function(data) {
                         Swal.fire('Success', data.message, 'success').then(() => {
                             window.location.reload();
@@ -497,8 +494,5 @@
         });
     }
 </script>
-
-
-
 </body>
 </html>

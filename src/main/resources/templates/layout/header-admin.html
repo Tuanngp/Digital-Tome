@@ -43,7 +43,7 @@
                         </a>
                     </li>
 
-<!--     Thông báo   -->
+                    <!--     Thông báo   -->
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" id="notificationDropdown">
                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -149,16 +149,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
-            //tạo một kết nối SockJS tới endpoint /ws được cấu hình trong WebSocketConfig
             var socket = new SockJS('/ws');
             var stompClient = Stomp.over(socket);
 
-
-            // Kết nối tới server WebSocket
             stompClient.connect({}, function (frame) {
-
-                // Đăng ký lắng nghe thông báo
                 stompClient.subscribe('/user/queue/notifications', function (notification) {
                     let newNotification = JSON.parse(notification.body);
                     addNotificationToUI(newNotification);
@@ -166,10 +160,9 @@
                     playNotificationSound();
                 });
             });
-            // Lấy các thông báo hiện có khi trang tải
+
             fetchNotifications();
 
-            // Thêm sự kiện click cho danh sách thông báo để đánh dấu thông báo là đã đọc
             document.querySelector('#notificationList').addEventListener('click', function (e) {
                 const notificationId = e.target.getAttribute('data-notification-id');
                 if (notificationId) {
@@ -179,63 +172,57 @@
             });
         });
 
-        // Gọi API để lấy các thông báo
         function fetchNotifications() {
             fetch('/api/notifications/current')
                 .then(response => response.json())
                 .then(data => {
-//                  Khi nhận được phản hồi, dữ liệu được chuyển đổi thành JSON và gọi updateNotificationUI(data) để cập nhật giao diện.
                     updateNotificationUI(data);
                 })
                 .catch(error => console.error('Error fetching notifications:', error));
         }
 
-        // Làm sạch (clear) danh sách thông báo hiện tại và thêm các thông báo mới vào giao diện.
         function updateNotificationUI(notifications) {
             const notificationItemsContainer = document.querySelector('#notificationList');
-            // Xóa các thông báo trước đó
             notificationItemsContainer.innerHTML = '';
 
-            // Thêm từng thông báo
             notifications.forEach(notification => {
                 addNotificationToUI(notification);
             });
 
-            // Cập nhật số lượng thông báo chưa đọc
             updateNotificationCount();
         }
 
-        // Hàm cập nhật số lượng thông báo chưa đọc
-        function updateNotificationCount() {notificationCount
+        function updateNotificationCount() {
             const countSpan = document.querySelector('#notificationCount');
             const notifications = document.querySelectorAll('.notification-item');
             let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
-            countSpan.textContent = unreadCount;
+
+            if (unreadCount === 0) {
+                countSpan.style.display = 'none';
+            } else {
+                countSpan.style.display = 'block';
+                countSpan.textContent = unreadCount;
+            }
         }
 
-        // Thêm thông báo hiện thị trên UI
         function addNotificationToUI(notification) {
             const notificationItemsContainer = document.querySelector('#notificationList');
 
             const notificationElement = document.createElement('li');
-
             notificationElement.className = notification.isRead ? 'notification-item' : 'notification-item unread';
-
             notificationElement.setAttribute('data-notification-id', notification.id);
             notificationElement.setAttribute('data-notification-url', notification.url);
 
-            // Tạo HTML cho thông báo với ảnh nhỏ và văn bản bên cạnh
             notificationElement.innerHTML = `
         <div class="notification-body">
             <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
             <div class="notification-text">
-                <p class="notification-message">${truncateText(notification.message, 100)}</p>
+                <p class="notification-message">${truncateText(notification.message, 50)}</p>
             </div>
         </div>
     `;
             notificationItemsContainer.prepend(notificationElement);
 
-            // Add click event handler to redirect to URL
             notificationElement.onclick = () => {
                 if (notification.url) {
                     window.location.href = notification.url;
@@ -244,20 +231,17 @@
             };
         }
 
-        // Hàm đánh dấu một thông báo là đã đọc trên server
         function markNotificationAsRead(notificationId) {
             fetch(`/api/notifications/mark-as-read/${notificationId}`, {
                 method: 'POST'
             }).then(response => {
                 if (response.ok) {
                     document.querySelector(`[data-notification-id="${notificationId}"]`).classList.remove('unread');
-                    // Update unread notification count
                     updateNotificationCount();
                 }
             }).catch(error => console.error('Error marking notification as read:', error));
         }
 
-        // Hàm rút ngắn văn bản đến độ dài tối đa và thêm dấu ba chấm
         function truncateText(text, maxLength) {
             if (text.length > maxLength) {
                 return text.substring(0, maxLength) + '...';

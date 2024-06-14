@@ -24,12 +24,11 @@ public class NotificationEntity {
     private AccountEntity user;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "publisher_id", nullable = false)
-//    private AccountEntity publisher;
+//    @JoinColumn(name = "sender_id")
+//    private AccountEntity sender;
 
     private String title;
 
-    @Lob 
     private String message;
 
     private Boolean isRead;

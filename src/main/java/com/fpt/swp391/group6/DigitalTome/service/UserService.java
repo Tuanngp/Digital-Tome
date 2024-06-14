@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static com.fpt.swp391.group6.DigitalTome.controller.ProfileController.DEFAULT_AVATAR_URL;
@@ -94,17 +93,6 @@ public class UserService {
         return roleRepository.save(role);
     }
 
-    public void updateUserRole(Long userId, String roleName) {
-        Optional<AccountEntity> accountOptional = userRepository.findById(userId);
-        if (accountOptional.isPresent()) {
-            AccountEntity account = accountOptional.get();
-            RoleEntity role = roleRepository.findByName(roleName);
-            if (role != null) {
-                account.setRoleEntity(role);
-                userRepository.save(account);
-            }
-        }
-    }
 
 
     public String forgotPass(String email) {

@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ApprovalRequest {
-    private Long userId;
-    private String action;  // Approve hoặc Not Approve
+    private Long id;
+    private boolean action;  // Approve hoặc Not Approve
 }
+    

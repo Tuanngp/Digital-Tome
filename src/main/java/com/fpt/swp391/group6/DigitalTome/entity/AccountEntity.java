@@ -86,8 +86,14 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date membershipExpiryDate;
 
-    @Column(name = "publisher_certificate")
-    private String pulisherCertificate;
+    @Column(name = "name_publisher", nullable = true, unique = true)
+    private String namePublisher;
+
+    @Column(name = "certificate_number", nullable = true, unique = true)
+    private String certificateNumber;
+
+    @Column(name = "is_approved")
+    private Boolean isApproved;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
@@ -151,4 +157,5 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.REFRESH, CascadeType.DETACH})
     @JsonManagedReference
     private Set<NotificationEntity> notifications;
+
 }
