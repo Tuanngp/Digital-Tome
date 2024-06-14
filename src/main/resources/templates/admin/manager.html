@@ -314,9 +314,8 @@
                                                     <td th:text="${user.phone}"></td>
                                                     <td th:class="${user.status == 0} ? 'status-active' : 'status-inactive'" th:text="${user.status == 0 ? 'Active' : 'IsActive'}"></td>
                                                     <td>
-                                                        <button type="button" class="btn btn-danger btn-sm" th:attr="onclick='confirmAction(\'ban\', \'' + ${page} + '\', ' + ${user.id} + ', \'' + ${user.email} + '\')'">Ban</button>
-                                                        <button type="button" class="btn btn-success btn-sm" th:attr="onclick='confirmAction(\'unban\', \'' + ${page} + '\', ' + ${user.id} + ', \'' + ${user.email} + '\')'">Unban</button>
-
+                                                        <button type="button" class="btn btn-danger btn-sm" th:if="${user.status == 0}" th:attr="onclick=|confirmAction('ban', '${page}', ${user.id}, '${user.email}')|">Ban</button>
+                                                        <button type="button" class="btn btn-success btn-sm" th:if="${user.status != 0}" th:attr="onclick=|confirmAction('unban', '${page}', ${user.id}, '${user.email}')|">Unban</button>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -361,7 +360,6 @@
                                                                 th:onclick="'confirmActionApprove(\'' + ${pub.userId} + '\',false)'">Reject</button>
                                                     </td>
                                                 </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
