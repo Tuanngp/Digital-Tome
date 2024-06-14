@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Sử Thanh Toán và Nạp Tiền</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .card-header {
+            background-color: #0070ba;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .table-striped>tbody>tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .table .status-pending {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .table .status-completed {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .table .status-failed {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Lịch Sử Tài Chính</h1>
+
+    <div class="card">
+        <div class="card-header">
+            Lịch Sử Thanh Toán
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Ngày</th>
+                <th>Giao Dịch</th>
+                <th>Số Tiền</th>
+                <th>Trạng Thái</th>
+            </tr>
+            </thead>
+            <tbody id="payment-history">
+            <!-- Dữ liệu thanh toán -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card my-4">
+        <div class="card-header">
+            Lịch Sử Nạp Tiền
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Ngày</th>
+                <th>Giao Dịch</th>
+                <th>Số Tiền</th>
+                <th>Trạng Thái</th>
+            </tr>
+            </thead>
+            <tbody id="deposit-history">
+            <!-- Dữ liệu nạp tiền -->
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

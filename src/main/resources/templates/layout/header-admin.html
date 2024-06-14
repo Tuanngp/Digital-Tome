@@ -147,7 +147,7 @@
         </nav>
     </div>
 
-    <script>
+    <script th:if="${account != null}">
         document.addEventListener('DOMContentLoaded', function () {
             var socket = new SockJS('/ws');
             var stompClient = Stomp.over(socket);
@@ -217,7 +217,7 @@
         <div class="notification-body">
             <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
             <div class="notification-text">
-                <p class="notification-message">${truncateText(notification.message, 50)}</p>
+                <p class="notification-message">${truncateText(notification.message, 100)}</p>
             </div>
         </div>
     `;
@@ -253,6 +253,7 @@
             var sound = document.getElementById("notificationSound");
             sound.play();
         }
+
     </script>
 </div>
 

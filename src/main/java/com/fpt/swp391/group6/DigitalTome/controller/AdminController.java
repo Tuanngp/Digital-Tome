@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-@Slf4j
 public class AdminController {
 
     private final AdminService adminService;

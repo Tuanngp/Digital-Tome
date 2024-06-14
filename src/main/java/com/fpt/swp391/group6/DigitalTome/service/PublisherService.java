@@ -5,12 +5,10 @@ import com.fpt.swp391.group6.DigitalTome.dto.PublisherDTO;
 import com.fpt.swp391.group6.DigitalTome.dto.RegisterPublisherDTO;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
-import com.fpt.swp391.group6.DigitalTome.repository.NotificationRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -71,7 +69,7 @@ public class PublisherService {
                 account.setIsApproved(true);
                 userRepository.save(account);
                 String message = "Publisher Registration Successful";
-                notificationService.createNotification(account, accountAdmin, message, "Register", "/duongdan");
+                notificationService.createNotification(account, accountAdmin, message, "Register", "/logout");
             }
         }
     }
@@ -82,7 +80,7 @@ public class PublisherService {
         Optional<AccountEntity> entityOptional = userRepository.findById(id);
         if (entityOptional.isPresent()) {
             AccountEntity account = entityOptional.get();
-            RoleEntity role = roleRepository.findByName("ROLE_PUBLISHER");
+            RoleEntity role = roleRepository.findByName("ROLE_USER");
             if (role != null) {
                 account.setRoleEntity(role);
                 account.setIsApproved(null);
@@ -90,7 +88,7 @@ public class PublisherService {
                 account.setCertificateNumber(null);
                 userRepository.save(account);
                 String message = "Publisher Registration Failed";
-                notificationService.createNotification(account, accountAdmin, message, "Register", "/duongdan");
+                notificationService.createNotification(account, accountAdmin, message, "Register", "/");
             }
         }
     }

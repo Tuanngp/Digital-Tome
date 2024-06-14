@@ -1,8 +1,8 @@
 <!-- Header -->
-<header class="site-header mo-left header style-1" th:fragment="head">
+<header class="site-header mo-left header style-1" th:fragment="header">
     <script src="https://cdn.jsdelivr.net/sockjs/1.0.2/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
-    <script>
+    <script th:if="${account != null}">
         document.addEventListener('DOMContentLoaded', function () {
             var socket = new SockJS('/ws');
             var stompClient = Stomp.over(socket);
@@ -72,7 +72,7 @@
         <div class="notification-body">
             <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
             <div class="notification-text">
-                <p class="notification-message">${truncateText(notification.message, 50)}</p>
+                <p class="notification-message">${truncateText(notification.message, 100)}</p>
             </div>
         </div>
     `;
@@ -121,9 +121,6 @@
             </div>
 
             <!-- EXTRA NAV -->
-
-
-<!--            Thông báo ở đây  -->
             <div class="extra-nav">
                 <div class="extra-cell">
                     <ul class="navbar-nav header-right">
@@ -145,6 +142,7 @@
                             </div>
                         </li>
                         <audio id="notificationSound" src="/admin/notificationsound/notification.mp3" preload="auto"></audio>
+
 
 
                         <li class="nav-item">
@@ -414,6 +412,8 @@
         </div>
 
     </div>
+
+
 
     <!-- Main Header End -->
 </header>

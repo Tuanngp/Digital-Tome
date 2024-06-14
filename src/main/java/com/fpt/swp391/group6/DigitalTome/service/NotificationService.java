@@ -3,6 +3,7 @@ package com.fpt.swp391.group6.DigitalTome.service;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.NotificationEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.NotificationRepository;
+import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -30,15 +31,19 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
+
     public List<NotificationEntity> getNotificationsForCurrentUser() {
         AccountEntity account = userService.getCurrentLogin();
-        String username = account.getUsername();
-        List<NotificationEntity> notifications = notificationRepository.findByUserIdOrderByIdDesc(account.getId());
-        for (NotificationEntity notification : notifications) {
-            assert username != null;
-            messagingTemplate.convertAndSendToUser(username, "/queue/notifications", notification);
+
+        if (account != null) {
+            String username = account.getUsername();
+            List<NotificationEntity> notifications = notificationRepository.findByUserIdOrderByIdDesc(account.getId());
+            for (NotificationEntity notification : notifications) {
+                messagingTemplate.convertAndSendToUser(username, "/queue/notifications", notification);
+            }
+            return notifications;
         }
-        return notifications;
+        return List.of();
     }
 
 
@@ -62,4 +67,5 @@ public class NotificationService {
         notification.setIsRead(true);
         notificationRepository.save(notification);
     }
+
 }
