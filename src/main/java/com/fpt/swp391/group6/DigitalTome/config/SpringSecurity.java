@@ -1,6 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.config;
 
-import com.fpt.swp391.group6.DigitalTome.security.CustomUserDetailsService;
+import com.fpt.swp391.group6.DigitalTome.service.CustomUserDetailsService;
 import com.fpt.swp391.group6.DigitalTome.service.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

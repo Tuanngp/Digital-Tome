@@ -60,7 +60,7 @@
                                         <ul class="book-info">
                                             <li>
                                                 <div class="writer-info">
-<!--                                                    <img alt="book" th:src="@{../user/images/profile2.jpg}">-->
+                                                    <!--                                                    <img alt="book" th:src="@{../user/images/profile2.jpg}">-->
                                                     <div >
                                                         <span>Writen by</span>
                                                         <span th:field="${book.authorEntityList.getFirst().name}"></span>
@@ -84,20 +84,20 @@
                                             <h5 th:text="${book.point}">$54.78</h5>
                                             <p class="p-lr10">$70.00</p>
                                         </div>
-<!--                                        <div class="product-num">-->
-<!--                                            <div class="quantity btn-quantity style-1 me-3">-->
-<!--                                                <label for="demo_vertical2"></label>-->
-<!--                                                <input id="demo_vertical2" name="demo_vertical2" type="number" value="1"/>-->
-<!--                                            </div>-->
-<!--                                            <a class="btn btn-primary btnhover btnhover2" th:href="@{shop-cart}"><i-->
-<!--                                                    class="flaticon-shopping-cart-1"></i> <span>Add to cart</span></a>-->
-<!--                                            <div class="bookmark-btn style-1 d-none d-sm-block">-->
-<!--                                                <input class="form-check-input" id="flexCheckDefault1" type="checkbox">-->
-<!--                                                <label class="form-check-label" for="flexCheckDefault1">-->
-<!--                                                    <i class="flaticon-heart"></i>-->
-<!--                                                </label>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
+                                        <!--                                        <div class="product-num">-->
+                                        <!--                                            <div class="quantity btn-quantity style-1 me-3">-->
+                                        <!--                                                <label for="demo_vertical2"></label>-->
+                                        <!--                                                <input id="demo_vertical2" name="demo_vertical2" type="number" value="1"/>-->
+                                        <!--                                            </div>-->
+                                        <!--                                            <a class="btn btn-primary btnhover btnhover2" th:href="@{shop-cart}"><i-->
+                                        <!--                                                    class="flaticon-shopping-cart-1"></i> <span>Add to cart</span></a>-->
+                                        <!--                                            <div class="bookmark-btn style-1 d-none d-sm-block">-->
+                                        <!--                                                <input class="form-check-input" id="flexCheckDefault1" type="checkbox">-->
+                                        <!--                                                <label class="form-check-label" for="flexCheckDefault1">-->
+                                        <!--                                                    <i class="flaticon-heart"></i>-->
+                                        <!--                                                </label>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -114,53 +114,53 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane show active" id="development-1">
-                                <div class="clear" id="comment-list">
-                                    <div class="post-comments comments-area style-1 clearfix">
-                                        <h4 class="comments-title" id="totalComments">4 COMMENTS</h4>
-                                        <div id="comment">
-                                            <div class="reply-box">
-                                            <form id="commentForm" method="POST" style="margin-bottom: 32px">
-                                                <div class="form-group" style="margin: 12px 0">
-                                                    <label for="content"></label>
-                                                    <input class="form-control" id="content" name="content" placeholder="Enter Comment"/>
-                                                    <input th:if="${book!=null}" id="bookId" name="bookId" type="hidden" th:value="${book.id}">
-                                                    <input th:if="${account!=null}" id="accountId" name="accountId" type="hidden" th:value="${account.id}">                                                    <input id="parentCommentId" name="parentCommentId" type="hidden" />
-                                                    <input id="commentId" name="commentId" type="hidden" />
-                                                </div>
-                                                <span id="message"></span>
-                                                <div class="form-group">
-                                                    <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Post Comment"/>
-                                                </div>
-                                            </form>
-                                        </div>
-                                            <ol class="comment-list">
-                                                <li class="comment even thread-even depth-1 comment">
-                                                    <div id="showComments"></div>
-                                                    <div class="row page">
-                                                        <div class="col-md-6">
-                                                            <p class="page-text">Showing 12 from 50 data</p>
+                                    <div class="clear" id="comment-list">
+                                        <div class="post-comments comments-area style-1 clearfix">
+                                            <h4 class="comments-title" id="totalComments">4 COMMENTS</h4>
+                                            <div id="comment">
+                                                <div class="reply-box">
+                                                    <form id="commentForm" method="POST" style="margin-bottom: 32px">
+                                                        <div class="form-group" style="margin: 12px 0">
+                                                            <label for="content"></label>
+                                                            <input class="form-control" id="content" name="content" placeholder="Enter Comment"/>
+                                                            <input th:if="${book!=null}" id="bookId" name="bookId" type="hidden" th:value="${book.id}">
+                                                            <input th:if="${account!=null}" id="accountId" name="accountId" type="hidden" th:value="${account.id}">                                                    <input id="parentCommentId" name="parentCommentId" type="hidden" />
+                                                            <input id="commentId" name="commentId" type="hidden" />
                                                         </div>
-                                                        <div class="col-md-6">
-                                                            <nav aria-label="Blog Pagination">
-                                                                <ul class="pagination style-1 p-t20">
-                                                                    <li class="page-item"><a class="page-link prev"
-                                                                                             href="javascript:void(0);">Prev</a></li>
-                                                                    <li class="page-item"><a class="page-link active"
-                                                                                             href="javascript:void(0);">1</a></li>
-                                                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                                                                    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                                                                    <li class="page-item"><a class="page-link next"
-                                                                                             href="javascript:void(0);">Next</a></li>
-                                                                </ul>
-                                                            </nav>
+                                                        <span id="message"></span>
+                                                        <div class="form-group">
+                                                            <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Post Comment"/>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                            </ol>
+                                                    </form>
+                                                </div>
+                                                <ol class="comment-list">
+                                                    <li class="comment even thread-even depth-1 comment">
+                                                        <div id="showComments"></div>
+                                                        <div class="row page">
+                                                            <div class="col-md-6">
+                                                                <p class="page-text">Showing 12 from 50 data</p>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <nav aria-label="Blog Pagination">
+                                                                    <ul class="pagination style-1 p-t20">
+                                                                        <li class="page-item"><a class="page-link prev"
+                                                                                                 href="javascript:void(0);">Prev</a></li>
+                                                                        <li class="page-item"><a class="page-link active"
+                                                                                                 href="javascript:void(0);">1</a></li>
+                                                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                                                        <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                                                        <li class="page-item"><a class="page-link next"
+                                                                                                 href="javascript:void(0);">Next</a></li>
+                                                                    </ul>
+                                                                </nav>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                                 <div class="tab-pane" id="graphic-design-1">
                                     <table class="table border book-overview">
                                         <tr>

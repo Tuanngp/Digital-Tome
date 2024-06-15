@@ -3,7 +3,6 @@ package com.fpt.swp391.group6.DigitalTome.repository.Impl;
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.IBookDetailRepository;
-import com.fpt.swp391.group6.DigitalTome.rest.input.SearchPageableRequest;
 import com.fpt.swp391.group6.DigitalTome.rest.input.SearchRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

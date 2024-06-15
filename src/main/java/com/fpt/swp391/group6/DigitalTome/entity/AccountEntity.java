@@ -147,5 +147,9 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<NotificationEntity>  registerationsReceived;
-
+}
+enum Gender {
+    MALE,
+    FEMALE,
+    OTHER
 }

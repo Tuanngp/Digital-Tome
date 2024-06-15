@@ -1,8 +1,9 @@
-package com.fpt.swp391.group6.DigitalTome.security;
+package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
+import com.fpt.swp391.group6.DigitalTome.dto.CustomUserDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.repository;
 
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
-import com.fpt.swp391.group6.DigitalTome.rest.input.SearchPageableRequest;
 import com.fpt.swp391.group6.DigitalTome.rest.input.SearchRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

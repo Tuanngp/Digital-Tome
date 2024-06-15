@@ -80,11 +80,6 @@ $(document).ready(function () {
 
         let url = `/api/comments/${bookId}`;
         let method = "POST";
-        if ($('#submit').val() === "Edit Comment") {
-            const commentId = $('#commentId').val();
-            url = `/api/comments/${commentId}`;
-            method = "PUT";
-        }
 
         sendAjaxRequest(url, method, formDataObject, function () {
             $('#submit').val('Post Comment');
@@ -151,16 +146,16 @@ $(document).ready(function () {
 
         sendAjaxRequest(url, method, formDataObject,
             function () {
-            showComments(currentPage);
-            toastr.success(msg);
-        },
+                showComments(currentPage);
+                toastr.success(msg);
+            },
             function () {
-            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
-                toastr.error(jqXHR.responseJSON.error);
-            } else {
-                toastr.error('Failed to reply comment');
-            }
-        });
+                if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                    toastr.error(jqXHR.responseJSON.error);
+                } else {
+                    toastr.error('Failed to reply comment');
+                }
+            });
     });
 
     //cancel reply-box

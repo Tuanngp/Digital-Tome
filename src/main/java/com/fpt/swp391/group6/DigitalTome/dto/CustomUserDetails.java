@@ -1,4 +1,4 @@
-package com.fpt.swp391.group6.DigitalTome.security;
+package com.fpt.swp391.group6.DigitalTome.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
