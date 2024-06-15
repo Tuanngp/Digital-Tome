@@ -1,5 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
+import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentDTOResponse;
+import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTOResponse;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
@@ -10,6 +12,7 @@ import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,13 +103,9 @@ public class PaypalController {
         } catch (PayPalRESTException e) {
             log.error("Error occurred: ", e);
             paymentEntity.setSuccess(false);
-
-
         } finally {
             paymentRepository.save(paymentEntity);
         }
-
-
         return paymentEntity.isSuccess() ? "payment/paymentSuccess" : "redirect:/payment/error";
 
     }
@@ -119,5 +118,21 @@ public class PaypalController {
     @GetMapping("/payment/error")
     public String paymentError() {
         return "payment/paymentError";
+    }
+
+
+    @GetMapping("/transaction")
+    public String transactionHistory(@RequestParam(name = "page", defaultValue = "0") int page,
+                                     @RequestParam(name = "size", defaultValue = "5") int size,
+                                     Model model) {
+        AccountEntity accountCurrent = userService.getCurrentLogin();
+        if (accountCurrent != null) {
+            PaymentPageDTOResponse response = paypalService.getPaymentsByAccountId(accountCurrent.getId(), page, size);
+            model.addAttribute("transactions", response.getPayments());
+            model.addAttribute("totalPages", response.getTotalPages());
+            model.addAttribute("currentPage", response.getCurrentPage());
+            model.addAttribute("pageSize", size);
+        }
+        return "payment/history";
     }
 }

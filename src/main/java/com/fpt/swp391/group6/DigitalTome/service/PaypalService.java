@@ -1,20 +1,29 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
+import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentDTOResponse;
+import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTOResponse;
+import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
+import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PaypalService {
 
     private final APIContext apiContext;
+    private final PaymentRepository paymentRepository;
 
     public Payment createPayment(
             Double total,               // Tổng tiền
@@ -75,16 +84,33 @@ public class PaypalService {
         Payment payment = new Payment();
         // Đặt ID của Payment bằng ID của thanh toán đã được tạo trước đó
         payment.setId(paymentId);
-
-        // Tạo một đối tượng PaymentExecution mới để chỉ định người thanh toán và thực hiện giao dịch
         PaymentExecution paymentExecution = new PaymentExecution();
         // Đặt ID của người thanh toán cho PaymentExecution. ID này xác định người dùng PayPal mà bạn muốn thực hiện giao dịch thanh toán.
         paymentExecution.setPayerId(payerId);
-
         // Gửi yêu cầu thực hiện thanh toán tới PayPal API
         // Sử dụng đối tượng APIContext và đối tượng PaymentExecution đã được tạo trước đó
         // Kết quả trả về từ phương thức execute là một Payment object đại diện cho kết quả của giao dịch
         return payment.execute(apiContext, paymentExecution);
+    }
+
+    public PaymentPageDTOResponse getPaymentsByAccountId(Long accountId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PaymentEntity> paymentsPage = paymentRepository.findByAccountEntityId(accountId, pageable);
+
+        List<PaymentDTOResponse> payments = paymentsPage.getContent().stream().map(payment -> PaymentDTOResponse.builder()
+                .id(payment.getId())
+                .username(payment.getAccountEntity().getUsername())
+                .price(payment.getDecimal())
+                .bookTitle(payment.getBookEntity() != null ? payment.getBookEntity().getTitle() : null)
+                .createdDate(payment.getCreatedDate())
+                .success(payment.isSuccess())
+                .build()).collect(Collectors.toList());
+
+        return PaymentPageDTOResponse.builder()
+                .payments(payments)
+                .totalPages(paymentsPage.getTotalPages())
+                .currentPage(page)
+                .build();
     }
 
 }

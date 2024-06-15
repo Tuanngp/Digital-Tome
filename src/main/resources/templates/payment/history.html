@@ -1,98 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch Sử Thanh Toán và Nạp Tiền</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head}">
+    <title>Transaction</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
         }
 
-        .container {
-            margin-top: 50px;
+        .table-responsive {
+            overflow-x: auto;
         }
 
-        .card-header {
-            background-color: #0070ba;
-            color: white;
-            font-size: 1.2em;
-        }
-
-        .table-striped>tbody>tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        .table-striped>tbody>tr:hover {
-            background-color: #f1f1f1;
-        }
-
-        .table th, .table td {
-            vertical-align: middle;
-        }
-
-        .table .status-pending {
-            color: #ffc107;
+        .table th {
             font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #666;
         }
 
-        .table .status-completed {
-            color: #28a745;
-            font-weight: bold;
+        .table td {
+            font-size: 14px;
+            color: #333;
         }
 
-        .table .status-failed {
-            color: #dc3545;
-            font-weight: bold;
+        .badge {
+            font-size: 12px;
+            padding: 6px 10px;
+            border-radius: 4px;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .badge-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .badge-warning {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        .dropdown-menu {
+            min-width: 100px;
         }
     </style>
 </head>
 <body>
+<header th:replace="layout/header :: header"></header>
+<br>
 <div class="container">
-    <h1 class="my-4">Lịch Sử Tài Chính</h1>
-
-    <div class="card">
-        <div class="card-header">
-            Lịch Sử Thanh Toán
-        </div>
-        <table class="table table-striped">
+    <div class="table-responsive">
+        <table class="table table-bordered table-responsive-md">
             <thead>
             <tr>
-                <th>Ngày</th>
-                <th>Giao Dịch</th>
-                <th>Số Tiền</th>
-                <th>Trạng Thái</th>
+                <th style="width:80px;"><strong>#</strong></th>
+                <th><strong>Book Title</strong></th>
+                <th><strong>Username</strong></th>
+                <th><strong>Date</strong></th>
+                <th><strong>Price</strong></th>
+                <th><strong>Status</strong></th>
             </tr>
             </thead>
-            <tbody id="payment-history">
-            <!-- Dữ liệu thanh toán -->
-            </tbody>
-        </table>
-    </div>
 
-    <div class="card my-4">
-        <div class="card-header">
-            Lịch Sử Nạp Tiền
-        </div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>Ngày</th>
-                <th>Giao Dịch</th>
-                <th>Số Tiền</th>
-                <th>Trạng Thái</th>
+            <tbody>
+            <tr th:each="transaction, iterStat : ${transactions}">
+                <td><strong th:text="${iterStat.count}"></strong></td>
+                <td th:text="${transaction.bookTitle}"></td>
+                <td th:text="${transaction.username}"></td>
+                <td th:text="${#dates.format(transaction.createdDate, 'dd MMMM yyyy')}"></td>
+                <td th:text="${transaction.price} + ' $'"></td>
+                <td>
+                    <span th:classappend="${transaction.success} ? 'badge badge-success' : 'badge badge-danger'">
+                        <span th:text="${transaction.success} ? 'Successful' : 'Failed'"></span>
+                    </span>
+                </td>
             </tr>
-            </thead>
-            <tbody id="deposit-history">
-            <!-- Dữ liệu nạp tiền -->
             </tbody>
         </table>
+
+        <!-- Phân trang -->
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/transaction(size=${pageSize}, page=${currentPage} - 1)}">Previous</a>
+                </li>
+
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" href="#" th:href="@{/transaction(size=${pageSize}, page=${i})}" th:text="${i + 1}"></a>
+                </li>
+
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/transaction(size=${pageSize}, page=${currentPage} + 1)}">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<footer th:replace="layout/footer :: footer"></footer>
 </body>
 </html>
