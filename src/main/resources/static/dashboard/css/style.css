@@ -1,62 +1,3 @@
-/*
-    Table of Contents
-
-    Name                 : W3Admin
-    Author               : Dexignzone
-    Author Portfolio     : https://themeforest.net/user/dexignzone/portfolio
-
-
-
-    Table of Sass Contents
-
-    1. Abstracts
-        _bs-custom
-        _inheritance
-        _maps
-        _mixin
-        _variable
-
-    2. bootstrap
-        -Here goes all official bootstrap scss files
-
-    3. Global/Base
-        _color
-        _custom-grid
-        _fonts
-        _helper
-        _reset
-
-    4. layout
-        +footer
-        +header
-        +rtl
-        +sidebar
-        +tables
-        +theme
-        +version-dark
-
-    5. Conponents
-        +app
-        +charts
-        +forms
-        +map
-        +uc
-        +ui
-        +widget
-
-    6. Page
-        _index-1
-        _page-error
-        _page-register
-        _page-signin
-        _page-user-lock
-        _page-user-lock
-
-*/
-/* //action button color
-$add-btn:blue
-$edit-btn:
-$delete-btn: */
 @import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&amp;display=swap");
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
@@ -66,7 +7,7 @@ $delete-btn: */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap");
 @import url("../icons/simple-line-icons/css/simple-line-icons.css");
 @import url("../icons/fontawesome6/css/all.min.css");
-@import url("../../icons/fontawesome/css/all.min.css");
+@import url("../icons/fontawesome/css/all.min.css");
 @import url("../icons/material-design-iconic-font/css/materialdesignicons.min.css");
 @import url("../icons/themify-icons/css/themify-icons.css");
 @import url("../icons/line-awesome/css/line-awesome.min.css");
@@ -9484,30 +9425,30 @@ label {
         margin-bottom: 1.5rem !important; } }
 
 /* Editable */
-#preloader {
-    background-color: #fff;
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    position: fixed;
-    z-index: 99999;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center; }
-#preloader .dz-ripple {
+/* #preloader {
+  background-color: #fff;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  position: fixed;
+  z-index: 99999;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  #preloader .dz-ripple {
     display: inline-block;
     position: relative;
     width: 80px;
     height: 80px; }
-#preloader .dz-ripple div {
+  #preloader .dz-ripple div {
     position: absolute;
     border: 4px solid var(--primary);
     opacity: 1;
     border-radius: 50%;
     animation: dz-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite; }
-#preloader .dz-ripple div:nth-child(2) {
-    animation-delay: -0.5s; }
+  #preloader .dz-ripple div:nth-child(2) {
+    animation-delay: -0.5s; } */
 
 @keyframes dz-ripple {
     0% {
@@ -31704,7 +31645,7 @@ table.dataTable thead .sorting_asc {
     width: 3.75rem;
     height: 3.75rem;
     display: inline-block;
-    background: url("../../images/like.png");
+    background: url("../images/like.png");
     cursor: pointer;
     margin: -1.563rem -0.938rem; }
 

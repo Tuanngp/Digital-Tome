@@ -46,8 +46,8 @@ public class MessageController {
     @GetMapping("/chat")
     public String chat(Model model, Principal principal, @AuthenticationPrincipal OAuth2User oAuth2User) {
         AccountEntity user = userService.getCurrentUser(principal, oAuth2User);
-        String username = user!=null ? user.getUsername() : "";
-        model.addAttribute("username", username);
+//        String username = user!=null ? user.getUsername() : "";
+        model.addAttribute("account", user);
         return "chat";
     }
 

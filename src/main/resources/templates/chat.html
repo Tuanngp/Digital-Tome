@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<head th:replace="~{layout/head-admin :: head-admin}"><title>Home</title></head>
 <body>
-<div class="outer-body">
+<div class="outer-body" style="padding-left: 10px;">
     <div class="inner-body">
         <div class="content-body chat-height">
             <!-- row -->
@@ -17,14 +14,16 @@
                             <div class="card-body p-0">
                                 <div class="row gx-0">
                                     <!-- column -->
-                                    <div class="col-xl-3 col-lg-6 col-sm-5 chat-border mobile-chat chat-left-area">
+                                    <div class="col-xl-5 col-lg-6 col-sm-5 chat-border mobile-chat chat-left-area">
                                         <div class="chat-p shaprate">
                                             <div class="d-flex align-items-center">
                                                 <img alt=""
-                                                     class="avatar avatar-md rounded-circle" src="images/contacts/d1.jpg">
+                                                     class="avatar avatar-md rounded-circle"
+                                                     th:src="${account.avatarPath}">
                                                 <div class="ms-2">
-                                                    <h6 class="mb-0">K kumar Gaur</h6>
-                                                    <span>web Designer</span>
+                                                    <h6 class="mb-0"
+                                                        th:text="${account.fullname}"></h6>
+<!--                                                    <span>web Designer</span>-->
                                                 </div>
                                             </div>
                                             <div class="icon-box bg-primary-light">
@@ -42,7 +41,8 @@
                                         <div class="c-list">
                                             <div class="input-group search-area">
                                                 <input class="form-control" placeholder="Search " type="text">
-                                                <span class="input-group-text"><a href="javascript:void(0)">
+                                                <span class="input-group-text">
+                                                    <a href="javascript:void(0)">
 														<svg fill="none" height="19" viewBox="0 0 18 19" width="18"
                                                              xmlns="http://www.w3.org/2000/svg">
 															<circle cx="8.82495" cy="9.32491" r="6.74142"
@@ -51,7 +51,8 @@
 															<path d="M13.5137 14.3638L16.1568 16.9999" stroke="#252525"
                                                                   stroke-linecap="round" stroke-linejoin="round"/>
 														</svg>
-														</a></span>
+                                                    </a>
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="people-list dz-scroll">
@@ -211,20 +212,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-5 col-lg-6 col-sm-7 chat-border">
+                                    <div class="col-xl-7 col-lg-6 col-sm-7 chat-border">
                                         <div class="chat-p shaprate">
                                             <div class="d-flex align-items-center">
                                                 <img alt=""
-                                                     class="avatar avatar-md rounded-circle" src="images/contacts/d1.jpg">
+                                                     class="avatar avatar-md rounded-circle" th:src="${account.avatarPath}">
                                                 <div class="ms-2">
-                                                    <h6 class="mb-0">K kumar Gaur</h6>
+                                                    <h6 class="mb-0" th:text="${account.fullname}"></h6>
                                                     <span>
-																<svg fill="none" height="14" viewBox="0 0 14 14"
+                                                        <svg fill="none" height="14" viewBox="0 0 14 14"
                                                                      width="14" xmlns="http://www.w3.org/2000/svg">
 																	<circle cx="7" cy="7" fill="#3AC977" r="6"
                                                                             stroke="white" stroke-width="2"/>
-																</svg>
-															online</span>
+																</svg>online</span>
                                                 </div>
                                             </div>
                                             <div class="chat-admin">
@@ -317,133 +317,6 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 file-media dz-scroll">
-                                        <div class="chat-meadia">
-                                            <h4 class="card-title">Media</h4>
-                                            <ul class="image-list">
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/1.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/3.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/2.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/5.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/4.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/2.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/4.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/1.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/4.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/3.png"></a></li>
-                                                <li><a href="javascript:void(0);"><img alt=""
-                                                                                       src="images/chat/2.png"></a></li>
-                                                <li class="all-media"><a href="javascript:void(0);"><span>50+</span><img
-                                                        alt="" src="images/chat/5.png"></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="chat-meadia">
-                                            <h4 class="card-title">Files</h4>
-                                            <div class="file-list row">
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/google-docs1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/play-button1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/music-notes1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/pdf.png">
-                                                    <h5>Project 01</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/music-notes1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/google-docs1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/play-button1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/music-notes1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/pdf.png">
-                                                    <h5>Project 01</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/google-docs1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/play-button1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/music-notes1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/pdf.png">
-                                                    <h5>Project 01</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/music-notes1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/google-docs1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/play-button1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/music-notes1.png">
-                                                    <h5>document.doc</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-                                                <div class="text-center col-xl-4 col-6 filie-l-icon">
-                                                    <img alt="" src="images/chat/pdf.png">
-                                                    <h5>Project 01</h5>
-                                                    <small>3 Items December 27th, 2021 04:56 AM - 10.0 MB</small>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -453,5 +326,22 @@
         </div>
     </div>
 </div>
+
+
+<script src="/dashboard/vendor/global/global.min.js"></script>
+<script src="/dashboard/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+<script src="/dashboard/vendor/dropzone/dist/dropzone.js"></script>
+<script src="/dashboard/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<script src="/dashboard/js/custom.js"></script>
+<script src="/dashboard/js/deznav-init.js"></script>
+<script src="/dashboard/js/demo.js"></script>
+<script src="/dashboard/js/styleSwitcher.js"></script>
+<script>
+    //$(".nav-control").on('click', function() {
+    $(".chat-toggle").on('click', function(){
+        $(' .chat-left-area ,.chat-toggle').toggleClass("active");
+    });
+</script>
 </body>
 </html>

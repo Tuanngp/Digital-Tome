@@ -42,7 +42,6 @@ public class SpringSecurity {
                         .requestMatchers("/censor/**").hasAnyRole("CENSOR")
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
-//                        .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/**").permitAll()
                 )
                 .formLogin(form -> form
