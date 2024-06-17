@@ -9,11 +9,14 @@ import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.utils.UserUtils;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -35,6 +38,7 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     public void saveUser(RegisterDto registerDto) {
         if (userRepository.existsByUsername(registerDto.getUsername())) {
             throw new RuntimeException("User exists");
@@ -160,5 +164,14 @@ public class UserService {
         userRepository.save(accountEntity);
     }
 
+    public AccountEntity getCurrentUser(Principal principal,@AuthenticationPrincipal OAuth2User oAuth2User) {
+        String username = null;
+        if (principal != null) {
+            username = principal.getName();
+        } else if (oAuth2User != null) {
+            username = oAuth2User.getAttribute("email");
+        }
+        return username != null ? findByUsername(username) : null;
+    }
 }
 

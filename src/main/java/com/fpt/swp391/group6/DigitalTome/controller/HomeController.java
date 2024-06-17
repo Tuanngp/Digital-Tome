@@ -5,11 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
-    @GetMapping("/comments")
-    public String comments() {
-        return "comments";
-    }
-
     @GetMapping("/about-us")
     public String aboutUs() {
         return "landing-page/about-us";
