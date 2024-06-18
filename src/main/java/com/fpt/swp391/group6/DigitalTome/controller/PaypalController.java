@@ -125,9 +125,12 @@ public class PaypalController {
     public String transactionHistory(@RequestParam(name = "page", defaultValue = "0") int page,
                                      @RequestParam(name = "size", defaultValue = "5") int size,
                                      Model model) {
+
         AccountEntity accountCurrent = userService.getCurrentLogin();
+
         if (accountCurrent != null) {
             PaymentPageDTOResponse response = paypalService.getPaymentsByAccountId(accountCurrent.getId(), page, size);
+
             model.addAttribute("transactions", response.getPayments());
             model.addAttribute("totalPages", response.getTotalPages());
             model.addAttribute("currentPage", response.getCurrentPage());

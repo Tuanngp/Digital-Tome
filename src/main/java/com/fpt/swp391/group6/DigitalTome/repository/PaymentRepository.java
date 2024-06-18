@@ -14,5 +14,5 @@ import java.util.List;
 public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
 
     @Query("SELECT u FROM PaymentEntity u WHERE u.accountEntity.id = :id ORDER BY u.createdDate DESC")
-    Page<PaymentEntity> findByAccountEntityId(@Param("id") Long id, Pageable pageable);
+    Page<PaymentEntity> transactionHistory(@Param("id") Long id, Pageable pageable);
 }

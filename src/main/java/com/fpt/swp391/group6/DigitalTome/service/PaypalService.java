@@ -2,6 +2,7 @@ package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentDTOResponse;
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTOResponse;
+import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
 import com.paypal.api.payments.*;
@@ -94,8 +95,10 @@ public class PaypalService {
     }
 
     public PaymentPageDTOResponse getPaymentsByAccountId(Long accountId, int page, int size) {
+
         Pageable pageable = PageRequest.of(page, size);
-        Page<PaymentEntity> paymentsPage = paymentRepository.findByAccountEntityId(accountId, pageable);
+
+        Page<PaymentEntity> paymentsPage = paymentRepository.transactionHistory(accountId, pageable);
 
         List<PaymentDTOResponse> payments = paymentsPage.getContent().stream().map(payment -> PaymentDTOResponse.builder()
                 .id(payment.getId())
@@ -112,5 +115,4 @@ public class PaypalService {
                 .currentPage(page)
                 .build();
     }
-
 }
