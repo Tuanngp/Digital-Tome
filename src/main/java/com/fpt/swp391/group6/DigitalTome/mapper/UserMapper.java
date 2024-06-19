@@ -18,7 +18,8 @@ public interface UserMapper {
 
     List<RegisterDto> toUserDto(List<AccountEntity> user);
 
-    @Mapping(source = "account.fullname", target = "fullName")
+    @Mapping(source = "fullname", target = "fullName")
+    @Mapping(source = "username", target = "username")
     UserDto toDto(AccountEntity account);
 
 }

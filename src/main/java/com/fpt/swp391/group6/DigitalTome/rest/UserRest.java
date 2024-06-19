@@ -28,4 +28,19 @@ public class UserRest {
         result.setUserDto(userMapper.toDto(userService.findByUsername(username)));
         return result;
     }
+
+    @GetMapping("/{id}")
+    public UserOutput getUser(@RequestParam Long id) {
+        UserOutput result = new UserOutput();
+        result.setUserDto(userMapper.toDto(userService.findById(id)));
+        return result;
+    }
+
+    // get UserOutput by email, phone, username, or id
+    @GetMapping("/search")
+    public UserOutput searchUser(@RequestParam String keyword) {
+        UserOutput result = new UserOutput();
+        result.setUserDto(userMapper.toDto(userService.search(keyword)));
+        return result;
+    }
 }

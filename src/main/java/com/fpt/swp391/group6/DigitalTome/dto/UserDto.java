@@ -17,6 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserDto {
     private Long id;
+    private String username;
     private String email;
     private String address;
 

@@ -69,17 +69,17 @@
                             <div class="dropdown-menu dropdown-menu-end">
                                 <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
                                     <ul class="timeline">
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" src="images/avatar/1.jpg">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
+<!--                                        <li>-->
+<!--                                            <div class="timeline-panel">-->
+<!--                                                <div class="media me-2">-->
+<!--                                                    <img alt="image" width="50" src="images/avatar/1.jpg">-->
+<!--                                                </div>-->
+<!--                                                <div class="media-body">-->
+<!--                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>-->
+<!--                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
                                     </ul>
                                 </div>
                                 <a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
@@ -213,13 +213,6 @@
                     <span></span>
                 </button>
 
-                <!-- EXTRA NAV -->
-                <div class="extra-nav">
-                    <div class="extra-cell">
-                        <!--                            <a th:href="@{contact-us}" class="btn btn-primary btnhover">Get In Touch</a>-->
-                    </div>
-                </div>
-
                 <!-- Main Nav -->
                 <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
                     <div class="logo-header logo-dark">
@@ -240,22 +233,45 @@
 <!--                        <li><a th:href="@{pricing}"><span>Pricing</span></a></li>-->
                         <li><a th:href="@{/contact-us}"><span>Contact Us</span></a></li>
                     </ul>
-<!--                    <div class="dz-social-icon">-->
-<!--                        <ul>-->
-<!--                            <li><a class="fab fa-facebook-f" target="_blank"-->
-<!--                                   th:href="@{https://www.facebook.com/dexignzone}"></a></li>-->
-<!--                            <li><a class="fab fa-twitter" target="_blank"-->
-<!--                                   th:href="@{https://twitter.com/dexignzones}"></a></li>-->
-<!--                            <li><a class="fab fa-linkedin-in" target="_blank"-->
-<!--                                   th:href="@{https://www.linkedin.com/showcase/3686700/admin/}"></a></li>-->
-<!--                            <li><a class="fab fa-instagram" target="_blank"-->
-<!--                                   th:href="@{https://www.instagram.com/website_templates__/}"></a></li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        var socket = new SockJS('/ws');
+        var stompClient = Stomp.over(socket);
+
+        stompClient.connect({},
+            (frame) => {
+            console.log('Connected: ' + frame);
+
+            // Subscribe to the notifications topic
+            stompClient.subscribe('/topic/messages', (messageOutput) => {
+                const message = JSON.parse(messageOutput.body);
+                console.log("Message: " + message);
+                updateNotificationDropdown(message);
+            });
+        });
+
+        function updateNotificationDropdown(message) {
+            let notificationDropdown = $('.timeline');
+            let newNotification = $('<li>');
+            let timelinePanel = $('<div>').addClass('timeline-panel');
+            let mediaDiv = $('<div>').addClass('media me-2');
+            let img = $('<img>').attr('src', 'images/avatar/1.jpg').attr('alt', 'image').attr('width', '50');
+            let mediaBody = $('<div>').addClass('media-body');
+            let h6 = $('<h6>').addClass('mb-1').text(`New message from ${message.sender}`);
+            let small = $('<small>').addClass('d-block').text(new Date().toLocaleString());
+
+            mediaDiv.append(img);
+            mediaBody.append(h6);
+            mediaBody.append(small);
+            timelinePanel.append(mediaDiv);
+            timelinePanel.append(mediaBody);
+            newNotification.append(timelinePanel);
+            notificationDropdown.prepend(newNotification);
+        }
+    </script>
     <!-- Main Header End -->
 </header>
 <!-- Header End -->

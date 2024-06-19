@@ -9,4 +9,5 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<MessageEntity, Long>{
     void deleteAllByReceiver(AccountEntity receiver);
     List<MessageEntity> findAllBySenderAndReceiver(AccountEntity sender, AccountEntity receiver);
+    List<MessageEntity> findBySenderOrReceiver(AccountEntity sender, AccountEntity receiver);
 }

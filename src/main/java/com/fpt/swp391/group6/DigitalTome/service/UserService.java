@@ -173,5 +173,16 @@ public class UserService {
         }
         return username != null ? findByUsername(username) : null;
     }
+
+    public AccountEntity search(String keyword) {
+
+        if (keyword.contains("@")) {
+            return userRepository.findByEmail(keyword);
+        }
+        if (keyword.matches("\\d{8,11}")) {
+            return userRepository.findByPhone(keyword);
+        }
+        return userRepository.findByUsername(keyword);
+    }
 }
 

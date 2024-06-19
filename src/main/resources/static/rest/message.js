@@ -1,12 +1,14 @@
 class ChatApp {
     constructor() {
         this.stompClient = null;
-        this.currentUser = null;
         this.conversationDiv = $('#conversation');
         this.messageForm = $('#messageForm');
         this.senderInput = $('#sender');
         this.receiverInput = $('#receiver');
         this.contentInput = $('#content');
+        this.userList = $('.chat-list');
+        this.searchResults = $('#searchResults');
+        this.users = {};
     }
 
     connect() {
@@ -18,11 +20,10 @@ class ChatApp {
                 this.stompClient.subscribe('/topic/messages', (messageOutput) => {
                     const message = JSON.parse(messageOutput.body);
                     console.log("Message: " + message);
-                    this.currentUser = this.senderInput.val();
-                    if (message.receiver === this.currentUser) {
+                    if (message.receiver === this.senderInput.val()) {
                         this.addMessageToConversation(message);
                     } else {
-                        this.notifyUser(message);
+                        // this.notifyUser(message);
                     }
                 });
             },
@@ -49,16 +50,141 @@ class ChatApp {
             receiver: message.sender,
             sender: message.sender
         }));
+
+        this.addUserToChatList(this.users[message.receiver]);
+
+        this.contentInput.val('');
+        this.contentInput.focus();
     }
 
     addMessageToConversation(message) {
-        const messageDiv = $('<div>').text(message.content);
-        if (message.sender === this.currentUser) {
-            messageDiv.addClass('outgoing');
+        const messageLi = $('<li>').addClass('clearfix');
+        const messageDataDiv = $('<div>').addClass(message.sender === this.senderInput.val() ? 'message-data d-flex flex-row-reverse align-items-center': 'message-data');
+        if (message.avatarSender != null) {
+            const messageDataTimeSpan = $('<span>').addClass('message-data-time mx-2').text(message.createdDate)
+            const messageDataImg = $('<img>').attr('src', message.avatarSender).attr('alt', 'avatar');
+            messageDataDiv.append(messageDataImg);
+            messageDataDiv.append(messageDataTimeSpan);
+            messageLi.append(messageDataDiv);
         } else {
-            messageDiv.addClass('incoming');
+            messageLi.addClass('mb-0');
         }
-        this.conversationDiv.append(messageDiv);
+
+        const messageDiv = $('<div>').addClass('message')
+            .addClass(message.sender === this.senderInput.val() ? 'message other-message float-right' : 'message my-message')
+            .text(message.content);
+
+        messageLi.append(messageDiv);
+
+        if (message.sender === this.senderInput.val()) {
+            const deleteDropdown = $('<div>').addClass('dropdown');
+            const deleteButton = $('<button>').attr('type', 'button').addClass('btn btn-link light light sharp').attr('data-bs-toggle', 'dropdown').attr('aria-expanded', 'false');
+
+            const deleteIcon = '<svg width="15px" height="15px" viewBox="0 0 24 24" version="1.1">' +
+                                            '<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">' +
+                                                '<rect x="0" y="0" width="24" height="24"></rect>' +
+                                                '<circle fill="#000000" cx="5" cy="12" r="2"></circle>' +
+                                                '<circle fill="#000000" cx="12" cy="12" r="2"></circle>' +
+                                                '<circle fill="#000000" cx="19" cy="12" r="2"></circle>' +
+                                            '</g>' +
+                                        '</svg>';
+            const dropdownMenu = $('<div>').addClass('dropdown-menu dropdown-menu-end');
+            const deleteOption = $('<a>').addClass('dropdown-item delete').attr('id', message.id).text('Delete');
+
+            deleteButton.append(deleteIcon);
+            dropdownMenu.append(deleteOption);
+            deleteDropdown.append(deleteButton);
+            deleteDropdown.append(dropdownMenu);
+
+            messageDataDiv.append(deleteDropdown);
+
+            deleteOption.click(() => {
+                fetch('/message/' + message.id, {
+                    method: 'DELETE'
+                }).then(() => {
+                    messageLi.remove();
+                });
+            });
+        }
+
+        this.conversationDiv.append(messageLi);
+        this.conversationDiv.scrollTop(this.conversationDiv.prop('scrollHeight'));
+    }
+
+    searchUsers(keyword) {
+        fetch('/api/user/search?keyword=' + keyword)
+            .then(response => response.json())
+            .then(userOutput => {
+                // Clear previous search results
+                this.searchResults.empty();
+                // Append new search result
+                const user = userOutput.userDto;
+                const userDiv = $('<div>').text(user.fullName);
+                userDiv.click(() => {
+                    // Display conversation with the selected user
+                    this.receiverInput.val(user.username);
+                    this.displayConversation(this.senderInput.val(), user.username);
+
+                    $('.userInfo img').attr('src', user.avatarPath);
+                    $('.userInfo .chat-about h6').text(user.fullname);
+                    // Add user to chat list
+                    this.addUserToChatList(user);
+                });
+                this.searchResults.append(userDiv);
+                // Show search results
+                this.searchResults.show();
+            });
+    }
+
+    addUserToChatList(user) {
+        // Check if user is already in chat list
+        const existingUserLi = this.userList.find('li:contains(' + user.fullName + ')');
+        if (existingUserLi.length > 0) {
+            // If user is already in chat list, move them to the top
+            this.userList.prepend(existingUserLi);
+        } else {
+            // If user is not in chat list, add them
+            const userLi = `
+                <li class="clearfix">
+                    <img src="${user.avatarPath}" alt="avatar">
+                    <div class="about">
+                        <div class="name">${user.fullName}</div>
+                        <div class="status"><i class="fa fa-circle offline"></i> left 7 mins ago</div>
+                    </div>
+                </li>
+            `;
+            this.userList.prepend(userLi);
+        }
+    }
+
+    getChatUsers() {
+        fetch('/chat/users')
+            .then(response => response.json())
+            .then(users => {
+                const userList = $('.chat-list');
+                userList.empty();
+                users.forEach(user => {
+                    const userLi = $('<li>').addClass('clearfix');
+                    const userImg = $('<img>').attr('src', user.avatarPath).attr('alt', 'avatar');
+                    const aboutDiv = $('<div>').addClass('about');
+                    const nameDiv = $('<div>').addClass('name').text(user.fullname);
+                    const statusDiv = $('<div>').addClass('status').html('<i class="fa fa-circle offline"></i> left 7 mins ago');
+
+                    aboutDiv.append(nameDiv);
+                    aboutDiv.append(statusDiv);
+                    userLi.append(userImg);
+                    userLi.append(aboutDiv);
+
+                    userLi.click(() => {
+                        this.receiverInput.val(user.username);
+                        this.displayConversation(this.senderInput.val(), user.username);
+
+                        $('.userInfo img').attr('src', user.avatarPath);
+                        $('.userInfo .chat-about h6').text(user.fullname);
+                    });
+                    userList.append(userLi);
+                });
+            });
     }
 
     notifyUser(message) {
@@ -81,19 +207,28 @@ class ChatApp {
             .then(messages => {
                 this.conversationDiv.empty();
                 messages.forEach(message => {
-                    const messageDiv = $('<div>').text(message.content);
-                    this.conversationDiv.append(messageDiv);
+                    console.log(message);
+                    this.addMessageToConversation(message);
                 });
             });
     }
 
     init() {
-        console.log("Index page is ready");
         this.connect();
-
+        this.getChatUsers()
         this.messageForm.submit((event) => {
             event.preventDefault();
             this.sendMessage();
+        });
+
+        $('#searchInput').on('input', () => {
+            const keyword = $('#searchInput').val();
+            if (keyword.length > 0) {
+                this.searchUsers(keyword);
+            } else {
+                // Hide search results when input is empty
+                this.searchResults.hide();
+            }
         });
     }
 }
