@@ -20,118 +20,6 @@
         }
     </style>
 
-    <script src="https://cdn.jsdelivr.net/sockjs/1.0.2/sockjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
-    <script th:if="${account != null}">
-        document.addEventListener('DOMContentLoaded', function () {
-            var socket = new SockJS('/ws');
-            var stompClient = Stomp.over(socket);
-
-            stompClient.connect({}, function (frame) {
-                stompClient.subscribe('/user/queue/notifications', function (notification) {
-                    let newNotification = JSON.parse(notification.body);
-                    addNotificationToUI(newNotification);
-                    updateNotificationCount();
-                    playNotificationSound();
-                });
-            });
-
-            fetchNotifications();
-
-            document.querySelector('#notificationList').addEventListener('click', function (e) {
-                const notificationId = e.target.getAttribute('data-notification-id');
-                if (notificationId) {
-                    console.log(notificationId);
-                    markNotificationAsRead(notificationId);
-                }
-            });
-        });
-
-        function fetchNotifications() {
-            fetch('/api/notifications/current')
-                .then(response => response.json())
-                .then(data => {
-                    updateNotificationUI(data);
-                })
-                .catch(error => console.error('Error fetching notifications:', error));
-        }
-
-        function updateNotificationUI(notifications) {
-            const notificationItemsContainer = document.querySelector('#notificationList');
-            notificationItemsContainer.innerHTML = '';
-
-            notifications.forEach(notification => {
-                addNotificationToUI(notification);
-            });
-
-            updateNotificationCount();
-        }
-
-        function updateNotificationCount() {
-            const countSpan = document.querySelector('#notificationCount');
-            const notifications = document.querySelectorAll('.notification-item');
-            let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
-
-            if (unreadCount === 0) {
-                countSpan.style.display = 'none';
-            } else {
-                countSpan.style.display = 'block';
-                countSpan.textContent = unreadCount;
-            }
-        }
-
-        function addNotificationToUI(notification) {
-            const notificationItemsContainer = document.querySelector('#notificationList');
-
-            const notificationElement = document.createElement('li');
-            notificationElement.className = notification.isRead ? 'notification-item' : 'notification-item unread';
-            notificationElement.setAttribute('data-notification-id', notification.id);
-            notificationElement.setAttribute('data-notification-url', notification.url);
-
-            notificationElement.innerHTML = `
-        <div class="notification-body">
-            <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
-            <div class="notification-text">
-                <p class="notification-message">${truncateText(notification.message, 100)}</p>
-            </div>
-        </div>
-    `;
-            notificationItemsContainer.prepend(notificationElement);
-
-            notificationElement.onclick = () => {
-                if (notification.url) {
-                    window.location.href = notification.url;
-                    markNotificationAsRead(notification.id);
-                }
-            };
-        }
-
-        function markNotificationAsRead(notificationId) {
-            fetch(`/api/notifications/mark-as-read/${notificationId}`, {
-                method: 'POST'
-            }).then(response => {
-                if (response.ok) {
-                    document.querySelector(`[data-notification-id="${notificationId}"]`).classList.remove('unread');
-                    updateNotificationCount();
-                }
-            }).catch(error => console.error('Error marking notification as read:', error));
-        }
-
-        function truncateText(text, maxLength) {
-            if (text.length > maxLength) {
-                return text.substring(0, maxLength) + '...';
-            }
-            return text;
-        }
-
-        function playNotificationSound() {
-            var sound = document.getElementById("notificationSound");
-            sound.play();
-        }
-
-    </script>
-
-
     <!-- Main Header -->
     <div class="header-info-bar">
         <div class="container clearfix">
@@ -423,6 +311,117 @@
         </div>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/sockjs/1.0.2/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script th:if="${account != null}">
+        document.addEventListener('DOMContentLoaded', function () {
+            var socket = new SockJS('/ws');
+            var stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/user/queue/notifications', function (notification) {
+                    let newNotification = JSON.parse(notification.body);
+                    addNotificationToUI(newNotification);
+                    updateNotificationCount();
+                    playNotificationSound();
+                });
+            });
+
+            fetchNotifications();
+
+            document.querySelector('#notificationList').addEventListener('click', function (e) {
+                const notificationId = e.target.getAttribute('data-notification-id');
+                if (notificationId) {
+                    console.log(notificationId);
+                    markNotificationAsRead(notificationId);
+                }
+            });
+        });
+
+        function fetchNotifications() {
+            fetch('/api/notifications/current')
+                .then(response => response.json())
+                .then(data => {
+                    updateNotificationUI(data);
+                })
+                .catch(error => console.error('Error fetching notifications:', error));
+        }
+
+        function updateNotificationUI(notifications) {
+            const notificationItemsContainer = document.querySelector('#notificationList');
+            notificationItemsContainer.innerHTML = '';
+
+            notifications.forEach(notification => {
+                addNotificationToUI(notification);
+            });
+
+            updateNotificationCount();
+        }
+
+        function updateNotificationCount() {
+            const countSpan = document.querySelector('#notificationCount');
+            const notifications = document.querySelectorAll('.notification-item');
+            let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
+
+            if (unreadCount === 0) {
+                countSpan.style.display = 'none';
+            } else {
+                countSpan.style.display = 'block';
+                countSpan.textContent = unreadCount;
+            }
+        }
+
+        function addNotificationToUI(notification) {
+            const notificationItemsContainer = document.querySelector('#notificationList');
+
+            const notificationElement = document.createElement('li');
+            notificationElement.className = notification.isRead ? 'notification-item' : 'notification-item unread';
+            notificationElement.setAttribute('data-notification-id', notification.id);
+            notificationElement.setAttribute('data-notification-url', notification.url);
+
+            notificationElement.innerHTML = `
+        <div class="notification-body">
+            <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
+            <div class="notification-text">
+                <p class="notification-message">${truncateText(notification.message, 100)}</p>
+            </div>
+        </div>
+    `;
+            notificationItemsContainer.prepend(notificationElement);
+
+            notificationElement.onclick = () => {
+                if (notification.url) {
+                    window.location.href = notification.url;
+                    markNotificationAsRead(notification.id);
+                }
+            };
+        }
+
+        function markNotificationAsRead(notificationId) {
+            fetch(`/api/notifications/mark-as-read/${notificationId}`, {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    document.querySelector(`[data-notification-id="${notificationId}"]`).classList.remove('unread');
+                    updateNotificationCount();
+                }
+            }).catch(error => console.error('Error marking notification as read:', error));
+        }
+
+        function truncateText(text, maxLength) {
+            if (text.length > maxLength) {
+                return text.substring(0, maxLength) + '...';
+            }
+            return text;
+        }
+
+        function playNotificationSound() {
+            var sound = document.getElementById("notificationSound");
+            sound.play();
+        }
+
+    </script>
 
 
 
