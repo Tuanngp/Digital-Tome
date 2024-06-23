@@ -3,7 +3,6 @@ package com.fpt.swp391.group6.DigitalTome.service;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.NotificationEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.NotificationRepository;
-import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

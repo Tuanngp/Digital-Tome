@@ -92,6 +92,23 @@ public class PublisherService {
             }
         }
     }
+    public void contact(String email) {
+
+        AccountEntity accountUser = userService.findByEmail(email);
+        if (accountUser != null) {
+
+            RoleEntity roleAdmin = roleRepository.findByName("ROLE_ADMIN");
+            if (roleAdmin != null) {
+                List<AccountEntity> adminAccounts = userRepository.findAllByRoleEntity(roleAdmin);
+                if (!adminAccounts.isEmpty()) {
+                    for (AccountEntity adminAccount : adminAccounts) {
+                        String messageWithSender = "There is an account opening requirement "+email;
+                        notificationService.createNotification(adminAccount, accountUser, messageWithSender, email, "/user-manager");
+                    }
+                }
+            }
+        }
+    }
 
     public String registerPublisher(RegisterPublisherDTO registerPublisherDTO, RedirectAttributes redirectAttributes) {
         AccountEntity accountCurrent = userService.getCurrentLogin();
@@ -124,6 +141,4 @@ public class PublisherService {
         redirectAttributes.addFlashAttribute("success", "You have successfully registered, please give us your feedback");
         return "redirect:/register-publisher";
     }
-
-
 }

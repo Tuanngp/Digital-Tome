@@ -3,10 +3,12 @@ package com.fpt.swp391.group6.DigitalTome.controller;
 import com.fpt.swp391.group6.DigitalTome.dto.RegisterDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
+import com.fpt.swp391.group6.DigitalTome.service.PublisherService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,17 +25,13 @@ import static com.fpt.swp391.group6.DigitalTome.utils.UserUtils.generateToken;
 import static com.fpt.swp391.group6.DigitalTome.utils.UserUtils.isTokenExpired;
 
 @Controller
+@RequiredArgsConstructor
 public class AuthController {
 
     private final EmailService emailService;
     private final HttpSession httpSession;
     private final UserService userService;
-
-    public AuthController(UserService userService, EmailService emailService, HttpSession httpSession) {
-        this.userService = userService;
-        this.emailService = emailService;
-        this.httpSession = httpSession;
-    }
+    private final PublisherService publisherService;
 
 
     @GetMapping(value = {"/","home", "index"})
@@ -162,6 +160,12 @@ public class AuthController {
             model.addAttribute("errorMessage", e.getMessage());
             return "authentication/newPassword";
         }
+        return "redirect:/login";
+    }
+
+    @PostMapping("/contact")
+    public String contact(@RequestParam("email") String email, @RequestParam("message") String message) {
+        publisherService.contact(email);
         return "redirect:/login";
     }
 }

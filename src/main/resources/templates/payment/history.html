@@ -2,11 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/head :: head}">
     <title>Transaction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f0f0;
             padding: 20px;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
         }
 
         .table-responsive {
@@ -30,6 +36,42 @@
 <header th:replace="layout/header :: header"></header>
 <br>
 <div class="container">
+    <!-- Form tìm kiếm -->
+    <div class="search-container card shadow-sm p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <h5 class="card-title">Search Transactions</h5>
+            <form method="get" action="/transaction/search">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="startDate">Start Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="start-date-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control" id="startDate" name="startDate" aria-describedby="start-date-addon" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="endDate">End Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="end-date-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control" id="endDate" name="endDate" aria-describedby="end-date-addon" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary btn-block">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Bảng kết quả -->
     <div class="table-responsive">
         <table class="table table-bordered table-responsive-md">
             <thead>
@@ -42,10 +84,9 @@
                 <th><strong>Status</strong></th>
             </tr>
             </thead>
-
             <tbody>
             <tr th:each="transaction, iterStat : ${transactions}">
-                <td><strong th:text="${iterStat.count}"></strong></td>
+                <td><strong th:text="${iterStat.count + (startIndex != null ? startIndex : 0) - 1}"></strong></td>
                 <td th:text="${transaction.bookTitle}"></td>
                 <td th:text="${transaction.username}"></td>
                 <td th:text="${#dates.format(transaction.createdDate, 'dd MMMM yyyy')}"></td>
@@ -60,23 +101,23 @@
         </table>
 
         <!-- Phân trang -->
-        <nav>
+        <nav th:if="${totalPages > 0}">
+
             <ul class="pagination">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/transaction(size=${pageSize}, page=${currentPage} - 1)}">Previous</a>
+                    <a class="page-link" href="#" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${currentPage - 1}, size=${pageSize})}">Previous</a>
                 </li>
 
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
-                    <a class="page-link" href="#" th:href="@{/transaction(size=${pageSize}, page=${i})}" th:text="${i + 1}"></a>
+                    <a class="page-link" href="#" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${i}, size=${pageSize})}" th:text="${i + 1}"></a>
                 </li>
 
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/transaction(size=${pageSize}, page=${currentPage} + 1)}">Next</a>
+                    <a class="page-link" href="#" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${currentPage + 1}, size=${pageSize})}">Next</a>
                 </li>
             </ul>
         </nav>
     </div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

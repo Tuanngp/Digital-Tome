@@ -2,6 +2,7 @@ package com.fpt.swp391.group6.DigitalTome.repository;
 
 import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,6 +33,8 @@ public interface UserRepository extends JpaRepository<AccountEntity, Long> {
 
     @Query("SELECT u FROM AccountEntity u WHERE u.isApproved =false ")
     List<AccountEntity> findAllByNamePublisherNotNull();
+    List<AccountEntity> findAllByRoleEntity(RoleEntity role);
+
 }
 
 

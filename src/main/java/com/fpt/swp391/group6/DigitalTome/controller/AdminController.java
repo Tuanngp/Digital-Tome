@@ -8,6 +8,7 @@ import com.fpt.swp391.group6.DigitalTome.service.AdminService;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
 import com.fpt.swp391.group6.DigitalTome.service.PublisherService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
 
     private final AdminService adminService;
@@ -28,14 +30,6 @@ public class AdminController {
     private final UserService userService;
     private final PublisherService publisherService;
 
-    public AdminController(AdminService adminService, EmailService emailService, UserRepository userRepository, UserService userService, PublisherService publisherService) {
-        this.adminService = adminService;
-        this.emailService = emailService;
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.publisherService = publisherService;
-
-    }
 
     @GetMapping("/admin")
     public String homeAdmin() {

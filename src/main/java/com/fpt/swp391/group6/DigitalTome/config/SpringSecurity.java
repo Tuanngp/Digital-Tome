@@ -50,6 +50,7 @@ public class SpringSecurity {
                         .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
+                        .requestMatchers("/transaction/**").permitAll()
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers(PUBLIC_ENDPOINT).permitAll()
                 )

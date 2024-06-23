@@ -2,9 +2,9 @@ package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentDTOResponse;
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTOResponse;
-import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
+import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -14,7 +14,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -25,6 +29,7 @@ public class PaypalService {
 
     private final APIContext apiContext;
     private final PaymentRepository paymentRepository;
+    private final UserRepository userRepository;
 
     public Payment createPayment(
             Double total,               // Tổng tiền
@@ -99,6 +104,29 @@ public class PaypalService {
         Pageable pageable = PageRequest.of(page, size);
 
         Page<PaymentEntity> paymentsPage = paymentRepository.transactionHistory(accountId, pageable);
+
+        List<PaymentDTOResponse> payments = paymentsPage.getContent().stream().map(payment -> PaymentDTOResponse.builder()
+                .id(payment.getId())
+                .username(payment.getAccountEntity().getUsername())
+                .price(payment.getDecimal())
+                .bookTitle(payment.getBookEntity() != null ? payment.getBookEntity().getTitle() : null)
+                .createdDate(payment.getCreatedDate())
+                .success(payment.isSuccess())
+                .build()).collect(Collectors.toList());
+
+        return PaymentPageDTOResponse.builder()
+                .payments(payments)
+                .totalPages(paymentsPage.getTotalPages())
+                .currentPage(page)
+                .build();
+    }
+
+    public PaymentPageDTOResponse searchPaymentsByAccountIdAndDateRange(Long accountId, LocalDate startDate, LocalDate endDate, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, LocalTime.MIN);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, LocalTime.MAX);
+
+        Page<PaymentEntity> paymentsPage = paymentRepository.findPaymentsByAccountIdAndDateRange(accountId, startDateTime, endDateTime, pageable);
 
         List<PaymentDTOResponse> payments = paymentsPage.getContent().stream().map(payment -> PaymentDTOResponse.builder()
                 .id(payment.getId())
