@@ -128,17 +128,25 @@ public class PaypalController {
         return "payment/paymentError";
     }
 
-
     @GetMapping("/transaction")
     public String transactionHistory(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "5") int size,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             Model model) {
 
         AccountEntity accountCurrent = userService.getCurrentLogin();
 
         if (accountCurrent != null) {
-            PaymentPageDTOResponse response = paypalService.getPaymentsByAccountId(accountCurrent.getId(), page, size);
+            if (startDate == null) {
+                startDate = LocalDate.MIN;
+            }
+            if (endDate == null) {
+                endDate = LocalDate.now(); 
+            }
+
+            PaymentPageDTOResponse response = paypalService.searchPaymentsByAccountIdAndDateRange(accountCurrent.getId(), startDate, endDate, page, size);
 
             int startIndex = page * size + 1;
             int endIndex = startIndex + size - 1;
@@ -149,10 +157,13 @@ public class PaypalController {
             model.addAttribute("pageSize", size);
             model.addAttribute("startIndex", startIndex);
             model.addAttribute("endIndex", endIndex);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
         }
 
         return "payment/history";
     }
+
 
     @GetMapping("/transaction/search")
     public String searchTransactionHistory(
@@ -182,4 +193,5 @@ public class PaypalController {
 
         return "payment/history";
     }
+
 }

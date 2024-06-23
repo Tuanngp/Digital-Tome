@@ -101,26 +101,27 @@
         </table>
 
         <!-- Phân trang -->
+        <!-- Phân trang -->
         <nav th:if="${totalPages > 0}">
-
             <ul class="pagination">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${currentPage - 1}, size=${pageSize})}">Previous</a>
+                    <a class="page-link" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${currentPage - 1}, size=${pageSize})}">Previous</a>
                 </li>
 
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
-                    <a class="page-link" href="#" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${i}, size=${pageSize})}" th:text="${i + 1}"></a>
+                    <a class="page-link" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${i}, size=${pageSize})}" th:text="${i + 1}"></a>
                 </li>
 
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                    <a class="page-link" href="#" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${currentPage + 1}, size=${pageSize})}">Next</a>
+                    <a class="page-link" th:href="@{/transaction/search(startDate=${startDate}, endDate=${endDate}, page=${currentPage + 1}, size=${pageSize})}">Next</a>
                 </li>
             </ul>
         </nav>
     </div>
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<footer th:replace="layout/footer :: footer"></footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <footer th:replace="layout/footer :: footer"></footer>
 </body>
 </html>
