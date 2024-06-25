@@ -5,6 +5,7 @@ import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTORespo
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
+import com.fpt.swp391.group6.DigitalTome.utils.PaymentMapper;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
@@ -99,28 +100,6 @@ public class PaypalService {
         return payment.execute(apiContext, paymentExecution);
     }
 
-    public PaymentPageDTOResponse getPaymentsByAccountId(Long accountId, int page, int size) {
-
-        Pageable pageable = PageRequest.of(page, size);
-
-        Page<PaymentEntity> paymentsPage = paymentRepository.transactionHistory(accountId, pageable);
-
-        List<PaymentDTOResponse> payments = paymentsPage.getContent().stream().map(payment -> PaymentDTOResponse.builder()
-                .id(payment.getId())
-                .username(payment.getAccountEntity().getUsername())
-                .price(payment.getDecimal())
-                .bookTitle(payment.getBookEntity() != null ? payment.getBookEntity().getTitle() : null)
-                .createdDate(payment.getCreatedDate())
-                .success(payment.isSuccess())
-                .build()).collect(Collectors.toList());
-
-        return PaymentPageDTOResponse.builder()
-                .payments(payments)
-                .totalPages(paymentsPage.getTotalPages())
-                .currentPage(page)
-                .build();
-    }
-
     public PaymentPageDTOResponse searchPaymentsByAccountIdAndDateRange(Long accountId, LocalDate startDate, LocalDate endDate, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         LocalDateTime startDateTime = LocalDateTime.of(startDate, LocalTime.MIN);
@@ -128,14 +107,7 @@ public class PaypalService {
 
         Page<PaymentEntity> paymentsPage = paymentRepository.findPaymentsByAccountIdAndDateRange(accountId, startDateTime, endDateTime, pageable);
 
-        List<PaymentDTOResponse> payments = paymentsPage.getContent().stream().map(payment -> PaymentDTOResponse.builder()
-                .id(payment.getId())
-                .username(payment.getAccountEntity().getUsername())
-                .price(payment.getDecimal())
-                .bookTitle(payment.getBookEntity() != null ? payment.getBookEntity().getTitle() : null)
-                .createdDate(payment.getCreatedDate())
-                .success(payment.isSuccess())
-                .build()).collect(Collectors.toList());
+        List<PaymentDTOResponse> payments = PaymentMapper.toPaymentDTOList(paymentsPage.getContent());
 
         return PaymentPageDTOResponse.builder()
                 .payments(payments)
