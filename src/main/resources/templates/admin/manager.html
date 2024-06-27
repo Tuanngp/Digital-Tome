@@ -237,54 +237,53 @@
         </ul>
     </div>
 
-    <div class="outer-body">
-        <div class="inner-body">
-            <div class="content-body">
-                <div class="container-fluid mh-auto">
-                    <!-- Dashboard Content Start -->
-                    <div th:if="${page == 'dashboard'}">
-                        <div class="row">
-                            <div class="cards">
-                                <div class="card-single">
-                                    <div>
-                                        <h3>254</h3>
-                                        <span>Users</span>
+        <div class="outer-body">
+            <div class="inner-body">
+                <div class="content-body">
+                    <div class="container-fluid mh-auto">
+                        <!-- Dashboard Content Start -->
+                        <div th:if="${page == 'dashboard'}">
+                            <div class="row">
+                                <div class="cards">
+                                    <div class="card-single">
+                                        <div>
+                                            <h3 th:text="${userCount}">254</h3>
+                                            <span>Users</span>
+                                        </div>
+                                        <div>
+                                            <span class="las la-users"></span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="las la-users"></span>
+                                    <div class="card-single">
+                                        <div>
+                                            <h3 th:text="${publisherCount}">50</h3>
+                                            <span>Publishers</span>
+                                        </div>
+                                        <div>
+                                            <span class="las la-chalkboard-teacher"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-single">
-                                    <div>
-                                        <h3>50</h3>
-                                        <span>Publishers</span>
+                                    <div class="card-single">
+                                        <div>
+                                            <h3>10</h3>
+                                            <span>Employees</span>
+                                        </div>
+                                        <div>
+                                            <span class="las la-briefcase"></span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="las la-chalkboard-teacher"></span>
-                                    </div>
-                                </div>
-                                <div class="card-single">
-                                    <div>
-                                        <h3>10</h3>
-                                        <span>Employees</span>
-                                    </div>
-                                    <div>
-                                        <span class="las la-briefcase"></span>
-                                    </div>
-                                </div>
-                                <div class="card-single">
-                                    <div>
-                                        <h3>$100k</h3>
-                                        <span>Revenue</span>
-                                    </div>
-                                    <div>
-                                        <span class="lab la-google-wallet"></span>
+                                    <div class="card-single">
+                                        <div>
+                                            <h3>$100k</h3>
+                                            <span>Revenue</span>
+                                        </div>
+                                        <div>
+                                            <span class="lab la-google-wallet"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
                     <!-- Dashboard Content End -->
                     <!-- Điều kiện hiển thị bảng dữ liệu người dùng -->
                     <div th:if="${page == 'user-manager' || page == 'publisher-manager' || page == 'employee-manager'}">

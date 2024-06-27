@@ -38,15 +38,21 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
+        List<AccountEntity> accounts = userService.fetchAllAccount();
+
+        long userCount = accounts.stream()
+                .filter(t -> "ROLE_USER".equals(t.getRoleEntity().getName()))
+                .count();
+        long publisherCount = accounts.stream()
+                .filter(t -> "ROLE_PUBLISHER".equals(t.getRoleEntity().getName()))
+                .count();
+
+        model.addAttribute("userCount", userCount);
+        model.addAttribute("publisherCount", publisherCount);
         model.addAttribute("page", "dashboard");
         return "admin/manager";
     }
 
-    @GetMapping("/manager")
-    public String manager(Model model) {
-        model.addAttribute("page", "dashboard");
-        return "admin/manager";
-    }
 
     @GetMapping("/user-manager")
     public String userManager(Model model) {

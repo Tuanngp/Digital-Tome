@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static com.fpt.swp391.group6.DigitalTome.controller.ProfileController.DEFAULT_AVATAR_URL;
@@ -40,6 +41,10 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+    public List<AccountEntity> fetchAllAccount(){
+        return userRepository.findAll();
+    }
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
