@@ -110,19 +110,7 @@
                                                                                           class="far fa-user"></i>
                                                 <span>Profile</span></a>
                                         </li>
-<!--                                        <li>-->
-<!--                                            <a th:href="@{/shop-cart}"><i class="flaticon-shopping-cart-1"></i>-->
-<!--                                                <span>My Cart</span></a>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <a th:href="@{/wishlist}"><i aria-hidden="true" class="far fa-heart"></i>-->
-<!--                                                <span>Wishlist</span></a>-->
-<!--                                        </li>-->
-<!--                                        <li>-->
-<!--                                            <a th:href="@{/books-grid-view}"><i aria-hidden="true"-->
-<!--                                                                                class="fa fa-briefcase"></i>-->
-<!--                                                <span>Shop</span></a>-->
-<!--                                        </li>-->
+
                                         <li>
                                             <a href="/changePassword"><i class="fa-solid fa-unlock" aria-hidden="true"></i>
                                                 <span>Change Password</span></a>
@@ -148,7 +136,7 @@
                                     <div class="row m-b30">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput1" class="form-label">Your Name:</label>
+                                                <label for="formcontrolinput1" class="form-label">Your Name*:</label>
                                                 <input th:field="*{fullName}" type="text" class="form-control" id="formcontrolinput1" placeholder="Full Name">
                                                 <div th:if="${#fields.hasErrors('fullName')}" class="alert alert-danger" th:errors="*{fullName}"></div>
                                             </div>
@@ -162,10 +150,9 @@
                                             </div>
                                         </div>
 
-
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput3" class="form-label">Phone:</label>
+                                                <label for="formcontrolinput3" class="form-label">Phone*:</label>
                                                 <input th:field="*{phone}" type="text" class="form-control" id="formcontrolinput3" placeholder="Phone Number">
                                                 <div th:if="${#fields.hasErrors('phone')}" class="alert alert-danger" th:errors="*{phone}"></div>
                                             </div>

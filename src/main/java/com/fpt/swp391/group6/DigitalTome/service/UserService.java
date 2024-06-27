@@ -87,6 +87,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void save(AccountEntity account){
+        userRepository.save(account);
+    }
+
     private RoleEntity checkRoleExist() {
         RoleEntity role = new RoleEntity();
         role.setName("ROLE_USER");
