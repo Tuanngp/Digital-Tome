@@ -93,10 +93,9 @@ public class PublisherService {
         }
     }
     public void contact(String email) {
-
         AccountEntity accountUser = userService.findByEmail(email);
-        if (accountUser != null) {
 
+        if (accountUser != null) {
             RoleEntity roleAdmin = roleRepository.findByName("ROLE_ADMIN");
             if (roleAdmin != null) {
                 List<AccountEntity> adminAccounts = userRepository.findAllByRoleEntity(roleAdmin);

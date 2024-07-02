@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layout/head :: head}"><title>Home</title></head>
+<head th:replace="~{layout/head :: head}"><title>Profile</title></head>
 
 <style>
     .my-image {
@@ -136,7 +136,7 @@
                                     <div class="row m-b30">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput1" class="form-label">Your Name*:</label>
+                                                <label for="formcontrolinput1" class="form-label">Your Name<span style="color: red;">*</span>:</label>
                                                 <input th:field="*{fullName}" type="text" class="form-control" id="formcontrolinput1" placeholder="Full Name">
                                                 <div th:if="${#fields.hasErrors('fullName')}" class="alert alert-danger" th:errors="*{fullName}"></div>
                                             </div>
@@ -152,7 +152,7 @@
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput3" class="form-label">Phone*:</label>
+                                                <label for="formcontrolinput3" class="form-label">Phone<span style="color: red;">*</span>:</label>
                                                 <input th:field="*{phone}" type="text" class="form-control" id="formcontrolinput3" placeholder="Phone Number">
                                                 <div th:if="${#fields.hasErrors('phone')}" class="alert alert-danger" th:errors="*{phone}"></div>
                                             </div>
@@ -175,14 +175,12 @@
                                         </div>
 
 
-
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
                                                 <label for="formcontrolinput7" class="form-label">Point</label>
                                                 <input th:field="*{point}" type="number" class="form-control" id="formcontrolinput7" placeholder="Point" readonly>
                                             </div>
                                         </div>
-
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">

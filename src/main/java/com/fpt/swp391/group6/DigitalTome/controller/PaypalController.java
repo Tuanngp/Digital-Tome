@@ -143,8 +143,8 @@ public class PaypalController {
                 startDate = LocalDate.MIN;
             }
             if (endDate == null) {
-                endDate = LocalDate.now(); 
-            }
+                endDate = LocalDate.now();
+        }
 
             PaymentPageDTOResponse response = paypalService.searchPaymentsByAccountIdAndDateRange(accountCurrent.getId(), startDate, endDate, page, size);
 
@@ -193,5 +193,4 @@ public class PaypalController {
 
         return "payment/history";
     }
-
 }

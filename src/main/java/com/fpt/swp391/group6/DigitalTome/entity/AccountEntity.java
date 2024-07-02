@@ -76,9 +76,11 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime tokenCreationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "membership_id")
     private MembershipEntity membershipEntity;
+
 
     @Column(name = "membership_expiry_date")
     @Temporal(TemporalType.DATE)

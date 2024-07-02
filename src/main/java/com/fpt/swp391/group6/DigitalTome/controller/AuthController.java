@@ -164,7 +164,7 @@ public class AuthController {
     }
 
     @PostMapping("/contact")
-    public String contact(@RequestParam("email") String email, @RequestParam("message") String message) {
+    public String contact(@RequestParam("email") String email) {
         publisherService.contact(email);
         return "redirect:/login";
     }

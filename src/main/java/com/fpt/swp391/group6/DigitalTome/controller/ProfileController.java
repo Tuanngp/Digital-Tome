@@ -102,9 +102,4 @@ public class ProfileController {
         profileService.newPassword(username, newPassword);
         return "redirect:/profile";
     }
-
-
-
-
-
 }
