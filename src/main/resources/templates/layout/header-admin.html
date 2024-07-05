@@ -164,8 +164,8 @@
 
     <script th:if="${account != null}">
         document.addEventListener('DOMContentLoaded', function () {
-            var socket = new SockJS('/ws');
-            var stompClient = Stomp.over(socket);
+            let socket = new SockJS('/ws');
+            let stompClient = Stomp.over(socket);
 
             stompClient.connect({}, function (frame) {
                 stompClient.subscribe('/user/queue/notifications', function (notification) {

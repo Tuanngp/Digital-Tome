@@ -370,6 +370,7 @@
 
 
                     <script>
+
                         function goBack() {
                             window.history.back();
                         }
@@ -384,9 +385,10 @@
                             showReasonDialog(actionType, roleType);
                         }
 
+                        //Swal.fire, nó trả về một Promise
                         function showReasonDialog(action, page, userId) {
                             const role = page === 'user-manager' ? 'user' : page === 'publisher-manager' ? 'publisher' : 'employee';
-                            Swal.fire({
+                            Swal.fire({  // SweetAlert2
                                 title: `Are you sure you want to ${action} this ${role}?`,
                                 input: 'textarea',
                                 inputLabel: 'Reason',
@@ -413,12 +415,13 @@
                                 reason: reason,
                             };
                             console.log(`Sending request to /${role}/${action} with data:`, JSON.stringify(userDto));
+
                             fetch(`/${role}/${action}`, {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json"
                                 },
-                                body: JSON.stringify(userDto)
+                                body: JSON.stringify(userDto)  // gửi dữ liệu
                             })
                                 .then(response => response.text())
                                 .then(data => {

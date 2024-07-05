@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{layout/head :: head}"><title>Profile</title></head>
-
+<script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
     .my-image {
         width: 100%;
@@ -86,18 +86,18 @@
                                     <div class="account-detail text-center">
                                         <div class="my-image">
                                             <a href="javascript:void(0);">
-                                                <img alt="" th:src="${profileDto.avatarPath}" >
+                                                <img alt="" th:src="${profileDto.avatarPath}" id="avatar-preview">
                                             </a>
                                         </div>
 
                                         <form th:action="@{/profileUrl}" method="post" enctype="multipart/form-data">
                                             <div class="account-title">
                                                 <div class="button-container">
-                                                    <input type="file" class="form-control" id="url" name="file" accept="image/*">
+                                                    <input type="file" class="form-control" id="url-update-avatar" name="file" accept="image/*">
                                                     <br>
                                                     <div class="button-wrapper">
-                                                        <button type="submit" name="action" value="save" class="btn btn-primary btn-custom">Save</button>
-                                                        <button type="submit" name="action" value="remove" class="btn btn-primary btn-custom">Remove</button>
+                                                        <button type="submit" name="action" id="save-avatar" value="save" class="btn btn-primary btn-custom">Save</button>
+                                                        <button type="submit" name="action" id="remove-avatar" value="remove" class="btn btn-primary btn-custom">Remove</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -136,8 +136,8 @@
                                     <div class="row m-b30">
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput1" class="form-label">Your Name<span style="color: red;">*</span>:</label>
-                                                <input th:field="*{fullName}" type="text" class="form-control" id="formcontrolinput1" placeholder="Full Name">
+                                                <label for="inputName" class="form-label">Your Name<span style="color: red;">*</span>:</label>
+                                                <input th:field="*{fullName}" type="text" class="form-control" id="inputName" placeholder="Full Name">
                                                 <div th:if="${#fields.hasErrors('fullName')}" class="alert alert-danger" th:errors="*{fullName}"></div>
                                             </div>
                                         </div>
@@ -211,10 +211,32 @@
     <footer th:replace="layout/footer :: footer"></footer>
 
     <script type="text/javascript">
-        function trimFullName() {
-            var fullNameInput = document.getElementById("formcontrolinput1");
-            fullNameInput.value = fullNameInput.value.trim().replace(/\s{2,}/g, ' ');
-        }
+        $(document).ready(function(){
+            $('#url-update-avatar').on('change', function(){
+                showImgAvatar(this);
+            });
+
+            $('#inputName').on('blur', function(){
+                trimFullName();
+            });
+
+            function showImgAvatar(selectFile){
+                let file = selectFile.files[0];
+                let reader = new FileReader();
+
+                reader.onload = function(){
+                    $('#avatar-preview').attr('src', reader.result);
+                };
+
+                if(file){
+                    reader.readAsDataURL(file);
+                }
+            }
+            function trimFullName() {
+                let $fullNameInput = $('#inputName');
+                $fullNameInput.val($fullNameInput.val().trim().replace(/\s{2,}/g, ' '));
+            }
+        });
     </script>
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
