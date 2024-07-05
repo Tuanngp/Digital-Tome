@@ -2,6 +2,7 @@ package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentDTOResponse;
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTOResponse;
+import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
@@ -28,7 +29,7 @@ public class PaypalService {
 
     private final APIContext apiContext;
     private final PaymentRepository paymentRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     public Payment createPayment(
             Double total,               // Tổng tiền
@@ -113,4 +114,14 @@ public class PaypalService {
                 .currentPage(page)
                 .build();
     }
+
+    public PaymentPageDTOResponse getTransactionHistory(LocalDate startDate, LocalDate endDate, int page, int size) {
+        AccountEntity accountCurrent = userService.getCurrentLogin();
+
+        if (accountCurrent != null) {
+            return searchPaymentsByAccountIdAndDateRange(accountCurrent.getId(), startDate, endDate, page, size);
+        }
+        return new PaymentPageDTOResponse();
+    }
+
 }

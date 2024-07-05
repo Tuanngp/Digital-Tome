@@ -105,9 +105,9 @@
     $(document).ready(function() {
         function fetchTransactions(startDate, endDate, page, size) {
             $.ajax({
-                url: '/api/transactions/all',
+                url: '/api/transactions/search',
                 type: 'GET',
-                data: {
+                data: {   // thông tin gửi tới backend để xử lý
                     startDate: startDate,
                     endDate: endDate,
                     page: page,
