@@ -237,58 +237,53 @@
         </ul>
     </div>
 
-        <div class="outer-body">
-            <div class="inner-body">
-                <div class="content-body">
-                    <div class="container-fluid mh-auto">
-                        <!-- Dashboard Content Start -->
-                        <div th:if="${page == 'dashboard'}">
-                            <div class="row">
-                                <div class="cards">
-                                    <div class="card-single">
-                                        <div>
-                                            <h3 th:text="${userCount}">254</h3>
-                                            <span>Users</span>
-                                        </div>
-                                        <div>
-                                            <span class="las la-users"></span>
-                                        </div>
+    <div class="outer-body">
+        <div class="inner-body">
+            <div class="content-body">
+                <div class="container-fluid mh-auto">
+                    <!-- Dashboard Content Start -->
+                    <div th:if="${page == 'dashboard'}">
+                        <div class="row">
+                            <div class="cards">
+                                <div class="card-single">
+                                    <div>
+                                        <h3 th:text="${userCount}">254</h3>
+                                        <span>Users</span>
                                     </div>
-                                    <div class="card-single">
-                                        <div>
-                                            <h3 th:text="${publisherCount}">50</h3>
-                                            <span>Publishers</span>
-                                        </div>
-                                        <div>
-                                            <span class="las la-chalkboard-teacher"></span>
-                                        </div>
+                                    <div>
+                                        <span class="las la-users"></span>
                                     </div>
-                                    <div class="card-single">
-                                        <div>
-                                            <h3>10</h3>
-                                            <span>Employees</span>
-                                        </div>
-                                        <div>
-                                            <span class="las la-briefcase"></span>
-                                        </div>
+                                </div>
+                                <div class="card-single">
+                                    <div>
+                                        <h3 th:text="${publisherCount}">50</h3>
+                                        <span>Publishers</span>
                                     </div>
-                                    <div class="card-single">
-                                        <div>
-                                            <h3>$100k</h3>
-                                            <span>Revenue</span>
-                                        </div>
-                                        <div>
-                                            <span class="lab la-google-wallet"></span>
-                                        </div>
+                                    <div>
+                                        <span class="las la-chalkboard-teacher"></span>
+                                    </div>
+                                </div>
+                                <div class="card-single">
+                                    <div>
+                                        <h3>10</h3>
+                                        <span>Employees</span>
+                                    </div>
+                                    <div>
+                                        <span class="las la-briefcase"></span>
+                                    </div>
+                                </div>
+                                <div class="card-single">
+                                    <div>
+                                        <h3>$100k</h3>
+                                        <span>Revenue</span>
+                                    </div>
+                                    <div>
+                                        <span class="lab la-google-wallet"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-<<<<<<< HEAD
                     </div>
-
-=======
->>>>>>> origin/khanhduc-workspace
                     <!-- Dashboard Content End -->
                     <!-- Điều kiện hiển thị bảng dữ liệu người dùng -->
                     <div th:if="${page == 'user-manager' || page == 'publisher-manager' || page == 'employee-manager'}">
@@ -356,22 +351,6 @@
                                                     <td th:text="${pub.username}"></td>
                                                     <td th:text="${pub.namePublisher}"></td>
                                                     <td th:text="${pub.certificateNumber}"></td>
-<<<<<<< HEAD
-                                                    <td th:text="${pub.approved == true ? 'Active' : 'IsActive'}"></td>
-
-                                                    <td>
-                                                        <button type="button" class="btn btn-success btn-sm"
-                                                                th:onclick="'confirmActionApprove(' + ${pub.id} + ', true)'">Approve</button>
-                                                        <button type="button" class="btn btn-danger btn-sm"
-                                                                th:onclick="'confirmActionApprove(' + ${pub.id} + ', false)'">Not Approve</button>
-                                                    </td>
-
-
-
-                                                </tr>
-                                                <tr th:if="${#lists.isEmpty(publisher)}">
-                                                    <td colspan="7">No publisher information available.</td>
-=======
                                                     <td th:text="${pub.approved == false ? 'Pending' : 'Approved'}"></td>
                                                     <td>
                                                         <button type="button" class="btn btn-success btn-sm"
@@ -379,7 +358,6 @@
                                                         <button type="button" class="btn btn-danger btn-sm"
                                                                 th:onclick="'confirmActionApprove(\'' + ${pub.userId} + '\',false)'">Reject</button>
                                                     </td>
->>>>>>> origin/khanhduc-workspace
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -390,13 +368,9 @@
                         </div>
                     </div>
 
-<<<<<<< HEAD
-                    <script>
-=======
 
                     <script>
 
->>>>>>> origin/khanhduc-workspace
                         function goBack() {
                             window.history.back();
                         }
@@ -441,10 +415,7 @@
                                 reason: reason,
                             };
                             console.log(`Sending request to /${role}/${action} with data:`, JSON.stringify(userDto));
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/khanhduc-workspace
                             fetch(`/${role}/${action}`, {
                                 method: "POST",
                                 headers: {
@@ -492,11 +463,7 @@
 
 <script>
     function confirmActionApprove(userId, isApproved) {
-<<<<<<< HEAD
-        let action = isApproved ? "Approve" : "Not Approve";
-=======
         let action = isApproved ? "Approve" : "Reject";
->>>>>>> origin/khanhduc-workspace
 
         Swal.fire({
             title: `Are you sure you want to ${action} this user?`,
@@ -510,11 +477,7 @@
                     url: '/api/approve',
                     type: 'POST',
                     contentType: 'application/json',
-<<<<<<< HEAD
-                    data: JSON.stringify({ userId: userId, action: action }),
-=======
                     data: JSON.stringify({ id: userId, action: isApproved }),
->>>>>>> origin/khanhduc-workspace
                     success: function(data) {
                         Swal.fire('Success', data.message, 'success').then(() => {
                             window.location.reload();
@@ -529,11 +492,5 @@
         });
     }
 </script>
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> origin/khanhduc-workspace
 </body>
 </html>

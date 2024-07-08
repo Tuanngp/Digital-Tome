@@ -41,19 +41,10 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
     public List<AccountEntity> fetchAllAccount(){
         return userRepository.findAll();
     }
->>>>>>> origin/khanhduc-workspace
-=======
-    public AccountEntity findById(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
->>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
@@ -73,57 +64,12 @@ public class UserService {
 
     public  void  updatePoint (AccountEntity accountEntity){
         userRepository.save(accountEntity);
-<<<<<<< HEAD
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
-    public String getEmailById(Long userId) {
-        return userRepository.findById(userId)
-                .map(AccountEntity::getEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public AccountEntity findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User Not Found with id: " + id));
     }
-
-    public void saveUser(RegisterDto registerDto) {
-        if (userRepository.existsByUsername(registerDto.getUsername())) {
-            throw new RuntimeException("User exists");
-        }
-
-        AccountEntity user = userMapper.toUSer(registerDto);
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setAvatarPath(DEFAULT_AVATAR_URL);
-
-        RoleEntity role = roleRepository.findByName("ROLE_USER");
-        if (role == null) {
-            role = checkRoleExist();
-        }
-        user.setRoleEntity(role);
-        user.setAvatarPath(DEFAULT_AVATAR_URL);
-        userRepository.save(user);
-    }
-
-    private RoleEntity checkRoleExist() {
-        RoleEntity role = new RoleEntity();
-        role.setName("ROLE_USER");
-        return roleRepository.save(role);
-    }
-
-    public void updateUserRole(Long userId, String roleName) {
-        Optional<AccountEntity> accountOptional = userRepository.findById(userId);
-        if (accountOptional.isPresent()) {
-            AccountEntity account = accountOptional.get();
-            RoleEntity role = roleRepository.findByName(roleName);
-            if (role != null) {
-                account.setRoleEntity(role);
-                userRepository.save(account);
-            }
-        }
-=======
->>>>>>> origin/khanhduc-workspace
-    }
-
 
     public String getEmailById(Long userId) {
         return userRepository.findById(userId)
@@ -195,6 +141,7 @@ public class UserService {
         return "Your password successfully updated.";
     }
 
+
     public String uploadImage(MultipartFile file) throws IOException {
         try{
             var result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
@@ -223,6 +170,7 @@ public class UserService {
         return true;
     }
 
+
     public void updateImage(String url, String username) {
         AccountEntity user = userRepository.findByUsername(username);
         if (user != null) {
@@ -232,6 +180,7 @@ public class UserService {
             throw new RuntimeException("User not found");
         }
     }
+
 
     public String getImage(String username){
         AccountEntity account = userRepository.findByUsername(username);
@@ -246,20 +195,13 @@ public class UserService {
         String username = null;
         if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
             username = ((UserDetails) authentication.getPrincipal()).getUsername();
-        } else if(authentication != null && authentication.getPrincipal() != null){
+        }else if(authentication != null && authentication.getPrincipal() != null){
             username = authentication.getPrincipal().toString();
         }
         if(username != null){
             return userRepository.findByUsername(username);
         }
-<<<<<<< HEAD
         return null;
     }
-=======
-            return null;
-    }
-
-}
->>>>>>> origin/khanhduc-workspace
 
 }

@@ -1,3 +1,4 @@
+
 package com.fpt.swp391.group6.DigitalTome.dto.appRegister;
 
 import lombok.AllArgsConstructor;
@@ -11,8 +12,4 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ApprovalResponse {
     private String message; // thông báo.
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/khanhduc-workspace

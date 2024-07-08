@@ -1,8 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.microsoft.azure.cognitiveservices.vision.contentmoderator.ContentModeratorClient;
 import com.microsoft.azure.cognitiveservices.vision.contentmoderator.ContentModeratorManager;
 import com.microsoft.azure.cognitiveservices.vision.contentmoderator.models.AzureRegionBaseUrl;
@@ -11,7 +9,10 @@ import com.microsoft.azure.cognitiveservices.vision.contentmoderator.models.PII;
 import com.microsoft.azure.cognitiveservices.vision.contentmoderator.models.Screen;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -37,15 +38,13 @@ public class ContentModeratorService {
         PII pII = textResults.pII();
         return (terms != null && !terms.isEmpty()) ||
                 (pII != null &&
-<<<<<<< HEAD
+
                         (!pII.email().isEmpty() ||
                                 !pII.phone().isEmpty() ||
                                 !pII.address().isEmpty())) ||
-=======
                     (!pII.email().isEmpty() ||
                     !pII.phone().isEmpty() ||
-                    !pII.address().isEmpty())) ||
->>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
+                    !pII.address().isEmpty()) ||
                 !isValidComment(content);
     }
 

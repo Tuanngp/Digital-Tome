@@ -7,9 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
     <!-- Thêm thư viện STOMP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-<<<<<<< HEAD
-=======
     <style>
         .notification-avatar {
             width: 40px;
@@ -29,7 +28,6 @@
             margin: 0;
         }
     </style>
->>>>>>> origin/khanhduc-workspace
 
     <div class="header-content">
         <nav class="navbar navbar-expand">
@@ -76,10 +74,6 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/khanhduc-workspace
                                 <ul class="timeline notification-items" id="notificationList">
                                     <!-- Các thông báo sẽ được thêm vào đây bằng JavaScript -->
                                 </ul>
@@ -169,17 +163,10 @@
         </nav>
     </div>
 
-<<<<<<< HEAD
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var socket = new SockJS('/ws');
-            var stompClient = Stomp.over(socket);
-=======
     <script th:if="${account != null}">
         document.addEventListener('DOMContentLoaded', function () {
             let socket = new SockJS('/ws');
             let stompClient = Stomp.over(socket);
->>>>>>> origin/khanhduc-workspace
 
             stompClient.connect({}, function (frame) {
                 stompClient.subscribe('/user/queue/notifications', function (notification) {
@@ -195,10 +182,7 @@
             document.querySelector('#notificationList').addEventListener('click', function (e) {
                 const notificationId = e.target.getAttribute('data-notification-id');
                 if (notificationId) {
-<<<<<<< HEAD
-=======
                     console.log(notificationId);
->>>>>>> origin/khanhduc-workspace
                     markNotificationAsRead(notificationId);
                 }
             });
@@ -228,9 +212,6 @@
             const countSpan = document.querySelector('#notificationCount');
             const notifications = document.querySelectorAll('.notification-item');
             let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
-<<<<<<< HEAD
-            countSpan.textContent = unreadCount;
-=======
 
             if (unreadCount === 0) {
                 countSpan.style.display = 'none';
@@ -238,7 +219,6 @@
                 countSpan.style.display = 'block';
                 countSpan.textContent = unreadCount;
             }
->>>>>>> origin/khanhduc-workspace
         }
 
         function addNotificationToUI(notification) {
@@ -250,15 +230,6 @@
             notificationElement.setAttribute('data-notification-url', notification.url);
 
             notificationElement.innerHTML = `
-<<<<<<< HEAD
-            <div class="notification-body">
-                <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
-                <div class="notification-text">
-                    <p class="notification-message">${truncateText(notification.message, 100)}</p>
-                </div>
-            </div>
-        `;
-=======
         <div class="notification-body">
             <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
             <div class="notification-text">
@@ -266,7 +237,6 @@
             </div>
         </div>
     `;
->>>>>>> origin/khanhduc-workspace
             notificationItemsContainer.prepend(notificationElement);
 
             notificationElement.onclick = () => {
@@ -296,16 +266,9 @@
         }
 
         function playNotificationSound() {
-            var sound = document.getElementById("notificationSound");
+            let sound = document.querySelector('#notificationSound');
             sound.play();
         }
-<<<<<<< HEAD
-    </script>
-</div>
-=======
 
     </script>
 </div>
-
-
->>>>>>> origin/khanhduc-workspace

@@ -27,8 +27,5 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             response.sendRedirect(request.getContextPath() + "/login?error");
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/khanhduc-workspace
+

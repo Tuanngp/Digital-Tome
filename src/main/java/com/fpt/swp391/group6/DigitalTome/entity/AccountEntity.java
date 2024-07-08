@@ -157,8 +157,5 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.REFRESH, CascadeType.DETACH})
     @JsonManagedReference
     private Set<NotificationEntity> notifications;
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/khanhduc-workspace
 }

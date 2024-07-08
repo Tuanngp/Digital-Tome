@@ -1,13 +1,14 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
+import com.fpt.swp391.group6.DigitalTome.dto.PublisherDTO;
 import com.fpt.swp391.group6.DigitalTome.dto.UserBanDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.service.AdminService;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
+import com.fpt.swp391.group6.DigitalTome.service.PublisherService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,27 +27,8 @@ public class AdminController {
     private final EmailService emailService;
     private final UserRepository userRepository;
     private final UserService userService;
-//    private final PublisherService publisherService;
+    private final PublisherService publisherService;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public AdminController(AdminService adminService, EmailService emailService, UserRepository userRepository, UserService userService, PublisherService publisherService) {
-=======
-    public AdminController(AdminService adminService, EmailService emailService, UserRepository userRepository, UserService userService) {
->>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
-        this.adminService = adminService;
-        this.emailService = emailService;
-        this.userRepository = userRepository;
-        this.userService = userService;
-<<<<<<< HEAD
-        this.publisherService = publisherService;
-=======
-//        this.publisherService = publisherService;
-
->>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
-    }
-=======
->>>>>>> origin/khanhduc-workspace
 
     @GetMapping("/admin")
     public String homeAdmin() {
@@ -55,14 +37,6 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
-<<<<<<< HEAD
-        model.addAttribute("page", "dashboard");
-        return "admin/manager";
-    }
-
-    @GetMapping("/manager")
-    public String manager(Model model) {
-=======
         List<AccountEntity> accounts = userService.fetchAllAccount();
 
         long userCount = accounts.stream()
@@ -74,7 +48,6 @@ public class AdminController {
 
         model.addAttribute("userCount", userCount);
         model.addAttribute("publisherCount", publisherCount);
->>>>>>> origin/khanhduc-workspace
         model.addAttribute("page", "dashboard");
         return "admin/manager";
     }
@@ -82,16 +55,16 @@ public class AdminController {
 
     @GetMapping("/user-manager")
     public String userManager(Model model) {
-        List<AccountEntity> users = userRepository.findByRoleName("ROLE_USER");
-        model.addAttribute("users", users);
+        List<AccountEntity> user = userRepository.findByRoleName("ROLE_USER");
+        model.addAttribute("users", user);
         model.addAttribute("page", "user-manager");
         return "admin/manager";
     }
 
     @GetMapping("/publisher-manager")
     public String publisherManager(Model model) {
-        List<AccountEntity> publishers = userRepository.findByRoleName("ROLE_PUBLISHER");
-        model.addAttribute("users", publishers);
+        List<AccountEntity> publisher = userRepository.findByRoleName("ROLE_PUBLISHER");
+        model.addAttribute("users", publisher);
         model.addAttribute("page", "publisher-manager");
         return "admin/manager";
     }
@@ -194,11 +167,11 @@ public class AdminController {
         }
     }
 
-//    @GetMapping("/register-publisher-details")
-//    public String showRegisterPublisherDetails(Model model) {
-//        List<PublisherDTO> publisherList = publisherService.getAllPublisherDetails();
-//        model.addAttribute("publisher", publisherList);
-//        model.addAttribute("page", "register-publisher");
-//        return "admin/manager";
-//    }
+    @GetMapping("/register-publisher-details")
+    public String showRegisterPublisherDetails(Model model) {
+        List<PublisherDTO> publisherList = publisherService.getAllPublisherDetails();
+        model.addAttribute("publisher", publisherList);
+        model.addAttribute("page", "register-publisher");
+        return "admin/manager";
+    }
 }

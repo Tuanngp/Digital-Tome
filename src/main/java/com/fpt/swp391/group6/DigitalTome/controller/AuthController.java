@@ -8,14 +8,7 @@ import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import lombok.RequiredArgsConstructor;
->>>>>>> origin/khanhduc-workspace
-=======
-import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,17 +31,7 @@ public class AuthController {
     private final EmailService emailService;
     private final HttpSession httpSession;
     private final UserService userService;
-<<<<<<< HEAD
-
-    @Autowired
-    public AuthController(UserService userService, EmailService emailService, HttpSession httpSession) {
-        this.userService = userService;
-        this.emailService = emailService;
-        this.httpSession = httpSession;
-    }
-=======
     private final PublisherService publisherService;
->>>>>>> origin/khanhduc-workspace
 
 
     @GetMapping(value = {"/","home", "index"})
@@ -58,6 +41,8 @@ public class AuthController {
     public String loginForm() {
         return "authentication/shop-login";
     }
+
+
 
     @GetMapping("register")
     public String showRegistrationForm(Model model){
@@ -90,6 +75,7 @@ public class AuthController {
 
         try {
             emailService.sendEmail("Code OTP", "Your OTP code is: " + otp, List.of(userDto.getEmail()));
+
         } catch (MessagingException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to send OTP. Please try again.");
             e.printStackTrace();
@@ -176,9 +162,6 @@ public class AuthController {
         }
         return "redirect:/login";
     }
-<<<<<<< HEAD
-}
-=======
 
     @PostMapping("/contact")
     public String contact(@RequestParam("email") String email) {
@@ -186,7 +169,3 @@ public class AuthController {
         return "redirect:/login";
     }
 }
-
-
-
->>>>>>> origin/khanhduc-workspace

@@ -6,16 +6,6 @@
     <title>Recharge</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <script>
-        function showConfirm(amount, points) {
-            document.getElementById('confirm-section').style.display = 'block';
-            document.getElementById('selected-product').innerText = `Point × ${points}`;
-            document.getElementById('selected-price').innerText = `${amount} USD`;
-            var inputElement = document.getElementById('amount');
-            inputElement.value = amount;
-        }
-    </script>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -188,5 +178,15 @@
         </div>
     </form>
 </div>
+
+<script>
+    function showConfirm(amount, points) {
+        document.getElementById('confirm-section').style.display = 'block';
+        document.getElementById('selected-product').innerText = `Point × ${points}`;
+        document.getElementById('selected-price').innerText = `${amount} USD`;
+        var inputElement = document.getElementById('amount');
+        inputElement.value = amount;
+    }
+</script>
 </body>
 </html>

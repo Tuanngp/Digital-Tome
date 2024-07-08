@@ -13,10 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.i18n.FixedLocaleResolver;
-
-import java.util.Locale;
 
 @Configuration
 @EnableWebSecurity
@@ -42,30 +38,23 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
-                        .requestMatchers("/publisher/**").hasRole("PUBLISHER")
-                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/publisher/**").hasAnyRole("PUBLISHER", "ADMIN")
+                        .requestMatchers("/admin/").hasAnyRole("ADMIN")
+                        .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
-<<<<<<< HEAD
-<<<<<<< HEAD
-//                        .requestMatchers("/api/**").authenticated()
-=======
                         .requestMatchers("/transaction/**").permitAll()
                         .requestMatchers("/api/**").permitAll()
->>>>>>> origin/khanhduc-workspace
                         .requestMatchers(PUBLIC_ENDPOINT).permitAll()
-=======
-                        .requestMatchers("/api/**").authenticated()
-                        .requestMatchers("/**").permitAll()
->>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
+                        .failureHandler(customAuthenticationFailureHandler)
                         .successHandler(new CustomAuthenticationSuccessHandler())
                         .permitAll()
                 )
@@ -73,25 +62,22 @@ public class SpringSecurity {
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
                                 .userService(customOAuth2UserService))
-                        .defaultSuccessUrl("/index")
-                        .failureUrl("/login?error")
+                        .defaultSuccessUrl("/")
+                        .failureUrl("/login")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .permitAll()
-                )
+                        .permitAll())
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/404")
-                );
+                        .accessDeniedPage("/404"));
         return http.build();
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(customUserDetailsService)
-                .passwordEncoder(passwordEncoder());
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
     }
 }
