@@ -5,7 +5,6 @@ import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTORespo
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
-import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.utils.PaymentMapper;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
@@ -123,5 +122,4 @@ public class PaypalService {
         }
         return new PaymentPageDTOResponse();
     }
-
 }

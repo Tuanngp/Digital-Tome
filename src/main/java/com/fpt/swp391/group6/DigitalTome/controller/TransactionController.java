@@ -1,9 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTOResponse;
-import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.service.PaypalService;
-import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -12,7 +12,7 @@ public class PaymentMapper {
                 .id(payment.getId())
                 .username(payment.getAccountEntity().getUsername())
                 .price(payment.getDecimal())
-                .bookTitle(payment.getBookEntity() != null ? payment.getBookEntity().getTitle() : null)
+                .bookTitle(payment.getBookEntity() != null ? payment.getBookEntity().getTitle() : "")
                 .createdDate(payment.getCreatedDate())
                 .success(payment.isSuccess())
                 .build();

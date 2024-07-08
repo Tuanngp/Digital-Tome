@@ -101,7 +101,6 @@
 
 
 <script>
-
     $(document).ready(function() {
         function fetchTransactions(startDate, endDate, page, size) {
             $.ajax({
@@ -115,10 +114,10 @@
                 },
                 success: function(response) {
                     let transactions = response.payments;
-                    let transactionTable = $('#transactionTable');
-                    transactionTable.empty();
+                    let transactionTable = $('#transactionTable'); // dòng 88
+                    transactionTable.empty(); // xóa nội dung bảng hiện tại, để thêm các dữ liệu mới
 
-                    if (transactions.length > 0) {
+                    if (transactions.length > 0) {  // kiểm tra dữ liệu trả về từ backend
                         transactions.forEach((transaction, index) => {
                             let row = `<tr>
                             <td>${page * size + index + 1}</td>
@@ -132,11 +131,9 @@
                         </tr>`;
                             transactionTable.append(row);
                         });
-                    } else {
+                    } else { // nếu không có giao dịch nào
                         transactionTable.append('<tr><td colspan="6">No transactions found</td></tr>');
                     }
-
-                    // Update pagination links
                     updatePagination(response.totalPages, response.currentPage);
                 },
                 error: function(xhr, status, error) {
@@ -145,8 +142,9 @@
             });
         }
 
+        // cập nhập phân trang
         function updatePagination(totalPages, currentPage) {
-            let paginationNav = $('#paginationNav ul');
+            let paginationNav = $('#paginationNav ul'); // dòng 94
             paginationNav.empty();
 
             // Previous button
@@ -175,11 +173,9 @@
             paginationNav.append(nextItem);
         }
 
-        // Initial load of transactions
-        fetchTransactions(null, null, 0, 5);
 
-        // Handle pagination clicks
-        $(document).on('click', '.pagination a', function(event) {
+        fetchTransactions(null, null, 0, 5);
+        $(document).on('click', '.pagination a', function(event) {  // dòng 95
             event.preventDefault();
             let page = $(this).data('page');
             fetchTransactions(null, null, page, 5);
