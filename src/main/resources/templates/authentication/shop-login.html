@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{layout/head :: head}"><title>Login</title></head>
+<head th:replace="~{layout/head :: head}">
+    <title>Login</title>
+</head>
 
 <body>
 <div class="page-wraper">
@@ -34,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <!-- inner page banner End-->
+        <!-- inner page banner End -->
 
         <!-- contact area -->
         <section class="content-inner shop-account">
@@ -53,32 +55,32 @@
                     <div class="col-lg-6 col-md-6 mb-4">
                         <div class="login-area">
                             <div class="tab-content nav">
-
-
-
-
-                                <form id="login"   method="post" th:action="@{/login}" class="tab-pane active col-12">
+                                <form id="login" method="post" th:action="@{/login}" class="tab-pane active col-12">
                                     <h4 class="text-secondary">LOGIN</h4>
                                     <p class="font-weight-600">If you have an account with us, please log in.</p>
                                     <div class="mb-4">
                                         <label class="label-title">E-MAIL *</label>
-                                        <input name="username" required="" class="form-control" placeholder="Your Email Id" type="email">
+                                        <input name="username" required class="form-control" placeholder="Your Email Id" type="email">
                                     </div>
                                     <div class="mb-4">
                                         <label class="label-title">PASSWORD *</label>
-                                        <input name="password" required="" class="form-control " placeholder="Type Password" type="password">
+                                        <input name="password" required class="form-control" placeholder="Type Password" type="password">
                                     </div>
 
                                     <div th:if="${param.error}">
                                         <p style="color: red;">Email or password does not exist</p>
                                     </div>
 
-                                    <div class="text-left">
-                                        <button class="btn btn-primary btnhover me-2">login</button>
-                                        <a  th:href="@{/forgotPassword}" class="m-l5"><i class="fas fa-unlock-alt"></i> Forgot Password</a>
+                                    <div th:if="${param.banned}">
+                                        <p style="color: red;">Your account has been locked, please contact us for support</p>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Click</a>
                                     </div>
+                                    <br>
 
-
+                                    <div class="text-left">
+                                        <button class="btn btn-primary btnhover me-2">Login</button>
+                                        <a th:href="@{/forgotPassword}" class="m-l5"><i class="fas fa-unlock-alt"></i> Forgot Password</a>
+                                    </div>
 
                                     <div class="col-md-12">
                                         <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" th:href="@{/oauth2/authorization/google}">
@@ -87,7 +89,6 @@
                                         </a>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
@@ -95,7 +96,32 @@
             </div>
             <!-- Product END -->
         </section>
-        <!-- contact area End-->
+
+        <!-- contact area End -->
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Contact Support</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{/contact}" method="post">
+                            <div class="form-group mb-3">
+                                <label for="name">Email</label>
+                                <input type="email" class="form-control" id="name" name="email" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="message">Message</label>
+                                <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -104,6 +130,18 @@
 
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
+
+<!-- Ensure Bootstrap modal workings -->
+<script src="/user/js/jquery.min.js"></script>
+<script src="/user/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            let button = $(event.relatedTarget)
+        });
+    });
+</script>
+
 </body>
 
 </html>

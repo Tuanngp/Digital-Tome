@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserServ
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,9 +49,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String email = oAuth2User.getAttribute("email");
 
         AccountEntity account = userRepository.findByEmail(email);
-        if (account == null) account = createUser(oAuth2User);
+        if (account == null) {
+            account = createUser(oAuth2User);
+            account.setAvatarPath("../user/images/avatar_default.png");
+        }
 
-        account.setAvatarPath("../user/images/avatar_default.png");
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 

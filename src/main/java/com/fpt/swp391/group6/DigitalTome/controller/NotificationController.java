@@ -20,7 +20,11 @@ public class NotificationController {
     }
 
     @GetMapping("/current")
+<<<<<<< HEAD
     public ResponseEntity<List<NotificationEntity>> getCurrentUserNotifications() {
+=======
+    public ResponseEntity<List<NotificationEntity>> getCurrentUserNotifications( ) {
+>>>>>>> origin/khanhduc-workspace
         List<NotificationEntity> notifications = notificationService.getNotificationsForCurrentUser();
         return ResponseEntity.ok(notifications);
     }
@@ -36,4 +40,8 @@ public class NotificationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/khanhduc-workspace

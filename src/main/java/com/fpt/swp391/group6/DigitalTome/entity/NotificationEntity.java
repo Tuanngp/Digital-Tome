@@ -24,12 +24,20 @@ public class NotificationEntity {
     private AccountEntity user;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
+<<<<<<< HEAD
 //    @JoinColumn(name = "publisher_id", nullable = false)
 //    private AccountEntity publisher;
 
     private String title;
 
     @Lob
+=======
+//    @JoinColumn(name = "sender_id")
+//    private AccountEntity sender;
+
+    private String title;
+
+>>>>>>> origin/khanhduc-workspace
     private String message;
 
     private Boolean isRead;
@@ -39,4 +47,8 @@ public class NotificationEntity {
     private String avatarUrl;
 
     private LocalDateTime createdAt;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/khanhduc-workspace

@@ -11,4 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ApprovalResponse {
     private String message; // thông báo.
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/khanhduc-workspace

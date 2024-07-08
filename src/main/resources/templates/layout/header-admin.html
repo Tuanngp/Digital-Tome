@@ -8,6 +8,28 @@
     <!-- Thêm thư viện STOMP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
+<<<<<<< HEAD
+=======
+    <style>
+        .notification-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .notification-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+
+        .notification-message {
+            margin: 0;
+        }
+    </style>
+>>>>>>> origin/khanhduc-workspace
 
     <div class="header-content">
         <nav class="navbar navbar-expand">
@@ -54,7 +76,10 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/khanhduc-workspace
                                 <ul class="timeline notification-items" id="notificationList">
                                     <!-- Các thông báo sẽ được thêm vào đây bằng JavaScript -->
                                 </ul>
@@ -80,24 +105,22 @@
                             <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="header-info2 d-flex align-items-center">
                                     <div class="header-media">
-                                        <img src="/admin/images/user.jpg" class="avatar avatar-lg" alt="">
+                                        <img th:src="${account != null && account.avatarPath != null ? account.avatarPath: '/user/images/avatar_default.png'}" class="avatar avatar-lg" alt="">
                                     </div>
                                     <div class="header-info">
-                                        <h6>Thomas Fleming</h6>
-                                        <p>info@gmail.com</p>
+                                        <span th:if="${account !=null}" th:text="${account.email}">Email user</span>
+                                        <h6 class="m-0" th:if="${account !=null}" th:text="${account.fullname}">Name</h6>
                                     </div>
-
                                 </div>
                             </a>
                             <div class=" profile-box">
                                 <div class="products">
                                     <div class="border-img">
-                                        <img src="/admin/images/user.jpg" class="avatar " alt="">
+                                        <img alt="/" th:src="${account != null && account.avatarPath != null ? account.avatarPath : '/user/images/avatar_default.png'}"/>
                                     </div>
                                     <div class="ms-3">
                                         <h6 class="mb-0">Thomas Fleming</h6>
-                                        <span class="d-block mb-1">demo@gmail.com</span>
-                                        <span class="badge border-0 rounded">Pro Mamber</span>
+                                        <span class="d-block mb-1" th:if="${account !=null}" th:text="${account.email}">demo@gmail.com</span>
                                     </div>
                                 </div>
                                 <div class="account-setting">
@@ -146,10 +169,17 @@
         </nav>
     </div>
 
+<<<<<<< HEAD
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var socket = new SockJS('/ws');
             var stompClient = Stomp.over(socket);
+=======
+    <script th:if="${account != null}">
+        document.addEventListener('DOMContentLoaded', function () {
+            let socket = new SockJS('/ws');
+            let stompClient = Stomp.over(socket);
+>>>>>>> origin/khanhduc-workspace
 
             stompClient.connect({}, function (frame) {
                 stompClient.subscribe('/user/queue/notifications', function (notification) {
@@ -165,6 +195,10 @@
             document.querySelector('#notificationList').addEventListener('click', function (e) {
                 const notificationId = e.target.getAttribute('data-notification-id');
                 if (notificationId) {
+<<<<<<< HEAD
+=======
+                    console.log(notificationId);
+>>>>>>> origin/khanhduc-workspace
                     markNotificationAsRead(notificationId);
                 }
             });
@@ -194,7 +228,17 @@
             const countSpan = document.querySelector('#notificationCount');
             const notifications = document.querySelectorAll('.notification-item');
             let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
+<<<<<<< HEAD
             countSpan.textContent = unreadCount;
+=======
+
+            if (unreadCount === 0) {
+                countSpan.style.display = 'none';
+            } else {
+                countSpan.style.display = 'block';
+                countSpan.textContent = unreadCount;
+            }
+>>>>>>> origin/khanhduc-workspace
         }
 
         function addNotificationToUI(notification) {
@@ -206,6 +250,7 @@
             notificationElement.setAttribute('data-notification-url', notification.url);
 
             notificationElement.innerHTML = `
+<<<<<<< HEAD
             <div class="notification-body">
                 <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
                 <div class="notification-text">
@@ -213,6 +258,15 @@
                 </div>
             </div>
         `;
+=======
+        <div class="notification-body">
+            <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
+            <div class="notification-text">
+                <p class="notification-message">${truncateText(notification.message, 100)}</p>
+            </div>
+        </div>
+    `;
+>>>>>>> origin/khanhduc-workspace
             notificationItemsContainer.prepend(notificationElement);
 
             notificationElement.onclick = () => {
@@ -245,5 +299,13 @@
             var sound = document.getElementById("notificationSound");
             sound.play();
         }
+<<<<<<< HEAD
     </script>
 </div>
+=======
+
+    </script>
+</div>
+
+
+>>>>>>> origin/khanhduc-workspace

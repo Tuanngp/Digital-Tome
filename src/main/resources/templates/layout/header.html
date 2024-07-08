@@ -1,5 +1,51 @@
 <!-- Header -->
-<header class="site-header mo-left header style-1" th:fragment="head">
+<header class="site-header mo-left header style-1" th:fragment="header">
+    <style>
+        .notification-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .notification-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .notification-message {
+            margin: 0;
+        }
+
+        .profile-avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .crown-icon,
+        .star-icon,
+        .sun-icon {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 1rem;
+        }
+
+        .crown-icon {
+            color: gold;
+        }
+
+        .star-icon {
+            color: gold;
+        }
+
+        .sun-icon {
+            color: gold;
+        }
+    </style>
+
+
     <!-- Main Header -->
     <div class="header-info-bar">
         <div class="container clearfix">
@@ -12,7 +58,26 @@
             <div class="extra-nav">
                 <div class="extra-cell">
                     <ul class="navbar-nav header-right">
-                        <li class="nav-item">
+                        <li class="nav-item dropdown notification-dropdown">
+                            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" id="notificationDropdown">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 8.5C18 6.9087 17.3679 5.38258 16.2426 4.25736C15.1174 3.13214 13.5913 2.5 12 2.5C10.4087 2.5 8.88258 3.13214 7.75736 4.25736C6.63214 5.38258 6 6.9087 6 8.5C6 15.5 3 17.5 3 17.5H21C21 17.5 18 15.5 18 8.5Z" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M13.73 21.5C13.5542 21.8031 13.3019 22.0547 12.9982 22.2295C12.6946 22.4044 12.3504 22.4965 12 22.4965C11.6496 22.4965 11.3054 22.4044 11.0018 22.2295C10.6982 22.0547 10.4458 21.8031 10.27 21.5" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span class="badge badge-pill badge-danger" id="notificationCount"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <div class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
+
+                                    <ul class="timeline notification-items" id="notificationList">
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        <audio id="notificationSound" src="/admin/notificationsound/notification.mp3" preload="auto"></audio>
+
+
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{wishlist}">
                                 <svg fill="#000000" height="24px" viewBox="0 0 24 24" width="24px"
@@ -23,15 +88,14 @@
                                 <!--                                    <span class="badge">21</span>-->
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <button class="nav-link box cart-btn" type="button">
-                                <svg fill="#000000" height="24px" viewBox="0 0 24 24" width="24px"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M0 0h24v24H0V0z" fill="none"/>
-                                    <path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-                                </svg>
-                                <!--                                    <span class="badge">5</span>-->
-                            </button>
+                            <a class="nav-link" th:href="@{/payment/premium}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M168.5 72L256 165l87.5-93h-175zM383.9 99.1L311.5 176h129L383.9 99.1zm50 124.9H256 78.1L256 420.3 433.9 224zM71.5 176h129L128.1 99.1 71.5 176zm434.3 40.1l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4l112-152c4.5-6.1 11.7-9.8 19.3-9.8H376c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4z"/></svg>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <ul class="dropdown-menu cart-list">
                                 <li class="cart-item">
                                     <div class="media">
@@ -58,16 +122,47 @@
                                     <a class="btn btn-sm btn-outline-primary btnhover w-100" th:href="@{shop-checkout}">Checkout</a>
                                 </li>
                             </ul>
+
+                        <li class="nav-item dropdown" th:if="${account != null}">
+                            <a data-mdb-dropdown-init class="me-3 dropdown-toggle hidden-arrow nav-link" href="/chat" id="navbarDropdownMenuLink"
+                               role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                                <img width="25" height="25" src="https://img.icons8.com/ios/50/chat-message--v2.png" alt="chat-message--v2"/>
+                                <!--                                    <span class="badge rounded-pill badge-notification bg-danger">1</span>-->
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item" href="#">Some news</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Another news</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </li>
+                            </ul>
                         </li>
+<<<<<<< HEAD
                         <li class="nav-item dropdown profile-dropdown  ms-4">
                             <a aria-expanded="false" class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);"
                                role="button">
                                 <img alt="/" th:src="${account != null && account.avatarPath != null ? account.avatarPath: '/user/images/avatar_default.png'}"/>
+=======
+
+                        <li class="nav-item dropdown profile-dropdown ms-4">
+                            <a aria-expanded="false" class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
+                                <div class="profile-avatar-container">
+                                    <img alt="/" th:src="${account != null && account.avatarPath != null ? account.avatarPath: '/user/images/avatar_default.png'}"/>
+                                    <i class="fa-solid fa-crown crown-icon" th:if="${account != null && account.membershipEntity != null && account.membershipEntity.name == 'premium'}"></i>
+                                    <i class="fa-solid fa-star star-icon" th:if="${account != null && account.membershipEntity != null && account.membershipEntity.name == 'standard'}"></i>
+                                    <i class="fa-solid fa-shield sun-icon" th:if="${account != null && account.membershipEntity != null && account.membershipEntity.name == 'basic'}"></i>
+                                </div>
+>>>>>>> origin/khanhduc-workspace
                                 <div class="profile-info" th:if="${account != null}">
                                     <h6 class="title"></h6>
                                     <span th:text="${account.email}">Email user</span>
                                 </div>
                             </a>
+
 
                             <div class="dropdown-menu py-0 dropdown-menu-end" style="min-width: 270px">
                                 <div class="dropdown-header" th:if="${account != null}">
@@ -79,37 +174,38 @@
                                     <a class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
                                        th:href="@{/profile}">
                                         <div>
-                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
-                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M0 0h24v24H0V0z" fill="none"/>
-                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                                            </svg>
+                                            <i class="fa-regular fa-id-card text-primary" style="font-size: 1.2rem;"></i>
                                             <span class="ms-2">Profile</span>
                                         </div>
                                     </a>
+
+
                                     <a class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
                                        th:href="@{shop-cart}">
                                         <div>
-                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
-                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M0 0h24v24H0V0z" fill="none"/>
-                                                <path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-                                            </svg>
+                                            <i class="fa-solid fa-cart-shopping text-primary" style="font-size: 1.2rem;"></i>
                                             <span class="ms-2">My Order</span>
                                         </div>
                                     </a>
+
                                     <a class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
                                        th:href="@{wishlist}">
                                         <div>
-                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
-                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M0 0h24v24H0V0z" fill="none"/>
-                                                <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/>
-                                            </svg>
+                                            <i class="fa-solid fa-heart text-primary" style="font-size: 1.2rem;"></i>
                                             <span class="ms-2">Wishlist</span>
                                         </div>
                                     </a>
 
+                                    <a th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_ADMIN')}"
+                                       class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                       th:href="@{/admin}">
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" height="22px" width="22px">
+                                                <path d="M224 0a128 128 0 1 1 0 256A128 128 0 1 1 224 0zM178.3 304h91.4c11.8 0 23.4 1.2 34.5 3.3c-2.1 18.5 7.4 35.6 21.8 44.8c-16.6 10.6-26.7 31.6-20 53.3c4 12.9 9.4 25.5 16.4 37.6s15.2 23.1 24.4 33c15.7 16.9 39.6 18.4 57.2 8.7v.9c0 9.2 2.7 18.5 7.9 26.3H29.7C13.3 512 0 498.7 0 482.3C0 383.8 79.8 304 178.3 304zM436 218.2c0-7 4.5-13.3 11.3-14.8c10.5-2.4 21.5-3.7 32.7-3.7s22.2 1.3 32.7 3.7c6.8 1.5 11.3 7.8 11.3 14.8v17.7c0 7.8 4.8 14.8 11.6 18.7c6.8 3.9 15.1 4.5 21.8 .6l13.8-7.9c6.1-3.5 13.7-2.7 18.5 2.4c7.6 8.1 14.3 17.2 20.1 27.2s10.3 20.4 13.5 31c2.1 6.7-1.1 13.7-7.2 17.2l-14.4 8.3c-6.5 3.7-10 10.9-10 18.4s3.5 14.7 10 18.4l14.4 8.3c6.1 3.5 9.2 10.5 7.2 17.2c-3.3 10.6-7.8 21-13.5 31s-12.5 19.1-20.1 27.2c-4.8 5.1-12.5 5.9-18.5 2.4l-13.8-7.9c-6.7-3.9-15.1-3.3-21.8 .6c-6.8 3.9-11.6 10.9-11.6 18.7v17.7c0 7-4.5 13.3-11.3 14.8c-10.5 2.4-21.5 3.7-32.7 3.7s-22.2-1.3-32.7-3.7c-6.8-1.5-11.3-7.8-11.3-14.8V467.8c0-7.9-4.9-14.9-11.7-18.9c-6.8-3.9-15.2-4.5-22-.6l-13.5 7.8c-6.1 3.5-13.7 2.7-18.5-2.4c-7.6-8.1-14.3-17.2-20.1-27.2s-10.3-20.4-13.5-31c-2.1-6.7 1.1-13.7 7.2-17.2l14-8.1c6.5-3.8 10.1-11.1 10.1-18.6s-3.5-14.8-10.1-18.6l-14-8.1c-6.1-3.5-9.2-10.5-7.2-17.2c3.3-10.6 7.7-21 13.5-31s12.5-19.1 20.1-27.2c4.8-5.1 12.4-5.9 18.5-2.4l13.6 7.8c6.8 3.9 15.2 3.3 22-.6c6.9-3.9 11.7-11 11.7-18.9V218.2zm92.1 133.5a48.1 48.1 0 1 0 -96.1 0 48.1 48.1 0 1 0 96.1 0z"/>
+                                            </svg>
+                                            <span class="ms-2">Admin</span>
+                                        </div>
+                                    </a>
 
 
                                     <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_ADMIN')}"
@@ -139,22 +235,37 @@
                                         </div>
                                     </a>
 
-
-                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
-                                        class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
-                                        th:href="@{/buypoint}">
+                                    <a th:if="${session.role != null and session.role.size() > 0}"
+                                       class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                       th:href="@{/transaction}">
                                         <div>
-                                            <svg fill="#000000" height="20px" viewBox="0 0 24 24"
-                                                 width="20px" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M0 0h24v24H0V0z" fill="none"/>
-                                                <path d="M12 6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m0 10c2.7 0 5.8 1.29 6 2H6c.23-.72 3.31-2 6-2m0-12C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                                            </svg>
+                                            <i class="fa-solid fa-money-bill text-primary" style="font-size: 1.2rem;"></i>
+                                            <span class="ms-2">Transaction</span>
+                                        </div>
+                                    </a>
+
+                                    <a th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
+                                       class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                       th:href="@{/buypoint}">
+                                        <div>
+                                            <i class="fa-solid fa-piggy-bank text-primary" style="font-size: 1.2rem;"></i>
                                             <span class="ms-2" th:if="${account != null}">Buy Point
-                                                 <span th:text="${account.point}"></span>
+                                                   <span th:text="${account.point}"></span>
                                             </span>
                                         </div>
                                     </a>
 
+
+                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
+                                        class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
+                                        th:href="@{/register-publisher}">
+                                        <div>
+                                            <i class="fa-solid fa-user-plus text-primary" style="font-size: 1.2rem;"></i>
+                                            <span class="ms-2">Register Publisher</span>
+                                        </div>
+                                    </a>
+
+<<<<<<< HEAD
                                     <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
                                         class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
                                         th:href="@{/register-publisher}">
@@ -168,6 +279,8 @@
                                         </div>
                                     </a>
 
+=======
+>>>>>>> origin/khanhduc-workspace
 
 
                                 </div>
@@ -224,7 +337,7 @@
             <div class="container clearfix">
                 <!-- Website Logo -->
                 <div class="logo-header logo-dark">
-                    <a th:href="@{../index}"><img alt="logo" th:src="@{../user/images/logo.png}"></a>
+                    <a th:href="@{../index}"><img alt="logo" th:src="@{/user/images/logo.png}"></a>
                 </div>
 
                 <!-- Nav Toggle Button -->
@@ -259,7 +372,7 @@
                         <li><a th:href="@{/}"><span>Home</span></a></li>
                         <li><a th:href="@{about-us}"><span>About Us</span></a></li>
                         <li><a th:href="@{books-list-view-sidebar}"><span>Bookshelves</span></a></li>
-                        <li><a th:href="@{blog-list-sidebar}"><span>Blog</span></a></li>
+<!--                        <li><a th:href="@{blog-list-sidebar}"><span>Blog</span></a></li>-->
                         <!--                        <li><a th:href="@{pricing}"><span>Pricing</span></a></li>-->
                         <li><a th:href="@{contact-us}"><span>Contact Us</span></a></li>
                     </ul>
@@ -278,7 +391,122 @@
                 </div>
             </div>
         </div>
+
     </div>
+
+    <script src="https://cdn.jsdelivr.net/sockjs/1.0.2/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script th:if="${account != null}">
+        document.addEventListener('DOMContentLoaded', function () {
+            var socket = new SockJS('/ws');
+            var stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/user/queue/notifications', function (notification) {
+                    let newNotification = JSON.parse(notification.body);
+                    addNotificationToUI(newNotification);
+                    updateNotificationCount();
+                    playNotificationSound();
+                });
+            });
+
+            fetchNotifications();
+
+            document.querySelector('#notificationList').addEventListener('click', function (e) {
+                const notificationId = e.target.getAttribute('data-notification-id');
+                if (notificationId) {
+                    console.log(notificationId);
+                    markNotificationAsRead(notificationId);
+                }
+            });
+        });
+
+        function fetchNotifications() {
+            fetch('/api/notifications/current')
+                .then(response => response.json())
+                .then(data => {
+                    updateNotificationUI(data);
+                })
+                .catch(error => console.error('Error fetching notifications:', error));
+        }
+
+        function updateNotificationUI(notifications) {
+            const notificationItemsContainer = document.querySelector('#notificationList');
+            notificationItemsContainer.innerHTML = '';
+
+            notifications.forEach(notification => {
+                addNotificationToUI(notification);
+            });
+
+            updateNotificationCount();
+        }
+
+        function updateNotificationCount() {
+            const countSpan = document.querySelector('#notificationCount');
+            const notifications = document.querySelectorAll('.notification-item');
+            let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
+
+            if (unreadCount === 0) {
+                countSpan.style.display = 'none';
+            } else {
+                countSpan.style.display = 'block';
+                countSpan.textContent = unreadCount;
+            }
+        }
+
+        function addNotificationToUI(notification) {
+            const notificationItemsContainer = document.querySelector('#notificationList');
+
+            const notificationElement = document.createElement('li');
+            notificationElement.className = notification.isRead ? 'notification-item' : 'notification-item unread';
+            notificationElement.setAttribute('data-notification-id', notification.id);
+            notificationElement.setAttribute('data-notification-url', notification.url);
+
+            notificationElement.innerHTML = `
+        <div class="notification-body">
+            <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
+            <div class="notification-text">
+                <p class="notification-message">${truncateText(notification.message, 100)}</p>
+            </div>
+        </div>
+    `;
+            notificationItemsContainer.prepend(notificationElement);
+
+            notificationElement.onclick = () => {
+                if (notification.url) {
+                    window.location.href = notification.url;
+                    markNotificationAsRead(notification.id);
+                }
+            };
+        }
+
+        function markNotificationAsRead(notificationId) {
+            fetch(`/api/notifications/mark-as-read/${notificationId}`, {
+                method: 'POST'
+            }).then(response => {
+                if (response.ok) {
+                    document.querySelector(`[data-notification-id="${notificationId}"]`).classList.remove('unread');
+                    updateNotificationCount();
+                }
+            }).catch(error => console.error('Error marking notification as read:', error));
+        }
+
+        function truncateText(text, maxLength) {
+            if (text.length > maxLength) {
+                return text.substring(0, maxLength) + '...';
+            }
+            return text;
+        }
+
+        function playNotificationSound() {
+            var sound = document.getElementById("notificationSound");
+            sound.play();
+        }
+
+    </script>
+
+
+
     <!-- Main Header End -->
 </header>
 <!-- Header End -->

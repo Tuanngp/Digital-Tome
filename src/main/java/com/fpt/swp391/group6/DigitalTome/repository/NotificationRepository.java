@@ -12,4 +12,8 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
 
     @Query("SELECT n FROM NotificationEntity n WHERE n.user.id = :accountId ORDER BY n.createdAt ASC ")
     List<NotificationEntity> findByUserIdOrderByIdDesc(Long accountId);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/khanhduc-workspace

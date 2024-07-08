@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 
+<<<<<<< HEAD
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PublisherEntity;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
@@ -17,10 +18,27 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
+=======
+import com.fpt.swp391.group6.DigitalTome.dto.RegisterPublisherDTO;
+import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
+import com.fpt.swp391.group6.DigitalTome.service.PublisherService;
+import com.fpt.swp391.group6.DigitalTome.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+@RequiredArgsConstructor
+>>>>>>> origin/khanhduc-workspace
 public class RegisterPublisherController {
 
     private final UserService userService;
     private final PublisherService publisherService;
+<<<<<<< HEAD
     private final EmailService emailService;
 
     @Autowired
@@ -29,6 +47,8 @@ public class RegisterPublisherController {
         this.publisherService = publisherService;
         this.emailService = emailService;
     }
+=======
+>>>>>>> origin/khanhduc-workspace
 
     @GetMapping("/register-publisher")
     public String registerPublisher( Model model) {
@@ -40,6 +60,7 @@ public class RegisterPublisherController {
         }
         return "admin/register-publisher";
     }
+<<<<<<< HEAD
 
 
     @PostMapping("/submit-register-publisher")
@@ -71,3 +92,12 @@ public class RegisterPublisherController {
         return "redirect:/register-publisher";
     }
 }
+=======
+    @PostMapping("/submit-register-publisher")
+    public String submitRegisterPublisher(@ModelAttribute RegisterPublisherDTO registerPublisherDTO, RedirectAttributes redirectAttributes) {
+        return publisherService.registerPublisher(registerPublisherDTO,redirectAttributes);
+    }
+}
+
+
+>>>>>>> origin/khanhduc-workspace

@@ -21,4 +21,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.setApplicationDestinationPrefixes("/app");
         registry.setUserDestinationPrefix("/user");
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/khanhduc-workspace

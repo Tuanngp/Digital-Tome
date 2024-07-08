@@ -41,6 +41,13 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+<<<<<<< HEAD
+=======
+
+    public List<AccountEntity> fetchAllAccount(){
+        return userRepository.findAll();
+    }
+>>>>>>> origin/khanhduc-workspace
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
@@ -60,6 +67,7 @@ public class UserService {
 
     public  void  updatePoint (AccountEntity accountEntity){
         userRepository.save(accountEntity);
+<<<<<<< HEAD
     }
 
 
@@ -104,7 +112,46 @@ public class UserService {
                 userRepository.save(account);
             }
         }
+=======
+>>>>>>> origin/khanhduc-workspace
     }
+
+
+    public String getEmailById(Long userId) {
+        return userRepository.findById(userId)
+                .map(AccountEntity::getEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+
+    public void saveUser(RegisterDto registerDto) {
+        if (userRepository.existsByUsername(registerDto.getUsername())) {
+            throw new RuntimeException("User exists");
+        }
+
+        AccountEntity user = userMapper.toUSer(registerDto);
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        user.setAvatarPath(DEFAULT_AVATAR_URL);
+
+        RoleEntity role = roleRepository.findByName("ROLE_USER");
+        if (role == null) {
+            role = checkRoleExist();
+        }
+        user.setRoleEntity(role);
+        user.setAvatarPath(DEFAULT_AVATAR_URL);
+        userRepository.save(user);
+    }
+
+    public void save(AccountEntity account){
+        userRepository.save(account);
+    }
+
+    private RoleEntity checkRoleExist() {
+        RoleEntity role = new RoleEntity();
+        role.setName("ROLE_USER");
+        return roleRepository.save(role);
+    }
+
 
 
     public String forgotPass(String email) {
@@ -200,7 +247,14 @@ public class UserService {
         if(username != null){
             return userRepository.findByUsername(username);
         }
+<<<<<<< HEAD
         return null;
     }
+=======
+            return null;
+    }
+
+}
+>>>>>>> origin/khanhduc-workspace
 
 }

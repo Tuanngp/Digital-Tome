@@ -97,6 +97,7 @@ public class BookEntity extends BaseEntity {
     )
     private List<AuthorEntity> authorEntityList;
 
+
     @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
     private int isNew;
 

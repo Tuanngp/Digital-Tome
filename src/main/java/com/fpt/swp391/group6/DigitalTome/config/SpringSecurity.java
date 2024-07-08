@@ -12,6 +12,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.FixedLocaleResolver;
+
+import java.util.Locale;
 
 @Configuration
 @EnableWebSecurity
@@ -46,7 +50,12 @@ public class SpringSecurity {
                         .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
+<<<<<<< HEAD
 //                        .requestMatchers("/api/**").authenticated()
+=======
+                        .requestMatchers("/transaction/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
+>>>>>>> origin/khanhduc-workspace
                         .requestMatchers(PUBLIC_ENDPOINT).permitAll()
                 )
                 .formLogin(form -> form

@@ -8,6 +8,7 @@ import com.fpt.swp391.group6.DigitalTome.service.AdminService;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
 import com.fpt.swp391.group6.DigitalTome.service.PublisherService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-@Slf4j
+@RequiredArgsConstructor
 public class AdminController {
 
     private final AdminService adminService;
@@ -29,6 +30,7 @@ public class AdminController {
     private final UserService userService;
     private final PublisherService publisherService;
 
+<<<<<<< HEAD
     public AdminController(AdminService adminService, EmailService emailService, UserRepository userRepository, UserService userService, PublisherService publisherService) {
         this.adminService = adminService;
         this.emailService = emailService;
@@ -36,6 +38,8 @@ public class AdminController {
         this.userService = userService;
         this.publisherService = publisherService;
     }
+=======
+>>>>>>> origin/khanhduc-workspace
 
     @GetMapping("/admin")
     public String homeAdmin() {
@@ -44,15 +48,30 @@ public class AdminController {
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
+<<<<<<< HEAD
         model.addAttribute("page", "dashboard");
         return "admin/manager";
     }
 
     @GetMapping("/manager")
     public String manager(Model model) {
+=======
+        List<AccountEntity> accounts = userService.fetchAllAccount();
+
+        long userCount = accounts.stream()
+                .filter(t -> "ROLE_USER".equals(t.getRoleEntity().getName()))
+                .count();
+        long publisherCount = accounts.stream()
+                .filter(t -> "ROLE_PUBLISHER".equals(t.getRoleEntity().getName()))
+                .count();
+
+        model.addAttribute("userCount", userCount);
+        model.addAttribute("publisherCount", publisherCount);
+>>>>>>> origin/khanhduc-workspace
         model.addAttribute("page", "dashboard");
         return "admin/manager";
     }
+
 
     @GetMapping("/user-manager")
     public String userManager(Model model) {

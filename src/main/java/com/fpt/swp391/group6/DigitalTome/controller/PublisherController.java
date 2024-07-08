@@ -23,6 +23,7 @@ public class PublisherController {
 
     @PostMapping("/approve")
     public ResponseEntity<ApprovalResponse> approveUser(@RequestBody ApprovalRequest request) {
+<<<<<<< HEAD
         System.out.println("User ID: " + request.getUserId());
         System.out.println("Action: " + request.getAction());
 
@@ -32,6 +33,14 @@ public class PublisherController {
             publisherService.removePublisherRequests(request.getUserId());
         }
         String message = "User " + (request.getAction().equalsIgnoreCase("Approve") ? "approved" : "not approved") + " successfully";
+=======
+        if (request.isAction()) {
+            publisherService.savePublishers(request.getId());
+        } else {
+            publisherService.removePublisherRequests(request.getId());
+        }
+        String message = "User " + request.getId() + " " + (request.isAction() ? "approved" : "not approved") + " successfully";
+>>>>>>> origin/khanhduc-workspace
         return ResponseEntity.ok(new ApprovalResponse(message));
     }
 }

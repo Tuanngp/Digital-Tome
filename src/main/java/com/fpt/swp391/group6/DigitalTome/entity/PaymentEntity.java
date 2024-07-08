@@ -1,8 +1,8 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -11,6 +11,9 @@ import java.util.Date;
 @Table(name = "payment")
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +38,7 @@ public class PaymentEntity {
 
     @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdDate;
 
     @Column(name = "created_by", updatable = false)
@@ -50,6 +54,4 @@ public class PaymentEntity {
     @Column(name = "modified_by")
     private Long modifiedBy;
 
-    public PaymentEntity() {
-    }
 }

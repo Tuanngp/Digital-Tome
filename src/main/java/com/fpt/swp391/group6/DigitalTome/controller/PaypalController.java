@@ -1,5 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
+import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTOResponse;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
@@ -10,6 +11,7 @@ import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -84,7 +87,7 @@ public class PaypalController {
             List<Transaction> transactions = payment.getTransactions();
             String total = transactions.get(0).getAmount().getTotal();
 
-            long point =  Math.round(Double.parseDouble(total) / 50);
+            long point = Math.round(Double.parseDouble(total));
             accountEntity.setPoint(accountEntity.getPoint() + point);
             userService.updatePoint(accountEntity);
 
@@ -100,13 +103,9 @@ public class PaypalController {
         } catch (PayPalRESTException e) {
             log.error("Error occurred: ", e);
             paymentEntity.setSuccess(false);
-
-
         } finally {
             paymentRepository.save(paymentEntity);
         }
-
-
         return paymentEntity.isSuccess() ? "payment/paymentSuccess" : "redirect:/payment/error";
 
     }
@@ -119,5 +118,40 @@ public class PaypalController {
     @GetMapping("/payment/error")
     public String paymentError() {
         return "payment/paymentError";
+    }
+
+    @GetMapping("/transaction")
+    public String transactionHistory(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "5") int size,
+            @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(name = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            Model model) {
+
+        AccountEntity accountCurrent = userService.getCurrentLogin();
+
+        if (accountCurrent != null) {
+            if (startDate == null) {
+                startDate = LocalDate.MIN;
+            }
+            if (endDate == null) {
+                endDate = LocalDate.now();
+            }
+
+            PaymentPageDTOResponse response = paypalService.searchPaymentsByAccountIdAndDateRange(accountCurrent.getId(), startDate, endDate, page, size);
+
+            int startIndex = page * size + 1;
+            int endIndex = startIndex + size - 1;
+
+            model.addAttribute("transactions", response.getPayments());
+            model.addAttribute("totalPages", response.getTotalPages());
+            model.addAttribute("currentPage", response.getCurrentPage());
+            model.addAttribute("pageSize", size);
+            model.addAttribute("startIndex", startIndex);
+            model.addAttribute("endIndex", endIndex);
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+        }
+        return "payment/history";
     }
 }
