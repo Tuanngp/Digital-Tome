@@ -37,9 +37,15 @@ public class ContentModeratorService {
         PII pII = textResults.pII();
         return (terms != null && !terms.isEmpty()) ||
                 (pII != null &&
+<<<<<<< HEAD
                         (!pII.email().isEmpty() ||
                                 !pII.phone().isEmpty() ||
                                 !pII.address().isEmpty())) ||
+=======
+                    (!pII.email().isEmpty() ||
+                    !pII.phone().isEmpty() ||
+                    !pII.address().isEmpty())) ||
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
                 !isValidComment(content);
     }
 

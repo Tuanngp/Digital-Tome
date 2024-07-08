@@ -148,23 +148,33 @@ public class BookController {
                                     @RequestParam("sortField") String sortField,
                                     @RequestParam("sortDir") String sortDir,
                                     Model model){
+<<<<<<< HEAD
         int pageSize = 12;
+=======
+                                        int pageSize = 12;
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 
-        Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<BookEntity> listBooks = page.getContent();
+                                        Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
+                                        List<BookEntity> listBooks = page.getContent();
 
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("totalItems", page.getTotalElements());
+                                        model.addAttribute("pageSize", pageSize);
+                                        model.addAttribute("currentPage", pageNo);
+                                        model.addAttribute("totalPages", page.getTotalPages());
+                                        model.addAttribute("totalItems", page.getTotalElements());
 
-        model.addAttribute("sortField", sortField);
-        model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+                                        model.addAttribute("sortField", sortField);
+                                        model.addAttribute("sortDir", sortDir);
+                                        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
+<<<<<<< HEAD
         model.addAttribute("listBooks", listBooks);
         return "books-grid-view";
     }
+=======
+                                        model.addAttribute("listBooks", listBooks);
+                                        return "books-grid-view";
+                                    }
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 
     @GetMapping("/books-manage/{pageNo}")
     public String findPaginatedList (   @PathVariable(value = "pageNo") int pageNo,
@@ -187,6 +197,18 @@ public class BookController {
         model.addAttribute("listBooks", listBooks);
         return "books-manage";
     }
+<<<<<<< HEAD
+=======
+
+    @GetMapping("/books/{isbn}")
+    public String showBookDetail(@PathVariable(value = "isbn") long isbn, Model model) {
+        BookEntity book = bookService.getBookById(isbn);
+        model.addAttribute("book", book);
+        return "book-view/books-detail";
+    }
+
+}
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 
     @GetMapping("/books/{isbn}")
     public String showBookDetail(@PathVariable(value = "isbn") long isbn, Model model) {

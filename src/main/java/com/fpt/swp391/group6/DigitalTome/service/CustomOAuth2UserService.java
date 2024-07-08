@@ -1,5 +1,6 @@
-package com.fpt.swp391.group6.DigitalTome.config;
+package com.fpt.swp391.group6.DigitalTome.service;
 
+import com.fpt.swp391.group6.DigitalTome.config.CustomOAuth2User;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
@@ -45,7 +46,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Transactional
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
         String email = oAuth2User.getAttribute("email");
 
         AccountEntity account = userRepository.findByEmail(email);
@@ -54,21 +54,26 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             account.setAvatarPath("../user/images/avatar_default.png");
         }
 
+<<<<<<< HEAD:src/main/java/com/fpt/swp391/group6/DigitalTome/config/CustomOAuth2UserService.java
+=======
+        account.setUsername(email);
+        account.setAvatarPath(oAuth2User.getAttribute("picture"));
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed:src/main/java/com/fpt/swp391/group6/DigitalTome/service/CustomOAuth2UserService.java
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         HttpSession session = request.getSession();
         session.setAttribute("user", account);
         session.setAttribute("role", authorities.stream().map(GrantedAuthority::getAuthority).toList());
-
         return new CustomOAuth2User(oAuth2User, authorities);
     }
 
     private AccountEntity createUser(OAuth2User oAuth2User) {
         AccountEntity account = new AccountEntity();
         account.setEmail(oAuth2User.getAttribute("email"));
-        account.setUsername(oAuth2User.getAttribute("name"));
-
+        account.setUsername(oAuth2User.getAttribute("email"));
+        account.setFullname(oAuth2User.getAttribute("name"));
+        account.setAvatarPath(oAuth2User.getAttribute("picture"));
         String password = UserUtils.generateToken();
 
         String encodePassword = passwordEncoder.encode(password);

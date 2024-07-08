@@ -56,8 +56,11 @@
     }
 
 </style>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 <body id="bg">
 <div class="page-wraper">
     <div class="preloader-wrapper-1" id="loading-area">
@@ -70,7 +73,7 @@
             <div class="preloader-wrap wrap5"></div>
         </div>
     </div>
-    <header th:replace="layout/header :: header"></header>
+    <header th:replace="~{layout/header :: header}"></header>
 
     <!-- Content -->
     <div class="page-content bg-white">
@@ -208,7 +211,7 @@
         </div>
     </div>
     <!-- Content END-->
-    <footer th:replace="layout/footer :: footer"></footer>
+    <footer th:replace="~{layout/footer :: footer}"></footer>
 
     <script type="text/javascript">
         $(document).ready(function(){

@@ -28,6 +28,11 @@ public class PublisherEntity extends BaseEntity {
     @Column(name = "certificate_number", nullable = false, unique = true)
     private String certificateNumber;
 
+<<<<<<< HEAD
+=======
+//    @OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<BookEntity> publishedBooks;
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 
     @Column(name = "approved", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean approved;

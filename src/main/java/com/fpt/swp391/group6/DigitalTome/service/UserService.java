@@ -42,12 +42,18 @@ public class UserService {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
     public List<AccountEntity> fetchAllAccount(){
         return userRepository.findAll();
     }
 >>>>>>> origin/khanhduc-workspace
+=======
+    public AccountEntity findById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
@@ -70,13 +76,15 @@ public class UserService {
 <<<<<<< HEAD
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
     public String getEmailById(Long userId) {
         return userRepository.findById(userId)
                 .map(AccountEntity::getEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
-
 
     public void saveUser(RegisterDto registerDto) {
         if (userRepository.existsByUsername(registerDto.getUsername())) {
@@ -187,7 +195,6 @@ public class UserService {
         return "Your password successfully updated.";
     }
 
-
     public String uploadImage(MultipartFile file) throws IOException {
         try{
             var result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
@@ -216,7 +223,6 @@ public class UserService {
         return true;
     }
 
-
     public void updateImage(String url, String username) {
         AccountEntity user = userRepository.findByUsername(username);
         if (user != null) {
@@ -226,7 +232,6 @@ public class UserService {
             throw new RuntimeException("User not found");
         }
     }
-
 
     public String getImage(String username){
         AccountEntity account = userRepository.findByUsername(username);
@@ -241,7 +246,7 @@ public class UserService {
         String username = null;
         if(authentication != null && authentication.getPrincipal() instanceof UserDetails){
             username = ((UserDetails) authentication.getPrincipal()).getUsername();
-        }else if(authentication != null && authentication.getPrincipal() != null){
+        } else if(authentication != null && authentication.getPrincipal() != null){
             username = authentication.getPrincipal().toString();
         }
         if(username != null){

@@ -37,4 +37,3 @@ public interface UserRepository extends JpaRepository<AccountEntity, Long> {
 
 }
 
-

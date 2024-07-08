@@ -97,10 +97,13 @@ public class BookEntity extends BaseEntity {
     )
     private List<AuthorEntity> authorEntityList;
 
+<<<<<<< HEAD
+=======
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "publisher_id")
+//    private PublisherEntity publisher;
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
 
     @Column(name = "is_new", columnDefinition = "INT DEFAULT 0")
     private int isNew;
-
-
-
 }

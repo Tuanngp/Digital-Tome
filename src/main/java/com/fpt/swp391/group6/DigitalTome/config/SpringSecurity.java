@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.config;
 
 import com.fpt.swp391.group6.DigitalTome.security.CustomUserDetailsService;
+import com.fpt.swp391.group6.DigitalTome.service.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,15 +42,15 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable)
+        http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
-                        .requestMatchers("/publisher/**").hasAnyRole("PUBLISHER", "ADMIN")
-                        .requestMatchers("/admin/").hasAnyRole("ADMIN")
-                        .requestMatchers("/admin/**").permitAll()
+                        .requestMatchers("/publisher/**").hasRole("PUBLISHER")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
+<<<<<<< HEAD
 <<<<<<< HEAD
 //                        .requestMatchers("/api/**").authenticated()
 =======
@@ -57,11 +58,14 @@ public class SpringSecurity {
                         .requestMatchers("/api/**").permitAll()
 >>>>>>> origin/khanhduc-workspace
                         .requestMatchers(PUBLIC_ENDPOINT).permitAll()
+=======
+                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/**").permitAll()
+>>>>>>> 728ce2091d5a52ed77fa453748e001245b19c9ed
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .failureHandler(customAuthenticationFailureHandler)
                         .successHandler(new CustomAuthenticationSuccessHandler())
                         .permitAll()
                 )
@@ -69,21 +73,25 @@ public class SpringSecurity {
                         .loginPage("/login")
                         .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
                                 .userService(customOAuth2UserService))
-                        .defaultSuccessUrl("/")
-                        .failureUrl("/login")
+                        .defaultSuccessUrl("/index")
+                        .failureUrl("/login?error")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .permitAll())
+                        .permitAll()
+                )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/404"));
+                        .accessDeniedPage("/404")
+                );
         return http.build();
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+        auth
+                .userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder());
     }
 }
