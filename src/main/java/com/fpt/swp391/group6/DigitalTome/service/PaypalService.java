@@ -1,11 +1,23 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
+import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentDTOResponse;
+import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentPageDTOResponse;
+import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
+import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
+import com.fpt.swp391.group6.DigitalTome.utils.PaymentMapper;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -15,6 +27,8 @@ import java.util.Locale;
 public class PaypalService {
 
     private final APIContext apiContext;
+    private final PaymentRepository paymentRepository;
+    private final UserService userService;
 
     public Payment createPayment(
             Double total,               // Tổng tiền
@@ -75,16 +89,37 @@ public class PaypalService {
         Payment payment = new Payment();
         // Đặt ID của Payment bằng ID của thanh toán đã được tạo trước đó
         payment.setId(paymentId);
-
-        // Tạo một đối tượng PaymentExecution mới để chỉ định người thanh toán và thực hiện giao dịch
         PaymentExecution paymentExecution = new PaymentExecution();
         // Đặt ID của người thanh toán cho PaymentExecution. ID này xác định người dùng PayPal mà bạn muốn thực hiện giao dịch thanh toán.
         paymentExecution.setPayerId(payerId);
-
         // Gửi yêu cầu thực hiện thanh toán tới PayPal API
         // Sử dụng đối tượng APIContext và đối tượng PaymentExecution đã được tạo trước đó
         // Kết quả trả về từ phương thức execute là một Payment object đại diện cho kết quả của giao dịch
         return payment.execute(apiContext, paymentExecution);
     }
 
+    public PaymentPageDTOResponse searchPaymentsByAccountIdAndDateRange(Long accountId, LocalDate startDate, LocalDate endDate, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, LocalTime.MIN);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, LocalTime.MAX);
+
+        Page<PaymentEntity> paymentsPage = paymentRepository.findPaymentsByAccountIdAndDateRange(accountId, startDateTime, endDateTime, pageable);
+
+        List<PaymentDTOResponse> payments = PaymentMapper.toPaymentDTOList(paymentsPage.getContent());
+
+        return PaymentPageDTOResponse.builder()
+                .payments(payments)
+                .totalPages(paymentsPage.getTotalPages())
+                .currentPage(page)
+                .build();
+    }
+
+    public PaymentPageDTOResponse getTransactionHistory(LocalDate startDate, LocalDate endDate, int page, int size) {
+        AccountEntity accountCurrent = userService.getCurrentLogin();
+
+        if (accountCurrent != null) {
+            return searchPaymentsByAccountIdAndDateRange(accountCurrent.getId(), startDate, endDate, page, size);
+        }
+        return new PaymentPageDTOResponse();
+    }
 }

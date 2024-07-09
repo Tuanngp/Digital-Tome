@@ -7,4 +7,4 @@
 //
 //public interface NotificationCommentRepository extends JpaRepository<NotificationCommentEntity, Long> {
 //    List<NotificationCommentEntity> findByAccount_IdAndIsReadFalse(Long accountId);
-//}
+// }

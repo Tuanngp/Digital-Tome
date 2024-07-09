@@ -247,7 +247,7 @@
                             <div class="cards">
                                 <div class="card-single">
                                     <div>
-                                        <h3>254</h3>
+                                        <h3 th:text="${userCount}">254</h3>
                                         <span>Users</span>
                                     </div>
                                     <div>
@@ -256,7 +256,7 @@
                                 </div>
                                 <div class="card-single">
                                     <div>
-                                        <h3>50</h3>
+                                        <h3 th:text="${publisherCount}">50</h3>
                                         <span>Publishers</span>
                                     </div>
                                     <div>
@@ -284,7 +284,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Dashboard Content End -->
                     <!-- Điều kiện hiển thị bảng dữ liệu người dùng -->
                     <div th:if="${page == 'user-manager' || page == 'publisher-manager' || page == 'employee-manager'}">
@@ -314,9 +313,8 @@
                                                     <td th:text="${user.phone}"></td>
                                                     <td th:class="${user.status == 0} ? 'status-active' : 'status-inactive'" th:text="${user.status == 0 ? 'Active' : 'IsActive'}"></td>
                                                     <td>
-                                                        <button type="button" class="btn btn-danger btn-sm" th:attr="onclick='confirmAction(\'ban\', \'' + ${page} + '\', ' + ${user.id} + ', \'' + ${user.email} + '\')'">Ban</button>
-                                                        <button type="button" class="btn btn-success btn-sm" th:attr="onclick='confirmAction(\'unban\', \'' + ${page} + '\', ' + ${user.id} + ', \'' + ${user.email} + '\')'">Unban</button>
-
+                                                        <button type="button" class="btn btn-danger btn-sm" th:if="${user.status == 0}" th:attr="onclick=|confirmAction('ban', '${page}', ${user.id}, '${user.email}')|">Ban</button>
+                                                        <button type="button" class="btn btn-success btn-sm" th:if="${user.status != 0}" th:attr="onclick=|confirmAction('unban', '${page}', ${user.id}, '${user.email}')|">Unban</button>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -353,20 +351,13 @@
                                                     <td th:text="${pub.username}"></td>
                                                     <td th:text="${pub.namePublisher}"></td>
                                                     <td th:text="${pub.certificateNumber}"></td>
-                                                    <td th:text="${pub.approved == true ? 'Active' : 'IsActive'}"></td>
-
+                                                    <td th:text="${pub.approved == false ? 'Pending' : 'Approved'}"></td>
                                                     <td>
                                                         <button type="button" class="btn btn-success btn-sm"
-                                                                th:onclick="'confirmActionApprove(' + ${pub.id} + ', true)'">Approve</button>
+                                                                th:onclick="'confirmActionApprove(\'' + ${pub.userId} + '\', true)'">Approve</button>
                                                         <button type="button" class="btn btn-danger btn-sm"
-                                                                th:onclick="'confirmActionApprove(' + ${pub.id} + ', false)'">Not Approve</button>
+                                                                th:onclick="'confirmActionApprove(\'' + ${pub.userId} + '\',false)'">Reject</button>
                                                     </td>
-
-
-
-                                                </tr>
-                                                <tr th:if="${#lists.isEmpty(publisher)}">
-                                                    <td colspan="7">No publisher information available.</td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -377,7 +368,9 @@
                         </div>
                     </div>
 
+
                     <script>
+
                         function goBack() {
                             window.history.back();
                         }
@@ -392,9 +385,10 @@
                             showReasonDialog(actionType, roleType);
                         }
 
+                        //Swal.fire, nó trả về một Promise
                         function showReasonDialog(action, page, userId) {
                             const role = page === 'user-manager' ? 'user' : page === 'publisher-manager' ? 'publisher' : 'employee';
-                            Swal.fire({
+                            Swal.fire({  // SweetAlert2
                                 title: `Are you sure you want to ${action} this ${role}?`,
                                 input: 'textarea',
                                 inputLabel: 'Reason',
@@ -421,12 +415,13 @@
                                 reason: reason,
                             };
                             console.log(`Sending request to /${role}/${action} with data:`, JSON.stringify(userDto));
+
                             fetch(`/${role}/${action}`, {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json"
                                 },
-                                body: JSON.stringify(userDto)
+                                body: JSON.stringify(userDto)  // gửi dữ liệu
                             })
                                 .then(response => response.text())
                                 .then(data => {
@@ -468,7 +463,7 @@
 
 <script>
     function confirmActionApprove(userId, isApproved) {
-        let action = isApproved ? "Approve" : "Not Approve";
+        let action = isApproved ? "Approve" : "Reject";
 
         Swal.fire({
             title: `Are you sure you want to ${action} this user?`,
@@ -482,7 +477,7 @@
                     url: '/api/approve',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: JSON.stringify({ userId: userId, action: action }),
+                    data: JSON.stringify({ id: userId, action: isApproved }),
                     success: function(data) {
                         Swal.fire('Success', data.message, 'success').then(() => {
                             window.location.reload();
@@ -497,8 +492,5 @@
         });
     }
 </script>
-
-
-
 </body>
 </html>

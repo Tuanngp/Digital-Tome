@@ -76,18 +76,24 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime tokenCreationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "membership_id")
     private MembershipEntity membershipEntity;
+
 
     @Column(name = "membership_expiry_date")
     @Temporal(TemporalType.DATE)
     private Date membershipExpiryDate;
 
-    @Column(name = "publisher_certificate")
-    private String pulisherCertificate;
+    @Column(name = "name_publisher", nullable = true, unique = true)
+    private String namePublisher;
+
+    @Column(name = "certificate_number", nullable = true, unique = true)
+    private String certificateNumber;
+
+    @Column(name = "is_approved")
+    private Boolean isApproved;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
@@ -151,4 +157,5 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.REFRESH, CascadeType.DETACH})
     @JsonManagedReference
     private Set<NotificationEntity> notifications;
+
 }

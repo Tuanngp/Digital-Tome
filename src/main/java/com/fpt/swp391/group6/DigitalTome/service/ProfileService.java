@@ -21,7 +21,7 @@ public class ProfileService {
         this.userRepository = userRepository;
     }
 
-    public UserDto findViewProfile(String username) {
+        public UserDto findViewProfile(String username) {
         return userRepository.findByUser(username);
     }
 

@@ -23,15 +23,12 @@ public class PublisherController {
 
     @PostMapping("/approve")
     public ResponseEntity<ApprovalResponse> approveUser(@RequestBody ApprovalRequest request) {
-        System.out.println("User ID: " + request.getUserId());
-        System.out.println("Action: " + request.getAction());
-
-        if (request.getAction().equalsIgnoreCase("Approve")) {
-            publisherService.savePublishers(request.getUserId());
+        if (request.isAction()) {
+            publisherService.savePublishers(request.getId());
         } else {
-            publisherService.removePublisherRequests(request.getUserId());
+            publisherService.removePublisherRequests(request.getId());
         }
-        String message = "User " + (request.getAction().equalsIgnoreCase("Approve") ? "approved" : "not approved") + " successfully";
+        String message = "User " + request.getId() + " " + (request.isAction() ? "approved" : "not approved") + " successfully";
         return ResponseEntity.ok(new ApprovalResponse(message));
     }
 }

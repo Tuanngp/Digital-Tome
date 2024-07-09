@@ -24,9 +24,4 @@ public class JobExecutionEntity {
 
     @Column(name = "last_execution_time", nullable = false)
     private Date lastExecutionTime;
-
-    public JobExecutionEntity(String jobName, Date lastExecutionTime) {
-        this.jobName = jobName;
-        this.lastExecutionTime = lastExecutionTime;
-    }
 }

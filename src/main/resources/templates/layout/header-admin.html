@@ -7,7 +7,27 @@
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
     <!-- Thêm thư viện STOMP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+    <style>
+        .notification-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .notification-text {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+
+        .notification-message {
+            margin: 0;
+        }
+    </style>
 
     <div class="header-content">
         <nav class="navbar navbar-expand">
@@ -43,7 +63,7 @@
                         </a>
                     </li>
 
-<!--     Thông báo   -->
+                    <!--     Thông báo   -->
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" id="notificationDropdown">
                             <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,7 +74,6 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
-
                                 <ul class="timeline notification-items" id="notificationList">
                                     <!-- Các thông báo sẽ được thêm vào đây bằng JavaScript -->
                                 </ul>
@@ -63,7 +82,6 @@
                         </div>
                     </li>
                     <audio id="notificationSound" src="/admin/notificationsound/notification.mp3" preload="auto"></audio>
-
 
 
 
@@ -81,24 +99,22 @@
                             <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="header-info2 d-flex align-items-center">
                                     <div class="header-media">
-                                        <img src="/admin/images/user.jpg" class="avatar avatar-lg" alt="">
+                                        <img th:src="${account != null && account.avatarPath != null ? account.avatarPath: '/user/images/avatar_default.png'}" class="avatar avatar-lg" alt="">
                                     </div>
                                     <div class="header-info">
-                                        <h6>Thomas Fleming</h6>
-                                        <p>info@gmail.com</p>
+                                        <span th:if="${account !=null}" th:text="${account.email}">Email user</span>
+                                        <h6 class="m-0" th:if="${account !=null}" th:text="${account.fullname}">Name</h6>
                                     </div>
-
                                 </div>
                             </a>
                             <div class=" profile-box">
                                 <div class="products">
                                     <div class="border-img">
-                                        <img src="/admin/images/user.jpg" class="avatar " alt="">
+                                        <img alt="/" th:src="${account != null && account.avatarPath != null ? account.avatarPath : '/user/images/avatar_default.png'}"/>
                                     </div>
                                     <div class="ms-3">
                                         <h6 class="mb-0">Thomas Fleming</h6>
-                                        <span class="d-block mb-1">demo@gmail.com</span>
-                                        <span class="badge border-0 rounded">Pro Mamber</span>
+                                        <span class="d-block mb-1" th:if="${account !=null}" th:text="${account.email}">demo@gmail.com</span>
                                     </div>
                                 </div>
                                 <div class="account-setting">
@@ -147,18 +163,12 @@
         </nav>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
+    <script th:if="${account != null}">
+        $(document).ready(function () {
+            let socket = new SockJS('/ws');
+            let stompClient = Stomp.over(socket);
 
-            //tạo một kết nối SockJS tới endpoint /ws được cấu hình trong WebSocketConfig
-            var socket = new SockJS('/ws');
-            var stompClient = Stomp.over(socket);
-
-
-            // Kết nối tới server WebSocket
             stompClient.connect({}, function (frame) {
-
-                // Đăng ký lắng nghe thông báo
                 stompClient.subscribe('/user/queue/notifications', function (notification) {
                     let newNotification = JSON.parse(notification.body);
                     addNotificationToUI(newNotification);
@@ -166,12 +176,11 @@
                     playNotificationSound();
                 });
             });
-            // Lấy các thông báo hiện có khi trang tải
+
             fetchNotifications();
 
-            // Thêm sự kiện click cho danh sách thông báo để đánh dấu thông báo là đã đọc
-            document.querySelector('#notificationList').addEventListener('click', function (e) {
-                const notificationId = e.target.getAttribute('data-notification-id');
+            $('#notificationList').on('click', 'li', function (e) {
+                const notificationId = $(e.target).data('notification-id');
                 if (notificationId) {
                     console.log(notificationId);
                     markNotificationAsRead(notificationId);
@@ -179,85 +188,84 @@
             });
         });
 
-        // Gọi API để lấy các thông báo
         function fetchNotifications() {
-            fetch('/api/notifications/current')
-                .then(response => response.json())
-                .then(data => {
-//                  Khi nhận được phản hồi, dữ liệu được chuyển đổi thành JSON và gọi updateNotificationUI(data) để cập nhật giao diện.
+            $.ajax({
+                url: '/api/notifications/current',
+                method: 'GET',
+                success: function (data) {
                     updateNotificationUI(data);
-                })
-                .catch(error => console.error('Error fetching notifications:', error));
+                },
+                error: function (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            });
         }
 
-        // Làm sạch (clear) danh sách thông báo hiện tại và thêm các thông báo mới vào giao diện.
         function updateNotificationUI(notifications) {
-            const notificationItemsContainer = document.querySelector('#notificationList');
-            // Xóa các thông báo trước đó
-            notificationItemsContainer.innerHTML = '';
+            const $notificationItemsContainer = $('#notificationList');
+            $notificationItemsContainer.empty();
 
-            // Thêm từng thông báo
             notifications.forEach(notification => {
                 addNotificationToUI(notification);
             });
 
-            // Cập nhật số lượng thông báo chưa đọc
             updateNotificationCount();
         }
 
-        // Hàm cập nhật số lượng thông báo chưa đọc
-        function updateNotificationCount() {notificationCount
-            const countSpan = document.querySelector('#notificationCount');
-            const notifications = document.querySelectorAll('.notification-item');
-            let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
-            countSpan.textContent = unreadCount;
+        function updateNotificationCount() {
+            const $countSpan = $('#notificationCount');
+            const $notifications = $('.notification-item');
+            let unreadCount = $notifications.filter('.unread').length;
+
+            if (unreadCount === 0) {
+                $countSpan.hide();
+            } else {
+                $countSpan.show();
+                $countSpan.text(unreadCount);
+            }
         }
 
-        // Thêm thông báo hiện thị trên UI
         function addNotificationToUI(notification) {
-            const notificationItemsContainer = document.querySelector('#notificationList');
+            const $notificationItemsContainer = $('#notificationList');
 
-            const notificationElement = document.createElement('li');
+            const $notificationElement = $('<li>')
+                .addClass(notification.isRead ? 'notification-item' : 'notification-item unread')
+                .attr('data-notification-id', notification.id)
+                .attr('data-notification-url', notification.url);
 
-            notificationElement.className = notification.isRead ? 'notification-item' : 'notification-item unread';
-
-            notificationElement.setAttribute('data-notification-id', notification.id);
-            notificationElement.setAttribute('data-notification-url', notification.url);
-
-            // Tạo HTML cho thông báo với ảnh nhỏ và văn bản bên cạnh
-            notificationElement.innerHTML = `
-        <div class="notification-body">
-            <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
-            <div class="notification-text">
-                <p class="notification-message">${truncateText(notification.message, 100)}</p>
+            $notificationElement.html(`
+            <div class="notification-body">
+                <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
+                <div class="notification-text">
+                    <p class="notification-message">${truncateText(notification.message, 100)}</p>
+                </div>
             </div>
-        </div>
-    `;
-            notificationItemsContainer.prepend(notificationElement);
+        `);
 
-            // Add click event handler to redirect to URL
-            notificationElement.onclick = () => {
+            $notificationItemsContainer.prepend($notificationElement);
+
+            $notificationElement.on('click', function () {
                 if (notification.url) {
                     window.location.href = notification.url;
                     markNotificationAsRead(notification.id);
                 }
-            };
+            });
         }
 
-        // Hàm đánh dấu một thông báo là đã đọc trên server
         function markNotificationAsRead(notificationId) {
-            fetch(`/api/notifications/mark-as-read/${notificationId}`, {
-                method: 'POST'
-            }).then(response => {
-                if (response.ok) {
-                    document.querySelector(`[data-notification-id="${notificationId}"]`).classList.remove('unread');
-                    // Update unread notification count
+            $.ajax({
+                url: `/api/notifications/mark-as-read/${notificationId}`,
+                method: 'POST',
+                success: function () {
+                    $(`[data-notification-id="${notificationId}"]`).removeClass('unread');
                     updateNotificationCount();
+                },
+                error: function (error) {
+                    console.error('Error marking notification as read:', error);
                 }
-            }).catch(error => console.error('Error marking notification as read:', error));
+            });
         }
 
-        // Hàm rút ngắn văn bản đến độ dài tối đa và thêm dấu ba chấm
         function truncateText(text, maxLength) {
             if (text.length > maxLength) {
                 return text.substring(0, maxLength) + '...';
@@ -266,10 +274,8 @@
         }
 
         function playNotificationSound() {
-            var sound = document.getElementById("notificationSound");
+            let sound = $('#notificationSound')[0];
             sound.play();
         }
     </script>
 </div>
-
-

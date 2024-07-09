@@ -24,7 +24,7 @@ public class MembershipEntity {
     @Column(name = "name", nullable = false, length = 50, unique = true)
     String name;
 
-    @Column(name = "point", nullable = false)
+    @Column(name = "point", nullable = false, columnDefinition = "BIGINT DEFAULT 0")
     long point;
 
     @OneToMany(mappedBy = "membershipEntity", fetch = FetchType.LAZY, cascade = {
