@@ -1,10 +1,30 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
+import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.service.BookService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class HomeController {
+    private final BookService bookService;
+
+    public HomeController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    // api to get list book recommendation
+    @GetMapping("/api/recommendation")
+    @ResponseBody
+    public ResponseEntity<List<BookEntity>> getRecommendation() {
+        return ResponseEntity.ok(bookService.getRecommendation());
+    }
+
+
     @GetMapping("/about-us")
     public String aboutUs() {
         return "landing-page/about-us";

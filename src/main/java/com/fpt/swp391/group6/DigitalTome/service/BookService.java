@@ -57,10 +57,6 @@ public class BookService {
         return book;
     }
 
-    public BookEntity getBookByIsbn(String isbn) {
-        return bookRepository.findByIsbn(isbn);
-    }
-
     public List<BookEntity> getBooks() {
         return bookRepository.findAll();
     }
@@ -81,6 +77,7 @@ public class BookService {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
         return this.bookRepository.findAll(pageable);
     }
+
     public boolean isISBNAlreadyExists(String isbn) {
 
         return bookRepository.existsByIsbn(isbn);
@@ -99,7 +96,6 @@ public class BookService {
         this.bookRepository.updateStatusByIsbn(status, isbn);
     }
 
-
     public List<BookDetailDto>  findByStatus(int status, Pageable pageable){
         List<BookEntity> list = this.IBookDetailRepositoryImpl.findByStatus(status, pageable);
         return list.stream().
@@ -116,12 +112,15 @@ public class BookService {
         return  new PageImpl<>(list.getContent().stream().map(this::mapToDto).collect(Collectors.toList()), list.getPageable(), list.getTotalElements());
     }
 
-
     private BookDetailDto mapToDto(BookEntity bookEntity){
         BookDetailDto bookDetailDto = bookDetailMapper.toDto(bookEntity);
         bookDetailDto.setAuthors(bookEntity.getAuthorEntityList().stream().map(AuthorEntity::getName).collect(Collectors.toList()));
         bookDetailDto.setCategories(bookEntity.getCategoryEntityList().stream().map(CategoryEntity::getName).collect(Collectors.toList()));
         return bookDetailDto;
+    }
+
+    public List<BookEntity> getRecommendation() {
+        return bookRepository.findTop10ByOrderByViews();
     }
 }
 

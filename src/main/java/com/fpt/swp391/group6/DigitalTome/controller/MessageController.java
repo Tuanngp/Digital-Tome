@@ -7,6 +7,7 @@ import com.fpt.swp391.group6.DigitalTome.mapper.MessageMapper;
 import com.fpt.swp391.group6.DigitalTome.service.MessageService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -39,6 +40,7 @@ public class MessageController {
     public MessageDto sendMessage(@RequestBody MessageDto message) {
         messageService.saveMessage(message);
         template.convertAndSendToUser(message.getReceiver(), "/topic/messages", message);
+//        template.convertAndSendToUser(message.getSender(), "/topic/messages", message);
         template.convertAndSendToUser(message.getReceiver(), "/topic/notifications", message);
         return message;
     }
@@ -69,10 +71,30 @@ public class MessageController {
         return messageMapper.toDto(messagesSent);
     }
 
+    @PostMapping("/messages/read")
+    public ResponseEntity<Void> setMessageToRead(@RequestBody MessageDto message) {
+        messageService.setMessageToRead(message);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/message/{id}")
     public void deleteMessage(@PathVariable Long id) {
         messageService.deleteMessageById(id);
     }
 
+    @GetMapping("/messages/unreadCount")
+    @ResponseBody
+    public int getUnreadCount(Principal principal, @AuthenticationPrincipal OAuth2User oAuth2User) {
+        AccountEntity user = userService.getCurrentUser(principal, oAuth2User);
+        return messageService.getUnreadCount(user);
+    }
+
+    @GetMapping("/messages/latestMessages")
+    @ResponseBody
+    public List<MessageDto> getLatestMessages(Principal principal, @AuthenticationPrincipal OAuth2User oAuth2User) {
+        AccountEntity user = userService.getCurrentUser(principal, oAuth2User);
+        List<MessageEntity> messages = messageService.getLatestMessages(user);
+        return messageMapper.toDto(messages);
+    }
 
 }

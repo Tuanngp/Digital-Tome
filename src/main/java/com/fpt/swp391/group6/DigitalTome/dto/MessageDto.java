@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MessageDto {
     private Long id;
+    private String content;
+    private String createdDate;
+    private String status;
+
     private String sender;
     private String receiver;
-    private String content;
-    private String status;
     private String avatarSender;
-    private String createdDate;
 
 }

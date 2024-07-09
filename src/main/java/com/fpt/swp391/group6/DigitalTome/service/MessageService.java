@@ -8,10 +8,7 @@ import com.fpt.swp391.group6.DigitalTome.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class MessageService {
@@ -48,7 +45,9 @@ public class MessageService {
 
     public List<AccountEntity> getChatUsers(AccountEntity currentUser) {
         List<MessageEntity> messages = messageRepository.findBySenderOrReceiver(currentUser, currentUser);
-        Set<AccountEntity> users = new HashSet<>();
+        messages.sort(Comparator.comparing(MessageEntity::getCreatedDate).reversed());
+        Set<AccountEntity> users = new LinkedHashSet<>();
+        // get all users that have conversation with current user
         for (MessageEntity message : messages) {
             if (message.getSender().equals(currentUser)) {
                 users.add(message.getReceiver());
@@ -57,5 +56,23 @@ public class MessageService {
             }
         }
         return new ArrayList<>(users);
+    }
+
+    public void setMessageToRead(MessageDto message) {
+        AccountEntity sender = userService.findByUsername(message.getSender());
+        AccountEntity receiver = userService.findByUsername(message.getReceiver());
+        List<MessageEntity> messages = messageRepository.findAllBySenderAndReceiver(receiver, sender);
+        messages.forEach(messageToRead -> {
+            messageToRead.setStatus("read");
+            messageRepository.save(messageToRead);
+        });
+    }
+
+    public int getUnreadCount(AccountEntity user) {
+        return messageRepository.countByReceiverAndStatus(user, "unread");
+    }
+
+    public List<MessageEntity> getLatestMessages(AccountEntity user) {
+        return messageRepository.findTop5ByReceiverOrderByCreatedDateDesc(user);
     }
 }

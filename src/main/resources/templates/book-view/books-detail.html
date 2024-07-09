@@ -60,29 +60,28 @@
                                         <ul class="book-info">
                                             <li>
                                                 <div class="writer-info">
-                                                    <!--                                                    <img alt="book" th:src="@{../user/images/profile2.jpg}">-->
-                                                    <div >
+                                                    <div>
+<!--                                                        <img src="https://th.bing.com/th/id/OIP.W0UYuzxW45gPc-dZXfCKMQHaGj?rs=1&pid=ImgDetMain" alt="book" />-->
                                                         <span>Writen by</span>
-                                                        <span th:field="${book.authorEntityList.getFirst().name}"></span>
+                                                        <div th:each="author : ${book.authorEntityList}">
+                                                            <span th:text="${author.getName()}"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li><span>Publisher</span>Printarea Studios</li>
+<!--                                            <li><span>Publisher</span>Printarea Studios</li>-->
                                             <li>
                                                 <span>Year</span>
-                                                <span th:field="${book.publicationDate}"></span>
+                                                <span th:field="${book.getPublicationDate()}"></span>
                                             </li>
                                         </ul>
                                     </div>
-                                    <p class="text-1" th:text="${book.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                        consequat. Duis aute irure dolor in reprehenderit.</p>
+                                    <p class="text-1" th:text="${book.description}"></p>
 
                                     <div class="book-footer">
                                         <div class="price">
-                                            <h5 th:text="${book.point}">$54.78</h5>
-                                            <p class="p-lr10">$70.00</p>
+                                            <h5 th:text="${book.point} + ' '">$54.78</h5> <span>Point</span>
+<!--                                            <p class="p-lr10">$70.00</p>-->
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +154,9 @@
                                         </tr>
                                         <tr>
                                             <th>Author</th>
-                                            <td th:field="${book.authorEntityList.getFirst().name}"></td>
+                                            <td th:each="author : ${book.authorEntityList}">
+                                                <span th:text="${author.getName()}"></span>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>ISBN</th>
@@ -225,9 +226,9 @@
                                                 <span class="price-num">$45.4</span>
                                                 <del>$98.4</del>
                                             </div>
-                                            <a class="btn btn-outline-primary btn-sm btnhover btnhover2"
-                                               th:href="@{shop-cart}"><i
-                                                    class="flaticon-shopping-cart-1 me-2"></i> Add to cart</a>
+                                            <a class="btn btn-secondary btnhover btnhover2"
+                                               th:href="@{shop-cart}">
+                                                <i class="fa-regular fa-eye me-2"></i>Read now</a>
                                         </div>
                                     </div>
                                 </div>
@@ -247,9 +248,9 @@
                                                 <span class="price-num">$45.4</span>
                                                 <del>$98.4</del>
                                             </div>
-                                            <a class="btn btn-outline-primary btn-sm btnhover btnhover2"
-                                               th:href="@{shop-cart}"><i
-                                                    class="flaticon-shopping-cart-1 me-2"></i> Add to cart</a>
+                                            <a class="btn btn-secondary btnhover btnhover2"
+                                               th:href="@{shop-cart}">
+                                                <i class="fa-regular fa-eye me-2"></i>Read now</a>
                                         </div>
                                     </div>
                                 </div>
@@ -269,9 +270,9 @@
                                                 <span class="price-num">$45.4</span>
                                                 <del>$98.4</del>
                                             </div>
-                                            <a class="btn btn-outline-primary btn-sm btnhover btnhover2"
-                                               th:href="@{shop-cart}"><i
-                                                    class="flaticon-shopping-cart-1 me-2"></i> Add to cart</a>
+                                            <a class="btn btn-secondary btnhover btnhover2"
+                                               th:href="@{shop-cart}">
+                                                <i class="fa-regular fa-eye me-2"></i>See details</a>
                                         </div>
                                     </div>
                                 </div>

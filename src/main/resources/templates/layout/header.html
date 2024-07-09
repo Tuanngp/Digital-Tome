@@ -13,8 +13,8 @@
                 <div class="extra-cell">
                     <ul class="navbar-nav header-right">
                         <li class="nav-item">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{wishlist}">
+                        <li class="nav-item" th:if="${account != null}">
+                            <a class="nav-link" th:href="@{favorites}">
                                 <svg fill="#000000" height="24px" viewBox="0 0 24 24" width="24px"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path d="M0 0h24v24H0V0z" fill="none"/>
@@ -23,6 +23,8 @@
                                 <!--                                    <span class="badge">21</span>-->
                             </a>
                         </li>
+
+<!--                        Giỏ hàng -->
 <!--                        <li class="nav-item">-->
 <!--                            <button class="nav-link box cart-btn" type="button">-->
 <!--                                <svg fill="#000000" height="24px" viewBox="0 0 24 24" width="24px"-->
@@ -69,23 +71,19 @@
                             <div class="dropdown-menu dropdown-menu-end">
                                 <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
                                     <ul class="timeline">
-<!--                                        <li>-->
-<!--                                            <div class="timeline-panel">-->
-<!--                                                <div class="media me-2">-->
-<!--                                                    <img alt="image" width="50" src="images/avatar/1.jpg">-->
-<!--                                                </div>-->
-<!--                                                <div class="media-body">-->
-<!--                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>-->
-<!--                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
+
                                     </ul>
                                 </div>
                                 <a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
                             </div>
                         </li>
-
+                        <li class="nav-item dropdown" th:if="${account != null}">
+                            <a data-mdb-dropdown-init class="me-3 nav-link" href="/chat"
+                               role="button">
+                                <img width="25" height="25" src="https://img.icons8.com/ios/50/chat-message--v2.png" alt="chat-message--v2"/>
+<!--                                    <span class="badge rounded-pill badge-notification bg-danger">1</span>-->
+                            </a>
+                        </li>
                         <li class="nav-item dropdown profile-dropdown ms-4">
                             <a aria-expanded="false" class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);"
                                role="button">
@@ -261,7 +259,7 @@
                         <li><a th:href="@{/}"><span>Home</span></a></li>
                         <li><a th:href="@{about-us}"><span>About Us</span></a></li>
                         <li><a th:href="@{/books-list-view-sidebar}"><span>Bookshelves</span></a></li>
-                        <li><a th:href="@{/blog-list-sidebar}"><span>Blog</span></a></li>
+<!--                        <li><a th:href="@{/blog-list-sidebar}"><span>Blog</span></a></li>-->
 <!--                        <li><a th:href="@{pricing}"><span>Pricing</span></a></li>-->
                         <li><a th:href="@{/contact-us}"><span>Contact Us</span></a></li>
                     </ul>
@@ -269,41 +267,6 @@
             </div>
         </div>
     </div>
-    <script>
-        var socket = new SockJS('/ws');
-        var stompClient = Stomp.over(socket);
-
-        stompClient.connect({},
-            (frame) => {
-            console.log('Connected: ' + frame);
-
-            // Subscribe to the notifications topic
-            stompClient.subscribe('/topic/messages', (messageOutput) => {
-                const message = JSON.parse(messageOutput.body);
-                console.log("Message: " + message);
-                updateNotificationDropdown(message);
-            });
-        });
-
-        function updateNotificationDropdown(message) {
-            let notificationDropdown = $('.timeline');
-            let newNotification = $('<li>');
-            let timelinePanel = $('<div>').addClass('timeline-panel');
-            let mediaDiv = $('<div>').addClass('media me-2');
-            let img = $('<img>').attr('src', 'images/avatar/1.jpg').attr('alt', 'image').attr('width', '50');
-            let mediaBody = $('<div>').addClass('media-body');
-            let h6 = $('<h6>').addClass('mb-1').text(`New message from ${message.sender}`);
-            let small = $('<small>').addClass('d-block').text(new Date().toLocaleString());
-
-            mediaDiv.append(img);
-            mediaBody.append(h6);
-            mediaBody.append(small);
-            timelinePanel.append(mediaDiv);
-            timelinePanel.append(mediaBody);
-            newNotification.append(timelinePanel);
-            notificationDropdown.prepend(newNotification);
-        }
-    </script>
     <!-- Main Header End -->
 </header>
 <!-- Header End -->

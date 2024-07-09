@@ -1,68 +1,44 @@
-    package com.fpt.swp391.group6.DigitalTome.controller;
+package com.fpt.swp391.group6.DigitalTome.controller;
 
-    import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
-    import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
-    import com.fpt.swp391.group6.DigitalTome.entity.FavoriteEntity;
-    import com.fpt.swp391.group6.DigitalTome.repository.BookRepository;
-    import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
-    import com.fpt.swp391.group6.DigitalTome.service.BookService;
-    import com.fpt.swp391.group6.DigitalTome.service.FavoriteService;
-    import com.fpt.swp391.group6.DigitalTome.service.UserService;
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.stereotype.Controller;
-    import org.springframework.ui.Model;
-    import org.springframework.web.bind.annotation.*;
+import com.fpt.swp391.group6.DigitalTome.entity.FavoriteEntity;
+import com.fpt.swp391.group6.DigitalTome.service.FavoriteService;
+import com.fpt.swp391.group6.DigitalTome.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-    import java.util.List;
-    import java.util.Optional;
+import java.security.Principal;
+import java.util.List;
 
-    @Controller
-    @RequestMapping("/favorites")
-    public class FavoriteController {
+@Controller
+@RequestMapping("/favorites")
+public class FavoriteController {
 
-        @Autowired
-        private FavoriteService favoriteService;
+    private final FavoriteService favoriteService;
+    private final UserService userService;
 
-        @Autowired
-        private UserRepository userRepository;
-
-        @Autowired
-        private BookRepository bookRepository;
-        @Autowired
-        private BookService bookService;
-
-        @GetMapping("/{userId}")
-        public String getFavorites(@PathVariable Long userId, Model model) {
-            List<FavoriteEntity> favorites = favoriteService.getFavoritesByUserId(userId);
-            model.addAttribute("favorites", favorites);
-            return "account/reading-history";
-        }
-
-
-        @PostMapping("/addFavorite")
-        public String addFavorite(@RequestParam Long bookId, @RequestParam Long userId) {
-            FavoriteEntity favorite = new FavoriteEntity();
-
-            Optional<AccountEntity> accountEntityOpt = userRepository.findById(userId);
-            BookEntity bookEntity = bookService.getBookById(bookId);
-
-
-            if(accountEntityOpt.isPresent()){
-                AccountEntity accountEntity = accountEntityOpt.get();
-
-                favorite.setAccountEntity(accountEntity);
-                favorite.setBookEntity(bookEntity);
-
-                favoriteService.addFavorite(favorite);
-                return "redirect:/favorites/" + userId;
-            }else{
-                return "redirect:/404";
-            }
-        }
-
-        @PostMapping("/remove")
-        public String removeFavorite(@RequestParam Long favoriteId) {
-            favoriteService.removeFavorite(favoriteId);
-            return "redirect:/favorites";
-        }
+    @Autowired
+    public FavoriteController(FavoriteService favoriteService, UserService userService) {
+        this.favoriteService = favoriteService;
+        this.userService = userService;
     }
+
+    @GetMapping("")
+    public String getFavorites(Model model, Principal principal, @AuthenticationPrincipal OAuth2User oAuth2User) {
+        var user = userService.getCurrentUser(principal, oAuth2User);
+        List<FavoriteEntity> favorites = favoriteService.getFavoritesByUser(user);
+        model.addAttribute("favorites", favorites);
+        return "wishlist";
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> deleteFavorite(@PathVariable Long id) {
+        favoriteService.deleteFavorite(id);
+        return ResponseEntity.noContent().build();
+    }
+}

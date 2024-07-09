@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "paypal.clientId",
+      "type": "java.lang.String",
+      "description": "Description for paypal.clientId."
+  }
+] }

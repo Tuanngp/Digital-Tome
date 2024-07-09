@@ -1,19 +1,14 @@
 package com.fpt.swp391.group6.DigitalTome.dto;
 
 import com.fpt.swp391.group6.DigitalTome.Validation.ValidDateOfBirth;
-import com.fpt.swp391.group6.DigitalTome.entity.Gender;
 import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {

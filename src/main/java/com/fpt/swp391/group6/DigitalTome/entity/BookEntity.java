@@ -1,14 +1,10 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -34,7 +30,6 @@ public class BookEntity extends BaseEntity {
 
     @Column(name = "edition")
     private String edition;  // Phiên bản của sách
-
 
     @Column(name = "publication_date")
     private Date publicationDate;

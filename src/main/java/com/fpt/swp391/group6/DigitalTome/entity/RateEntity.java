@@ -31,6 +31,4 @@ public class RateEntity {
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
     private BookEntity bookEntity;
-
-
 }

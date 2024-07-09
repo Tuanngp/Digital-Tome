@@ -17,15 +17,7 @@ class ChatApp {
         this.stompClient.connect({},
             (frame) => { // Callback for successful connection
                 console.log('Connected: ' + frame);
-                this.stompClient.subscribe('/topic/messages', (messageOutput) => {
-                    const message = JSON.parse(messageOutput.body);
-                    console.log("Message: " + message);
-                    if (message.receiver === this.senderInput.val()) {
-                        this.addMessageToConversation(message);
-                    } else {
-                        // this.notifyUser(message);
-                    }
-                });
+                this.subscribeToMessages();
             },
             (error) => { // Callback for connection errors
                 console.log('Connection error: ' + error);
@@ -33,6 +25,18 @@ class ChatApp {
                 setTimeout(() => this.connect(), 5000);
             }
         );
+    }
+
+    subscribeToMessages() {
+        this.stompClient.subscribe('/topic/messages', messageOutput => {
+            const message = JSON.parse(messageOutput.body);
+            if (message.receiver === this.receiverInput.val()) {
+                this.addMessageToConversation(message);
+            } else {
+                this.displayConversation(this.senderInput.val(), this.receiverInput.val());
+                this.markUserUnread(message.sender);
+            }
+        });
     }
 
     sendMessage() {
@@ -44,17 +48,23 @@ class ChatApp {
         };
         // Send message to receiver
         this.stompClient.send("/app/send/message", {}, JSON.stringify(message));
-        // Also send message to sender
-        this.stompClient.send("/app/send/message", {}, JSON.stringify({
-            ...message,
-            receiver: message.sender,
-            sender: message.sender
-        }));
 
+        this.contentInput.val('').focus();
+        this.moveUserToTop(message.receiver);
+        this.moveUserToTop(message.sender);
         this.addUserToChatList(this.users[message.receiver]);
+        this.addUserToChatList(this.users[message.sender]);
+    }
 
-        this.contentInput.val('');
-        this.contentInput.focus();
+    displayConversation(user1, user2) {
+        fetch('/conversation/' + user1 + '/' + user2)
+            .then(response => response.json())
+            .then(messages => {
+                this.conversationDiv.empty();
+                messages.forEach(message => {
+                    this.addMessageToConversation(message);
+                });
+            });
     }
 
     addMessageToConversation(message) {
@@ -99,16 +109,74 @@ class ChatApp {
             messageDataDiv.append(deleteDropdown);
 
             deleteOption.click(() => {
-                fetch('/message/' + message.id, {
-                    method: 'DELETE'
-                }).then(() => {
-                    messageLi.remove();
-                });
+                if (confirm('Are you sure you want to delete this message?')) {
+                    fetch('/message/' + message.id, {
+                        method: 'DELETE'
+                    }).then(() => {
+                        messageLi.remove();
+                        this.displayConversation(this.senderInput.val(), this.receiverInput.val());
+                    });
+                }
             });
         }
 
         this.conversationDiv.append(messageLi);
         this.conversationDiv.scrollTop(this.conversationDiv.prop('scrollHeight'));
+    }
+
+    addUserToChatList(user) {
+        // Check if user is already in chat list
+        const existingUserLi = this.userList.find('li:contains(' + user.fullName + ')');
+        if (existingUserLi.length > 0) {
+            // If user is already in chat list, move them to the top
+            this.userList.prepend(existingUserLi);
+        } else {
+            // If user is not in chat list, add them
+            const userLi = $('<li>').addClass('clearfix');
+            const userImg = $('<img>').attr('src', user.avatarPath).attr('alt', 'avatar');
+            const aboutDiv = $('<div>').addClass('about');
+            const nameDiv = $('<div>').addClass('name').text(user.fullname);
+            const usernameDiv = $('<div>').addClass('username').text(user.username).css('display', 'none');
+            const statusDiv = $('<div>').addClass('status').html('<i class="fa fa-circle offline"></i> left 7 mins ago');
+            aboutDiv.append(nameDiv);
+            aboutDiv.append(usernameDiv);
+            aboutDiv.append(statusDiv);
+            userLi.append(userImg);
+            userLi.append(aboutDiv);
+
+            this.userList.append(userLi);
+            userLi.click(() => {
+                this.receiverInput.val(user.username);
+                this.displayConversation(this.senderInput.val(), user.username);
+                this.markUserRead();
+                $('.userInfo img').attr('src', user.avatarPath);
+                $('.userInfo .chat-about h6').text(user.fullname);
+
+                // If user has unread messages, remove 'unread' class and set messages to read
+                if (this.userList.find(`li:contains(${user.fullName})`).hasClass('unread')) {
+                    this.userList.find(`li:contains(${user.fullName})`).removeClass('unread');
+                    this.markUserRead();
+                }
+            });
+        }
+    }
+
+    // move user to the top of the chat list
+    moveUserToTop(username) {
+        this.userList.prepend(this.userList.find(`li:contains(${username})`));
+    }
+
+    getChatUsers() {
+        fetch('/chat/users')
+            .then(response => response.json())
+            .then(users => {
+                users.forEach(user => {
+                    this.addUserToChatList(user);
+                });
+            })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
     }
 
     searchUsers(keyword) {
@@ -120,6 +188,12 @@ class ChatApp {
                 // Append new search result
                 const user = userOutput.userDto;
                 const userDiv = $('<div>').text(user.fullName);
+                userDiv.css('padding', '12px').hover(() => {
+                    userDiv.css({
+                        'background-color': 'lightgray',
+                        'cursor': 'pointer'
+                    });
+                });
                 userDiv.click(() => {
                     // Display conversation with the selected user
                     this.receiverInput.val(user.username);
@@ -136,55 +210,27 @@ class ChatApp {
             });
     }
 
-    addUserToChatList(user) {
-        // Check if user is already in chat list
-        const existingUserLi = this.userList.find('li:contains(' + user.fullName + ')');
-        if (existingUserLi.length > 0) {
-            // If user is already in chat list, move them to the top
-            this.userList.prepend(existingUserLi);
-        } else {
-            // If user is not in chat list, add them
-            const userLi = `
-                <li class="clearfix">
-                    <img src="${user.avatarPath}" alt="avatar">
-                    <div class="about">
-                        <div class="name">${user.fullName}</div>
-                        <div class="status"><i class="fa fa-circle offline"></i> left 7 mins ago</div>
-                    </div>
-                </li>
-            `;
-            this.userList.prepend(userLi);
-        }
+    markUserUnread(username) {
+        this.userList.find(`li:contains(${username})`).addClass('unread').css('font-weight', 'bold');
     }
 
-    getChatUsers() {
-        fetch('/chat/users')
-            .then(response => response.json())
-            .then(users => {
-                const userList = $('.chat-list');
-                userList.empty();
-                users.forEach(user => {
-                    const userLi = $('<li>').addClass('clearfix');
-                    const userImg = $('<img>').attr('src', user.avatarPath).attr('alt', 'avatar');
-                    const aboutDiv = $('<div>').addClass('about');
-                    const nameDiv = $('<div>').addClass('name').text(user.fullname);
-                    const statusDiv = $('<div>').addClass('status').html('<i class="fa fa-circle offline"></i> left 7 mins ago');
-
-                    aboutDiv.append(nameDiv);
-                    aboutDiv.append(statusDiv);
-                    userLi.append(userImg);
-                    userLi.append(aboutDiv);
-
-                    userLi.click(() => {
-                        this.receiverInput.val(user.username);
-                        this.displayConversation(this.senderInput.val(), user.username);
-
-                        $('.userInfo img').attr('src', user.avatarPath);
-                        $('.userInfo .chat-about h6').text(user.fullname);
-                    });
-                    userList.append(userLi);
-                });
-            });
+    markUserRead() {
+        fetch('/messages/read', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                sender: this.senderInput.val(),
+                receiver: this.receiverInput.val(),
+            })
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+        }).catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
     }
 
     notifyUser(message) {
@@ -199,18 +245,6 @@ class ChatApp {
                 }
             });
         }
-    }
-
-    displayConversation(user1, user2) {
-        fetch('/conversation/' + user1 + '/' + user2)
-            .then(response => response.json())
-            .then(messages => {
-                this.conversationDiv.empty();
-                messages.forEach(message => {
-                    console.log(message);
-                    this.addMessageToConversation(message);
-                });
-            });
     }
 
     init() {
