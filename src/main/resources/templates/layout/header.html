@@ -360,9 +360,9 @@
     <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
     <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script th:if="${account != null}">
-        document.addEventListener('DOMContentLoaded', function () {
-            var socket = new SockJS('/ws');
-            var stompClient = Stomp.over(socket);
+        $(document).ready(function () {
+            let socket = new SockJS('/ws');
+            let stompClient = Stomp.over(socket);
 
             stompClient.connect({}, function (frame) {
                 stompClient.subscribe('/user/queue/notifications', function (notification) {
@@ -375,8 +375,8 @@
 
             fetchNotifications();
 
-            document.querySelector('#notificationList').addEventListener('click', function (e) {
-                const notificationId = e.target.getAttribute('data-notification-id');
+            $('#notificationList').on('click', 'li', function (e) {
+                const notificationId = $(e.target).data('notification-id');
                 if (notificationId) {
                     console.log(notificationId);
                     markNotificationAsRead(notificationId);
@@ -385,17 +385,21 @@
         });
 
         function fetchNotifications() {
-            fetch('/api/notifications/current')
-                .then(response => response.json())
-                .then(data => {
+            $.ajax({
+                url: '/api/notifications/current',
+                method: 'GET',
+                success: function (data) {
                     updateNotificationUI(data);
-                })
-                .catch(error => console.error('Error fetching notifications:', error));
+                },
+                error: function (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            });
         }
 
         function updateNotificationUI(notifications) {
-            const notificationItemsContainer = document.querySelector('#notificationList');
-            notificationItemsContainer.innerHTML = '';
+            const $notificationItemsContainer = $('#notificationList');
+            $notificationItemsContainer.empty();
 
             notifications.forEach(notification => {
                 addNotificationToUI(notification);
@@ -405,53 +409,57 @@
         }
 
         function updateNotificationCount() {
-            const countSpan = document.querySelector('#notificationCount');
-            const notifications = document.querySelectorAll('.notification-item');
-            let unreadCount = Array.from(notifications).filter(notification => notification.classList.contains('unread')).length;
+            const $countSpan = $('#notificationCount');
+            const $notifications = $('.notification-item');
+            let unreadCount = $notifications.filter('.unread').length;
 
             if (unreadCount === 0) {
-                countSpan.style.display = 'none';
+                $countSpan.hide();
             } else {
-                countSpan.style.display = 'block';
-                countSpan.textContent = unreadCount;
+                $countSpan.show();
+                $countSpan.text(unreadCount);
             }
         }
 
         function addNotificationToUI(notification) {
-            const notificationItemsContainer = document.querySelector('#notificationList');
+            const $notificationItemsContainer = $('#notificationList');
 
-            const notificationElement = document.createElement('li');
-            notificationElement.className = notification.isRead ? 'notification-item' : 'notification-item unread';
-            notificationElement.setAttribute('data-notification-id', notification.id);
-            notificationElement.setAttribute('data-notification-url', notification.url);
+            const $notificationElement = $('<li>')
+                .addClass(notification.isRead ? 'notification-item' : 'notification-item unread')
+                .attr('data-notification-id', notification.id)
+                .attr('data-notification-url', notification.url);
 
-            notificationElement.innerHTML = `
-        <div class="notification-body">
-            <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
-            <div class="notification-text">
-                <p class="notification-message">${truncateText(notification.message, 100)}</p>
+            $notificationElement.html(`
+            <div class="notification-body">
+                <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
+                <div class="notification-text">
+                    <p class="notification-message">${truncateText(notification.message, 100)}</p>
+                </div>
             </div>
-        </div>
-    `;
-            notificationItemsContainer.prepend(notificationElement);
+        `);
 
-            notificationElement.onclick = () => {
+            $notificationItemsContainer.prepend($notificationElement);
+
+            $notificationElement.on('click', function () {
                 if (notification.url) {
                     window.location.href = notification.url;
                     markNotificationAsRead(notification.id);
                 }
-            };
+            });
         }
 
         function markNotificationAsRead(notificationId) {
-            fetch(`/api/notifications/mark-as-read/${notificationId}`, {
-                method: 'POST'
-            }).then(response => {
-                if (response.ok) {
-                    document.querySelector(`[data-notification-id="${notificationId}"]`).classList.remove('unread');
+            $.ajax({
+                url: `/api/notifications/mark-as-read/${notificationId}`,
+                method: 'POST',
+                success: function () {
+                    $(`[data-notification-id="${notificationId}"]`).removeClass('unread');
                     updateNotificationCount();
+                },
+                error: function (error) {
+                    console.error('Error marking notification as read:', error);
                 }
-            }).catch(error => console.error('Error marking notification as read:', error));
+            });
         }
 
         function truncateText(text, maxLength) {
@@ -462,11 +470,10 @@
         }
 
         function playNotificationSound() {
-            let sound = document.querySelector('#notificationSound');
+            let sound = $('#notificationSound')[0];
             sound.play();
         }
     </script>
-    
     <!-- Main Header End -->
 </header>
 <!-- Header End -->
