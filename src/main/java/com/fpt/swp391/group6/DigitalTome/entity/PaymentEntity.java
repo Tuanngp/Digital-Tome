@@ -1,7 +1,9 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -11,6 +13,8 @@ import java.util.Date;
 @Table(name = "payment")
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +54,4 @@ public class PaymentEntity {
     @Column(name = "modified_by")
     private Long modifiedBy;
 
-    public PaymentEntity() {
-    }
 }

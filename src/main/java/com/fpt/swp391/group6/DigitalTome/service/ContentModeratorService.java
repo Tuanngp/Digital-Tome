@@ -19,7 +19,7 @@ import java.util.*;
 public class ContentModeratorService {
     private static final String subscriptionKey = "a5b0c787cc3b40ffbe2c2aa88efa4c38";
     private static final String endpoint = "https://digital-tome-swp301.cognitiveservices.azure.com/";
-    private static final int MIN_LENGTH = 1;
+    private static final int MIN_LENGTH = 2;
     private static final int MAX_LENGTH = 500;
     private final Map<String, Integer> commentFrequencyMap = new HashMap<>();
     private static final int COMMENT_THRESHOLD = 3;
@@ -53,7 +53,7 @@ public class ContentModeratorService {
     public boolean isValidComment(String comment) throws IOException {
         loadBannedKeywordsFromFile();
         // Kiểm tra độ dài bình luận
-        if (comment.isEmpty() || comment.length() > MAX_LENGTH) {
+        if (comment.length() < MIN_LENGTH || comment.length() > MAX_LENGTH) {
             return false;
         }
 

@@ -42,6 +42,9 @@ public class BookService {
         BookEntity bookEntity = bookMapper.toBook(bookDto);
         bookRepository.save(bookEntity);
     }
+    public BookEntity getBookByIsbn(String isbn){
+        return bookRepository.findByIsbn(isbn);
+    }
 
     public BookEntity getBookById(long id) {
         Optional<BookEntity> optionalBook = bookRepository.findById(id);

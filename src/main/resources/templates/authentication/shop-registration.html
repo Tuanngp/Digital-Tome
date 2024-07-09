@@ -50,7 +50,7 @@
                                 <span th:text="${errorMessage}"></span>
                             </div>
 
-                            <form th:action="@{/authenOtp}" th:object="${user}" method="post">
+                            <form th:action="@{/register}" th:object="${user}" method="post">
                                 <h4 class="text-secondary">Registration</h4>
                                 <p class="font-weight-600">If you don't have an account with us, please register.</p>
 
@@ -93,6 +93,7 @@
 
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
+
 </body>
 
 </html>
