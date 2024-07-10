@@ -24,4 +24,6 @@ public class CategoryService {
     public Optional<CategoryEntity> findById(Long id) {
         return categoryRepository.findById(id);
     }
+
 }
+

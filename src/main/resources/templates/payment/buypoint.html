@@ -5,17 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recharge</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/recharge/css/style.css">
-
-    <script>
-        function showConfirm(amount, points) {
-            document.getElementById('confirm-section').style.display = 'block';
-            document.getElementById('selected-product').innerText = `Point × ${points}`;
-            document.getElementById('selected-price').innerText = `${amount} USD`;
-            var inputElement = document.getElementById('amount');
-            inputElement.value = amount;
-        }
-    </script>
 
     <style>
         body {
@@ -131,45 +120,45 @@
         <div class="form-group">
             <label for="amount5">Select recharge amount:</label>
             <div>
-                <input type="radio" id="amount5" name="amount" value="5" onclick="showConfirm('5', '1')">
+                <input type="radio" id="amount5" name="amount" value="5" onclick="showConfirm('5', '5')">
                 <label for="amount5">
                     <span><i class="fas fa-dollar-sign"></i> 5 USD</span>
-                    <span><i class="fas fa-coins"></i> Point × 1</span>
+                    <span><i class="fas fa-coins"></i> Point × 5</span>
                 </label>
             </div>
             <div>
-                <input type="radio" id="amount10" name="amount" value="10" onclick="showConfirm('10', '1')">
+                <input type="radio" id="amount10" name="amount" value="10" onclick="showConfirm('10', '10')">
                 <label for="amount10">
                     <span><i class="fas fa-dollar-sign"></i> 10 USD</span>
-                    <span><i class="fas fa-coins"></i> Point × 2</span>
+                    <span><i class="fas fa-coins"></i> Point × 10</span>
                 </label>
             </div>
             <div>
-                <input type="radio" id="amount15" name="amount" value="15" onclick="showConfirm('15', '1')">
+                <input type="radio" id="amount15" name="amount" value="15" onclick="showConfirm('15', '15')">
                 <label for="amount15">
                     <span><i class="fas fa-dollar-sign"></i> 15 USD</span>
-                    <span><i class="fas fa-coins"></i> Point × 3</span>
+                    <span><i class="fas fa-coins"></i> Point × 15</span>
                 </label>
             </div>
             <div>
-                <input type="radio" id="amount20" name="amount" value="20" onclick="showConfirm('20', '1')">
+                <input type="radio" id="amount20" name="amount" value="20" onclick="showConfirm('20', '20')">
                 <label for="amount20">
                     <span><i class="fas fa-dollar-sign"></i> 20 USD</span>
-                    <span><i class="fas fa-coins"></i> Point × 4</span>
+                    <span><i class="fas fa-coins"></i> Point × 20</span>
                 </label>
             </div>
             <div>
-                <input type="radio" id="amount35" name="amount" value="35" onclick="showConfirm('35', '1')">
+                <input type="radio" id="amount35" name="amount" value="35" onclick="showConfirm('35', '35')">
                 <label for="amount35">
                     <span><i class="fas fa-dollar-sign"></i> 35 USD</span>
-                    <span><i class="fas fa-coins"></i> Point × 7</span>
+                    <span><i class="fas fa-coins"></i> Point × 35</span>
                 </label>
             </div>
             <div>
-                <input type="radio" id="amount50" name="amount" value="50" onclick="showConfirm('50', '1')">
+                <input type="radio" id="amount50" name="amount" value="50" onclick="showConfirm('50', '50')">
                 <label for="amount50">
                     <span><i class="fas fa-dollar-sign"></i> 50 USD</span>
-                    <span><i class="fas fa-coins"></i> Point × 10</span>
+                    <span><i class="fas fa-coins"></i> Point × 50</span>
                 </label>
             </div>
         </div>
@@ -181,7 +170,7 @@
         <div id="confirm-section" class="confirm" style="display: none;">
             <div class="transaction-details">
                 <p><i class="fas fa-gift"></i> <strong>Selected products:</strong> <span id="selected-product">Point × 1</span></p>
-                <p><i class="fas fa-money-bill-wave"></i> <strong>Price:</strong> <span id="selected-price">5.00 USD</span></p>
+                <p><i class="fas fa-money-bill-wave"></i> <strong>Price:</strong> <span id="selected-price">1.00 USD</span></p>
                 <p><i class="fas fa-wallet"></i> <strong>Payment methods:</strong> Paypal</p>
                 <p><i class="fas fa-user"></i> <strong>Username:</strong> <input type="text" name="usernameAccount" th:value="${#authentication.name}"></p>
             </div>
@@ -189,5 +178,15 @@
         </div>
     </form>
 </div>
+
+<script>
+    function showConfirm(amount, points) {
+        document.getElementById('confirm-section').style.display = 'block';
+        document.getElementById('selected-product').innerText = `Point × ${points}`;
+        document.getElementById('selected-price').innerText = `${amount} USD`;
+        var inputElement = document.getElementById('amount');
+        inputElement.value = amount;
+    }
+</script>
 </body>
 </html>

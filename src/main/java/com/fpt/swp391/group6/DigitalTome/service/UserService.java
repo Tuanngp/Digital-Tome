@@ -45,8 +45,8 @@ public class UserService {
     }
 
 
-    public AccountEntity findById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public List<AccountEntity> fetchAllAccount(){
+        return userRepository.findAll();
     }
 
     public boolean existsByEmail(String email) {
@@ -67,6 +67,11 @@ public class UserService {
 
     public  void  updatePoint (AccountEntity accountEntity){
         userRepository.save(accountEntity);
+    }
+
+    public AccountEntity findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User Not Found with id: " + id));
     }
 
     public String getEmailById(Long userId) {
@@ -93,23 +98,16 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void save(AccountEntity account){
+        userRepository.save(account);
+    }
+
     private RoleEntity checkRoleExist() {
         RoleEntity role = new RoleEntity();
         role.setName("ROLE_USER");
         return roleRepository.save(role);
     }
 
-    public void updateUserRole(Long userId, String roleName) {
-        Optional<AccountEntity> accountOptional = userRepository.findById(userId);
-        if (accountOptional.isPresent()) {
-            AccountEntity account = accountOptional.get();
-            RoleEntity role = roleRepository.findByName(roleName);
-            if (role != null) {
-                account.setRoleEntity(role);
-                userRepository.save(account);
-            }
-        }
-    }
 
 
     public String forgotPass(String email) {
@@ -129,7 +127,6 @@ public class UserService {
         if (!userOptional.isPresent()) {
             return "Invalid token";
         }
-
         LocalDateTime tokenCreationDate = userOptional.get().getTokenCreationDate();
 
         if (UserUtils.isTokenExpired(tokenCreationDate)) {

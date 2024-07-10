@@ -20,7 +20,7 @@ public class NotificationController {
     }
 
     @GetMapping("/current")
-    public ResponseEntity<List<NotificationEntity>> getCurrentUserNotifications() {
+    public ResponseEntity<List<NotificationEntity>> getCurrentUserNotifications( ) {
         List<NotificationEntity> notifications = notificationService.getNotificationsForCurrentUser();
         return ResponseEntity.ok(notifications);
     }

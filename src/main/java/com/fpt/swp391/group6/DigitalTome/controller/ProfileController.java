@@ -3,7 +3,7 @@ package com.fpt.swp391.group6.DigitalTome.controller;
 import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.service.ProfileService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,17 +18,12 @@ import java.io.IOException;
 import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 public class ProfileController {
 
     public static final String DEFAULT_AVATAR_URL = "/user/images/avatar_default.png";
     private final ProfileService profileService;
     private final UserService userService;
-
-    @Autowired
-    public ProfileController(ProfileService profileService, UserService userService) {
-        this.profileService = profileService;
-        this.userService = userService;
-    }
 
     @GetMapping("/profile")
     public String formProfile(Model model, Principal principal) {

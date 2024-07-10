@@ -1,3 +1,4 @@
+
 package com.fpt.swp391.group6.DigitalTome.dto.appRegister;
 
 import lombok.AllArgsConstructor;

@@ -3,11 +3,12 @@ package com.fpt.swp391.group6.DigitalTome.controller;
 import com.fpt.swp391.group6.DigitalTome.dto.RegisterDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.service.EmailService;
+import com.fpt.swp391.group6.DigitalTome.service.PublisherService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,18 +25,13 @@ import static com.fpt.swp391.group6.DigitalTome.utils.UserUtils.generateToken;
 import static com.fpt.swp391.group6.DigitalTome.utils.UserUtils.isTokenExpired;
 
 @Controller
+@RequiredArgsConstructor
 public class AuthController {
 
     private final EmailService emailService;
     private final HttpSession httpSession;
     private final UserService userService;
-
-    @Autowired
-    public AuthController(UserService userService, EmailService emailService, HttpSession httpSession) {
-        this.userService = userService;
-        this.emailService = emailService;
-        this.httpSession = httpSession;
-    }
+    private final PublisherService publisherService;
 
 
     @GetMapping(value = {"/","home", "index"})
@@ -45,6 +41,8 @@ public class AuthController {
     public String loginForm() {
         return "authentication/shop-login";
     }
+
+
 
     @GetMapping("register")
     public String showRegistrationForm(Model model){
@@ -77,6 +75,7 @@ public class AuthController {
 
         try {
             emailService.sendEmail("Code OTP", "Your OTP code is: " + otp, List.of(userDto.getEmail()));
+
         } catch (MessagingException e) {
             redirectAttributes.addFlashAttribute("errorMessage", "Failed to send OTP. Please try again.");
             e.printStackTrace();
@@ -95,7 +94,7 @@ public class AuthController {
     public String verifyOtp(@RequestParam("otp") String otp,
                             HttpSession session,
                             Model model
-                            ) {
+    ) {
 
         String sessionOtp = (String) session.getAttribute("otp");
         LocalDateTime otpCreationTime = (LocalDateTime) session.getAttribute("otpCreationTime");
@@ -163,7 +162,10 @@ public class AuthController {
         }
         return "redirect:/login";
     }
+
+    @PostMapping("/contact")
+    public String contact(@RequestParam("email") String email) {
+        publisherService.contact(email);
+        return "redirect:/login";
+    }
 }
-
-
-

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/head :: head}">
+    <title>Transaction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table th {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .table td {
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="layout/header :: header"></header>
+<br>
+<div class="container">
+    <!-- Form tìm kiếm -->
+    <div class="search-container card shadow-sm p-3 mb-5 bg-white rounded">
+        <div class="card-body">
+            <h5 class="card-title">Search Transactions</h5>
+            <form id="searchForm">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label for="startDate">Start Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="start-date-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control" id="startDate" name="startDate" aria-describedby="start-date-addon">
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="endDate">End Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="end-date-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="date" class="form-control" id="endDate" name="endDate" aria-describedby="end-date-addon">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary btn-block">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bảng kết quả -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-responsive-md">
+            <thead>
+            <tr>
+                <th style="width:80px;"><strong>#</strong></th>
+                <th><strong>Book Title</strong></th>
+                <th><strong>Username</strong></th>
+                <th><strong>Date</strong></th>
+                <th><strong>Price</strong></th>
+                <th><strong>Status</strong></th>
+            </tr>
+            </thead>
+            <tbody id="transactionTable">
+            <!-- Dữ liệu giao dịch sẽ được thêm bằng JavaScript -->
+            </tbody>
+        </table>
+
+        <!-- Phân trang -->
+        <nav id="paginationNav">
+            <ul class="pagination">
+                <!-- Các phần trang sẽ được thêm bằng JavaScript -->
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        function fetchTransactions(startDate, endDate, page, size) {
+            $.ajax({
+                url: '/api/transactions/search',
+                type: 'GET',
+                data: {   // thông tin gửi tới backend để xử lý
+                    startDate: startDate,
+                    endDate: endDate,
+                    page: page,
+                    size: size
+                },
+                success: function(response) {
+                    let transactions = response.payments;
+                    let transactionTable = $('#transactionTable'); // dòng 88
+                    transactionTable.empty(); // xóa nội dung bảng hiện tại, để thêm các dữ liệu mới
+
+                    if (transactions.length > 0) {  // kiểm tra dữ liệu trả về từ backend
+                        transactions.forEach((transaction, index) => {
+                            let row = `<tr>
+                            <td>${page * size + index + 1}</td>
+                            <td>${transaction.bookTitle}</td>
+                            <td>${transaction.username}</td>
+                            <td>${new Date(transaction.createdDate).toLocaleDateString()}</td>
+                            <td>${transaction.price} $</td>
+                            <td><span class="${transaction.success ? 'badge badge-success' : 'badge badge-danger'}">
+                                ${transaction.success ? 'Successful' : 'Failed'}
+                            </span></td>
+                        </tr>`;
+                            transactionTable.append(row);
+                        });
+                    } else { // nếu không có giao dịch nào
+                        transactionTable.append('<tr><td colspan="6">No transactions found</td></tr>');
+                    }
+                    updatePagination(response.totalPages, response.currentPage);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            });
+        }
+
+        // cập nhập phân trang
+        function updatePagination(totalPages, currentPage) {
+            let paginationNav = $('#paginationNav ul'); // dòng 94
+            paginationNav.empty();
+
+            // Previous button
+            let prevDisabled = (currentPage === 0) ? 'disabled' : '';
+            let prevPage = (currentPage > 0) ? currentPage - 1 : 0;
+            let prevItem = `<li class="page-item ${prevDisabled}">
+                <a class="page-link" href="#" data-page="${prevPage}">Previous</a>
+            </li>`;
+            paginationNav.append(prevItem);
+
+            // Page numbers
+            for (let i = 0; i < totalPages; i++) {
+                let activeClass = (i === currentPage) ? 'active' : '';
+                let pageItem = `<li class="page-item ${activeClass}">
+                    <a class="page-link" href="#" data-page="${i}">${i + 1}</a>
+                </li>`;
+                paginationNav.append(pageItem);
+            }
+
+            // Next button
+            let nextDisabled = (currentPage === totalPages - 1) ? 'disabled' : '';
+            let nextPage = (currentPage < totalPages - 1) ? currentPage + 1 : totalPages - 1;
+            let nextItem = `<li class="page-item ${nextDisabled}">
+                <a class="page-link" href="#" data-page="${nextPage}">Next</a>
+            </li>`;
+            paginationNav.append(nextItem);
+        }
+
+
+        fetchTransactions(null, null, 0, 5);
+        $(document).on('click', '.pagination a', function(event) {  // dòng 95
+            event.preventDefault();
+            let page = $(this).data('page');
+            fetchTransactions(null, null, page, 5);
+        });
+
+        // Submit search form
+        $('#searchForm').on('submit', function(event) {
+            event.preventDefault();
+            let startDate = $('#startDate').val();
+            let endDate = $('#endDate').val();
+            fetchTransactions(startDate, endDate, 0, 5);
+        });
+    });
+</script>
+<footer th:replace="layout/footer :: footer"></footer>
+</body>
+</html>
