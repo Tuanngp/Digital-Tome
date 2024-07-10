@@ -11,6 +11,7 @@ import lombok.Setter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -82,8 +83,12 @@ public class AccountEntity extends BaseEntity implements Serializable {
     private MembershipEntity membershipEntity;
 
 
+    @Column(name = "last_updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startUpdate;
+
     @Column(name = "membership_expiry_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date membershipExpiryDate;
 
     @Column(name = "name_publisher", nullable = true, unique = true)
@@ -158,4 +163,26 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @JsonManagedReference
     private Set<NotificationEntity> notifications;
 
+
+//
+//    @PrePersist
+//    protected void onCreate() {
+//        startUpdate = new Date();
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(startUpdate);
+//        calendar.add(Calendar.MINUTE, 1);
+//        membershipExpiryDate = calendar.getTime();
+//    }
+
+
+//    @PreUpdate
+//    protected void onUpdate() {
+//        startUpdate = new Date();
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(startUpdate);
+//        calendar.add(Calendar.MINUTE, 1);
+//        membershipExpiryDate = calendar.getTime();
+//    }
 }

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -190,6 +191,10 @@ public class UserService {
         return DEFAULT_AVATAR_URL;
     }
 
+    public List<AccountEntity> findAccountsByExpiredMembership(Date currentDate){
+        return userRepository.findAccountsByExpiredMembership(currentDate);
+    }
+
     public AccountEntity getCurrentLogin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = null;
@@ -203,5 +208,4 @@ public class UserService {
         }
         return null;
     }
-
 }

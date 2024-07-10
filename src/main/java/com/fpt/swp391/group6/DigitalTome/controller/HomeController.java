@@ -5,6 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
+
+    @GetMapping("/payment/premium")
+    public String upgrade() {
+        return "payment/premium";
+    }
+
     @GetMapping("/comments")
     public String comments() {
         return "comments";
