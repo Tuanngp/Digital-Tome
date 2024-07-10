@@ -48,11 +48,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String email = oAuth2User.getAttribute("email");
 
-        AccountEntity account = userRepository.findByEmail(email);
-        if (account == null) {
-            account = createUser(oAuth2User);
-            account.setAvatarPath("../user/images/avatar_default.png");
-        }
+        // Tạo tài khoản mới mỗi khi người dùng đăng nhập bằng Google
+        AccountEntity account = createUser(oAuth2User);
+        account.setAvatarPath("../user/images/avatar_default.png");
 
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
