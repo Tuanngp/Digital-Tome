@@ -48,9 +48,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String email = oAuth2User.getAttribute("email");
 
-        // Tạo tài khoản mới mỗi khi người dùng đăng nhập bằng Google
-        AccountEntity account = createUser(oAuth2User);
-        account.setAvatarPath("../user/images/avatar_default.png");
+        AccountEntity account = userRepository.findByEmail(email);
+        if (account == null) {
+            account = createUser(oAuth2User);
+            account.setAvatarPath("../user/images/avatar_default.png");
+        }
 
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -66,6 +68,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         AccountEntity account = new AccountEntity();
         account.setEmail(oAuth2User.getAttribute("email"));
         account.setUsername(oAuth2User.getAttribute("name"));
+        account.setFullname(oAuth2User.getAttribute("name"));
 
         String password = UserUtils.generateToken();
 
