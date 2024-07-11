@@ -235,9 +235,9 @@
 <!--                                <option>Education</option>-->
 <!--                            </select>-->
 <!--                        </label>-->
-                        <input aria-label="Text input with dropdown button" class="form-control" placeholder="Search Books Here"
+                        <input id="keyword" aria-label="Text input with dropdown button" class="form-control" placeholder="Search Books Here"
                                type="text">
-                        <button class="btn" type="button"><i class="flaticon-loupe"></i></button>
+                        <button id="sBtn" class="btn" type="button"><i class="flaticon-loupe"></i></button>
                     </div>
                 </form>
             </div>
@@ -284,12 +284,13 @@
                     </form>
                     <ul class="nav navbar-nav">
                         <li><a th:href="@{/}"><span>Home</span></a></li>
-                        <li><a th:href="@{about-us}"><span>About Us</span></a></li>
-<!--                        <li><a th:href="@{/books-list-view-sidebar}"><span>Bookshelves</span></a></li>-->
-                        <li><a th:href="@{/books-view}"><span>Bookshelves</span></a></li>
+                        <li><a th:href="@{/about-us}"><span>About Us</span></a></li>
+                        <li><a th:href="@{/books-list-view-sidebar}"><span>Bookshelves</span></a></li>
+                        <li><a th:href="@{/books-view}"><span>Bookshelves-Grid</span></a></li>
                         <!--                        <li><a th:href="@{blog-list-sidebar}"><span>Blog</span></a></li>-->
                         <!--                        <li><a th:href="@{pricing}"><span>Pricing</span></a></li>-->
-                        <li><a th:href="@{contact-us}"><span>Contact Us</span></a></li>
+                        <li><a th:href="@{/deeply-books-seeking}"><span>Deeply Seeking</span></a></li>
+                        <li><a th:href="@{/contact-us}"><span>Contact Us</span></a></li>
                     </ul>
                     <div class="dz-social-icon">
                         <ul>
