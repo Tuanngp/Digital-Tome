@@ -11,6 +11,11 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+
+    @GetMapping("/payment/premium")
+    public String upgrade() {
+        return "payment/premium";
+    }
     private final BookService bookService;
 
     public HomeController(BookService bookService) {

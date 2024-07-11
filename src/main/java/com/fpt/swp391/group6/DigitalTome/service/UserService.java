@@ -9,8 +9,8 @@ import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
 import com.fpt.swp391.group6.DigitalTome.utils.UserUtils;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -188,6 +189,10 @@ public class UserService {
         return DEFAULT_AVATAR_URL;
     }
 
+    public List<AccountEntity> findAccountsByExpiredMembership(Date currentDate){
+        return userRepository.findAccountsByExpiredMembership(currentDate);
+    }
+
     public AccountEntity getCurrentLogin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = null;
@@ -199,7 +204,7 @@ public class UserService {
         if(username != null){
             return userRepository.findByUsername(username);
         }
-            return null;
+        return null;
     }
 
     public AccountEntity registerPublisher(Long id) {
@@ -222,19 +227,4 @@ public class UserService {
         }
         return username != null ? findByUsername(username) : null;
     }
-
-    public AccountEntity search(String keyword) {
-
-        if (keyword.contains("@")) {
-            return userRepository.findByEmail(keyword);
-        }
-        if (keyword.matches("\\d{8,11}")) {
-            return userRepository.findByPhone(keyword);
-        }
-        return userRepository.findByUsername(keyword);
-    }
-    public List<AccountEntity> getAdminUsers() {
-        return userRepository.findByRoleName("ADMIN");
-    }
 }
-

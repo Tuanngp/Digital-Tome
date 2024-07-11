@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -35,6 +36,7 @@ public interface UserRepository extends JpaRepository<AccountEntity, Long> {
     List<AccountEntity> findAllByNamePublisherNotNull();
     List<AccountEntity> findAllByRoleEntity(RoleEntity role);
 
-    AccountEntity findByPhone(String keyword);
+    @Query("SELECT a FROM AccountEntity a WHERE a.membershipExpiryDate <= :currentDate")
+    List<AccountEntity> findAccountsByExpiredMembership(@Param("currentDate") Date currentDate);
 }
 

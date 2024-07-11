@@ -68,6 +68,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         AccountEntity account = new AccountEntity();
         account.setEmail(oAuth2User.getAttribute("email"));
         account.setUsername(oAuth2User.getAttribute("name"));
+        account.setFullname(oAuth2User.getAttribute("name"));
 
         String password = UserUtils.generateToken();
 
