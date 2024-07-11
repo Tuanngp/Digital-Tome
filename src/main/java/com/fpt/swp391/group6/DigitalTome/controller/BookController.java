@@ -44,12 +44,16 @@ public class BookController {
     public String bookListView(Model model) {
         return findPaginated(1, "id", "asc", model);
     }
-
-    @GetMapping("/books-manage")
-    public String bookListManage(Model model) {
-        return findPaginatedList(1, "id", "asc", model);
+    @GetMapping("/books-chart")
+    public String getBooksChartPage(@RequestParam(required = false) Long accountId, Model model) {
+        model.addAttribute("accountId", accountId);
+        return "books-chart";
     }
 
+    @GetMapping("/books-manage")
+    public String bookListManage(Model model, Principal principal) {
+        return findPaginatedList(1, "id", "asc", model, principal, 10);
+    }
     @GetMapping("/upload")
     public String showAddBookForm(Model model) {
         List<AuthorEntity> existingAuthors = authorService.getAllAuthors();
@@ -77,12 +81,12 @@ public class BookController {
         if (book.getId() != null) {
             BookEntity existingBook = bookService.findByIsbn(book.getIsbn());
             if (existingBook != null && !existingBook.getId().equals(book.getId())) {
-                model.addAttribute("error", "Không thể câp nhật. ISBN đã tồn tại!");
+                model.addAttribute("error", "ISBN already exists in the system!");
                 return "book-upload/update-book";
             }
         } else {
             if (bookService.isISBNAlreadyExists(book.getIsbn())) {
-                model.addAttribute("error", "Không thể thêm mới. ISBN đã tồn tại!");
+                model.addAttribute("error", "ISBN already exists in the system!");
                 return "books-upload";
             }
         }
@@ -94,7 +98,7 @@ public class BookController {
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
             if (localPublicationDate.isAfter(currentDate)) {
-                model.addAttribute("error", "Ngày xuất bản phải nhỏ hơn ngày hiện tại!");
+                model.addAttribute("error", "The published date must be less than the current date!");
                 return "books-upload";
             }
         }
@@ -108,11 +112,11 @@ public class BookController {
                 book.setBookPath(bookUrl);
             } catch (RuntimeException e) {
                 e.printStackTrace();
-                model.addAttribute("error", "Đã xảy ra lỗi khi lưu sách!");
+                model.addAttribute("error", "An error occurred while saving the file!");
                 return "books-upload";
             }
         } else {
-            model.addAttribute("error", "Vui lòng chọn file để upload!");
+            model.addAttribute("error", "Please select a file to upload!!");
             return "books-upload";
         }
 
@@ -142,10 +146,9 @@ public class BookController {
         }
         book.setCategoryEntityList(categories);
 
-        // Xử lý cho ContributionEntity
+        // Xử lý contribution
         AccountEntity accountEntity = accountService.findByUsername(principal.getName());
 //            Long accountId = accountEntity.getId();
-
         ContributionEntity contribution = new ContributionEntity();
 //            contribution.setId(accountId);
         contribution.setAccountEntity(accountEntity);
@@ -168,9 +171,17 @@ public class BookController {
 
 
     @GetMapping("/update/{id}")
-    public String showEditBookForm(@PathVariable(value = "id") long id, Model model) {
-        List<CategoryEntity> categories = categoryService.getAllCategories();
+    public String showEditBookForm(@PathVariable(value = "id") long id, Model model, Principal principal) {
         BookEntity book = bookService.getBookById(id);
+
+        // Check if the logged-in user is the author of the book
+        AccountEntity accountEntity = accountService.findByUsername(principal.getName());
+        boolean isAuthor = contributionService.isAuthorOfBook(accountEntity.getId(), id);
+        if (!isAuthor) {
+            return "error/error403";
+        }
+
+        List<CategoryEntity> categories = categoryService.getAllCategories();
         List<AuthorEntity> authors = book.getAuthorEntityList();
         model.addAttribute("authors", authors);
         model.addAttribute("categories", categories);
@@ -179,8 +190,16 @@ public class BookController {
     }
 
 
+
     @GetMapping("/delete/{id}")
-    public String deleteBook(@PathVariable(value = "id") long id) {
+    public String deleteBook(@PathVariable(value = "id") long id, Principal principal) {
+        // Check if the logged-in user is the author of the book
+        AccountEntity accountEntity = accountService.findByUsername(principal.getName());
+        boolean isAuthor = contributionService.isAuthorOfBook(accountEntity.getId(), id);
+        if (!isAuthor) {
+            return "error/error403";
+        }
+
         this.bookService.deleteBookById(id);
         return "redirect:/books-manage";
     }
@@ -212,15 +231,26 @@ public class BookController {
     public String findPaginatedList(@PathVariable(value = "pageNo") int pageNo,
                                     @RequestParam("sortField") String sortField,
                                     @RequestParam("sortDir") String sortDir,
-                                    Model model) {
-        int pageSize = 12;
+                                    Model model, Principal principal,
+                                    @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
 
-        Page<BookEntity> page = bookService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        // Check if the principal is null (user not authenticated)
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        // Get the current logged-in user's account ID
+        AccountEntity accountEntity = accountService.findByUsername(principal.getName());
+
+        // Fetch books for the current account
+        Page<BookEntity> page = bookService.findPaginatedByAccountId(accountEntity.getId(), pageNo, pageSize, sortField, sortDir);
         List<BookEntity> listBooks = page.getContent();
 
+        model.addAttribute("pageSize", pageSize);
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("startEntry", (pageNo - 1) * pageSize + 1);
+        model.addAttribute("endEntry", Math.min(pageNo * pageSize, page.getTotalElements()));
 
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);

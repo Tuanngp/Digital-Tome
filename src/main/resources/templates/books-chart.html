@@ -6,7 +6,7 @@
 <head>
 
     <!-- PAGE TITLE HERE -->
-    <title>Digital Tome</title>
+    <title>Digital</title>
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
@@ -34,7 +34,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/user/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
+    <link href="/admin/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="/admin/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/user/vendor/select2/css/select2.min.css">
+
 
 </head>
 
@@ -63,7 +67,7 @@
         Nav header start
     ***********************************-->
     <div class="nav-header">
-        <a href="index.html" class="brand-logo">
+        <a href="/" class="brand-logo">
             <img src="../user/images/logo.png" alt="New Logo" class="logo-abbr brand-title"/>
         </a>
         <div class="nav-control">
@@ -74,6 +78,7 @@
             </div>
         </div>
     </div>
+
     <!--**********************************
         Nav header end
     ***********************************-->
@@ -692,251 +697,7 @@
                     <div class="header-left">
 
                     </div>
-                    <ul class="navbar-nav header-right">
-                        <li class="nav-item dropdown notification_dropdown">
-                            <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18 8.5C18 6.9087 17.3679 5.38258 16.2426 4.25736C15.1174 3.13214 13.5913 2.5 12 2.5C10.4087 2.5 8.88258 3.13214 7.75736 4.25736C6.63214 5.38258 6 6.9087 6 8.5C6 15.5 3 17.5 3 17.5H21C21 17.5 18 15.5 18 8.5Z"
-                                          stroke="#111828" stroke-width="1.5" stroke-linecap="round"
-                                          stroke-linejoin="round"/>
-                                    <path d="M13.73 21.5C13.5542 21.8031 13.3019 22.0547 12.9982 22.2295C12.6946 22.4044 12.3504 22.4965 12 22.4965C11.6496 22.4965 11.3054 22.4044 11.0018 22.2295C10.6982 22.0547 10.4458 21.8031 10.27 21.5"
-                                          stroke="#111828" stroke-width="1.5" stroke-linecap="round"
-                                          stroke-linejoin="round"/>
-                                </svg>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0"
-                                     style="height:380px;">
-                                    <ul class="timeline">
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" src="images/avatar/1.jpg">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-info">
-                                                    KG
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Resport created successfully</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-success">
-                                                    <i class="fa fa-home"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" src="images/avatar/1.jpg">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-danger">
-                                                    KG
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Resport created successfully</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-primary">
-                                                    <i class="fa fa-home"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" src="images/avatar/1.jpg">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-info">
-                                                    KG
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Resport created successfully</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-success">
-                                                    <i class="fa fa-home"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" src="images/avatar/1.jpg">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-danger">
-                                                    KG
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Resport created successfully</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-primary">
-                                                    <i class="fa fa-home"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <a class="all-notification" href="javascript:void(0);">See all notifications <i
-                                        class="ti-arrow-end"></i></a>
-                            </div>
-                        </li>
-                        <li class="nav-item align-items-center header-border"><a href="analytics.html"
-                                                                                 class="btn btn-primary">Analytics</a>
-                        </li>
-                        <li class="nav-item ps-3">
-                            <div class="header-profile2">
-                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <div class="header-info2 d-flex align-items-center">
-                                        <div class="header-media">
-                                            <img src="images/user.jpg" class="avatar avatar-lg" alt="">
-                                        </div>
-                                        <div class="header-info">
-                                            <h6>Thomas Fleming</h6>
-                                            <p>info@gmail.com</p>
-                                        </div>
 
-                                    </div>
-                                </a>
-                                <div class=" profile-box">
-                                    <div class="products">
-                                        <div class="border-img">
-                                            <img src="images/user.jpg" class="avatar " alt="">
-                                        </div>
-                                        <div class="ms-3">
-                                            <h6 class="mb-0">Thomas Fleming</h6>
-                                            <span class="d-block mb-1">demo@gmail.com</span>
-                                            <span class="badge border-0 rounded">Pro Mamber</span>
-                                        </div>
-                                    </div>
-                                    <div class="account-setting">
-                                        <a href="app-profile-2.html" class="ai-icon">
-                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M16.6666 17.5V15.8333C16.6666 14.9493 16.3154 14.1014 15.6903 13.4763C15.0652 12.8512 14.2173 12.5 13.3333 12.5H6.66658C5.78253 12.5 4.93468 12.8512 4.30956 13.4763C3.68444 14.1014 3.33325 14.9493 3.33325 15.8333V17.5"
-                                                      stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                      stroke-linejoin="round"/>
-                                                <path d="M10.0001 9.16667C11.841 9.16667 13.3334 7.67428 13.3334 5.83333C13.3334 3.99238 11.841 2.5 10.0001 2.5C8.15913 2.5 6.66675 3.99238 6.66675 5.83333C6.66675 7.67428 8.15913 9.16667 10.0001 9.16667Z"
-                                                      stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                      stroke-linejoin="round"/>
-                                            </svg>
-                                            <span class="ms-2">Account Settings</span>
-                                        </a>
-                                        <a href="app-profile-1.html" class="ai-icon ">
-                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M3.33341 3.33301H16.6667C17.5834 3.33301 18.3334 4.08301 18.3334 4.99967V14.9997C18.3334 15.9163 17.5834 16.6663 16.6667 16.6663H3.33341C2.41675 16.6663 1.66675 15.9163 1.66675 14.9997V4.99967C1.66675 4.08301 2.41675 3.33301 3.33341 3.33301Z"
-                                                      stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                      stroke-linejoin="round"/>
-                                                <path d="M18.3334 5L10.0001 10.8333L1.66675 5" stroke="white"
-                                                      stroke-width="1.5" stroke-linecap="round"
-                                                      stroke-linejoin="round"/>
-                                            </svg>
-                                            <span class="ms-2">Subscription</span>
-                                        </a>
-                                        <div class="d-flex align-items-center">
-                                            <a href="javascript:void(0);" class="dropdown-item ai-icon ">
-                                                <div>
-                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                         xmlns="http://www.w3.org/2000/svg">
-                                                        <path d="M17.4999 10.6583C17.3688 12.0768 16.8365 13.4287 15.9651 14.5557C15.0938 15.6826 13.9195 16.5382 12.5797 17.0221C11.2398 17.5061 9.7899 17.5984 8.3995 17.2884C7.0091 16.9784 5.73575 16.2788 4.72844 15.2715C3.72113 14.2642 3.02153 12.9908 2.71151 11.6004C2.40148 10.21 2.49385 8.76007 2.9778 7.42025C3.46175 6.08042 4.31728 4.90614 5.44426 4.03479C6.57125 3.16345 7.92308 2.63109 9.34158 2.5C8.51109 3.62356 8.11146 5.00787 8.21536 6.40118C8.31926 7.79448 8.9198 9.10421 9.90775 10.0922C10.8957 11.0801 12.2054 11.6807 13.5987 11.7846C14.992 11.8885 16.3764 11.4888 17.4999 10.6583Z"
-                                                              stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                              stroke-linejoin="round"/>
-                                                    </svg>
-                                                    <span class="ms-2">Dark Mode</span>
-                                                </div>
-                                            </a>
-                                            <div class="dz-layout">
-                                                <i class="fas fa-sun sun"></i>
-                                                <i class="fas fa-moon moon"></i>
-                                            </div>
-                                        </div>
-                                        <a href="page-login.html" class="ai-icon">
-                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5"
-                                                      stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                      stroke-linejoin="round"/>
-                                                <path d="M13.3333 14.1663L17.4999 9.99967L13.3333 5.83301"
-                                                      stroke="white" stroke-width="1.5" stroke-linecap="round"
-                                                      stroke-linejoin="round"/>
-                                                <path d="M17.5 10H7.5" stroke="white" stroke-width="1.5"
-                                                      stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                            <span class="ms-2">Logout </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
             </nav>
         </div>
@@ -953,7 +714,55 @@
     <!--**********************************
         Sidebar start
     ***********************************-->
+    <div class="deznav">
+        <div class="deznav-scroll">
+            <ul class="metismenu" id="menu">
+                <li><a href="/books-manage" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Books Manage</span>
+                </a>
+                </li>
+                <li><a href="/upload" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Upload Book</span>
+                </a>
+                </li>
+                <li><a href="/books-chart" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5687 13.8887C18.2435 13.8887 18.8098 14.4455 18.7066 15.1118C18.1013 19.0318 14.7456 21.9423 10.6982 21.9423C6.22029 21.9423 2.59082 18.3129 2.59082 13.836C2.59082 10.1476 5.39293 6.71181 8.54766 5.93497C9.22556 5.7676 9.92029 6.24445 9.92029 6.94234C9.92029 11.6708 10.0792 12.8939 10.9771 13.5592C11.875 14.2244 12.9308 13.8887 17.5687 13.8887Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M21.9834 9.95121C22.0371 6.91331 18.3055 2.01647 13.7581 2.10068C13.4045 2.107 13.1213 2.40173 13.1055 2.75437C12.9908 5.25226 13.1455 8.4891 13.2318 9.95647C13.2581 10.4133 13.6171 10.7723 14.0729 10.7986C15.5813 10.8849 18.936 11.0028 21.3981 10.6302C21.7329 10.5796 21.9781 10.2891 21.9834 9.95121Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Books Chart</span>
+                </a>
+                </li>
 
+
+            </ul>
+            <div class="switch-btn">
+                <a th:href="@{/logout}">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.36 6.63965C19.6184 7.89844 20.4753 9.50209 20.8223 11.2478C21.1693 12.9936 20.9909 14.803 20.3096 16.4474C19.6284 18.0918 18.4748 19.4972 16.9948 20.486C15.5148 21.4748 13.7749 22.0026 11.995 22.0026C10.2151 22.0026 8.47515 21.4748 6.99517 20.486C5.51519 19.4972 4.36164 18.0918 3.68036 16.4474C2.99909 14.803 2.82069 12.9936 3.16772 11.2478C3.51475 9.50209 4.37162 7.89844 5.63 6.63965"
+                              stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 2V12" stroke="#252525" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
     <!--**********************************
         Sidebar end
     ***********************************-->
@@ -964,181 +773,50 @@
     <div class="outer-body">
         <div class="inner-body">
             <div class="content-body">
-                <div th:if="${error}" class="alert alert-danger" role="alert">
-                    <p th:text="${error}"></p>
-                </div>
-                <div class="container-fluid">
-                    <!-- row -->
+                <div class="container-fluid my-4">
+                    <h1>Book Chart</h1>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <select id="timePeriod" class="form-select">
+                                <option value="7days">Last 7 Days</option>
+                                <option value="1month">Last 1 Month</option>
+                                <option value="1year">Last 1 Year</option>
+                                <option value="all">All Time</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="row">
-                        <form action="#" th:action="@{/save}" th:object="${book}" method="POST"
-                              enctype="multipart/form-data">
-                            <div class="col-xl-12 col-xxl-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Update Book</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="smartwizard" class="form-wizard order-create">
-                                            <ul class="nav nav-wizard">
-                                                <li><a class="nav-link" href="#book_Info">
-                                                    <span>1</span>
-                                                </a></li>
-                                                <li><a class="nav-link" href="#book_Description">
-                                                    <span>2</span>
-                                                </a></li>
-                                                <li><a class="nav-link" href="#book_Content">
-                                                    <span>3</span>
-                                                </a></li>
-                                                <li><a class="nav-link" href="#book_Pricing">
-                                                    <span>4</span>
-                                                </a></li>
-                                            </ul>
-                                            <div class="tab-content">
-                                                <div id="book_Info" class="tab-pane" role="tabpanel">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">ISBN*</label>
-                                                                <input type="text" th:field="*{isbn}"
-                                                                       class="form-control"
-                                                                       placeholder="ISBN" required
-                                                                       pattern="^\d{10}|\d{13}$"
-                                                                       title="ISBN must be 10 or 13 digits long">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Language*</label>
-                                                                <select id="language-select" th:field="*{language}"
-                                                                        class="form-control"
-                                                                        required>
-                                                                    <option value="en">English</option>
-                                                                    <option value="vi">Vietnam</option>
-                                                                    <!-- Th�m c�c ng�n ng? kh�c n?u c?n -->
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Author*</label>
-                                                                <select id="authorList" class="form-control"
-                                                                        multiple="multiple"
-                                                                        th:field="*{authorEntityList}">
-                                                                    <option th:each="author : ${authors}"
-                                                                            th:value="${author.id}"
-                                                                            th:text="${author.name}"></option>
-                                                                </select>
-                                                                <input type="text" id="authorSearch"
-                                                                       placeholder="Input to add new author..."
-                                                                       class="form-control mt-2">
-                                                                <button type="button" id="addAuthor"
-                                                                        class="btn btn-primary sw-btn-sub mt-2">Add
-                                                                    Author
-                                                                </button>
-                                                                <!-- Trường ẩn để lưu các author dưới dạng chuỗi -->
-                                                                <input type="hidden" id="authorIds" name="authorIds">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Publication
-                                                                    Date*</label>
-                                                                <input type="date" th:field="*{publicationDate}"
-                                                                       class="form-control"
-                                                                       placeholder="2017-06-04" id="mdate" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Genres*</label>
-                                                                <select id="multi-value-select" multiple="multiple"
-                                                                        style="width: 100%;"
-                                                                        th:field="*{categoryEntityList}">
-                                                                    <option th:each="category : ${categories}"
-                                                                            th:value="${category.id}"
-                                                                            th:text="${category.name}"></option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Book Cover*</label>
-                                                                <input class="form-control" type="file" name="image"
-                                                                       id="formFile"
-                                                                       accept="image/x-png,image/jpeg,image/jpg"
-                                                                       required/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="book_Description" class="tab-pane" role="tabpanel">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <h4 class="card-title mx-auto">Title*</h4>
-                                                                <p>Title about your book.</p>
-                                                                <input type="text" th:field="*{title}"
-                                                                       class="form-control"
-                                                                       placeholder="title" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mx-auto">
-                                                            <div class="mb-3">
-                                                                <h4 class="card-title mx-auto">Description*</h4>
-                                                                <p>Description about your book.</p>
-                                                                <textarea class="form-txtarea form-control"
-                                                                          th:field="*{description}" rows="8"
-                                                                          id="comment"
-                                                                          style="height: 121px;"></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="book_Content" class="tab-pane" role="tabpanel">
-                                                    <div class="row">
-                                                        <div class="mx-auto">
-                                                            <h4 class="card-title mx-auto">Content</h4>
-                                                            <p>Upload file for your book.</p>
-                                                            <input class="form-control form-control-lg" id="formFileLg"
-                                                                   type="file" name="bookP" accept="application/pdf"
-                                                                   required/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="book_Pricing" class="tab-pane" role="tabpanel">
-                                                    <div class="row emial-setup">
-                                                        <div class="mx-auto">
-                                                            <h4 class="card-title mx-auto">Poin*</h4>
-                                                            <p>Enter the point value for this book. Points are used
-                                                                as currency on our website, allowing users to
-                                                                purchase books using points.</p>
-                                                            <div class="input-group">
-                                                                <input type="number" id="pricing" name="pricing" class="form-control" th:value="*{point}" required />
-                                                                <span class="input-group-text">point</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Books Sold (Bar Chart)</h4>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="booksSoldChart"></canvas>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary sw-btn-sub" style="text-align: right;"> Save
-                                Book
-                            </button>
-                        </form>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Revenue (Line Chart)</h4>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="footer out-footer">
-                <div class="copyright">
-                    <p>Copyright � Developed by <a href="https://dexignzone.com/" target="_blank">DexignZone</a> 2023
-                    </p>
+                <div class="footer out-footer">
+                    <div class="copyright">
+                        <p>Copyright © by <a href="https://digitaltome.com/" target="_blank">Digital Tome</a> 2024</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!--**********************************
         Content body end
     ***********************************-->
@@ -1169,6 +847,101 @@
 <!--**********************************
     Scripts
 ***********************************-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const booksSoldContext = document.getElementById('booksSoldChart').getContext('2d');
+        const revenueContext = document.getElementById('revenueChart').getContext('2d');
+
+        let booksSoldChart = new Chart(booksSoldContext, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Books Sold',
+                        data: [],
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        let revenueChart = new Chart(revenueContext, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Revenue',
+                        data: [],
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        document.getElementById('timePeriod').addEventListener('change', function() {
+            const period = this.value;
+            fetch(`/api/books/statistics?period=${period}`)
+                .then(response => response.json())
+                .then(data => {
+                    const labels = Object.keys(data.booksSoldDetails);
+                    const booksSoldData = Object.values(data.booksSoldDetails);
+                    const revenueData = Object.values(data.revenueDetails);
+
+                    booksSoldChart.data.labels = labels;
+                    booksSoldChart.data.datasets[0].data = booksSoldData;
+                    booksSoldChart.update();
+
+                    revenueChart.data.labels = labels;
+                    revenueChart.data.datasets[0].data = revenueData;
+                    revenueChart.update();
+                })
+                .catch(error => console.error('Error fetching book statistics:', error));
+        });
+
+        // Trigger change event to load initial data
+        document.getElementById('timePeriod').dispatchEvent(new Event('change'));
+    });
+
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <!-- Required vendors -->
 <script src="/user/vendor/global/global.min.js"></script>
 
@@ -1222,102 +995,12 @@
 <!-- Pickdate -->
 <script src="/user/js/plugins-init/pickadate-init.js"></script>
 
-<!-- x�a c�i n�y l� k x�i select2 ???c ?�u -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
-
-<script>
-    $(document).ready(function () {
-        // SmartWizard initialize
-        $('#smartwizard').smartWizard();
-    });
-</script>
-
-
-//api cho n�t author v� search author
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        $('#authorList').select2({
-            tags: false, // Cho phép người dùng thêm tag mới
-            tokenSeparators: [',', ' ']
-        });
-
-        document.getElementById('addAuthor').addEventListener('click', function () {
-            var authorName = document.getElementById('authorSearch').value;
-            if (authorName) {
-                var newOption = new Option(authorName, 'new-' + authorName, true, true);
-                $('#authorList').append(newOption).trigger('change');
-            }
-        });
-
-        // Trước khi submit form, chúng ta sẽ lấy tất cả các giá trị của tác giả và gán vào trường ẩn
-        document.querySelector('form').addEventListener('submit', function () {
-            var authorSelect = $('#authorList').select2('data');
-            var authorIds = authorSelect.map(function (author) {
-                return author.id;
-            });
-            document.getElementById('authorIds').value = authorIds.join(',');
-        });
-    });
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        $('#authorSearch').on('input', function () {
-            var query = $(this).val();
-            if (query.length > 0) {
-                $('#addAuthor').prop('disabled', false);
-            } else {
-                $('#addAuthor').prop('disabled', true);
-            }
-        });
-    });
-</script>
-
-//api cho n�t category v� search category
-<script>
-    $(document).ready(function () {
-        $('#authorList').select2({
-            tags: true,
-            tokenSeparators: [',', ' '],
-            createTag: function (params) {
-                return {
-                    id: params.term,
-                    text: params.term,
-                    newOption: true
-                };
-            }
-        });
-
-        var newAuthors = [];
-
-        $('#addAuthor').click(function () {
-            var authorId = $('#authorSearch').val();
-            if (authorId) {
-                var newOption = new Option(authorId, authorId, true, true);
-                newOption.newOption = true;
-                $('#authorList').append(newOption).trigger('change');
-                newAuthors.push(parseInt(authorId));  // Chuyển đổi chuỗi thành số nguyên
-                $('#authorSearch').val('');
-            }
-        });
-
-        $('#multi-value-select').select2({
-            placeholder: 'Select a category',
-            allowClear: true
-        });
-
-        $('form').submit(function (e) {
-            $('<input>').attr({
-                type: 'hidden',
-                name: 'newAuthors',
-                value: JSON.stringify(newAuthors),  // Chuyển danh sách thành chuỗi JSON
-            }).appendTo('form');
-        });
-    });
-</script>
-
+<script src="/admin/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="/admin/js/plugins-init/sweetalert.init.js"></script>
+<!-- Datatable -->
+<script src="/admin/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/admin/js/plugins-init/datatables.init.js"></script>
 </body>
 
+<!-- Mirrored from w3admin.dexignzone.com/xhtml/form-wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2024 07:43:07 GMT -->
 </html>
