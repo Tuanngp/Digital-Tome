@@ -16,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -104,7 +107,15 @@ public class BookService {
     }
 
     public void updateStatusByIsbn(int status,String isbn){
-        this.bookRepository.updateStatusByIsbn(status, isbn);
+        BookEntity bookEntity = bookRepository.findByIsbn(isbn);
+        if(bookEntity != null){
+            List<String> args = new ArrayList<>();
+            args.add("Book_Collection_Digital_Tome");
+            args.add(bookEntity.getIsbn());
+            args.add(bookEntity.getTitle());
+            args.add(bookEntity.getDescription());
+            if(insertToQdrant(args)) this.bookRepository.updateStatusByIsbn(status, isbn);
+        }
     }
 
     public List<BookDetailDto>  findByStatus(int status, Pageable pageable){
@@ -222,5 +233,68 @@ public class BookService {
 
         return groupedData;
     }
+
+    private boolean insertToQdrant(List<String> args){
+        try {
+            List<String> command = new ArrayList<>();
+            command.add("python");
+            command.add("src/main/python/InsertDataToQdrant.py");
+            command.addAll(args);
+
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.redirectErrorStream(true);
+
+            Process p = pb.start();
+
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+                String line = br.readLine();
+                return Boolean.parseBoolean(line);
+            }catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private static List<String> findSimilarBooksByDes(List<String> args) {
+        try {
+            List<String> command = new ArrayList<>();
+            command.add("python");
+            command.add("src/main/python/FindSimilarText.py");
+            command.addAll(args);
+
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.redirectErrorStream(true);
+
+            Process p = pb.start();
+
+            List<String> isbns = new ArrayList<>();
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                    if(line.equals("false")){
+                        return null;
+                    }
+                    isbns.add(line);
+                }
+            }catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+
+            return isbns;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
+    }
+
+
 }
 
