@@ -58,10 +58,7 @@
             <div class="extra-nav">
                 <div class="extra-cell">
                     <ul class="navbar-nav header-right">
-                        <li class="nav-item">
-                        <li class="nav-item" th:if="${account != null}">
-                            <a class="nav-link" th:href="@{favorites}">
-                        <li class="nav-item dropdown notification-dropdown">
+                        <li class="nav-item dropdown notification-dropdown" th:if="${account != null}">
                             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" id="notificationDropdown">
                                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M18 8.5C18 6.9087 17.3679 5.38258 16.2426 4.25736C15.1174 3.13214 13.5913 2.5 12 2.5C10.4087 2.5 8.88258 3.13214 7.75736 4.25736C6.63214 5.38258 6 6.9087 6 8.5C6 15.5 3 17.5 3 17.5H21C21 17.5 18 15.5 18 8.5Z" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -81,8 +78,8 @@
                         <audio id="notificationSound" src="/admin/notificationsound/notification.mp3" preload="auto"></audio>
 
 
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{wishlist}">
+                        <li class="nav-item" th:if="${account != null}">
+                            <a class="nav-link" th:href="@{/favorites}">
                                 <svg fill="#000000" height="24px" viewBox="0 0 24 24" width="24px"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path d="M0 0h24v24H0V0z" fill="none"/>
@@ -92,87 +89,15 @@
                             </a>
                         </li>
 
-<!--                        Giỏ hàng -->
-<!--                        <li class="nav-item">-->
-<!--                            <button class="nav-link box cart-btn" type="button">-->
-<!--                                <svg fill="#000000" height="24px" viewBox="0 0 24 24" width="24px"-->
-<!--                                     xmlns="http://www.w3.org/2000/svg">-->
-<!--                                    <path d="M0 0h24v24H0V0z" fill="none"/>-->
-<!--                                    <path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>-->
-<!--                                </svg>-->
-<!--                                &lt;!&ndash;                                    <span class="badge">5</span>&ndash;&gt;-->
-<!--                            </button>-->
-<!--                            <ul class="dropdown-menu cart-list">-->
-<!--                                <li class="cart-item">-->
-<!--                                    <div class="media">-->
-<!--                                        <div class="media-left">-->
-<!--                                            <a th:href="@{books-detail}">-->
-<!--                                                <img alt="" class="media-object"-->
-<!--                                                     th:src="@{../user/images/books/small/pic1.jpg}">-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                        <div class="media-body">-->
-<!--                                            <h6 class="dz-title"><a class="media-heading" th:href="@{books-detail}">Real-->
-<!--                                                Life</a></h6>-->
-<!--                                            <span class="dz-price">$28.00</span>-->
-<!--                                            <span class="item-close">&times;</span>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </li>-->
-<!--                                <li class="cart-item text-center">-->
-<!--                                    &lt;!&ndash;                                        <h6 class="text-secondary">Totle = $500</h6>&ndash;&gt;-->
-<!--                                </li>-->
-<!--                                <li class="text-center d-flex">-->
-<!--                                    <a class="btn btn-sm btn-primary me-2 btnhover w-100" th:href="@{shop-cart}">View-->
-<!--                                        Cart</a>-->
-<!--                                    <a class="btn btn-sm btn-outline-primary btnhover w-100" th:href="@{shop-checkout}">Checkout</a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </li>-->
-                        <li class="nav-item dropdown notification_dropdown" th:if="${account != null}">
-                            <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18 8.5C18 6.9087 17.3679 5.38258 16.2426 4.25736C15.1174 3.13214 13.5913 2.5 12 2.5C10.4087 2.5 8.88258 3.13214 7.75736 4.25736C6.63214 5.38258 6 6.9087 6 8.5C6 15.5 3 17.5 3 17.5H21C21 17.5 18 15.5 18 8.5Z" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M13.73 21.5C13.5542 21.8031 13.3019 22.0547 12.9982 22.2295C12.6946 22.4044 12.3504 22.4965 12 22.4965C11.6496 22.4965 11.3054 22.4044 11.0018 22.2295C10.6982 22.0547 10.4458 21.8031 10.27 21.5" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/payment/premium}">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M168.5 72L256 165l87.5-93h-175zM383.9 99.1L311.5 176h129L383.9 99.1zm50 124.9H256 78.1L256 420.3 433.9 224zM71.5 176h129L128.1 99.1 71.5 176zm434.3 40.1l-232 256c-4.5 5-11 7.9-17.8 7.9s-13.2-2.9-17.8-7.9l-232-256c-7.7-8.5-8.3-21.2-1.5-30.4l112-152c4.5-6.1 11.7-9.8 19.3-9.8H376c7.6 0 14.8 3.6 19.3 9.8l112 152c6.8 9.2 6.1 21.9-1.5 30.4z"/></svg>
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <ul class="dropdown-menu cart-list">
-                                <li class="cart-item">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a th:href="@{books-detail}">
-                                                <img alt="" class="media-object"
-                                                     th:src="@{../user/images/books/small/pic1.jpg}">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="dz-title"><a class="media-heading" th:href="@{books-detail}">Real
-                                                Life</a></h6>
-                                            <span class="dz-price">$28.00</span>
-                                            <span class="item-close">&times;</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="cart-item text-center">
-                                    <!--                                        <h6 class="text-secondary">Totle = $500</h6>-->
-                                </li>
-                                <li class="text-center d-flex">
-                                    <a class="btn btn-sm btn-primary me-2 btnhover w-100" th:href="@{shop-cart}">View
-                                        Cart</a>
-                                    <a class="btn btn-sm btn-outline-primary btnhover w-100" th:href="@{shop-checkout}">Checkout</a>
-                                </li>
-                            </ul>
-
+                    <li class="nav-item">
                         <li class="nav-item dropdown" th:if="${account != null}">
-                            <a data-mdb-dropdown-init class="me-3 dropdown-toggle hidden-arrow nav-link" href="/chat" id="navbarDropdownMenuLink"
-                               role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                            <a data-mdb-dropdown-init class="me-3 nav-link" href="/chat">
                                 <img width="25" height="25" src="https://img.icons8.com/ios/50/chat-message--v2.png" alt="chat-message--v2"/>
                                 <!--                                    <span class="badge rounded-pill badge-notification bg-danger">1</span>-->
                             </a>
@@ -188,13 +113,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown" th:if="${account != null}">
-                            <a data-mdb-dropdown-init class="me-3 nav-link" href="/chat"
-                               role="button">
-                                <img width="25" height="25" src="https://img.icons8.com/ios/50/chat-message--v2.png" alt="chat-message--v2"/>
-<!--                                    <span class="badge rounded-pill badge-notification bg-danger">1</span>-->
-                            </a>
-                        </li>
+
                         <li class="nav-item dropdown profile-dropdown ms-4">
                             <a aria-expanded="false" class="nav-link" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
                                 <div class="profile-avatar-container">
@@ -216,29 +135,12 @@
                                 </div>
 
                                 <div class="dropdown-body">
-
                                     <a class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
-                                       th:href="@{/profile}">
+                                       th:href="@{/profile}"
+                                       th:if="${account != null}">
                                         <div>
                                             <i class="fa-regular fa-id-card text-primary" style="font-size: 1.2rem;"></i>
                                             <span class="ms-2">Profile</span>
-                                        </div>
-                                    </a>
-
-
-                                    <a class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
-                                       th:href="@{shop-cart}">
-                                        <div>
-                                            <i class="fa-solid fa-cart-shopping text-primary" style="font-size: 1.2rem;"></i>
-                                            <span class="ms-2">My Order</span>
-                                        </div>
-                                    </a>
-
-                                    <a class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
-                                       th:href="@{wishlist}">
-                                        <div>
-                                            <i class="fa-solid fa-heart text-primary" style="font-size: 1.2rem;"></i>
-                                            <span class="ms-2">Wishlist</span>
                                         </div>
                                     </a>
 
@@ -286,7 +188,7 @@
                                         </div>
                                     </a>
 
-                                    <a th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
+                                    <a  th:if="${session.role != null and session.role.size() > 0 and session.role.contains('ROLE_USER')}"
                                         class="dropdown-item d-flex justify-content-between align-items-center ai-icon"
                                         th:href="@{/register-publisher}">
                                         <div>
@@ -294,6 +196,7 @@
                                             <span class="ms-2">Register Publisher</span>
                                         </div>
                                     </a>
+
                                 </div>
                                 <div class="dropdown-footer">
                                     <div th:if="${#authorization.expression('!isAuthenticated()')}">
@@ -314,9 +217,27 @@
             <div class="header-search-nav">
                 <form class="header-item-search">
                     <div class="input-group search-input">
-                        <input id="keyword" aria-label="Text input with dropdown button" class="form-control" placeholder="Search Books Here"
+<!--                        <label>-->
+<!--                            <select class="default-select">-->
+<!--                                <option>Category</option>-->
+<!--                                <option>Photography</option>-->
+<!--                                <option>Arts</option>-->
+<!--                                <option>Adventure</option>-->
+<!--                                <option>Action</option>-->
+<!--                                <option>Games</option>-->
+<!--                                <option>Movies</option>-->
+<!--                                <option>Comics</option>-->
+<!--                                <option>Biographies</option>-->
+<!--                                <option>Children’s Books</option>-->
+<!--                                <option>Historical</option>-->
+<!--                                <option>Contemporary</option>-->
+<!--                                <option>Classics</option>-->
+<!--                                <option>Education</option>-->
+<!--                            </select>-->
+<!--                        </label>-->
+                        <input aria-label="Text input with dropdown button" class="form-control" placeholder="Search Books Here"
                                type="text">
-                        <button id="sBtn" class="btn" type="button"><i class="flaticon-loupe"></i></button>
+                        <button class="btn" type="button"><i class="flaticon-loupe"></i></button>
                     </div>
                 </form>
             </div>
@@ -342,6 +263,13 @@
                     <span></span>
                 </button>
 
+                <!-- EXTRA NAV -->
+                <div class="extra-nav">
+                    <div class="extra-cell">
+                        <!--                            <a th:href="@{contact-us}" class="btn btn-primary btnhover">Get In Touch</a>-->
+                    </div>
+                </div>
+
                 <!-- Main Nav -->
                 <div class="header-nav navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
                     <div class="logo-header logo-dark">
@@ -357,15 +285,147 @@
                     <ul class="nav navbar-nav">
                         <li><a th:href="@{/}"><span>Home</span></a></li>
                         <li><a th:href="@{about-us}"><span>About Us</span></a></li>
-                        <li><a th:href="@{/books-list-view-sidebar}"><span>Bookshelves</span></a></li>
-<!--                        <li><a th:href="@{/blog-list-sidebar}"><span>Blog</span></a></li>-->
-<!--                        <li><a th:href="@{pricing}"><span>Pricing</span></a></li>-->
-                        <li><a th:href="@{/contact-us}"><span>Contact Us</span></a></li>
+                        <li><a th:href="@{books-list-view-sidebar}"><span>Bookshelves</span></a></li>
+                        <!--                        <li><a th:href="@{blog-list-sidebar}"><span>Blog</span></a></li>-->
+                        <!--                        <li><a th:href="@{pricing}"><span>Pricing</span></a></li>-->
+                        <li><a th:href="@{contact-us}"><span>Contact Us</span></a></li>
                     </ul>
+                    <div class="dz-social-icon">
+                        <ul>
+                            <li><a class="fab fa-facebook-f" target="_blank"
+                                   th:href="@{https://www.facebook.com/dexignzone}"></a></li>
+                            <li><a class="fab fa-twitter" target="_blank"
+                                   th:href="@{https://twitter.com/dexignzones}"></a></li>
+                            <li><a class="fab fa-linkedin-in" target="_blank"
+                                   th:href="@{https://www.linkedin.com/showcase/3686700/admin/}"></a></li>
+                            <li><a class="fab fa-instagram" target="_blank"
+                                   th:href="@{https://www.instagram.com/website_templates__/}"></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
+
+    <script src="https://cdn.jsdelivr.net/sockjs/1.0.2/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script th:if="${account != null}">
+        $(document).ready(function () {
+            let socket = new SockJS('/ws');
+            let stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe('/user/queue/notifications', function (notification) {
+                    let newNotification = JSON.parse(notification.body);
+                    addNotificationToUI(newNotification);
+                    updateNotificationCount();
+                    playNotificationSound();
+                });
+            });
+
+            fetchNotifications();
+
+            $('#notificationList').on('click', 'li', function (e) {
+                const notificationId = $(e.target).data('notification-id');
+                if (notificationId) {
+                    console.log(notificationId);
+                    markNotificationAsRead(notificationId);
+                }
+            });
+        });
+
+        function fetchNotifications() {
+            $.ajax({
+                url: '/api/notifications/current',
+                method: 'GET',
+                success: function (data) {
+                    updateNotificationUI(data);
+                },
+                error: function (error) {
+                    console.error('Error fetching notifications:', error);
+                }
+            });
+        }
+
+        function updateNotificationUI(notifications) {
+            const $notificationItemsContainer = $('#notificationList');
+            $notificationItemsContainer.empty();
+
+            notifications.forEach(notification => {
+                addNotificationToUI(notification);
+            });
+
+            updateNotificationCount();
+        }
+
+        function updateNotificationCount() {
+            const $countSpan = $('#notificationCount');
+            const $notifications = $('.notification-item');
+            let unreadCount = $notifications.filter('.unread').length;
+
+            if (unreadCount === 0) {
+                $countSpan.hide();
+            } else {
+                $countSpan.show();
+                $countSpan.text(unreadCount);
+            }
+        }
+
+        function addNotificationToUI(notification) {
+            const $notificationItemsContainer = $('#notificationList');
+
+            const $notificationElement = $('<li>')
+                .addClass(notification.isRead ? 'notification-item' : 'notification-item unread')
+                .attr('data-notification-id', notification.id)
+                .attr('data-notification-url', notification.url);
+
+            $notificationElement.html(`
+            <div class="notification-body">
+                <img src="${notification.avatarUrl}" alt="Avatar" class="notification-avatar" style="width: 40px; height: 40px; margin-right: 10px; float: left;">
+                <div class="notification-text">
+                    <p class="notification-message">${truncateText(notification.message, 100)}</p>
+                </div>
+            </div>
+        `);
+
+            $notificationItemsContainer.prepend($notificationElement);
+
+            $notificationElement.on('click', function () {
+                if (notification.url) {
+                    window.location.href = notification.url;
+                    markNotificationAsRead(notification.id);
+                }
+            });
+        }
+
+        function markNotificationAsRead(notificationId) {
+            $.ajax({
+                url: `/api/notifications/mark-as-read/${notificationId}`,
+                method: 'POST',
+                success: function () {
+                    $(`[data-notification-id="${notificationId}"]`).removeClass('unread');
+                    updateNotificationCount();
+                },
+                error: function (error) {
+                    console.error('Error marking notification as read:', error);
+                }
+            });
+        }
+
+        function truncateText(text, maxLength) {
+            if (text.length > maxLength) {
+                return text.substring(0, maxLength) + '...';
+            }
+            return text;
+        }
+
+        function playNotificationSound() {
+            let sound = $('#notificationSound')[0];
+            sound.play();
+        }
+    </script>
     <!-- Main Header End -->
 </header>
 <!-- Header End -->

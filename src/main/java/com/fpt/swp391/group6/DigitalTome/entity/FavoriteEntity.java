@@ -20,12 +20,12 @@ public class FavoriteEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "account_id", nullable = false, unique = true)
     private AccountEntity accountEntity;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id", nullable = false, unique = true)
     private BookEntity bookEntity;
 }

@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.entity.FavoriteEntity;
+import com.fpt.swp391.group6.DigitalTome.service.BookService;
 import com.fpt.swp391.group6.DigitalTome.service.FavoriteService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ public class FavoriteController {
 
     private final FavoriteService favoriteService;
     private final UserService userService;
+    private final BookService bookService;
 
     @Autowired
-    public FavoriteController(FavoriteService favoriteService, UserService userService) {
+    public FavoriteController(FavoriteService favoriteService, UserService userService, BookService bookService) {
         this.favoriteService = favoriteService;
         this.userService = userService;
+        this.bookService = bookService;
     }
 
     @GetMapping("")
@@ -35,10 +38,5 @@ public class FavoriteController {
         return "wishlist";
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseBody
-    public ResponseEntity<Void> deleteFavorite(@PathVariable Long id) {
-        favoriteService.deleteFavorite(id);
-        return ResponseEntity.noContent().build();
-    }
+
 }
