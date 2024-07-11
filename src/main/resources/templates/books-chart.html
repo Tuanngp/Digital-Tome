@@ -15,7 +15,7 @@
     <link href="/user/css/smart_wizard.min.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="/user/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="/user/css/style2.css" rel="stylesheet">
+    <link href="/dashboard/css/style2.css" rel="stylesheet">
     <!--    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>-->
 
     <!-- Daterange picker -->
@@ -34,11 +34,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/user/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-    <link href="/admin/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-    <link href="/admin/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="/dashboard/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="/user/vendor/select2/css/select2.min.css">
-
 
 </head>
 
@@ -914,7 +913,7 @@
 
         document.getElementById('timePeriod').addEventListener('change', function() {
             const period = this.value;
-            fetch(`/api/books/statistics?period=${period}`)
+            fetch(`/api/book/statistics?period=${period}`)
                 .then(response => response.json())
                 .then(data => {
                     const labels = Object.keys(data.booksSoldDetails);
@@ -995,11 +994,11 @@
 <!-- Pickdate -->
 <script src="/user/js/plugins-init/pickadate-init.js"></script>
 
-<script src="/admin/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
-<script src="/admin/js/plugins-init/sweetalert.init.js"></script>
+<script src="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="/dashboard/js/plugins-init/sweetalert.init.js"></script>
 <!-- Datatable -->
-<script src="/admin/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="/admin/js/plugins-init/datatables.init.js"></script>
+<script src="/dashboard/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/dashboard/js/plugins-init/datatables.init.js"></script>
 </body>
 
 <!-- Mirrored from w3admin.dexignzone.com/xhtml/form-wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2024 07:43:07 GMT -->

@@ -5,26 +5,21 @@ import com.fpt.swp391.group6.DigitalTome.dto.BookDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AuthorEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
-import com.fpt.swp391.group6.DigitalTome.mapper.BookDetailMapper;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
+import com.fpt.swp391.group6.DigitalTome.mapper.BookDetailMapper;
 import com.fpt.swp391.group6.DigitalTome.mapper.BookMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.BookRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.IBookDetailRepository;
-import com.fpt.swp391.group6.DigitalTome.rest.input.SearchRequest;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
+import com.fpt.swp391.group6.DigitalTome.rest.input.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
