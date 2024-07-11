@@ -234,6 +234,19 @@ public class BookService {
         return groupedData;
     }
 
+    public List<BookDetailDto> getListBookDetailDtoByDes(String des) {
+        List<String> args = new ArrayList<>();
+        args.add("Book_Collection_Digital_Tome");
+        args.add(des);
+        List<String> isbns = findSimilarBooksByDes(args);
+
+        if(isbns == null) return null;
+        else if(isbns.get(0).trim().equals("")) return new ArrayList<>();
+
+        List<BookEntity> bookEntityDtos = isbns.stream().map(this::getBookByIsbn).toList();
+        return bookEntityDtos.stream().map(this::mapToDto).toList();
+    }
+
     private boolean insertToQdrant(List<String> args){
         try {
             List<String> command = new ArrayList<>();

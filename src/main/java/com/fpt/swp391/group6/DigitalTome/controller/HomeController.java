@@ -75,6 +75,12 @@ public class HomeController {
         return "book-view/books-grid-view-sidebar";
     }
 
+
+    @GetMapping("/deeply-books-seeking")
+    public String deeplyBooksSeeking() {
+        return "book-view/deeply-books-seeking";
+    }
+
     @GetMapping("/books-list")
     public String booksList() {
         return "book-view/books-list";
@@ -88,7 +94,7 @@ public class HomeController {
     //Test
     @GetMapping("/books-test")
     public String booksListViewSidebarTest() {
-        return "book-view/books-list-view-sidebarCopy";
+        return "Deeply Books Seeking";
     }
 
     @GetMapping("/coming-soon")

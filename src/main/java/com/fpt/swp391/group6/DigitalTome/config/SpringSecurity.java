@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurity {
 
-    private static final String[] PUBLIC_ENDPOINT = {"/**", "/index", "/home", "/register", "/forgotPassword", "/books-list", "/register-publisher"};
+    private static final String[] PUBLIC_ENDPOINT = {"/**", "/index", "/home", "/register", "/forgotPassword", "/books-list", "/register-publisher", "/deeply-books-seeking"};
 
     private final CustomUserDetailsService customUserDetailsService;
     private final CustomOAuth2UserService customOAuth2UserService;

@@ -150,4 +150,15 @@ public class BookRest {
         }
         return calendar.getTime();
     }
+
+    @GetMapping("/search/des")
+    public ResponseEntity<AbstractOutput<BookDetailDto>> SeekBookByDes(@RequestParam String des){
+        AbstractOutput<BookDetailDto> result = new AbstractOutput<>();
+        result.setListResults(bookService.getListBookDetailDtoByDes(des));
+        if(result.getListResults() == null){
+            return ResponseEntity.badRequest().body(result);
+        }
+        return ResponseEntity.ok(result);
+    }
+
 }
