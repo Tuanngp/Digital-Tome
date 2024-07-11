@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{layout/head :: head}"><title>Home</title></head>
+<style>
+    .dz-media {
+        height: 300px; /* Đặt chiều cao cố định cho container */
+        /*width: 172px;*/
+        overflow: hidden; /* Ẩn phần hình ảnh nằm ngoài container */
+    }
+    .dz-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
 <body>
 <div class="page-wraper">
     <div class="preloader-wrapper-1" id="loading-area">
@@ -243,20 +255,22 @@
                     </div>
                 </div>
 
-                <div class="row book-grid-row">
-                    <div class="col-book style-1" th:each="book : ${listBooks}">
+                <div class="row book-grid-row" >
+                    <div class="col-book style-1"
+                         style="min-height: 520px"
+                         th:each="book : ${listBooks}">
                         <div class="dz-shop-card style-1" >
                             <div class="dz-media">
                                 <img alt="book" th:src="${book.bookCover}">
                             </div>
-                            <div class="bookmark-btn style-2" >
+                            <div class="bookmark-btn style-2">
                                 <input class="form-check-input" th:id="'flexCheckDefault'+${book.id}" type="checkbox" th:data-book-id="${book.getId()}">
-                                <label class="form-check-label" th:for="'flexCheckDefault'+${book.id}">
-                                    <i class="flaticon-heart"></i>
+                                <label class="form-check-label" th:for="'flexCheckDefault'+${book.id}" th:data-book-id="${book.getId()}">
+                                    <i class="flaticon-heart" th:data-book-id="${book.getId()}"></i>
                                 </label>
                             </div>
                             <div class="dz-content">
-                                <h5 class="title"><a th:text="${book.title}">Thunder Stunt</a></h5>
+                                <h5 class="title"><a th:text="${book.title}" th:href="'books/'+${book.getIsbn()}">Thunder Stunt</a></h5>
                                 <ul class="dz-tags">
                                     <li><a th:href="@{books-grid-view}">ADVANTURE,</a></li>
                                     <li><a th:href="@{books-grid-view}">SCIENCE</a></li>
@@ -339,7 +353,7 @@
 <!-- JAVASCRIPT FILES ========================================= -->
 <script>
 
-    document.querySelectorAll('.form-check-input').forEach(function(icon) {
+    document.querySelectorAll('.form-check-label').forEach(function(icon) {
         icon.addEventListener('click', function(event) {
             if ( $('#accountId').length === 0) {
                 // Nếu chưa đăng nhập, hiển thị modal
