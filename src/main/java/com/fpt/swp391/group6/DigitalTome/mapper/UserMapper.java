@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -22,4 +23,5 @@ public interface UserMapper {
     @Mapping(source = "username", target = "username")
     UserDto toDto(AccountEntity account);
 
+    List<UserDto> toDto(List<AccountEntity> account);
 }
