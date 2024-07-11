@@ -38,5 +38,7 @@ public interface UserRepository extends JpaRepository<AccountEntity, Long> {
 
     @Query("SELECT a FROM AccountEntity a WHERE a.membershipExpiryDate <= :currentDate")
     List<AccountEntity> findAccountsByExpiredMembership(@Param("currentDate") Date currentDate);
+
+    AccountEntity findByPhone(String keyword);
 }
 
