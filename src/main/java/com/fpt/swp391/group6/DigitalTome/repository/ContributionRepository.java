@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface ContributionRepository extends JpaRepository<ContributionEntity,Long> {
+public interface ContributionRepository extends JpaRepository<ContributionEntity, Long> {
 
     @Query("SELECT c FROM ContributionEntity c " +
             "join fetch c.accountEntity " +
@@ -26,6 +26,7 @@ public interface ContributionRepository extends JpaRepository<ContributionEntity
     List<ContributionEntity> findByBookEntity_Status(@Param("status") int status, Pageable pageable);
 
     int countByBookEntity_Status(int status);
+    boolean existsByAccountEntityIdAndBookEntityId(Long accountId, Long bookId);
 
 
     @Transactional
@@ -34,4 +35,6 @@ public interface ContributionRepository extends JpaRepository<ContributionEntity
             "SET c.modifiedDate = CURRENT_TIMESTAMP  " +
             "where c.bookEntity.isbn = :isbn")
     public  void updateModifiedDateByBookEntity_ISBN(@Param("isbn") String isbn);
+    @Query("SELECT c.bookEntity.id FROM ContributionEntity c WHERE c.accountEntity.id = :accountId")
+    List<Long> findBookIdsByAccountId(@Param("accountId") Long accountId);
 }

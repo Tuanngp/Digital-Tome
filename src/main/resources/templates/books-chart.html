@@ -15,6 +15,9 @@
     <link href="/user/css/smart_wizard.min.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="/user/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/user/css/style2.css" rel="stylesheet">
+    <!--    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>-->
+
     <!-- Daterange picker -->
     <link href="/user/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Clockpicker -->
@@ -31,7 +34,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/user/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
+    <link href="/admin/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="/admin/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/user/vendor/select2/css/select2.min.css">
+
 
 </head>
 
@@ -766,180 +773,50 @@
     <div class="outer-body">
         <div class="inner-body">
             <div class="content-body">
-                <div th:if="${error}" class="alert alert-danger" role="alert">
-                    <p th:text="${error}"></p>
-                </div>
-                <div class="container-fluid">
-                    <!-- row -->
+                <div class="container-fluid my-4">
+                    <h1>Book Chart</h1>
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <select id="timePeriod" class="form-select">
+                                <option value="7days">Last 7 Days</option>
+                                <option value="1month">Last 1 Month</option>
+                                <option value="1year">Last 1 Year</option>
+                                <option value="all">All Time</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="row">
-                        <form action="#" th:action="@{/save}" th:object="${book}" method="POST"
-                              enctype="multipart/form-data">
-                            <div class="col-xl-12 col-xxl-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4 class="card-title">Update Book</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        <div id="smartwizard" class="form-wizard order-create">
-                                            <ul class="nav nav-wizard">
-                                                <li><a class="nav-link" href="#book_Info">
-                                                    <span>1</span>
-                                                </a></li>
-                                                <li><a class="nav-link" href="#book_Description">
-                                                    <span>2</span>
-                                                </a></li>
-                                                <li><a class="nav-link" href="#book_Content">
-                                                    <span>3</span>
-                                                </a></li>
-                                                <li><a class="nav-link" href="#book_Pricing">
-                                                    <span>4</span>
-                                                </a></li>
-                                            </ul>
-                                            <div class="tab-content">
-                                                <div id="book_Info" class="tab-pane" role="tabpanel">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">ISBN*</label>
-                                                                <input type="text" th:field="*{isbn}"
-                                                                       class="form-control"
-                                                                       placeholder="ISBN" required
-                                                                       pattern="^\d{10}|\d{13}$"
-                                                                       title="ISBN must be 10 or 13 digits long">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Language*</label>
-                                                                <select id="language-select" th:field="*{language}"
-                                                                        class="form-control"
-                                                                        required>
-                                                                    <option value="en">English</option>
-                                                                    <option value="vi">Vietnam</option>
-                                                                    <!-- Thêm các ngôn ngữ khác nếu cần -->
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Author*</label>
-                                                                <select id="authorList" class="form-control"
-                                                                        multiple="multiple" required>
-                                                                    <option th:each="author : ${authors}"
-                                                                            th:value="${author.id}"
-                                                                            th:text="${author.name}"></option>
-                                                                </select>
-                                                                <input type="text" id="authorSearch"
-                                                                       placeholder="Input to add new author..."
-                                                                       class="form-control mt-2">
-                                                                <button type="button" id="addAuthor"
-                                                                        class="btn btn-primary sw-btn-sub mt-2">Add
-                                                                    Author
-                                                                </button>
-                                                                <!-- Trường ẩn để lưu các tác giả tạm dưới dạng chuỗi -->
-                                                                <input type="hidden" id="authorIds" name="authorIds">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Publication
-                                                                    Date*</label>
-                                                                <input type="date" th:field="*{publicationDate}"
-                                                                       class="form-control"
-                                                                       placeholder="yyyy-MM-dd" id="mdate" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Genres*</label>
-                                                                <select id="multi-value-select" multiple="multiple"
-                                                                        style="width: 100%;"
-                                                                        th:field="*{categoryEntityList}" required>
-                                                                    <option th:each="category : ${categories}"
-                                                                            th:value="${category.id}"
-                                                                            th:text="${category.name}"></option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <label class="text-label form-label">Book Cover*</label>
-                                                                <input class="form-control" type="file" name="image"
-                                                                       id="formFile"
-                                                                       accept="image/x-png,image/jpeg,image/jpg"
-                                                                       required/>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="book_Description" class="tab-pane" role="tabpanel">
-                                                    <div class="row">
-                                                        <div class="col-lg-6 mb-2">
-                                                            <div class="mb-3">
-                                                                <h4 class="card-title mx-auto">Title*</h4>
-                                                                <p>Title about your book.</p>
-                                                                <input type="text" th:field="*{title}"
-                                                                       class="form-control"
-                                                                       placeholder="title" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mx-auto">
-                                                            <div class="mb-3">
-                                                                <h4 class="card-title mx-auto">Description*</h4>
-                                                                <p>Description about your book.</p>
-                                                                <textarea class="form-txtarea form-control"
-                                                                          th:field="*{description}" rows="8"
-                                                                          id="comment"
-                                                                          style="height: 121px;" required></textarea>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="book_Content" class="tab-pane" role="tabpanel">
-                                                    <div class="row">
-                                                        <div class="mx-auto">
-                                                            <h4 class="card-title mx-auto">Content</h4>
-                                                            <p>Upload file for your book.</p>
-                                                            <input class="form-control form-control-lg" id="formFileLg"
-                                                                   type="file" name="bookP" accept="application/pdf"
-                                                                   required/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="book_Pricing" class="tab-pane" role="tabpanel">
-                                                    <div class="row emial-setup">
-                                                        <div class="mx-auto">
-                                                            <h4 class="card-title mx-auto">Poin*</h4>
-                                                            <p>Enter the point value for this book. Points are used
-                                                                as currency on our website, allowing users to
-                                                                purchase books using points.</p>
-                                                            <div class="input-group">
-                                                                <input inputmode="numeric" pattern="[0-9]*" id="pricing" name="pricing" class="form-control" th:value="*{point}" required oninput="validateNumericInput(event)" />
-                                                                <span class="input-group-text">point</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Books Sold (Bar Chart)</h4>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="booksSoldChart"></canvas>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary sw-btn-sub" style="text-align: right;"> Save
-                                Book
-                            </button>
-                        </form>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Revenue (Line Chart)</h4>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="footer out-footer">
-                <div class="copyright">
-                    <p>Copyright © Developed by <a href="https://dexignzone.com/" target="_blank">DexignZone</a> 2023
-                    </p>
+                <div class="footer out-footer">
+                    <div class="copyright">
+                        <p>Copyright © by <a href="https://digitaltome.com/" target="_blank">Digital Tome</a> 2024</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!--**********************************
         Content body end
     ***********************************-->
@@ -970,6 +847,101 @@
 <!--**********************************
     Scripts
 ***********************************-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const booksSoldContext = document.getElementById('booksSoldChart').getContext('2d');
+        const revenueContext = document.getElementById('revenueChart').getContext('2d');
+
+        let booksSoldChart = new Chart(booksSoldContext, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Books Sold',
+                        data: [],
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        let revenueChart = new Chart(revenueContext, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Revenue',
+                        data: [],
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        document.getElementById('timePeriod').addEventListener('change', function() {
+            const period = this.value;
+            fetch(`/api/books/statistics?period=${period}`)
+                .then(response => response.json())
+                .then(data => {
+                    const labels = Object.keys(data.booksSoldDetails);
+                    const booksSoldData = Object.values(data.booksSoldDetails);
+                    const revenueData = Object.values(data.revenueDetails);
+
+                    booksSoldChart.data.labels = labels;
+                    booksSoldChart.data.datasets[0].data = booksSoldData;
+                    booksSoldChart.update();
+
+                    revenueChart.data.labels = labels;
+                    revenueChart.data.datasets[0].data = revenueData;
+                    revenueChart.update();
+                })
+                .catch(error => console.error('Error fetching book statistics:', error));
+        });
+
+        // Trigger change event to load initial data
+        document.getElementById('timePeriod').dispatchEvent(new Event('change'));
+    });
+
+</script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <!-- Required vendors -->
 <script src="/user/vendor/global/global.min.js"></script>
 
@@ -1023,103 +995,11 @@
 <!-- Pickdate -->
 <script src="/user/js/plugins-init/pickadate-init.js"></script>
 
-<!-- xóa cái này là k xài select2 được đâu -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
-
-
-<script>
-    $(document).ready(function () {
-        // SmartWizard initialize
-        $('#smartwizard').smartWizard();
-    });
-</script>
-
-
-//api cho nút author và search author
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        $('#authorList').select2({
-            tags: false, // Cho phép người dùng thêm tag mới
-            tokenSeparators: [',', ' ']
-        });
-
-        document.getElementById('addAuthor').addEventListener('click', function () {
-            var authorName = document.getElementById('authorSearch').value;
-            if (authorName) {
-                var newOption = new Option(authorName, 'new-' + authorName, true, true);
-                $('#authorList').append(newOption).trigger('change');
-            }
-        });
-
-        // Trước khi submit form, chúng ta sẽ lấy tất cả các giá trị của tác giả và gán vào trường ẩn
-        document.querySelector('form').addEventListener('submit', function () {
-            var authorSelect = $('#authorList').select2('data');
-            var authorIds = authorSelect.map(function (author) {
-                return author.id;
-            });
-            document.getElementById('authorIds').value = authorIds.join(',');
-        });
-    });
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        $('#authorSearch').on('input', function () {
-            var query = $(this).val();
-            if (query.length > 0) {
-                $('#addAuthor').prop('disabled', false);
-            } else {
-                $('#addAuthor').prop('disabled', true);
-            }
-        });
-    });
-</script>
-
-//api cho nút category và search category
-<script>
-    $(document).ready(function () {
-        $('#multi-value-select').select2({
-            placeholder: 'Select a category',
-            ajax: {
-                url: '/api/categories',
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        search: params.term // search term
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results: data.map(function (item) {
-                            return {
-                                id: item.id,
-                                text: item.name
-                            };
-                        })
-                    };
-                },
-                cache: true
-            },
-            minimumInputLength: 1 // Chỉ tìm kiếm khi nhập ít nhất 1 ký tự
-        });
-    });
-</script>
-
-//chỉ cho người dunng nhập number
-<script>
-    function validateNumericInput(event) {
-        const input = event.target;
-        const value = input.value;
-        const filteredValue = value.replace(/[^0-9]/g, '');
-        if (value !== filteredValue) {
-            input.value = filteredValue;
-        }
-    }
-</script>
-
+<script src="/admin/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="/admin/js/plugins-init/sweetalert.init.js"></script>
+<!-- Datatable -->
+<script src="/admin/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/admin/js/plugins-init/datatables.init.js"></script>
 </body>
 
 <!-- Mirrored from w3admin.dexignzone.com/xhtml/form-wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2024 07:43:07 GMT -->

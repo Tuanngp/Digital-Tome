@@ -2,6 +2,7 @@ package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.dto.ContributionDto;
 import com.fpt.swp391.group6.DigitalTome.mapper.ContributionMapper;
+import com.fpt.swp391.group6.DigitalTome.entity.ContributionEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.ContributionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -38,5 +39,17 @@ public class ContributionService {
 
     public void updateModifiedDateByBookEntity_ISBN( String isbn){
         this.contributionRepository.updateModifiedDateByBookEntity_ISBN(isbn);
+    }
+
+    public void saveContribution(ContributionEntity contribution) {
+        contributionRepository.save(contribution);
+    }
+
+    public boolean isAuthorOfBook(Long accountId, Long bookId) {
+        return contributionRepository.existsByAccountEntityIdAndBookEntityId(accountId, bookId);
+    }
+
+    public List<Long> getBookIdsByAccountId(Long accountId) {
+        return contributionRepository.findBookIdsByAccountId(accountId);
     }
 }
