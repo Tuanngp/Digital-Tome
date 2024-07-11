@@ -78,10 +78,25 @@
                                     </div>
                                     <p class="text-1" th:text="${book.description}"></p>
 
+                                    <!-- thông báo lỗi -->
+                                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                                        <p th:text="${error}"></p>
+                                    </div>
+
                                     <div class="book-footer">
                                         <div class="price">
                                             <h5 th:text="${book.point} + ' Point'">$54.78</h5>
-<!--                                            <p class="p-lr10">$70.00</p>-->
+                                        </div>
+                                        <!-- Nút mua sách -->
+                                        <div th:if="${!isOwned}">
+                                            <form th:action="@{/buy-book}" method="post">
+                                                <input type="hidden" name="bookId" th:value="${book.id}"/>
+                                                <button type="submit" class="btn btn-primary">Buy this book</button>
+                                            </form>
+                                        </div>
+                                        <!-- Nút xem sách -->
+                                        <div th:if="${isOwned}">
+                                            <a th:href="@{/read-book/{bookId}(bookId=${book.id})}" class="btn btn-success">Read this book</a>
                                         </div>
                                     </div>
                                 </div>

@@ -1,5 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.repository;
 
+import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,5 +26,7 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
     Page<PaymentEntity> findPaymentsByAccountIdAndDateRange(@Param("id") Long id, @Param("startDate") LocalDateTime startDate,@Param("endDate") LocalDateTime endDate,  Pageable pageable);
     @Query("SELECT p FROM PaymentEntity p WHERE p.bookEntity.id IN :bookIds AND p.createdDate >= :startDate AND p.createdDate <= :endDate AND p.success = true")
     List<PaymentEntity> findPaymentsByBookIdsAndDateRange(@Param("bookIds") List<Long> bookIds, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+    boolean existsByAccountEntityAndBookEntity(AccountEntity user, BookEntity book);
 }
 
