@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.dto.MessageDto;
+import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.MessageEntity;
 import com.fpt.swp391.group6.DigitalTome.mapper.MessageMapper;
@@ -54,7 +55,7 @@ public class MessageController {
 
     @GetMapping("/chat/users")
     @ResponseBody
-    public List<AccountEntity> getChatUsers(Principal principal, @AuthenticationPrincipal OAuth2User oAuth2User) {
+    public List<UserDto> getChatUsers(Principal principal, @AuthenticationPrincipal OAuth2User oAuth2User) {
         AccountEntity user = userService.getCurrentUser(principal, oAuth2User);
         return messageService.getChatUsers(user);
     }

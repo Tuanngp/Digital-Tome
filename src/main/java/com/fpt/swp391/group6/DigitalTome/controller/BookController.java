@@ -259,5 +259,12 @@ public class BookController {
         model.addAttribute("listBooks", listBooks);
         return "books-manage";
     }
+
+    @GetMapping("/books/{isbn}")
+    public String showBookDetail(@PathVariable(value = "isbn") String isbn, Model model) {
+        BookEntity book = bookService.getBookByIsbn(isbn);
+        model.addAttribute("book", book);
+        return "book-view/books-detail";
+    }
 }
 

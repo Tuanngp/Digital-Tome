@@ -80,7 +80,7 @@
 
                                     <div class="book-footer">
                                         <div class="price">
-                                            <h5 th:text="${book.point} + ' '">$54.78</h5> <span>Point</span>
+                                            <h5 th:text="${book.point} + ' Point'">$54.78</h5>
 <!--                                            <p class="p-lr10">$70.00</p>-->
                                         </div>
                                     </div>
@@ -160,45 +160,22 @@
                                         </tr>
                                         <tr>
                                             <th>ISBN</th>
-                                            <td>121341381648 (ISBN13: 121341381648)</td>
+                                            <td th:text="${book.getIsbn()}"></td>
                                         </tr>
                                         <tr>
-                                            <th>Ediiton Language</th>
-                                            <td>English</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Book Format</th>
-                                            <td>Paperback, 450 Pages</td>
+                                            <th>Editon Language</th>
+                                            <td th:text="${book.getLanguage()}"></td>
                                         </tr>
                                         <tr>
                                             <th>Date Published</th>
-                                            <td>August 10th 2019</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Publisher</th>
-                                            <td>Wepress Inc.</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Pages</th>
-                                            <td>520</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Lesson</th>
-                                            <td>7</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Topic</th>
-                                            <td>360</td>
+                                            <td th:text="${book.getPublicationDate()}"></td>
                                         </tr>
                                         <tr class="tags">
                                             <th>Tags</th>
                                             <td>
-                                                <a class="badge" href="javascript:void(0);">Drama</a>
-                                                <a class="badge" href="javascript:void(0);">Advanture</a>
-                                                <a class="badge" href="javascript:void(0);">Survival</a>
-                                                <a class="badge" href="javascript:void(0);">Biography</a>
-                                                <a class="badge" href="javascript:void(0);">Trending2022</a>
-                                                <a class="badge" href="javascript:void(0);">Bestseller</a>
+                                                <div th:each="cate : ${book.getCategoryEntityList()}">
+                                                    <a class="badge" href="javascript:void(0);" th:text="${cate.getName()}"></a>
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
