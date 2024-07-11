@@ -207,7 +207,7 @@
                 </div>
                 <div class="row book-grid-row">
                         <div class="col-book style-1" th:each="fav : ${favorites}">
-                            <div class="dz-shop-card style-1">
+                            <div class="dz-shop-card style-1" th:href="'books/'+${fav.getBookEntity().getIsbn()}">
                                 <div class="dz-media">
                                     <img alt="book" th:src="${fav.getBookEntity().getBookCover()}">
                                 </div>
