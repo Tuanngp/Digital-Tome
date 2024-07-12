@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{layout/head :: head}">
+    <title>Deeply Seeking</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="page-wraper">
+    <!-- Bootstrap Spinner -->
+    <div id="loading-spinner" class="text-center" style="display: none;">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="preloader-wrapper-1" id="loading-area">
+        <div class="preloader-inner">
+            <div class="preloader-shade"></div>
+            <div class="preloader-wrap"></div>
+            <div class="preloader-wrap wrap2"></div>
+            <div class="preloader-wrap wrap3"></div>
+            <div class="preloader-wrap wrap4"></div>
+            <div class="preloader-wrap wrap5"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header th:replace="~{layout/header :: header}"></header>
+    <!-- Header End -->
+    <div class="page-content bg-grey">
+        <section class="content-inner-1 border-bottom">
+            <div class="container">
+                <div class="row">
+                    <!-- Left Column (Search and Button) -->
+                    <div class="col-md-4 col-sm-4">
+                        <textarea id="des-ta" type="text" placeholder="Input your description" required class="flex-grow-1" style="padding: 10px; border: 1px solid #F0F0F0; height: 240px; width: 100%"></textarea>
+                        <button id="seek-btn" class="btn btn-secondary mt-4 btnhover d-block" style="width: 100%">Seek</button>
+                    </div>
+                    <!-- Right Column (Book Display) -->
+                    <div class="col-md-8 col-sm-8" style="margin-bottom: 0;" id="booksList"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="~{layout/footer :: footer}"></footer>
+    <!-- Footer End -->
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        function validateForm() {
+            var textarea = document.getElementById('des-ta');
+            if (textarea.value.trim() === '') {
+                alert('Please enter a description.');
+                return false;
+            }
+            return true;
+        }
+
+        function formatDate(date) {
+            const d = new Date(date);
+            const day = ('0' + d.getDate()).slice(-2);
+            const month = ('0' + (d.getMonth() + 1)).slice(-2);
+            const year = d.getFullYear();
+            return `${day}-${month}-${year}`;
+        }
+
+        function loadBooks() {
+            const data = $('#des-ta').val();
+            var url = '/api/book/search/des?des=' + encodeURIComponent(data);
+
+            // Show the loading spinner
+            $('#loading-spinner').show();
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log("Books data received:", data);
+                    $('#booksList').empty();
+                    if (data.listResults == null || data.listResults.length === 0) {
+                        console.log("No result");
+                        const notification = `
+                            <div id="notifyDiv" class="alert alert-light" role="alert">
+                                No books found!
+                            </div>`;
+                        $('#booksList').append(notification);
+                    } else {
+                        data.listResults.forEach(function (book) {
+                            const bookCard = `
+                                <div class="dz-shop-card style-2">
+                                    <div class="dz-media">
+                                        <img alt="book" src="${book.bookCover}" onerror="this.src='../user/images/books/grid/book12.jpg';">
+                                    </div>
+                                    <div class="dz-content">
+                                        <div class="dz-header">
+                                            <div>
+                                                <ul class="dz-tags">
+                                                    ${book.categories.map(category => `<li style="margin-left: 4px">${category}</li>`).join(', ')}
+                                                </ul>
+                                                <h4 class="title mb-0"><a href="/books/${book.isbn}">${book.title}</a></h4>
+                                            </div>
+                                            <div class="price">
+                                                <span class="price-num text-primary">${book.point + " Point"}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="dz-body">
+                                            <div class="dz-rating-box">
+                                                <div>
+                                                    <p class="dz-para" style="height: 110px; overflow: hidden; text-overflow: ellipsis">${book.description}</p>
+                                                    <div>
+                                                        <span class="badge">${book.language}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="rate">
+                                                <ul class="book-info">
+                                                    <li><span>Written by</span> ${book.authors.join(', ')}</li>
+                                                    <li><span>Publication Date</span> ${formatDate(book.publicationDate)}</li>
+                                                </ul>
+                                                <div class="d-flex">
+                                                    <a class="btn btn-secondary btnhover btnhover2" href="/books/${book.isbn}"><i class="flaticon-shopping-cart-1 m-r10"></i>Read Now</a>
+                                                    <div class="bookmark-btn style-1">
+                                                        <input class="form-check-input" id="flexCheckDefault" type="checkbox">
+                                                        <label class="form-check-label" for="flexCheckDefault">
+                                                            <i class="flaticon-heart"></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            $('#booksList').append(bookCard);
+                        });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error loading books:", textStatus, errorThrown);
+                },
+                complete: function () {
+                    // Hide the loading spinner
+                    $('#loading-spinner').hide();
+                }
+            });
+        }
+
+        $('#seek-btn').on('click', function () {
+            if (validateForm()) {
+                loadBooks();
+            } else {
+                return false;
+            }
+        });
+    });
+</script>
+</body>
+</html>

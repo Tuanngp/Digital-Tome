@@ -135,12 +135,12 @@ class ChatApp {
             const userLi = $('<li>').addClass('clearfix');
             const userImg = $('<img>').attr('src', user.avatarPath).attr('alt', 'avatar');
             const aboutDiv = $('<div>').addClass('about');
-            const nameDiv = $('<div>').addClass('name').text(user.fullname);
+            const nameDiv = $('<div>').addClass('name').text(user.fullName);
             const usernameDiv = $('<div>').addClass('username').text(user.username).css('display', 'none');
-            const statusDiv = $('<div>').addClass('status').html('<i class="fa fa-circle offline"></i> left 7 mins ago');
+            // const statusDiv = $('<div>').addClass('status').html('<i class="fa fa-circle offline"></i> left 7 mins ago');
             aboutDiv.append(nameDiv);
             aboutDiv.append(usernameDiv);
-            aboutDiv.append(statusDiv);
+            // aboutDiv.append(statusDiv);
             userLi.append(userImg);
             userLi.append(aboutDiv);
 
@@ -150,7 +150,7 @@ class ChatApp {
                 this.displayConversation(this.senderInput.val(), user.username);
                 this.markUserRead();
                 $('.userInfo img').attr('src', user.avatarPath);
-                $('.userInfo .chat-about h6').text(user.fullname);
+                $('.userInfo .chat-about h6').text(user.fullName);
 
                 // If user has unread messages, remove 'unread' class and set messages to read
                 if (this.userList.find(`li:contains(${user.fullName})`).hasClass('unread')) {
@@ -171,6 +171,7 @@ class ChatApp {
             .then(response => response.json())
             .then(users => {
                 users.forEach(user => {
+                    console.log(user);
                     this.addUserToChatList(user);
                 });
             })

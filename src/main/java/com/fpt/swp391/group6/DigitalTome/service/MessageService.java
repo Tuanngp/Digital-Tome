@@ -1,9 +1,11 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.dto.MessageDto;
+import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.MessageEntity;
 import com.fpt.swp391.group6.DigitalTome.mapper.MessageMapper;
+import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,13 @@ import java.util.*;
 public class MessageService {
     private final MessageRepository messageRepository;
     private final MessageMapper messageMapper;
+    private final UserMapper userMapper;
     private final UserService userService;
     @Autowired
-    public MessageService(MessageRepository messageRepository, MessageMapper messageMapper, UserService userService) {
+    public MessageService(MessageRepository messageRepository, MessageMapper messageMapper, UserMapper userMapper, UserService userService) {
         this.messageRepository = messageRepository;
         this.messageMapper = messageMapper;
+        this.userMapper = userMapper;
         this.userService = userService;
     }
 
@@ -43,7 +47,7 @@ public class MessageService {
         return messageRepository.findAllBySenderAndReceiver(sender, receiver);
     }
 
-    public List<AccountEntity> getChatUsers(AccountEntity currentUser) {
+    public List<UserDto> getChatUsers(AccountEntity currentUser) {
         List<MessageEntity> messages = messageRepository.findBySenderOrReceiver(currentUser, currentUser);
         messages.sort(Comparator.comparing(MessageEntity::getCreatedDate).reversed());
         Set<AccountEntity> users = new LinkedHashSet<>();
@@ -55,7 +59,7 @@ public class MessageService {
                 users.add(message.getSender());
             }
         }
-        return new ArrayList<>(users);
+        return userMapper.toDto(new ArrayList<>(users));
     }
 
     public void setMessageToRead(MessageDto message) {
