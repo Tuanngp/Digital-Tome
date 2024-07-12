@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -39,6 +40,9 @@ public class BookController {
 
     @Autowired
     private ContributionService contributionService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @GetMapping("/books-view")
     public String bookListView(Model model) {
@@ -261,10 +265,95 @@ public class BookController {
     }
 
     @GetMapping("/books/{isbn}")
-    public String showBookDetail(@PathVariable(value = "isbn") String isbn, Model model) {
+    public String showBookDetail(@PathVariable(value = "isbn") String isbn, Principal principal, Model model) {
         BookEntity book = bookService.getBookByIsbn(isbn);
+        boolean isOwned = false;
+
+        if (principal != null) {
+            AccountEntity user = accountService.findByUsername(principal.getName());
+            if (user != null) {
+                isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
+            }
+        }
+
         model.addAttribute("book", book);
+        model.addAttribute("isOwned", isOwned);
         return "book-view/books-detail";
     }
+
+    @PostMapping("/buy-book")
+    public String buyBook(@RequestParam("bookId") Long bookId, Principal principal, Model model) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        BookEntity book = bookService.getBookById(bookId);
+        AccountEntity user = accountService.findByUsername(principal.getName());
+
+        if (user != null && book != null) {
+            long userPoints = user.getPoint();
+            MembershipEntity membership = user.getMembershipEntity();
+            long bookPrice = book.getPoint();
+
+            if ((membership == null && bookPrice <= 10000 && userPoints >= bookPrice) ||
+                    (membership != null &&
+                            ((membership.getName().equals("basic") && bookPrice <= 30000 && userPoints >= bookPrice) ||
+                                    (membership.getName().equals("standard") && bookPrice <= 50000 && userPoints >= bookPrice) ||
+                                    (membership.getName().equals("premium") && userPoints >= bookPrice)))) {
+
+                // Trừ điểm của người dùng
+                user.setPoint(userPoints - bookPrice);
+                accountService.save(user);
+
+                // Lưu giao dịch vào bảng payment
+                PaymentEntity payment = new PaymentEntity();
+                payment.setAccountEntity(user);
+                payment.setBookEntity(book);
+                payment.setDecimal(BigDecimal.valueOf(bookPrice));
+                payment.setCreatedDate(new Date());
+                payment.setSuccess(true);
+                paymentService.save(payment);
+
+                // Chuyển đến trang đọc sách
+                return "redirect:/read-book/" + book.getId();
+            } else {
+                model.addAttribute("error", "You don't have enough points or your membership level is insufficient to buy this book.");
+            }
+        } else {
+            model.addAttribute("error", "Error processing your purchase. Please try again.");
+        }
+
+
+        boolean isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
+        model.addAttribute("book", book);
+        model.addAttribute("isOwned", isOwned);
+        return "book-view/books-detail";
+    }
+
+    @GetMapping("/read-book/{bookId}")
+    public String readBook(@PathVariable Long bookId, Principal principal, Model model) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        BookEntity book = bookService.getBookById(bookId);
+        AccountEntity user = accountService.findByUsername(principal.getName());
+
+        if (book != null && user != null) {
+            boolean isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
+            if (isOwned) {
+                model.addAttribute("book", book);
+                return "book-view/books-read";
+            } else {
+                model.addAttribute("error", "You do not have access to read this book. Please purchase the book first.");
+                return "redirect:/books/" + book.getIsbn();
+            }
+        } else {
+            model.addAttribute("error", "Book not found.");
+            return "redirect:/error404";
+        }
+    }
+
+
 }
 
