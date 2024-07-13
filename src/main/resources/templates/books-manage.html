@@ -836,7 +836,7 @@
                             <td th:text="${book.title}"></td>
                             <td><img alt="book" th:src="${book.bookCover}" style="width:100px;height:auto;"></td>
                             <td th:text="${book.isbn}"></td>
-                            <td th:text="${book.description}"></td>
+                            <td style="display: block; overflow: auto; max-width: 200px" th:text="${book.description}"></td>
                             <td th:text="${#dates.format(book.publicationDate, 'yyyy-MM-dd')}"></td>
                             <td th:text="${book.point}"></td>
                             <td>

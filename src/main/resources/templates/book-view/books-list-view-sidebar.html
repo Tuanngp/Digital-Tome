@@ -14,6 +14,13 @@
         </div>
     </div>
 
+    <!-- Bootstrap Spinner -->
+    <div id="loading-spinner" class="text-center" style="display: none;">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
     <!-- Header -->
     <header th:replace="~{layout/header :: header}"></header>
     <!-- Header End -->
@@ -51,16 +58,16 @@
                                             <div class="">
                                                 <div class="form-check search-content">
                                                     <input class="form-check-input" id="productCheckBox-01" type="checkbox"
-                                                           value="">
+                                                           value="Hài">
                                                     <label class="form-check-label" for="productCheckBox-01">
-                                                        Action
+                                                        Hài
                                                     </label>
                                                 </div>
                                                 <div class="form-check search-content">
                                                     <input class="form-check-input" id="productCheckBox-02" type="checkbox"
-                                                           value="">
+                                                           value="Truyện Ngắn">
                                                     <label class="form-check-label" for="productCheckBox-02">
-                                                        Advanture
+                                                        Truyện Ngắn
                                                     </label>
                                                 </div>
                                                 <div class="form-check search-content">
@@ -706,6 +713,24 @@
 
     </div>
 
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Thông báo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Vui lòng đăng nhập để sử dụng chức năng.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <a href="/login" class="btn btn-primary">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer th:replace="~{layout/footer :: footer}"></footer>
     <!-- Footer End -->
@@ -773,7 +798,7 @@
             isLoading = true;
 
             const data = collectData(page);
-
+            $('#loading-spinner').show();
             $.ajax({
                 url: '/api/book/search',
                 method: 'POST',
@@ -819,9 +844,9 @@
                                             <div class="d-flex">
                                                 <a class="btn btn-secondary btnhover btnhover2" href="/books/${book.isbn}"><i class="flaticon-shopping-cart-1 m-r10"></i>Read Now</a>
                                                 <div class="bookmark-btn style-1">
-                                                    <input class="form-check-input" id="flexCheckDefault" type="checkbox">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        <i class="flaticon-heart"></i>
+                                                    <input class="form-check-input" id="flexCheckDefault" type="checkbox" data-book-id="${book.id}">
+                                                    <label class="form-check-label" for="flexCheckDefault" data-book-id="${book.id}">
+                                                        <i class="flaticon-heart" data-book-id="${book.id}"></i>
                                                     </label>
                                                 </div>
                                             </div>
@@ -855,7 +880,12 @@
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error("Error loading books:", textStatus, errorThrown);
                     isLoading = false;
+                },
+                complete: function () {
+                    // Hide the loading spinner
+                    $('#loading-spinner').hide();
                 }
+
             });
         }
 
@@ -893,6 +923,45 @@
             $("#collapseThree input[type='checkbox']").prop("checked", false);
         });
     });
+
+    document.querySelectorAll('.form-check-label').forEach(function(icon) {
+        icon.addEventListener('click', function(event) {
+            if ( $('#accountId').length === 0) {
+                // Nếu chưa đăng nhập, hiển thị modal
+                $('#loginModal').modal('show');
+                return;
+            }
+            var bookId = event.target.getAttribute('data-book-id');
+            var userConfirmed = window.confirm('Are you sure you want to add this book to favorites?');
+            if (userConfirmed) {
+                addBookFromFavorites(bookId);
+            }
+        });
+    });
+
+        function addBookFromFavorites(bookID) {
+        sendAjaxRequest(`/api/favorites/add/${bookID}`, 'POST', null,
+            function(response) { // Success callback
+                toastr.success('Favorite added successfully', 'Success');
+                // Optionally, update the UI to reflect the change
+            },
+            function(error) { // Error callback
+                toastr.error('Book already exist in favorite list.', 'Error');
+                console.error('Failed to add favorite', error);
+                // Optionally, show an error message to the user
+            }
+        );
+    }
+
+        function sendAjaxRequest(url, method, data, successCallback, errorCallback) {
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            success: successCallback,
+            error: errorCallback
+        });
+    }
 </script>
 </body>
 </html>
