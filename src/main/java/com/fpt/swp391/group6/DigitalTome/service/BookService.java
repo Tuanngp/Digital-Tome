@@ -30,15 +30,15 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
     private final BookDetailMapper bookDetailMapper;
-    private final IBookDetailRepository IBookDetailRepositoryImpl;
+    private final IBookDetailRepository bookDetailRepositoryImpl;
     private final PaymentRepository paymentRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, BookMapper bookMapper, PaymentRepository paymentRepository,BookDetailMapper bookDetailMapper, IBookDetailRepository IBookDetailRepositoryImpl) {
+    public BookService(BookRepository bookRepository, BookMapper bookMapper, PaymentRepository paymentRepository,BookDetailMapper bookDetailMapper, IBookDetailRepository bookDetailRepositoryImpl) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
         this.bookDetailMapper = bookDetailMapper;
-        this.IBookDetailRepositoryImpl = IBookDetailRepositoryImpl;
+        this.bookDetailRepositoryImpl = bookDetailRepositoryImpl;
         this.paymentRepository = paymentRepository;
     }
 
@@ -102,7 +102,7 @@ public class BookService {
     }
 
     public BookDetailDto findByIsbnIncludeCategoriesAndAuthors(String isbn){
-        BookEntity bookEntity = this.IBookDetailRepositoryImpl.findByIsbnIncludeCategoriesAndAuthors(isbn);
+        BookEntity bookEntity = this.bookDetailRepositoryImpl.findByIsbnIncludeCategoriesAndAuthors(isbn);
         return mapToDto(bookEntity) ;
     }
 
@@ -119,7 +119,7 @@ public class BookService {
     }
 
     public List<BookDetailDto>  findByStatus(int status, Pageable pageable){
-        List<BookEntity> list = this.IBookDetailRepositoryImpl.findByStatus(status, pageable);
+        List<BookEntity> list = this.bookDetailRepositoryImpl.findByStatus(status, pageable);
         return list.stream().
                 map(this::mapToDto).
                 collect(Collectors.toList());
@@ -130,7 +130,7 @@ public class BookService {
     }
 
     public Page<BookDetailDto> search(SearchRequest searchRequest, Pageable pageable){
-        Page<BookEntity> list = this.IBookDetailRepositoryImpl.search(searchRequest,pageable);
+        Page<BookEntity> list = this.bookDetailRepositoryImpl.search(searchRequest,pageable);
         return  new PageImpl<>(list.getContent().stream().map(this::mapToDto).collect(Collectors.toList()), list.getPageable(), list.getTotalElements());
     }
 
