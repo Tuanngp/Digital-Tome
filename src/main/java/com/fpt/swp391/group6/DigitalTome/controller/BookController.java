@@ -44,14 +44,14 @@ public class BookController {
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping("/books-view")
+    @GetMapping("/books-grid-view")
     public String bookListView(Model model) {
         return findPaginated(1, "id", "asc", model);
     }
     @GetMapping("/books-chart")
     public String getBooksChartPage(@RequestParam(required = false) Long accountId, Model model) {
         model.addAttribute("accountId", accountId);
-        return "books-chart";
+        return "book-manager/books-chart";
     }
 
     @GetMapping("/books-manage")
@@ -63,7 +63,7 @@ public class BookController {
         List<AuthorEntity> existingAuthors = authorService.getAllAuthors();
         model.addAttribute("book", new BookEntity());
         model.addAttribute("authors", existingAuthors);
-        return "books-upload";
+        return "book-manager/books-upload";
     }
 
     @PostMapping("/save")
@@ -86,12 +86,12 @@ public class BookController {
             BookEntity existingBook = bookService.findByIsbn(book.getIsbn());
             if (existingBook != null && !existingBook.getId().equals(book.getId())) {
                 model.addAttribute("error", "ISBN already exists in the system!");
-                return "book-upload/update-book";
+                return "book-manager/update-book";
             }
         } else {
             if (bookService.isISBNAlreadyExists(book.getIsbn())) {
                 model.addAttribute("error", "ISBN already exists in the system!");
-                return "books-upload";
+                return "book-manager/books-upload";
             }
         }
         // check publication_date
@@ -103,7 +103,7 @@ public class BookController {
                     .toLocalDate();
             if (localPublicationDate.isAfter(currentDate)) {
                 model.addAttribute("error", "The published date must be less than the current date!");
-                return "books-upload";
+                return "book-manager/books-upload";
             }
         }
 
@@ -117,11 +117,11 @@ public class BookController {
             } catch (RuntimeException e) {
                 e.printStackTrace();
                 model.addAttribute("error", "An error occurred while saving the file!");
-                return "books-upload";
+                return "book-manager/books-upload";
             }
         } else {
             model.addAttribute("error", "Please select a file to upload!!");
-            return "books-upload";
+            return "book-manager/books-upload";
         }
 
         // Xử lý danh sách tác giả
@@ -170,7 +170,7 @@ public class BookController {
 
         book.setStatus(1);
         bookService.saveBook(book);
-        return "redirect:/books-manage";
+        return "redirect:/book-manager/books-manage";
     }
 
 
@@ -190,7 +190,7 @@ public class BookController {
         model.addAttribute("authors", authors);
         model.addAttribute("categories", categories);
         model.addAttribute("book", book);
-        return "book-upload/update-book";
+        return "book-manager/update-book";
     }
 
 
@@ -205,7 +205,7 @@ public class BookController {
         }
 
         this.bookService.deleteBookById(id);
-        return "redirect:/books-manage";
+        return "redirect:/book-manager/books-manage";
     }
 
     @GetMapping("/books-view/{pageNo}")
@@ -261,7 +261,7 @@ public class BookController {
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
 
         model.addAttribute("listBooks", listBooks);
-        return "books-manage";
+        return "book-manager/books-manage";
     }
 
     @GetMapping("/books/{isbn}")

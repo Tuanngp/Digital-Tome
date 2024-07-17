@@ -65,16 +65,10 @@ public class HomeController {
         return "book-view/books-detail";
     }
 
-    @GetMapping("/books-grid-view")
-    public String booksGridView() {
-        return "book-view/books-grid-view";
-    }
-
     @GetMapping("/books-grid-view-sidebar")
     public String booksGridViewSidebar() {
         return "book-view/books-grid-view-sidebar";
     }
-
 
     @GetMapping("/deeply-books-seeking")
     public String deeplyBooksSeeking() {
@@ -100,6 +94,11 @@ public class HomeController {
     @GetMapping("/coming-soon")
     public String comingSoon() {
         return "landing-page/coming-soon";
+    }
+
+    @GetMapping("/ads")
+    public String ads() {
+        return "book-manager/ads";
     }
 
     @GetMapping("/faq")

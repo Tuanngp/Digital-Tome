@@ -15,9 +15,6 @@
     <link href="/dashboard/css/smart_wizard.min.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="/dashboard/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="/dashboard/css/style2.css" rel="stylesheet">
-    <!--    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>-->
-
     <!-- Daterange picker -->
     <link href="/dashboard/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Clockpicker -->
@@ -27,19 +24,14 @@
     <!-- Material color picker -->
     <link href="/dashboard/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
           rel="stylesheet">
-
+    <link href="/dashboard/css/style.css" rel="stylesheet">
     <!-- Pick date -->
     <link rel="stylesheet" href="/user/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="/user/vendor/pickadate/themes/default.date.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/dashboard/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/user/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-    <link href="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-    <link href="/dashboard/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="/dashboard/vendor/select2/css/select2.min.css">
-
-
+    <link rel="stylesheet" href="/user/vendor/select2/css/select2.min.css">
 
 </head>
 
@@ -774,136 +766,180 @@
     <div class="outer-body">
         <div class="inner-body">
             <div class="content-body">
-                <div class="container-fluid my-4">
-                    <h1>Book List</h1>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label>Show
-                                <select id="pageSize" class="form-select d-inline-block w-auto">
-                                    <option value="10" th:selected="${pageSize == 10}">10</option>
-                                    <option value="25" th:selected="${pageSize == 25}">25</option>
-                                    <option value="50" th:selected="${pageSize == 50}">50</option>
-                                    <option value="100" th:selected="${pageSize == 100}">100</option>
-                                </select> books
-                            </label>
-                        </div>
-                        <div class="col-md-6 text-end">
-                            <input type="text" id="searchInput" class="form-control d-inline-block w-auto"
-                                   placeholder="Search">
-                        </div>
-                    </div>
-                    <table class="table table-striped table-responsive-md">
-                        <thead>
-                        <tr>
-                            <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
-                                    Id
-                                </a>
-                            </th>
-                            <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
-                                    Title
-                                </a>
-                            </th>
-                            <th>Images</th>
-                            <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir}}">
-                                    ISBN
-                                </a>
-                            </th>
-                            <th>Description</th>
-                            <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=publicationDate&sortDir=' + ${reverseSortDir}}">
-                                    Publication Date
-                                </a>
-                            </th>
-                            <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=point&sortDir=' + ${reverseSortDir}}">
-                                    Pricing
-                                </a>
-                            </th>
-                            <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}">
-                                    Status
-                                </a>
-                            </th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody id="bookTableBody" th:each="book : ${listBooks}">
-                        <tr>
-                            <td th:text="${book.id}"></td>
-                            <td th:text="${book.title}"></td>
-                            <td><img alt="book" th:src="${book.bookCover}" style="width:100px;height:auto;"></td>
-                            <td th:text="${book.isbn}"></td>
-                            <td style="display: block; overflow: auto; max-width: 200px" th:text="${book.description}"></td>
-                            <td th:text="${#dates.format(book.publicationDate, 'yyyy-MM-dd')}"></td>
-                            <td th:text="${book.point}"></td>
-                            <td>
-                                <span th:classappend="${book.status == 1} ? 'badge badge-sm badge-warning light' : ''"
-                                      th:if="${book.status == 1}">Pending</span>
-                                <span th:classappend="${book.status == 2} ? 'badge badge-sm badge-success light' : ''"
-                                      th:if="${book.status == 2}">Successful</span>
-                                <span th:classappend="${book.status == 0} ? 'badge badge-sm badge-danger light' : ''"
-                                      th:if="${book.status == 0}">Canceled</span>
-                            </td>
-                            <td>
-                                <a th:href="@{/update/{id}(id=${book.id})}" class="btn btn-primary">Update</a>
-                                <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="footer-section">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p th:text="'Showing ' + ${startEntry} + ' to ' + ${endEntry} + ' of ' + ${totalItems} + ' entries'"></p>
+                <div th:if="${error}" class="alert alert-danger" role="alert">
+                    <p th:text="${error}"></p>
+                </div>
+                <div class="container-fluid">
+                    <!-- row -->
+                    <div class="row">
+                        <form action="#" th:action="@{/save}" th:object="${book}" method="POST"
+                              enctype="multipart/form-data">
+                            <div class="col-xl-12 col-xxl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Update Book</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="smartwizard" class="form-wizard order-create">
+                                            <ul class="nav nav-wizard">
+                                                <li><a class="nav-link" href="#book_Info">
+                                                    <span>1</span>
+                                                </a></li>
+                                                <li><a class="nav-link" href="#book_Description">
+                                                    <span>2</span>
+                                                </a></li>
+                                                <li><a class="nav-link" href="#book_Content">
+                                                    <span>3</span>
+                                                </a></li>
+                                                <li><a class="nav-link" href="#book_Pricing">
+                                                    <span>4</span>
+                                                </a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="book_Info" class="tab-pane" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">ISBN*</label>
+                                                                <input type="text" th:field="*{isbn}"
+                                                                       class="form-control"
+                                                                       placeholder="ISBN" required
+                                                                       pattern="^\d{10}|\d{13}$"
+                                                                       title="ISBN must be 10 or 13 digits long">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Language*</label>
+                                                                <select id="language-select" th:field="*{language}"
+                                                                        class="form-control"
+                                                                        required>
+                                                                    <option value="en">English</option>
+                                                                    <option value="vi">Vietnam</option>
+                                                                    <!-- Thêm các ngôn ngữ khác nếu cần -->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Author*</label>
+                                                                <select id="authorList" class="form-control"
+                                                                        multiple="multiple" required>
+                                                                    <option th:each="author : ${authors}"
+                                                                            th:value="${author.id}"
+                                                                            th:text="${author.name}"></option>
+                                                                </select>
+                                                                <input type="text" id="authorSearch"
+                                                                       placeholder="Input to add new author..."
+                                                                       class="form-control mt-2">
+                                                                <button type="button" id="addAuthor"
+                                                                        class="btn btn-primary sw-btn-sub mt-2">Add
+                                                                    Author
+                                                                </button>
+                                                                <!-- Trường ẩn để lưu các tác giả tạm dưới dạng chuỗi -->
+                                                                <input type="hidden" id="authorIds" name="authorIds">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Publication
+                                                                    Date*</label>
+                                                                <input type="date" th:field="*{publicationDate}"
+                                                                       class="form-control"
+                                                                       placeholder="yyyy-MM-dd" id="mdate" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Genres*</label>
+                                                                <select id="multi-value-select" multiple="multiple"
+                                                                        style="width: 100%;"
+                                                                        th:field="*{categoryEntityList}" required>
+                                                                    <option th:each="category : ${categories}"
+                                                                            th:value="${category.id}"
+                                                                            th:text="${category.name}"></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Book Cover*</label>
+                                                                <input class="form-control" type="file" name="image"
+                                                                       id="formFile"
+                                                                       accept="image/x-png,image/jpeg,image/jpg"
+                                                                       required/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="book_Description" class="tab-pane" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <h4 class="card-title mx-auto">Title*</h4>
+                                                                <p>Title about your book.</p>
+                                                                <input type="text" th:field="*{title}"
+                                                                       class="form-control"
+                                                                       placeholder="title" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mx-auto">
+                                                            <div class="mb-3">
+                                                                <h4 class="card-title mx-auto">Description*</h4>
+                                                                <p>Description about your book.</p>
+                                                                <textarea class="form-txtarea form-control"
+                                                                          th:field="*{description}" rows="8"
+                                                                          id="comment"
+                                                                          style="height: 121px;" required></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="book_Content" class="tab-pane" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="mx-auto">
+                                                            <h4 class="card-title mx-auto">Content</h4>
+                                                            <p>Upload file for your book.</p>
+                                                            <input class="form-control form-control-lg" id="formFileLg"
+                                                                   type="file" name="bookP" accept="application/pdf"
+                                                                   required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="book_Pricing" class="tab-pane" role="tabpanel">
+                                                    <div class="row emial-setup">
+                                                        <div class="mx-auto">
+                                                            <h4 class="card-title mx-auto">Poin*</h4>
+                                                            <p>Enter the point value for this book. Points are used
+                                                                as currency on our website, allowing users to
+                                                                purchase books using points.</p>
+                                                            <div class="input-group">
+                                                                <input inputmode="numeric" pattern="[0-9]*" id="pricing" name="pricing" class="form-control" th:value="*{point}" required oninput="validateNumericInput(event)" />
+                                                                <span class="input-group-text">point</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <nav>
-                                    <ul class="pagination pagination-gutter pagination-primary no-bg float-end">
-                                        <!-- Previous Page Link -->
-                                        <li class="page-item page-indicator"
-                                            th:classappend="${currentPage == 1} ? 'disabled'">
-                                            <a class="page-link"
-                                               th:href="@{'/books-manage/' + (${currentPage - 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                                               th:aria-disabled="${currentPage == 1}" aria-label="Previous">
-                                                <i class="la la-angle-left"></i>
-                                            </a>
-                                        </li>
-
-                                        <!-- Page Numbers -->
-                                        <li th:each="i: ${#numbers.sequence(1, totalPages)}"
-                                            th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
-                                            <a class="page-link"
-                                               th:href="@{'/books-manage/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-                                        </li>
-
-                                        <!-- Next Page Link -->
-                                        <li class="page-item page-indicator"
-                                            th:classappend="${currentPage == totalPages} ? 'disabled'">
-                                            <a class="page-link"
-                                               th:href="@{'/books-manage/' + (${currentPage + 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                                               th:aria-disabled="${currentPage == totalPages}" aria-label="Next">
-                                                <i class="la la-angle-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+                            <button type="submit" class="btn btn-primary sw-btn-sub" style="text-align: right;"> Save
+                                Book
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="footer out-footer">
                 <div class="copyright">
-                    <p>Copyright � by <a href="https://digitaltome.com/" target="_blank">Digital Tome</a> 2024</p>
+                    <p>Copyright © Developed by <a href="https://dexignzone.com/" target="_blank">DexignZone</a> 2023
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-
     <!--**********************************
         Content body end
     ***********************************-->
@@ -934,30 +970,8 @@
 <!--**********************************
     Scripts
 ***********************************-->
-<script>
-    document.getElementById('pageSize').addEventListener('change', function () {
-        const pageSize = this.value;
-        window.location.href = `?pageSize=${pageSize}`;
-    });
-
-    document.getElementById('searchInput').addEventListener('keyup', function () {
-        const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#bookTableBody tr');
-        rows.forEach(row => {
-            const title = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
-            if (title.includes(filter)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-</script>
-
-
-
 <!-- Required vendors -->
-<script src="/dashboard/vendor/global/global.min.js"></script>
+<script src="/user/vendor/global/global.min.js"></script>
 
 <script src="/user/js/jquery.steps.min.js"></script>
 <script src="/user/js/jquery.validate.min.js"></script>
@@ -1009,11 +1023,102 @@
 <!-- Pickdate -->
 <script src="/user/js/plugins-init/pickadate-init.js"></script>
 
-<script src="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
-<script src="/dashboard/js/plugins-init/sweetalert.init.js"></script>
-<!-- Datatable -->
-<script src="/dashboard/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="/dashboard/js/plugins-init/datatables.init.js"></script>
+<!-- xóa cái này là k xài select2 được đâu -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
+
+
+<script>
+    $(document).ready(function () {
+        // SmartWizard initialize
+        $('#smartwizard').smartWizard();
+    });
+</script>
+
+
+//api cho nút author và search author
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#authorList').select2({
+            tags: false, // Cho phép người dùng thêm tag mới
+            tokenSeparators: [',', ' ']
+        });
+
+        document.getElementById('addAuthor').addEventListener('click', function () {
+            var authorName = document.getElementById('authorSearch').value;
+            if (authorName) {
+                var newOption = new Option(authorName, 'new-' + authorName, true, true);
+                $('#authorList').append(newOption).trigger('change');
+            }
+        });
+
+        // Trước khi submit form, chúng ta sẽ lấy tất cả các giá trị của tác giả và gán vào trường ẩn
+        document.querySelector('form').addEventListener('submit', function () {
+            var authorSelect = $('#authorList').select2('data');
+            var authorIds = authorSelect.map(function (author) {
+                return author.id;
+            });
+            document.getElementById('authorIds').value = authorIds.join(',');
+        });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#authorSearch').on('input', function () {
+            var query = $(this).val();
+            if (query.length > 0) {
+                $('#addAuthor').prop('disabled', false);
+            } else {
+                $('#addAuthor').prop('disabled', true);
+            }
+        });
+    });
+</script>
+
+//api cho nút category và search category
+<script>
+    $(document).ready(function () {
+        $('#multi-value-select').select2({
+            placeholder: 'Select a category',
+            ajax: {
+                url: '/api/categories',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term // search term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.map(function (item) {
+                            return {
+                                id: item.id,
+                                text: item.name
+                            };
+                        })
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1 // Chỉ tìm kiếm khi nhập ít nhất 1 ký tự
+        });
+    });
+</script>
+
+//chỉ cho người dunng nhập number
+<script>
+    function validateNumericInput(event) {
+        const input = event.target;
+        const value = input.value;
+        const filteredValue = value.replace(/[^0-9]/g, '');
+        if (value !== filteredValue) {
+            input.value = filteredValue;
+        }
+    }
+</script>
 
 </body>
 

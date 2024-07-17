@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+
+    <!-- PAGE TITLE HERE -->
+    <title>Digital</title>
+
+    <!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" href="../dashboard/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <!-- Form step -->
+    <link href="/dashboard/css/smart_wizard.min.css" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link href="/dashboard/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/dashboard/css/style.css" rel="stylesheet">
+
+    <!-- Daterange picker -->
+    <link href="/dashboard/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- Clockpicker -->
+    <link href="/dashboard/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+    <!-- asColorpicker -->
+    <link href="/dashboard/vendor/jquery-asColorPicker/css/asColorPicker.min.css" rel="stylesheet">
+    <!-- Material color picker -->
+    <link href="/dashboard/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+          rel="stylesheet">
+
+    <!-- Pick date -->
+    <link rel="stylesheet" href="/user/vendor/pickadate/themes/default.css">
+    <link rel="stylesheet" href="/user/vendor/pickadate/themes/default.date.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/dashboard/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+
+    <link href="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+    <link href="/dashboard/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/dashboard/vendor/select2/css/select2.min.css">
+
+
+
+</head>
+
+<body>
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="dz-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
+
+<!--**********************************
+    Sidebar start
+***********************************-->
+<div class="deznav">
+    <div class="deznav-scroll">
+        <ul class="metismenu" id="menu">
+            <li><a href="/books-manage" class="" aria-expanded="false">
+                <div class="menu-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/>
+                    </svg>
+                </div>
+                <span class="nav-text">Books Manage</span>
+            </a>
+            </li>
+            <li><a href="/upload" class="" aria-expanded="false">
+                <div class="menu-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
+                    </svg>
+                </div>
+                <span class="nav-text">Upload Book</span>
+            </a>
+            </li>
+            <li><a href="/books-chart" class="" aria-expanded="false">
+                <div class="menu-icon">
+                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5687 13.8887C18.2435 13.8887 18.8098 14.4455 18.7066 15.1118C18.1013 19.0318 14.7456 21.9423 10.6982 21.9423C6.22029 21.9423 2.59082 18.3129 2.59082 13.836C2.59082 10.1476 5.39293 6.71181 8.54766 5.93497C9.22556 5.7676 9.92029 6.24445 9.92029 6.94234C9.92029 11.6708 10.0792 12.8939 10.9771 13.5592C11.875 14.2244 12.9308 13.8887 17.5687 13.8887Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M21.9834 9.95121C22.0371 6.91331 18.3055 2.01647 13.7581 2.10068C13.4045 2.107 13.1213 2.40173 13.1055 2.75437C12.9908 5.25226 13.1455 8.4891 13.2318 9.95647C13.2581 10.4133 13.6171 10.7723 14.0729 10.7986C15.5813 10.8849 18.936 11.0028 21.3981 10.6302C21.7329 10.5796 21.9781 10.2891 21.9834 9.95121Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="nav-text">Books Chart</span>
+            </a>
+            </li>
+
+
+        </ul>
+        <div class="switch-btn">
+            <a th:href="@{/logout}">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.36 6.63965C19.6184 7.89844 20.4753 9.50209 20.8223 11.2478C21.1693 12.9936 20.9909 14.803 20.3096 16.4474C19.6284 18.0918 18.4748 19.4972 16.9948 20.486C15.5148 21.4748 13.7749 22.0026 11.995 22.0026C10.2151 22.0026 8.47515 21.4748 6.99517 20.486C5.51519 19.4972 4.36164 18.0918 3.68036 16.4474C2.99909 14.803 2.82069 12.9936 3.16772 11.2478C3.51475 9.50209 4.37162 7.89844 5.63 6.63965"
+                          stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 2V12" stroke="#252525" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                </svg>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+</div>
+<!--**********************************
+    Sidebar end
+***********************************-->
+
+<!--**********************************
+    Content body start
+***********************************-->
+<div class="outer-body">
+    <div class="inner-body">
+        <div class="content-body">
+            <div class="container-fluid my-4">
+                <h1>Book List</h1>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>Show
+                            <select id="pageSize" class="form-select d-inline-block w-auto">
+                                <option value="10" th:selected="${pageSize == 10}">10</option>
+                                <option value="25" th:selected="${pageSize == 25}">25</option>
+                                <option value="50" th:selected="${pageSize == 50}">50</option>
+                                <option value="100" th:selected="${pageSize == 100}">100</option>
+                            </select> books
+                        </label>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <input type="text" id="searchInput" class="form-control d-inline-block w-auto"
+                               placeholder="Search">
+                    </div>
+                </div>
+                <table class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th>
+                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+                                Id
+                            </a>
+                        </th>
+                        <th>
+                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
+                                Title
+                            </a>
+                        </th>
+                        <th>Images</th>
+                        <th>
+                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir}}">
+                                ISBN
+                            </a>
+                        </th>
+                        <th>Description</th>
+                        <th>
+                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=publicationDate&sortDir=' + ${reverseSortDir}}">
+                                Publication Date
+                            </a>
+                        </th>
+                        <th>
+                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=point&sortDir=' + ${reverseSortDir}}">
+                                Pricing
+                            </a>
+                        </th>
+                        <th>
+                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}">
+                                Status
+                            </a>
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="bookTableBody" th:each="book : ${listBooks}">
+                    <tr>
+                        <td th:text="${book.id}"></td>
+                        <td th:text="${book.title}"></td>
+                        <td><img alt="book" th:src="${book.bookCover}" style="width:100px;height:auto;"></td>
+                        <td th:text="${book.isbn}"></td>
+                        <td style="display: block; overflow: auto; max-width: 200px" th:text="${book.description}"></td>
+                        <td th:text="${#dates.format(book.publicationDate, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${book.point}"></td>
+                        <td>
+                                <span th:classappend="${book.status == 1} ? 'badge badge-sm badge-warning light' : ''"
+                                      th:if="${book.status == 1}">Pending</span>
+                            <span th:classappend="${book.status == 2} ? 'badge badge-sm badge-success light' : ''"
+                                  th:if="${book.status == 2}">Successful</span>
+                            <span th:classappend="${book.status == 0} ? 'badge badge-sm badge-danger light' : ''"
+                                  th:if="${book.status == 0}">Canceled</span>
+                        </td>
+                        <td>
+                            <a th:href="@{/update/{id}(id=${book.id})}" class="btn btn-primary">Update</a>
+                            <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="footer-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p th:text="'Showing ' + ${startEntry} + ' to ' + ${endEntry} + ' of ' + ${totalItems} + ' entries'"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <nav>
+                                <ul class="pagination pagination-gutter pagination-primary no-bg float-end">
+                                    <!-- Previous Page Link -->
+                                    <li class="page-item page-indicator"
+                                        th:classappend="${currentPage == 1} ? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{'/books-manage/' + (${currentPage - 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                                           th:aria-disabled="${currentPage == 1}" aria-label="Previous">
+                                            <i class="la la-angle-left"></i>
+                                        </a>
+                                    </li>
+
+                                    <!-- Page Numbers -->
+                                    <li th:each="i: ${#numbers.sequence(1, totalPages)}"
+                                        th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
+                                        <a class="page-link"
+                                           th:href="@{'/books-manage/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                                    </li>
+
+                                    <!-- Next Page Link -->
+                                    <li class="page-item page-indicator"
+                                        th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                        <a class="page-link"
+                                           th:href="@{'/books-manage/' + (${currentPage + 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                                           th:aria-disabled="${currentPage == totalPages}" aria-label="Next">
+                                            <i class="la la-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer out-footer">
+            <div class="copyright">
+                <p>Copyright � by <a href="https://digitaltome.com/" target="_blank">Digital Tome</a> 2024</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--**********************************
+    Content body end
+***********************************-->
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+<script>
+    document.getElementById('pageSize').addEventListener('change', function () {
+        const pageSize = this.value;
+        window.location.href = `?pageSize=${pageSize}`;
+    });
+
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#bookTableBody tr');
+        rows.forEach(row => {
+            const title = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+            if (title.includes(filter)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+
+
+<!-- Required vendors -->
+<script src="/dashboard/vendor/global/global.min.js"></script>
+
+<script src="/user/js/jquery.steps.min.js"></script>
+<script src="/user/js/jquery.validate.min.js"></script>
+<!-- Form validate init -->
+<script src="/user/js/jquery.validate-init.js"></script>
+
+
+<!-- Form Steps -->
+<script src="/user/js/jquery.smartWizard.js"></script>
+<script src="/user/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<script src="/user/js/custom2.js"></script>
+<script src="/user/js/deznav-init.js"></script>
+<script src="/user/js/demo.js"></script>
+<script src="/user/js/styleSwitcher.js"></script>
+
+<!-- Form Select option -->
+<script src="/user/vendor/select2/js/select2.full.min.js"></script>
+<script src="/user/js/plugins-init/select2-init.js"></script>
+
+
+<script src="/user/vendor/chart.js/Chart.bundle.min.js"></script>
+<script src="/user/vendor/apexchart/apexchart.js"></script>
+
+<!-- momment js is must -->
+<script src="/user/vendor/moment/moment.min.js"></script>
+<script src="/user/vendor/bootstrap-daterangepicker/daterangepicker.js"></script>
+<!-- clockpicker -->
+<script src="/user/vendor/clockpicker/js/bootstrap-clockpicker.min.js"></script>
+<!-- asColorPicker -->
+<script src="/user/vendor/jquery-asColor/jquery-asColor.min.js"></script>
+<script src="/user/vendor/jquery-asGradient/jquery-asGradient.min.js"></script>
+<script src="/user/vendor/jquery-asColorPicker/js/jquery-asColorPicker.min.js"></script>
+<!-- Material color picker -->
+<script src="/user/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<!-- pickdate -->
+<script src="/user/vendor/pickadate/picker.js"></script>
+<script src="/user/vendor/pickadate/picker.time.js"></script>
+<script src="/user/vendor/pickadate/picker.date.js"></script>
+
+<!-- Daterangepicker -->
+<script src="/user/js/plugins-init/bs-daterange-picker-init.js"></script>
+<!-- Clockpicker init -->
+<script src="/user/js/plugins-init/clock-picker-init.js"></script>
+<!-- asColorPicker init -->
+<script src="/user/js/plugins-init/jquery-asColorPicker.init.js"></script>
+<!-- Material color picker init -->
+<script src="/user/js/plugins-init/material-date-picker-init.js"></script>
+<!-- Pickdate -->
+<script src="/user/js/plugins-init/pickadate-init.js"></script>
+
+<script src="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="/dashboard/js/plugins-init/sweetalert.init.js"></script>
+<!-- Datatable -->
+<script src="/dashboard/vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/dashboard/js/plugins-init/datatables.init.js"></script>
+</body>
+</html>

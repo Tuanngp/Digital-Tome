@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class BookDetailDto {
+     Long id;
      String isbn;
      String title;
      String description;
