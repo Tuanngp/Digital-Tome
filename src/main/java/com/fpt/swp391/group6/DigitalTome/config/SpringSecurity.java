@@ -43,12 +43,12 @@ public class SpringSecurity {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
                         .requestMatchers("/publisher/**").hasAnyRole("PUBLISHER", "ADMIN")
-<<<<<<< HEAD
+
                         .requestMatchers("/censor/**").hasAnyRole("CENSOR", "ADMIN")
                        /* .requestMatchers("/admin/").hasAnyRole("ADMIN")*/
-=======
+
                         .requestMatchers("/admin").hasAnyRole("ADMIN")
->>>>>>> e177050 (update premium)
+
                         .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
