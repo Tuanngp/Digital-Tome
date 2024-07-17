@@ -370,7 +370,6 @@
 
 
                     <script>
-
                         function goBack() {
                             window.history.back();
                         }
@@ -409,6 +408,7 @@
                             });
                         }
 
+
                         function sendActionRequest(reason, action, role) {
                             const userDto = {
                                 id: userIdToBan,
@@ -444,6 +444,36 @@
                                 });
                             });
                         }
+
+                        function confirmActionApprove(userId, isApproved) {
+                            let action = isApproved ? "Approve" : "Reject";
+
+                            Swal.fire({
+                                title: `Are you sure you want to ${action} this user?`,
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Yes',
+                                cancelButtonText: 'No'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        url: '/api/approve',
+                                        type: 'POST',
+                                        contentType: 'application/json',
+                                        data: JSON.stringify({ id: userId, action: isApproved }),
+                                        success: function(data) {
+                                            Swal.fire('Success', data.message, 'success').then(() => {
+                                                window.location.reload();
+                                            });
+                                        },
+                                        error: function(error) {
+                                            console.error('Error:', error);
+                                            Swal.fire('Error', 'An error occurred', 'error');
+                                        }
+                                    });
+                                }
+                            });
+                        }
                     </script>
                 </div>
             </div>
@@ -460,37 +490,5 @@
 <script src="/admin/js/deznav-init.js"></script>
 <script src="/admin/js/demo.js"></script>
 <script src="/admin/js/styleSwitcher.js"></script>
-
-<script>
-    function confirmActionApprove(userId, isApproved) {
-        let action = isApproved ? "Approve" : "Reject";
-
-        Swal.fire({
-            title: `Are you sure you want to ${action} this user?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '/api/approve',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({ id: userId, action: isApproved }),
-                    success: function(data) {
-                        Swal.fire('Success', data.message, 'success').then(() => {
-                            window.location.reload();
-                        });
-                    },
-                    error: function(error) {
-                        console.error('Error:', error);
-                        Swal.fire('Error', 'An error occurred', 'error');
-                    }
-                });
-            }
-        });
-    }
-</script>
 </body>
 </html>
