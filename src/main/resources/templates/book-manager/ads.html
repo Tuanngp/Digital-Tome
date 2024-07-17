@@ -17,51 +17,54 @@
     <!-- PAGE TITLE HERE -->
     <title>Book List</title>
 
-
-
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" th:href="@{../censor/images/favicon.png}">
+    <link rel="shortcut icon" type="image/png" th:href="@{../dashboard/images/favicon.png}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-    <link th:href="@{../censor/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
-    <link th:href="@{../censor/vendor/lightgallery/css/lightgallery.min.css}" rel="stylesheet">
-    <link th:href="@{../censor/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
-    <link th:href="@{../censor/css/style.css}" rel="stylesheet">
+    <link th:href="@{../dashboard/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
+    <link th:href="@{../dashboard/vendor/lightgallery/css/lightgallery.min.css}" rel="stylesheet">
+    <link th:href="@{../dashboard/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
+    <link th:href="@{../dashboard/css/style.css}" rel="stylesheet">
 
     <!--Bootstrap-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-
     <!-- Custom Stylesheet -->
-    <link  th:href="@{../censor/css/style.css}" rel="stylesheet">
+    <link  th:href="@{../dashboard/css/style.css}" rel="stylesheet">
+    <style>
+        .package-option {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
+        .package-option .card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
 
+        .package-option:hover .card {
+            box-shadow: 0 0 15px rgba(0,123,255,0.3);
+        }
+
+        .package-option.selected .card {
+            border-color: #007bff;
+            background-color: #e7f1ff;
+            box-shadow: 0 0 15px rgba(0,123,255,0.5);
+        }
+
+        .package-option.selected h5 {
+            color: #007bff;
+        }
+    </style>
 </head>
-
 <body>
-
-<!--*******************
-    Preloader start
-********************-->
 <div id="preloader">
     <div class="dz-ripple">
         <div></div>
         <div></div>
     </div>
 </div>
-<!--*******************
-    Preloader end
-********************-->
-
-
-<!--**********************************
-    Main wrapper start
-***********************************-->
 <div id="main-wrapper">
-
-    <!--**********************************
-        Nav header start
-    ***********************************-->
     <div class="nav-header">
         <a href="index.html" class="brand-logo">
             <svg class="logo-abbr" width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,13 +85,6 @@
             </div>
         </div>
     </div>
-    <!--**********************************
-        Nav header end
-    ***********************************-->
-
-    <!--**********************************
-        Chat box start
-    ***********************************-->
     <div class="chatbox">
         <div class="chatbox-close"></div>
         <div class="custom-tab-1">
@@ -584,16 +580,7 @@
             </div>
         </div>
     </div>
-    <!--**********************************
-        Chat box End
-    ***********************************-->
 
-
-
-
-    <!--**********************************
-        Header start
-    ***********************************-->
     <div class="header">
         <div class="header-content">
             <nav class="navbar navbar-expand">
@@ -637,140 +624,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
-                                    <ul class="timeline">
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" th:href="@{../admin/images/avatar/1.jpg}">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-info">
-                                                    KG
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Resport created successfully</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-success">
-                                                    <i class="fa fa-home"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" th:href="@{../admin/images/avatar/1.jpg}">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-danger">
-                                                    KG
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Resport created successfully</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-primary">
-                                                    <i class="fa fa-home"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" th:href="@{../admin/images/avatar/1.jpg}">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-info">
-                                                    KG
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Resport created successfully</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-success">
-                                                    <i class="fa fa-home"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2">
-                                                    <img alt="image" width="50" th:href="@{../admin/images/avatar/1.jpg}">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-danger">
-                                                    KG
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Resport created successfully</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-panel">
-                                                <div class="media me-2 media-primary">
-                                                    <i class="fa fa-home"></i>
-                                                </div>
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+
                                 </div>
                                 <a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
                             </div>
@@ -783,17 +637,18 @@
                                 </svg>
                             </a>
                         </li>
-                        <li class="nav-item align-items-center header-border"><a href="analytics.html" class="btn btn-primary">Analytics</a></li>
+                        <li class="nav-item align-items-center header-border">
+                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#advertisingModal">Create Advertisement</a></li>
                         <li class="nav-item ps-3">
                             <div class="header-profile2">
                                 <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="header-info2 d-flex align-items-center">
                                         <div class="header-media">
-                                            <img th:href="@{../admin/images/user.jpg}" class="avatar avatar-lg" alt="">
+                                            <img th:href="@{account.avatarPath}" class="avatar avatar-lg" alt="">
                                         </div>
                                         <div class="header-info">
-                                            <h6>Thomas Fleming</h6>
-                                            <p>info@gmail.com</p>
+                                            <h6 th:text="${account.fullname}"></h6>
+                                            <p th:text="${account.email}">info@gmail.com</p>
                                         </div>
 
                                     </div>
@@ -804,8 +659,8 @@
                                             <img th:href="@{../admin/images/user.jpg}" class="avatar " alt="">
                                         </div>
                                         <div class="ms-3">
-                                            <h6 class="mb-0">Thomas Fleming</h6>
-                                            <span class="d-block mb-1">demo@gmail.com</span>
+                                            <h6 class="mb-0" th:text="${account.fullname}"></h6>
+                                            <span class="d-block mb-1" th:text="${account.email}">demo@gmail.com</span>
                                             <span class="badge border-0 rounded">Pro Mamber</span>
                                         </div>
                                     </div>
@@ -856,13 +711,6 @@
         </div>
     </div>
 
-    <!--**********************************
-        Header end ti-comment-alt
-    ***********************************-->
-
-    <!--**********************************
-        Sidebar start
-    ***********************************-->
     <div class="deznav">
         <div class="deznav-scroll">
             <ul class="metismenu" id="menu">
@@ -884,7 +732,7 @@
                 </li>
             </ul>
             <div class="switch-btn">
-                <a href="page-login.html">
+                <a href="">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18.36 6.63965C19.6184 7.89844 20.4753 9.50209 20.8223 11.2478C21.1693 12.9936 20.9909 14.803 20.3096 16.4474C19.6284 18.0918 18.4748 19.4972 16.9948 20.486C15.5148 21.4748 13.7749 22.0026 11.995 22.0026C10.2151 22.0026 8.47515 21.4748 6.99517 20.486C5.51519 19.4972 4.36164 18.0918 3.68036 16.4474C2.99909 14.803 2.82069 12.9936 3.16772 11.2478C3.51475 9.50209 4.37162 7.89844 5.63 6.63965" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M12 2V12" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -894,16 +742,10 @@
             </div>
         </div>
     </div>
-    <!--**********************************
-        Sidebar end
-    ***********************************-->
 
-    <!--**********************************
-        Content body start
-    ***********************************-->
     <div class="outer-body">
         <div class="inner-body">
-            <div class="container-fluid" style="height: 560px; padding-top: 86px;">
+            <div class="container-fluid" style="min-height: 800px; margin-top: 100px;">
                 <div class="container-fluid" style="height: 100%;">
                     <!-- row -->
                     <div id="notify"  role="alert">
@@ -911,7 +753,7 @@
                     <div class="row" style="height: 100%;">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Validation</h4>
+                                <h4 class="card-title">Advertisement management</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
@@ -926,23 +768,20 @@
                                                         <label class="form-check-label" for="checkAll"></label>
                                                     </div>
                                                 </th>
-                                                <th><strong>ISBN</strong></th>
-                                                <th><strong>Book</strong></th>
-                                                <th><strong>Description</strong></th>
-                                                <th><strong>Date</strong></th>
-                                                <th><strong>Provider</strong></th>
+                                                <th><strong>Id</strong></th>
+                                                <th><strong>Advertisement Name</strong></th>
+                                                <th><strong>Image</strong></th>
+                                                <th><strong>Ad Type</strong></th>
+                                                <th><strong>Start Date</strong></th>
+                                                <th><strong>End Date</strong></th>
                                                 <th><strong>Status</strong></th>
-                                                <th><strong>Appointment</strong></th>
                                                 <th><strong>Action</strong></th>
                                             </tr>
                                             </thead>
-                                            <tbody id="booksList">
+                                            <tbody id="adsList">
                                             </tbody>
                                         </table>
                                     </div>
-                                    <!--End Book List-->
-
-
                                 </div>
                             </div>
                         </div>
@@ -956,487 +795,153 @@
 
             <div class="footer out-footer">
                 <div class="copyright">
-                    <p>Copyright © Developed by <a href="https://dexignzone.com/" target="_blank">Quang Hau</a> 2023</p>
+                    <p>Copyright © Developed by <a href="" target="_blank">Tuanngp</a> 2024</p>
                 </div>
             </div>
         </div>
-
     </div>
     <!--**********************************
         Content body end
     ***********************************-->
 
-    <!--Profile Modal-->
-    <div class="modal fade" id="profileModal" style="--bs-modal-width: 80vw;">
+    <div class="modal fade" id="advertisingModal" style="--bs-modal-width: 80vw;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Profile</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
+                    <h5 class="modal-title">Tạo Quảng Cáo Mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-3 col-lg-4">
+                        <div class="col-xl-4 col-lg-4">
                             <div class="clearfix">
-                                <div class="card card-bx profile-card author-profile m-b30">
+                                <div class="card card-bx profile-card author-profile m-b30" style="min-height: 440px;">
                                     <div class="card-body">
                                         <div class="p-5">
                                             <div class="author-profile">
-                                                <div class="author-media">
-                                                    <img id="userImg" alt="">
+                                                <div class="my-image">
+                                                    <a href="javascript:void(0);">
+                                                        <img alt="" id="image-preview" src="" style="max-width: 280px">
+                                                    </a>
                                                 </div>
-                                                <div class="author-info">
-                                                    <h6 class="title" id="fullnameUser"></h6>
-                                                </div>
+
+                                                <form method="post" enctype="multipart/form-data">
+                                                    <div class="account-title">
+                                                        <div class="button-container">
+                                                            <input type="file" class="form-control" id="url-update-avatar" name="file" accept="image/*">
+                                                            <br>
+                                                            <div class="button-wrapper">
+                                                                <button type="submit" name="action" id="save-avatar" value="save" class="btn btn-primary btn-custom">Save</button>
+                                                                <button type="submit" name="action" id="remove-avatar" value="remove" class="btn btn-primary btn-custom">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                         <div class="info-list">
                                             <ul>
-                                                <li><a href="app-profile-2.html">Sex</a><span id="sexUser"></span></li>
-                                                <li><a href="uc-lightgallery.html">Date Of Birth</a><span id="dobUser"></span></li>
+                                                <li>Start Date: <span id="adsStartDate"></span></li>
+                                                <li>End Date: <span id="adsEndDate"></span></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-9 col-lg-8">
-                            <div class="card profile-card card-bx m-b30">
-                                <div class="card-header">
-                                    <h6 class="card-title">Information Details</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-sm-6 m-b30">
-                                            <label class="form-label">description</label>
-                                            <input type="text" class="form-control" id="desUser" readonly>
-                                        </div>
-                                        <div class="col-sm-6 m-b30">
-                                            <label class="form-label">Email</label>
-                                            <input type="text" class="form-control" id="emailUser" readonly>
-                                        </div>
-                                        <div class="col-sm-6 m-b30">
-                                            <label class="form-label">Address</label>
-                                            <input type="text" class="form-control" id="adrressUser" readonly>
-                                        </div>
-                                        <div class="col-sm-6 m-b30">
-                                            <label class="form-label">Phone</label>
-                                            <input type="text" class="form-control" id="phoneUser" readonly>
-                                        </div>
-                                        <div class="col-sm-6 m-b30">
-                                            <label class="form-label">Point</label>
-                                            <input type="text" class="form-control" id="pointUser" readonly>
+                        <div class="col-xl-8 col-lg-8">
+                            <h6>Chọn Gói Quảng Cáo:</h6>
+                            <div class="row ads-types">
+                                <div class="col-md-3 package-option" data-package="Gói Cơ Bản">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Gói Cơ Bản</h5>
+                                            <p>Vị trí: Sidebar</p>
+                                            <p>Loại: Banner</p>
+                                            <p>Giá: 500,000 VND/ngày</p>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-3 package-option" data-package="Gói Tiêu Chuẩn">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Gói Tiêu Chuẩn</h5>
+                                            <p>Vị trí: Footer</p>
+                                            <p>Loại: Banner</p>
+                                            <p>Giá: 700,000 VND/ngày</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 package-option" data-package="Gói Cao Cấp">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Gói Cao Cấp</h5>
+                                            <p>Vị trí: Homepage</p>
+                                            <p>Loại: Banner</p>
+                                            <p>Giá: 1,000,000 VND/ngày</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 package-option" data-package="Gói Video">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5>Gói Video</h5>
+                                            <p>Vị trí: In-content</p>
+                                            <p>Loại: Video</p>
+                                            <p>Giá: 1,500,000 VND/ngày</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="adTitle" class="form-label">Tiêu đề quảng cáo</label>
+                                    <input type="text" class="form-control" id="adTitle">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="adContent" class="form-label">Nội dung quảng cáo</label>
+                                    <textarea class="form-control" id="adContent"></textarea>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="startDate" class="form-label">Ngày bắt đầu</label>
+                                    <input type="date" class="form-control" id="startDate">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="endDate" class="form-label">Ngày kết thúc</label>
+                                    <input type="date" class="form-control" id="endDate">
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Tổng số ngày: <span id="totalDays">0</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Tổng chi phí: <span id="totalCost">0 VND</span></p>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="saveAd">Lưu Quảng Cáo</button>
                 </div>
             </div>
         </div>
     </div>
-    <!--End Profile Modal-->
-
-    <!--Book Modal-->
-    <div class="modal fade" id="bookModal" style="--bs-modal-width: 80vw;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Book</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xl-3 col-lg-4">
-                            <div class="clearfix">
-                                <div class="card card-bx profile-card author-profile m-b30">
-                                    <div class="card-body">
-                                        <div class="p-5">
-                                            <div class="author-profile" style="display: flex; justify-content: center; align-items: center; flex-direction: column; overflow: hidden;">
-                                                <img id="bookCover" src="" alt="" style="max-width: 100%; max-height: 100%;">
-                                            </div>
-                                        </div>
-                                        <div class="info-list">
-                                            <ul>
-                                                <li><span>ISBN</span><span id="isbn"></span></li>
-                                                <li><span>Category</span><span id="categories"></span></li>
-                                                <li><span >Author</span><span id="authors"></span></li>
-                                                <li><span>Language</span><span id="language"></span></li>
-                                                <li><span>Publication Date</span><span id="publicationDate"></span></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="input-group">
-                                            <a  class="form-control text-primary rounded text-start bg-white" id="bookPath">Download</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-9 col-lg-8">
-                            <div class="card profile-card card-bx m-b30">
-                                <div class="card-header">
-                                    <h6 class="card-title" >Description</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div id="description" style="padding: 10px;
-													font-family: 'Arial', sans-serif;
-													font-size: 16px;
-													line-height: 1.6;
-													color: #333;
-													background-color: #f9f9f9;
-													border: 1px solid #ddd;
-													border-radius: 8px;
-													box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div  style="    font-size: 16px;
-														display: flex;
-														width: 100px;
-														justify-content: space-around;">
-                                        <span style="font-weight: bold;">Point</span><span id="point">18</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--End Book Modal-->
-
-    <!--Appointment Modal-->
-    <div class="modal fade" id="appointmentModal" style="--bs-modal-width: 80vw;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Email</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="email-right-box ms-0 ">
-                        <div class="compose-wrapper mt-3 " id="compose-content">
-                            <div class="compose-content">
-                                <form id="emailForm">
-                                    <div class="mb-3">
-                                        <input id="emailTo" type="text" class="form-control bg-transparent" placeholder=" To:" readonly>
-                                    </div>
-                                    <div class="mb-3">
-                                        <input id="emailSubject" type="text" class="form-control bg-transparent" placeholder=" Subject:">
-                                    </div>
-                                    <div class="mb-3">
-                                        <textarea id="email-compose-editor" style="height: 250px !important;" class="textarea_editor form-control bg-transparent" rows="5" placeholder="Enter text ..."></textarea>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="text-start mt-4 mb-3">
-                                <button class="btn btn-primary light light btn-sl-sm me-2" type="button"><span class="me-2"><i class="fa fa-paper-plane"></i></span>Send</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--End Appointment Modal-->
 </div>
-<!--**********************************
-    Main wrapper end
-***********************************-->
-
-<!--**********************************
-    Scripts
-***********************************-->
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Required vendors -->
-<script src="/censor/vendor/global/global.min.js"></script>
-<script src="/censor/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="/dashboard/vendor/global/global.min.js"></script>
+<script src="/dashboard/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 
-<script src="/censor/js/custom.js"></script>
-<script src="/censor/js/deznav-init.js"></script>
-<script src="/censor/js/demo.js"></script>
-<script src="/censor/js/styleSwitcher.js"></script>
+<script src="/dashboard/js/custom.js"></script>
+<script src="/dashboard/js/deznav-init.js"></script>
+<script src="/dashboard/js/demo.js"></script>
+<script src="/dashboard/js/styleSwitcher.js"></script>
 
 <script th:src="@{../pagination/jquery.twbsPagination.js}" type="text/javascript"></script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        let currentPage = 1;
-        let isLoading = false;
-
-        // Function to format date as "dd-MM-yyyy"
-        function formatDate(date) {
-            const d = new Date(date);
-            const day = ('0' + d.getDate()).slice(-2);
-            const month = ('0' + (d.getMonth() + 1)).slice(-2);
-            const year = d.getFullYear();
-            return `${day}-${month}-${year}`;
-        }
-
-        // Function to notify the result
-        function notify(className, content){
-            $("#notify").removeClass();
-            $('#notify').addClass("alert");
-            $('#notify').addClass(className);
-            $('#notify').text(content).show();
-            // Hide the notification after 5 seconds
-            setTimeout(function() {
-                $('#notify').hide();
-            }, 5000);
-        }
-
-        // Function to load books and pagination
-        function loadBooks(page) {
-            if (isLoading) return;
-            isLoading = true;
-
-            $.ajax({
-                url: '/api/contribution',
-                method: 'GET',
-                dataType: 'json',
-                data: {
-                    page: page,
-                    limit: 5
-                },
-                success: function(data) {
-                    $('#booksList').empty();
-                    data.listResults.forEach(function(book, index) {
-                        const row = $('<tr>');
-                        row.append('<td><div class="form-check custom-checkbox checkbox-success check-lg me-3"><input type="checkbox" class="form-check-input" id="customCheckBox' + index + '" required=""><label class="form-check-label" for="customCheckBox' + index + '"></label></div></td>');
-                        row.append('<td><strong>' + (book.isbn || 'N/A') + '</strong></td>');
-                        row.append('<td class="bookTitleCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#bookModal"><div class="d-flex align-items-center"><img id="bookImg" class="rounded-lg me-2" width="24" alt="" src="'+book.bookCoverPath+'"><span id="bookTitle" class="w-space-no">' + (book.title || 'N/A') + '</span></div></a></td>');
-                        row.append('<td id="bookDes" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">' + (book.description || 'N/A') + '</td>');
-                        row.append('<td id="publishedDate">' + (book.publicationDate ? formatDate(book.publicationDate) : 'N/A') + '</td>');
-                        row.append('<td class="authorCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#profileModal"><div class="d-flex align-items-center"><img id="publisherImg" '+"src={"+book.publisherAvatarPath+"}" +' class="rounded-lg me-2" width="24" alt=""><span id="publisherName" class="w-space-no">' + (book.publisherName || 'N/A') + '</span></div></a></td>');
-                        row.append('<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i> ' + "Processing" + '</div></td>');
-                        row.append('<td><button class="btn btn-info shadow btn-md sharp me-1 btn-make" data-bs-toggle="modal" data-bs-target="#appointmentModal">Make</button></td>');
-                        row.append('<td><div class="d-flex"><button id="acceptBtn" class="btn btn-success shadow btn-md sharp me-1">Accept</button><button id="rejectBtn" class="btn btn-danger shadow btn-md sharp me-1">Reject</button></div></td>');
-
-                        $('#booksList').append(row);
-
-                        // Attach click event to the third td (book title cell)
-                        row.find('.bookTitleCell').on('click', function() {
-                            $.ajax({
-                                url: '/api/book/detail',
-                                method: 'GET',
-                                data: { isbn: book.isbn },
-                                success: function(response) {
-                                    // Map response data to HTML elements
-                                    $('#bookCover').attr('src', response.bookDetailDto.bookCover);
-                                    $('#isbn').text(response.bookDetailDto.isbn);
-                                    $('#categories').text(response.bookDetailDto.categories);
-                                    $('#authors').text(response.bookDetailDto.authors);
-                                    $('#language').text(response.bookDetailDto.language);
-                                    $('#publicationDate').text(response.bookDetailDto.publicationDate ? formatDate(response.bookDetailDto.publicationDate):"N/A");
-                                    $('#description').text(response.bookDetailDto.description);
-                                    $('#point').text(response.bookDetailDto.point);
-                                    // Assuming 'bookPath' is a link to the book
-                                    $('#bookPath').attr('href', response.bookDetailDto.bookPath);
-                                },
-                                error: function(jqXHR, textStatus, errorThrown) {
-                                    console.error("Error fetching user data:", textStatus, errorThrown);
-                                }
-                            });
-                        });
-
-
-                        // Attach click event to the fifth td (Publisher cell)
-                        row.find('.authorCell').on('click', function() {
-                            $.ajax({
-                                url: '/api/user',
-                                method: 'GET',
-                                data: { username: book.publisherName },
-                                success: function(response) {
-                                    // Map response data to HTML elements
-                                    $('#userImg').attr('src', response.userDto.avatarPath);
-                                    $('#fullnameUser').text(response.userDto.fullName);
-                                    $('#sexUser').text(response.userDto.gender);
-                                    $('#dobUser').text(response.userDto.dateOfBirth ? formatDate(response.userDto.dateOfBirth) : "N/A");
-                                    $('#desUser').val(response.userDto.description);
-                                    $('#emailUser').val(response.userDto.email);
-                                    $('#adrressUser').val(response.userDto.address);
-                                    $('#phoneUser').val(response.userDto.phone);
-                                    $('#pointUser').val(response.userDto.point);
-
-                                },
-                                error: function(jqXHR, textStatus, errorThrown) {
-                                    console.error("Error fetching user data:", textStatus, errorThrown);
-                                }
-                            });
-                        });
-
-                        // Attach click event to the "Make" button
-                        row.find('.btn-make').on('click', function() {
-                            $.ajax({
-                                url: '/api/user',
-                                method: 'GET',
-                                data: { username: book.publisherName },
-                                success: function(response) {
-                                    $('#emailTo').val(response.userDto.email);
-                                },
-                                error: function(jqXHR, textStatus, errorThrown) {
-                                    console.error("Error fetching user email:", textStatus, errorThrown);
-                                }
-                            });
-                        });
-
-
-                        // Attach click event to the "Accept" button
-                        row.find('#acceptBtn').on('click', function() {
-                            const confirmAccept = confirm("Do you want to accept "+book.title+" book");
-                            if (confirmAccept) {
-                                $.ajax({
-                                    url: '/api/book/acception',
-                                    method: 'PUT',
-                                    data: { isbn: book.isbn },
-                                    success: function(response) {
-                                        loadBooks(data.currentPage)
-                                        notify("alert-success", response+"")
-                                    },
-                                    error: function(jqXHR, textStatus, errorThrown) {
-                                        loadBooks(data.currentPage)
-                                        notify("alert-danger", "Accepting book unsuccessfully")
-                                    }
-                                });
-                            }
-                        });
-
-                        // Attach click event to the "Reject" button
-                        row.find('#rejectBtn').on('click', function() {
-                            const confirmAccept = confirm("Do you want to reject "+book.title+" book");
-                            if (confirmAccept) {
-                                $.ajax({
-                                    url: '/api/book/rejection',
-                                    method: 'PUT',
-                                    data: { isbn: book.isbn },
-                                    success: function(response) {
-                                        loadBooks(data.currentPage)
-                                        notify("alert-success", response+"")
-                                    },
-                                    error: function(jqXHR, textStatus, errorThrown) {
-                                        loadBooks(data.currentPage)
-                                        notify("alert-danger", "Rejecting book unsuccessfully")
-                                    }
-                                });
-                            }
-                        });
-                    });
-
-                    // Pagination setup
-                    $('#pagination').twbsPagination('destroy');
-                    $('#pagination').twbsPagination({
-                        totalPages: data.totalPages,
-                        startPage: data.currentPage,
-                        visiblePages: 5,
-                        first: 'First',
-                        prev: '<<',
-                        next: '>>',
-                        last: 'Last',
-                        onPageClick: function(event, page) {
-                            if (page !== currentPage) {
-                                currentPage = page;
-                                loadBooks(page);
-                            }
-                        }
-                    });
-
-                    isLoading = false;
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("Error loading books:", textStatus, errorThrown);
-                    isLoading = false;
-                }
-            });
-        }
-
-        // Function to validate the form fields
-        function validateForm() {
-            const emailTo = $('#emailTo').val();
-            const subject = $('#emailSubject').val();
-            const message = $('#email-compose-editor').val();
-
-            if (!emailTo || !subject || !message) {
-                alert("Please fill out all fields before sending the email.");
-                return false;
-            }
-            return true;
-        }
-
-        // Attach click event to the "Send" button in the modal
-        $('.btn-primary.light.light').on('click', function() {
-
-            if (!validateForm()) {
-                return; // Stop if the form is not valid
-            }
-
-            const emailTo = $('#emailTo').val();
-            const subject = $('#emailSubject').val();
-            const message = $('#email-compose-editor').val();
-
-            // Perform form submission using AJAX
-            $.ajax({
-                url: '/api/send-email',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    emailTo: emailTo,
-                    subject: subject,
-                    message: message
-                }),
-                success: function(response) {
-                    notify("alert-success", response+"")
-
-                    // Clear the form fields
-                    $('#emailTo').val('');
-                    $('#emailSubject').val('');
-                    $('#email-compose-editor').val('');
-
-                    // Close the modal
-                    $('#appointmentModal').modal('hide');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    notify("alert-danger", "Sending email unsuccessfully")
-
-                    // Clear the form fields
-                    $('#emailTo').val('');
-                    $('#emailSubject').val('');
-                    $('#email-compose-editor').val('');
-
-                    // Close the modal
-                    $('#appointmentModal').modal('hide');
-                }
-            });
-        });
-
-        // Initial load of books
-        loadBooks(1);
-    });
-
-
-
-</script>
-
+<script th:src="@{../js/ads.js}" type="text/javascript"></script>
 </body>
-
-<!-- Mirrored from w3admin.dexignzone.com/xhtml/form-element.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2024 07:43:03 GMT -->
 </html>

@@ -1,43 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-
-
-<!-- Mirrored from w3admin.dexignzone.com/xhtml/form-wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2024 07:43:03 GMT -->
 <head>
 
     <!-- PAGE TITLE HERE -->
     <title>Digital</title>
 
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="../dashboard/images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <!-- Form step -->
-    <link href="/user/css/smart_wizard.min.css" rel="stylesheet">
+    <link href="/dashboard/css/smart_wizard.min.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
-    <link href="/user/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="/dashboard/css/style2.css" rel="stylesheet">
+    <link href="/dashboard/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/dashboard/css/style.css" rel="stylesheet">
     <!--    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>-->
 
     <!-- Daterange picker -->
-    <link href="/user/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="/dashboard/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Clockpicker -->
-    <link href="/user/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
+    <link href="/dashboard/vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
     <!-- asColorpicker -->
-    <link href="/user/vendor/jquery-asColorPicker/css/asColorPicker.min.css" rel="stylesheet">
+    <link href="/dashboard/vendor/jquery-asColorPicker/css/asColorPicker.min.css" rel="stylesheet">
     <!-- Material color picker -->
-    <link href="/user/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+    <link href="/dashboard/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
           rel="stylesheet">
 
     <!-- Pick date -->
     <link rel="stylesheet" href="/user/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="/user/vendor/pickadate/themes/default.date.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/user/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/dashboard/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
     <link href="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
     <link href="/dashboard/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/user/vendor/select2/css/select2.min.css">
+    <link rel="stylesheet" href="/dashboard/vendor/select2/css/select2.min.css">
+
+
 
 </head>
 
@@ -773,44 +772,130 @@
         <div class="inner-body">
             <div class="content-body">
                 <div class="container-fluid my-4">
-                    <h1>Book Chart</h1>
+                    <h1>Book List</h1>
                     <div class="row mb-3">
-                        <div class="col-md-4">
-                            <select id="timePeriod" class="form-select">
-                                <option value="7days">Last 7 Days</option>
-                                <option value="1month">Last 1 Month</option>
-                                <option value="1year">Last 1 Year</option>
-                                <option value="all">All Time</option>
-                            </select>
+                        <div class="col-md-6">
+                            <label>Show
+                                <select id="pageSize" class="form-select d-inline-block w-auto">
+                                    <option value="10" th:selected="${pageSize == 10}">10</option>
+                                    <option value="25" th:selected="${pageSize == 25}">25</option>
+                                    <option value="50" th:selected="${pageSize == 50}">50</option>
+                                    <option value="100" th:selected="${pageSize == 100}">100</option>
+                                </select> books
+                            </label>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <input type="text" id="searchInput" class="form-control d-inline-block w-auto"
+                                   placeholder="Search">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Books Sold (Bar Chart)</h4>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="booksSoldChart"></canvas>
-                                </div>
+                    <table class="table table-striped table-responsive-md">
+                        <thead>
+                        <tr>
+                            <th>
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+                                    Id
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
+                                    Title
+                                </a>
+                            </th>
+                            <th>Images</th>
+                            <th>
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir}}">
+                                    ISBN
+                                </a>
+                            </th>
+                            <th>Description</th>
+                            <th>
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=publicationDate&sortDir=' + ${reverseSortDir}}">
+                                    Publication Date
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=point&sortDir=' + ${reverseSortDir}}">
+                                    Pricing
+                                </a>
+                            </th>
+                            <th>
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}">
+                                    Status
+                                </a>
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody id="bookTableBody" th:each="book : ${listBooks}">
+                        <tr>
+                            <td th:text="${book.id}"></td>
+                            <td th:text="${book.title}"></td>
+                            <td><img alt="book" th:src="${book.bookCover}" style="width:100px;height:auto;"></td>
+                            <td th:text="${book.isbn}"></td>
+                            <td style="display: block; overflow: auto; max-width: 200px" th:text="${book.description}"></td>
+                            <td th:text="${#dates.format(book.publicationDate, 'yyyy-MM-dd')}"></td>
+                            <td th:text="${book.point}"></td>
+                            <td>
+                                <span th:classappend="${book.status == 1} ? 'badge badge-sm badge-warning light' : ''"
+                                      th:if="${book.status == 1}">Pending</span>
+                                <span th:classappend="${book.status == 2} ? 'badge badge-sm badge-success light' : ''"
+                                      th:if="${book.status == 2}">Successful</span>
+                                <span th:classappend="${book.status == 0} ? 'badge badge-sm badge-danger light' : ''"
+                                      th:if="${book.status == 0}">Canceled</span>
+                            </td>
+                            <td>
+                                <a th:href="@{/update/{id}(id=${book.id})}" class="btn btn-primary">Update</a>
+                                <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="footer-section">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p th:text="'Showing ' + ${startEntry} + ' to ' + ${endEntry} + ' of ' + ${totalItems} + ' entries'"></p>
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Revenue (Line Chart)</h4>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="revenueChart"></canvas>
-                                </div>
+                            <div class="col-md-6">
+                                <nav>
+                                    <ul class="pagination pagination-gutter pagination-primary no-bg float-end">
+                                        <!-- Previous Page Link -->
+                                        <li class="page-item page-indicator"
+                                            th:classappend="${currentPage == 1} ? 'disabled'">
+                                            <a class="page-link"
+                                               th:href="@{'/books-manage/' + (${currentPage - 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                                               th:aria-disabled="${currentPage == 1}" aria-label="Previous">
+                                                <i class="la la-angle-left"></i>
+                                            </a>
+                                        </li>
+
+                                        <!-- Page Numbers -->
+                                        <li th:each="i: ${#numbers.sequence(1, totalPages)}"
+                                            th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
+                                            <a class="page-link"
+                                               th:href="@{'/books-manage/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                                        </li>
+
+                                        <!-- Next Page Link -->
+                                        <li class="page-item page-indicator"
+                                            th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                            <a class="page-link"
+                                               th:href="@{'/books-manage/' + (${currentPage + 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                                               th:aria-disabled="${currentPage == totalPages}" aria-label="Next">
+                                                <i class="la la-angle-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="footer out-footer">
-                    <div class="copyright">
-                        <p>Copyright © by <a href="https://digitaltome.com/" target="_blank">Digital Tome</a> 2024</p>
-                    </div>
+            </div>
+            <div class="footer out-footer">
+                <div class="copyright">
+                    <p>Copyright � by <a href="https://digitaltome.com/" target="_blank">Digital Tome</a> 2024</p>
                 </div>
             </div>
         </div>
@@ -846,103 +931,30 @@
 <!--**********************************
     Scripts
 ***********************************-->
-
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const booksSoldContext = document.getElementById('booksSoldChart').getContext('2d');
-        const revenueContext = document.getElementById('revenueChart').getContext('2d');
-
-        let booksSoldChart = new Chart(booksSoldContext, {
-            type: 'bar',
-            data: {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'Books Sold',
-                        data: [],
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
-                        fill: true
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'day'
-                        }
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        let revenueChart = new Chart(revenueContext, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'Revenue',
-                        data: [],
-                        borderColor: 'rgba(153, 102, 255, 1)',
-                        borderWidth: 1,
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'day'
-                        }
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        document.getElementById('timePeriod').addEventListener('change', function() {
-            const period = this.value;
-            fetch(`/api/book/statistics?period=${period}`)
-                .then(response => response.json())
-                .then(data => {
-                    const labels = Object.keys(data.booksSoldDetails);
-                    const booksSoldData = Object.values(data.booksSoldDetails);
-                    const revenueData = Object.values(data.revenueDetails);
-
-                    booksSoldChart.data.labels = labels;
-                    booksSoldChart.data.datasets[0].data = booksSoldData;
-                    booksSoldChart.update();
-
-                    revenueChart.data.labels = labels;
-                    revenueChart.data.datasets[0].data = revenueData;
-                    revenueChart.update();
-                })
-                .catch(error => console.error('Error fetching book statistics:', error));
-        });
-
-        // Trigger change event to load initial data
-        document.getElementById('timePeriod').dispatchEvent(new Event('change'));
+    document.getElementById('pageSize').addEventListener('change', function () {
+        const pageSize = this.value;
+        window.location.href = `?pageSize=${pageSize}`;
     });
 
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#bookTableBody tr');
+        rows.forEach(row => {
+            const title = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+            if (title.includes(filter)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
 </script>
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <!-- Required vendors -->
-<script src="/user/vendor/global/global.min.js"></script>
+<script src="/dashboard/vendor/global/global.min.js"></script>
 
 <script src="/user/js/jquery.steps.min.js"></script>
 <script src="/user/js/jquery.validate.min.js"></script>
@@ -999,6 +1011,7 @@
 <!-- Datatable -->
 <script src="/dashboard/vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="/dashboard/js/plugins-init/datatables.init.js"></script>
+
 </body>
 
 <!-- Mirrored from w3admin.dexignzone.com/xhtml/form-wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2024 07:43:07 GMT -->
