@@ -18,8 +18,9 @@ public class MembershipService {
     private final UserService userService;
     private final MembershipRepository membershipRepository;
 
-    private static final int DAYS_IN_30_DAYS = 30;
+    private static final long DAYS_IN_30_DAYS = 30L * 24 * 60 * 60 * 1000;
     private static final int MILLIS_PER_MINUTE = 60 * 1000;
+
 
     @Transactional
     public void processMembershipUpgrade(AccountEntity accountEntity, String membershipType) {
@@ -27,18 +28,15 @@ public class MembershipService {
         accountEntity.setMembershipEntity(membership);
         accountEntity.setStartUpdate(new Date());
 
-
         Date membershipExpiryDate = new Date(accountEntity.getStartUpdate().getTime() + MILLIS_PER_MINUTE);
         accountEntity.setMembershipExpiryDate(membershipExpiryDate);
 
         userService.save(accountEntity);
     }
 
-
     public MembershipEntity findMembershipByName(String name) {
         return membershipRepository.findByName(name);
     }
-
 
     private MembershipEntity findOrCreateMembership(String membershipType) {
         MembershipEntity membership = findMembershipByName(membershipType);
@@ -50,8 +48,8 @@ public class MembershipService {
         return membership;
     }
 
-
-    @Scheduled(fixedRate = 20000) // Chạy mỗi 20 giây (1 phút)
+    @Scheduled(fixedRate = 20000) // Chạy mỗi 20 giây
+// @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void checkAndProcessExpiredMemberships() {
         Date currentDate = new Date();
@@ -65,7 +63,7 @@ public class MembershipService {
                 account.setStartUpdate(null);
                 account.setMembershipExpiryDate(null);
                 userService.save(account);
-                System.out.println("Đã xử lý hết hạn cho tài khoản: " + account.getUsername());
+                System.out.println("Account expiration has been processed: " + account.getUsername());
             }
         }
     }

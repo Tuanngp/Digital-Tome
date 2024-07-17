@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.dto;
 
 import com.fpt.swp391.group6.DigitalTome.Validation.ValidDateOfBirth;
+import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -11,7 +12,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserDto extends AccountEntity {
     private Long id;
     private String username;
     private String email;

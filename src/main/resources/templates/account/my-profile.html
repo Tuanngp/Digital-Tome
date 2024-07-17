@@ -142,16 +142,16 @@
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput2" class="form-label">DateOfBirth:</label>
-                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="formcontrolinput2" placeholder="Date Of Birth ">
+                                                <label for="birthday" class="form-label">DateOfBirth:</label>
+                                                <input th:field="*{dateOfBirth}" type="date" class="form-control" id="birthday" placeholder="Date Of Birth ">
                                                 <div th:if="${#fields.hasErrors('dateOfBirth')}" class="alert alert-danger" th:errors="*{dateOfBirth}"></div>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput3" class="form-label">Phone<span style="color: red;">*</span>:</label>
-                                                <input th:field="*{phone}" type="text" class="form-control" id="formcontrolinput3" placeholder="Phone Number">
+                                                <label for="phone" class="form-label">Phone<span style="color: red;">*</span>:</label>
+                                                <input th:field="*{phone}" type="text" class="form-control" id="phone" placeholder="Phone Number">
                                                 <div th:if="${#fields.hasErrors('phone')}" class="alert alert-danger" th:errors="*{phone}"></div>
                                             </div>
                                         </div>
@@ -160,8 +160,8 @@
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput5" class="form-label">Gender:</label>
-                                                <select th:field="*{gender}" class="form-control" id="formcontrolinput5">
+                                                <label for="gender" class="form-label">Gender:</label>
+                                                <select th:field="*{gender}" class="form-control" id="gender">
                                                     <!-- Kiểm tra gender chưa được cập nhật -->
                                                     <option th:if="${profileDto.gender eq null}" value="" selected>Choice</option>
                                                     <!-- Các lựa chọn giới tính -->
@@ -175,8 +175,8 @@
 
                                         <div class="col-lg-6 col-md-6">
                                             <div class="mb-3">
-                                                <label for="formcontrolinput7" class="form-label">Point</label>
-                                                <input th:field="*{point}" type="number" class="form-control" id="formcontrolinput7" placeholder="Point" readonly>
+                                                <label for="point" class="form-label">Point</label>
+                                                <input th:field="*{point}" type="number" class="form-control" id="point" placeholder="Point" readonly>
                                             </div>
                                         </div>
 
@@ -194,7 +194,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary btnhover">Save</button>
+                                    <button class="btn btn-primary btnhover" id="save-profile">Save</button>
                                 </form>
 
                             </div>
