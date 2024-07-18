@@ -96,7 +96,7 @@ public class HomeController {
         return "landing-page/coming-soon";
     }
 
-    @GetMapping("/ads")
+    @GetMapping("publisher/ads")
     public String ads() {
         return "book-manager/ads";
     }

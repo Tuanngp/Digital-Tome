@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 @Data
@@ -14,12 +17,16 @@ import java.util.Date;
 public class AdsDto {
     private Long id;
     private Long adsId;
-    private Long placementId;
-    private Long typeId;
-    private String title;
-    private String imageUrl;
+    private Long placementId;//
+    private Long typeId;//
+    private String title; //
+    private String content; //
+    private Date startDate; //
+    private Date endDate; //
+    private String status; //
     private String adsType;
-    private Date startDate;
-    private Date endDate;
-    private String status;
+    private String adsPlacement;
+    private BigDecimal cost;
+    private String imageUrl;
+    private MultipartFile file;//
 }
