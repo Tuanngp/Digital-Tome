@@ -13,7 +13,7 @@ public class PaypalConfig {
     @Value("${paypal.client-id}")
     private String clientId;
 
-    @Value("${paypal.client-secret}")
+    @Value("${paypal.clientSecret}")
     private String clientSecret;
 
     @Value("${paypal.mode}")
