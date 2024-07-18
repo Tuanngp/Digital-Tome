@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recharge</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <style>
         body {
@@ -109,7 +110,6 @@
             margin-right: 10px;
             color: #4CAF50;
         }
-
     </style>
 </head>
 
@@ -172,20 +172,35 @@
                 <p><i class="fas fa-gift"></i> <strong>Selected products:</strong> <span id="selected-product">Point × 1</span></p>
                 <p><i class="fas fa-money-bill-wave"></i> <strong>Price:</strong> <span id="selected-price">1.00 USD</span></p>
                 <p><i class="fas fa-wallet"></i> <strong>Payment methods:</strong> Paypal</p>
-                <p><i class="fas fa-user"></i> <strong>Username:</strong> <input type="text" name="usernameAccount" th:value="${#authentication.name}"></p>
+                <p><i class="fas fa-user"></i> <strong>Username:</strong> <input type="text" name="usernameAccount" value=""></p>
             </div>
-            <button type="submit">Confirm</button>
+            <button type="button" onclick="confirmPayment()">Confirm</button>
         </div>
     </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function showConfirm(amount, points) {
         document.getElementById('confirm-section').style.display = 'block';
         document.getElementById('selected-product').innerText = `Point × ${points}`;
         document.getElementById('selected-price').innerText = `${amount} USD`;
-        var inputElement = document.getElementById('amount');
-        inputElement.value = amount;
+    }
+
+    function confirmPayment() {
+        Swal.fire({
+            title: 'Confirm your recharge',
+            text: 'Are you sure you want to recharge?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#4CAF50',
+            cancelButtonColor: '#f44336',
+            confirmButtonText: 'Yes, recharge!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('recharge-form').submit(); // Gửi form khi người dùng xác nhận
+            }
+        });
     }
 </script>
 </body>

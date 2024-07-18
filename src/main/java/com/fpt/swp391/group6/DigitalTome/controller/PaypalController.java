@@ -50,6 +50,10 @@ public class PaypalController {
             String cancelUrl = "http://localhost:8080/payment/cancel";
             String successUrl = "http://localhost:8080/payment/success";
 
+//            String cancelUrl = "https://digitaltome.azurewebsites.net/payment/cancel";
+//            String successUrl = "https://digitaltome.azurewebsites.net/payment/success";
+
+
             Payment payment = paypalService.createPayment(
                     Double.valueOf(amount),
                     currency,
@@ -107,7 +111,6 @@ public class PaypalController {
             paymentRepository.save(paymentEntity);
         }
         return paymentEntity.isSuccess() ? "payment/paymentSuccess" : "redirect:/payment/error";
-
     }
 
     @GetMapping("/payment/cancel")
