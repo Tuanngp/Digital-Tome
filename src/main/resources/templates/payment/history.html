@@ -35,7 +35,7 @@
     </style>
 </head>
 <body>
-<header th:replace="layout/header :: header"></header>
+<header th:replace="~{layout/header :: header}"></header>
 <br>
 <div class="container">
     <!-- Form tìm kiếm -->
@@ -101,12 +101,15 @@
 
 
 <script>
+
     $(document).ready(function() {
+        let startDate = null;
+        let endDate = null;
         function fetchTransactions(startDate, endDate, page, size) {
             $.ajax({
                 url: '/api/transactions/search',
                 type: 'GET',
-                data: {   // thông tin gửi tới backend để xử lý
+                data: {
                     startDate: startDate,
                     endDate: endDate,
                     page: page,
@@ -114,10 +117,10 @@
                 },
                 success: function(response) {
                     let transactions = response.payments;
-                    let transactionTable = $('#transactionTable'); // dòng 88
-                    transactionTable.empty(); // xóa nội dung bảng hiện tại, để thêm các dữ liệu mới
+                    let transactionTable = $('#transactionTable');
+                    transactionTable.empty();
 
-                    if (transactions.length > 0) {  // kiểm tra dữ liệu trả về từ backend
+                    if (transactions.length > 0) {
                         transactions.forEach((transaction, index) => {
                             let row = `<tr>
                             <td>${page * size + index + 1}</td>
@@ -131,7 +134,7 @@
                         </tr>`;
                             transactionTable.append(row);
                         });
-                    } else { // nếu không có giao dịch nào
+                    } else {
                         transactionTable.append('<tr><td colspan="6">No transactions found</td></tr>');
                     }
                     updatePagination(response.totalPages, response.currentPage);
@@ -142,46 +145,42 @@
             });
         }
 
-        // cập nhập phân trang
         function updatePagination(totalPages, currentPage) {
-            let paginationNav = $('#paginationNav ul'); // dòng 94
+            let paginationNav = $('#paginationNav ul');
             paginationNav.empty();
 
-            // Previous button
             let prevDisabled = (currentPage === 0) ? 'disabled' : '';
             let prevPage = (currentPage > 0) ? currentPage - 1 : 0;
             let prevItem = `<li class="page-item ${prevDisabled}">
-                <a class="page-link" href="#" data-page="${prevPage}">Previous</a>
-            </li>`;
+            <a class="page-link" href="#" data-page="${prevPage}">Previous</a>
+        </li>`;
             paginationNav.append(prevItem);
 
-            // Page numbers
             for (let i = 0; i < totalPages; i++) {
                 let activeClass = (i === currentPage) ? 'active' : '';
                 let pageItem = `<li class="page-item ${activeClass}">
-                    <a class="page-link" href="#" data-page="${i}">${i + 1}</a>
-                </li>`;
+                <a class="page-link" href="#" data-page="${i}">${i + 1}</a>
+            </li>`;
                 paginationNav.append(pageItem);
             }
 
-            // Next button
             let nextDisabled = (currentPage === totalPages - 1) ? 'disabled' : '';
             let nextPage = (currentPage < totalPages - 1) ? currentPage + 1 : totalPages - 1;
             let nextItem = `<li class="page-item ${nextDisabled}">
-                <a class="page-link" href="#" data-page="${nextPage}">Next</a>
-            </li>`;
+            <a class="page-link" href="#" data-page="${nextPage}">Next</a>
+        </li>`;
             paginationNav.append(nextItem);
         }
 
-
         fetchTransactions(null, null, 0, 5);
-        $(document).on('click', '.pagination a', function(event) {  // dòng 95
+        $(document).on('click', '.pagination a', function(event) {
             event.preventDefault();
             let page = $(this).data('page');
-            fetchTransactions(null, null, page, 5);
+            let startDate = $('#startDate').val();
+            let endDate = $('#endDate').val();
+            fetchTransactions(startDate, endDate, page, 5);
         });
 
-        // Submit search form
         $('#searchForm').on('submit', function(event) {
             event.preventDefault();
             let startDate = $('#startDate').val();
@@ -189,7 +188,8 @@
             fetchTransactions(startDate, endDate, 0, 5);
         });
     });
+
 </script>
-<footer th:replace="layout/footer :: footer"></footer>
+<footer th:replace="~{layout/footer :: footer}"></footer>
 </body>
 </html>

@@ -39,6 +39,7 @@ public class MemberShipController {
         if (!canUpgrade(accountEntity, planType)) {
             return ResponseEntity.badRequest().body("Cannot upgrade to this plan");
         }
+
         membershipService.processMembershipUpgrade(accountEntity, planType);
         return ResponseEntity.ok("Successfully upgraded to " + planType + " plan");
     }
