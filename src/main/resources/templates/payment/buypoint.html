@@ -172,7 +172,7 @@
                 <p><i class="fas fa-gift"></i> <strong>Selected products:</strong> <span id="selected-product">Point × 1</span></p>
                 <p><i class="fas fa-money-bill-wave"></i> <strong>Price:</strong> <span id="selected-price">1.00 USD</span></p>
                 <p><i class="fas fa-wallet"></i> <strong>Payment methods:</strong> Paypal</p>
-                <p><i class="fas fa-user"></i> <strong>Username:</strong> <input type="text" name="usernameAccount" value=""></p>
+                <p><i class="fas fa-user"></i> <strong>Username:</strong> <input type="text" name="usernameAccount" th:value="${#authentication.name}"></p>
             </div>
             <button type="button" onclick="confirmPayment()">Confirm</button>
         </div>
