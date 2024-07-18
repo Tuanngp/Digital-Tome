@@ -43,6 +43,7 @@ public class SpringSecurity {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/uploadbook/**").hasAnyRole("PUBLISHER")
                         .requestMatchers("/publisher/**").hasAnyRole("PUBLISHER", "ADMIN")
+                        .requestMatchers("/censor/**").hasAnyRole("CENSOR", "ADMIN")
                        /* .requestMatchers("/admin/").hasAnyRole("ADMIN")*/
                         .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/profile/**").authenticated()

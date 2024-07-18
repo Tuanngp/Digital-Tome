@@ -145,6 +145,12 @@
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error("Error loading books:", textStatus, errorThrown);
+                    $('#booksList').empty();
+                    const notification = `
+                            <div id="notifyDiv" class="alert alert-danger" role="alert">
+                                Error on loading books!
+                            </div>`;
+                    $('#booksList').append(notification);
                 },
                 complete: function () {
                     // Hide the loading spinner

@@ -206,7 +206,9 @@
                     <h2>No books in your favorite list.</h2>
                 </div>
                 <div class="row book-grid-row">
-                        <div class="col-book style-1" th:each="fav : ${favorites}">
+                        <div class="col-book style-1"
+
+                             th:each="fav : ${favorites}">
                             <div class="dz-shop-card style-1" th:href="'books/'+${fav.getBookEntity().getIsbn()}">
                                 <div class="dz-media">
                                     <img alt="book" th:src="${fav.getBookEntity().getBookCover()}">
@@ -218,7 +220,7 @@
                                     </label>
                                 </div>
                                 <div class="dz-content">
-                                    <h5 class="title"><a th:href="@{'/books/' + ${fav.getBookEntity().getIsbn()}}">Thunder Stunt</a></h5>
+                                    <h5 class="title"><a th:href="@{'/books/' + ${fav.getBookEntity().getIsbn()}}" th:text="${fav.getBookEntity().getTitle()}">Thunder Stunt</a></h5>
                                     <ul class="dz-tags" th:each="category : ${fav.getBookEntity().getCategoryEntityList()}">
                                         <li><a th:href="@{books-grid-view}" th:text="${category.getName().toUpperCase()}"></a></li>
                                     </ul>
