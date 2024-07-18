@@ -49,7 +49,7 @@ public class SpringSecurity {
                         .requestMatchers("/admin").hasAnyRole("ADMIN")
 
                         .requestMatchers("/admin/**").permitAll()
-                        .requestMatchers("/profile/**").authenticated()
+                        .requestMatchers("/profile/**","/payment/premium").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
                         .requestMatchers("/chat").authenticated()
                         .requestMatchers("favorites/**").authenticated()
