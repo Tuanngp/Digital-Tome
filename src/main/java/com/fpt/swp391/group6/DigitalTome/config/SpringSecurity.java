@@ -46,7 +46,7 @@ public class SpringSecurity {
                         .requestMatchers("/censor/**").hasAnyRole("CENSOR", "ADMIN")
                         .requestMatchers("/admin").hasAnyRole("ADMIN")
                         .requestMatchers("/admin/**").permitAll()
-                        .requestMatchers("/profile/**").authenticated()
+                        .requestMatchers("/profile/**","/payment/premium").authenticated()
                         .requestMatchers("/buypoint/**").authenticated()
                         .requestMatchers("/chat").authenticated()
                         .requestMatchers("favorites/**").authenticated()

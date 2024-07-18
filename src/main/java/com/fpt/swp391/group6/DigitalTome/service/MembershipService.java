@@ -18,20 +18,34 @@ public class MembershipService {
     private final UserService userService;
     private final MembershipRepository membershipRepository;
 
-    private static final long DAYS_IN_30_DAYS = 30L * 24 * 60 * 60 * 1000;
     private static final int MILLIS_PER_MINUTE = 60 * 1000;
 
+    private static final long MILLIS_IN_30_DAYS = 30L * 24 * 60 * 60 * 1000;
+    private static final long MILLIS_IN_90_DAYS = 90L * 24 * 60 * 60 * 1000;
+    private static final long MILLIS_IN_150_DAYS = 150L * 24 * 60 * 60 * 1000;
 
     @Transactional
     public void processMembershipUpgrade(AccountEntity accountEntity, String membershipType) {
+
         MembershipEntity membership = findOrCreateMembership(membershipType);
+
         accountEntity.setMembershipEntity(membership);
         accountEntity.setStartUpdate(new Date());
 
-        Date membershipExpiryDate = new Date(accountEntity.getStartUpdate().getTime() + MILLIS_PER_MINUTE);
+        Date membershipExpiryDate = calculateExpiryDate(membershipType, accountEntity.getStartUpdate());
         accountEntity.setMembershipExpiryDate(membershipExpiryDate);
 
         userService.save(accountEntity);
+    }
+
+    private Date calculateExpiryDate(String membershipType, Date startDate) {
+        long duration = switch (membershipType) {
+            case "basic" -> MILLIS_IN_30_DAYS;
+            case "standard" -> MILLIS_IN_90_DAYS;
+            case "premium" -> MILLIS_IN_150_DAYS;
+            default -> throw new IllegalArgumentException("Unknown membership type: " + membershipType);
+        };
+        return new Date(startDate.getTime() + duration);
     }
 
     public MembershipEntity findMembershipByName(String name) {
@@ -48,17 +62,15 @@ public class MembershipService {
         return membership;
     }
 
-    @Scheduled(fixedRate = 20000) // Chạy mỗi 20 giây
-// @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(fixedRate = 20000)
+  //  @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void checkAndProcessExpiredMemberships() {
         Date currentDate = new Date();
         List<AccountEntity> expiredAccounts = userService.findAccountsByExpiredMembership(currentDate);
 
         for (AccountEntity account : expiredAccounts) {
-            Date expiryDate = account.getMembershipExpiryDate();
-
-            if (expiryDate != null && currentDate.after(expiryDate)) {
+            if (account.getMembershipExpiryDate().before(currentDate)) {
                 account.setMembershipEntity(null);
                 account.setStartUpdate(null);
                 account.setMembershipExpiryDate(null);

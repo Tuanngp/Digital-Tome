@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/head :: head}">
     <title>Premium</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -17,7 +17,7 @@
         </div>
     </div>
     <!-- Header -->
-    <div th:replace="~{layout/header :: header}"></div>
+    <header th:replace="~{layout/header :: header}"></header>
     <!-- Header End -->
 
     <div class="page-content">
@@ -50,14 +50,13 @@
                                 <div class="pricingtable-price">
                                     <h2 class="pricingtable-bx">50 Points<small class="pricingtable-type">/Month</small></h2>
                                 </div>
-                                <p class="text">Get access to a limited selection of books.</p>
+                                <p class="text">Get access to all books for one month.</p>
                                 <ul class="pricingtable-features">
-                                    <li>Access to basic book categories</li>
+                                    <li>Unlimited access to all book categories</li>
                                     <li>Basic customer support</li>
                                     <li>Offline access to downloaded books</li>
                                     <li>Access to community forums</li>
                                     <li>Monthly book recommendations</li>
-
                                 </ul>
                                 <div class="pricingtable-footer">
                                     <button onclick="confirmUpgrade('basic', 50)" class="btn btn-primary btnhover3">Start Now <i class="fa fa-angle-right m-l10"></i></button>
@@ -72,18 +71,18 @@
                                     <h3 class="title">Standard Plan</h3>
                                 </div>
                                 <div class="pricingtable-price">
-                                    <h2 class="pricingtable-bx">100 Points<small class="pricingtable-type">/Month</small></h2>
+                                    <h2 class="pricingtable-bx">120 Points<small class="pricingtable-type">/3 Months</small></h2>
                                 </div>
-                                <p class="text">Get access to a wider selection of books.</p>
+                                <p class="text">Get access to all books for three months.</p>
                                 <ul class="pricingtable-features">
-                                    <li>Access to standard and premium book categories</li>
+                                    <li>Unlimited access to all book categories</li>
                                     <li>Priority customer support</li>
                                     <li>Offline access to downloaded books</li>
                                     <li>Access to community forums</li>
                                     <li>Monthly book recommendations</li>
                                 </ul>
                                 <div class="pricingtable-footer">
-                                    <button onclick="confirmUpgrade('standard', 100)" class="btn btn-primary btnhover3">Start Now <i class="fa fa-angle-right m-l10"></i></button>
+                                    <button onclick="confirmUpgrade('standard', 120)" class="btn btn-primary btnhover3">Start Now <i class="fa fa-angle-right m-l10"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -95,9 +94,9 @@
                                     <h3 class="title">Premium Plan</h3>
                                 </div>
                                 <div class="pricingtable-price">
-                                    <h2 class="pricingtable-bx">150 Points<small class="pricingtable-type">/Month</small></h2>
+                                    <h2 class="pricingtable-bx">150 Points<small class="pricingtable-type">/5 Months</small></h2>
                                 </div>
-                                <p class="text">Get access to all book categories and premium features.</p>
+                                <p class="text">Get access to all books for five months.</p>
                                 <ul class="pricingtable-features">
                                     <li>Unlimited access to all book categories</li>
                                     <li>24/7 priority customer support</li>
@@ -114,6 +113,7 @@
                 </div>
             </div>
         </section>
+
 
         <!-- Newsletter -->
         <section class="py-5 newsletter-wrapper" style="background-image: url('/user/images/background/bg1.jpg'); background-size: cover;">
@@ -151,7 +151,6 @@
     <!-- Footer -->
     <div th:replace="~{layout/footer :: footer}"></div>
     <!-- Footer End -->
-
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
 
