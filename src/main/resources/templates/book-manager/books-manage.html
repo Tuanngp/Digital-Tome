@@ -793,34 +793,32 @@
                         <thead>
                         <tr>
                             <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} + '&pageSize=' + ${pageSize}}">
                                     Id
                                 </a>
                             </th>
                             <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir} + '&pageSize=' + ${pageSize}}">
                                     Title
                                 </a>
                             </th>
-                            <th>Images</th>
                             <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir}}">
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir} + '&pageSize=' + ${pageSize}}">
                                     ISBN
                                 </a>
                             </th>
-                            <th>Description</th>
                             <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=publicationDate&sortDir=' + ${reverseSortDir}}">
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=publicationDate&sortDir=' + ${reverseSortDir} + '&pageSize=' + ${pageSize}}">
                                     Publication Date
                                 </a>
                             </th>
                             <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=point&sortDir=' + ${reverseSortDir}}">
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=point&sortDir=' + ${reverseSortDir} + '&pageSize=' + ${pageSize}}">
                                     Pricing
                                 </a>
                             </th>
                             <th>
-                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}">
+                                <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir} + '&pageSize=' + ${pageSize}}">
                                     Status
                                 </a>
                             </th>
@@ -861,28 +859,20 @@
                                 <nav>
                                     <ul class="pagination pagination-gutter pagination-primary no-bg float-end">
                                         <!-- Previous Page Link -->
-                                        <li class="page-item page-indicator"
-                                            th:classappend="${currentPage == 1} ? 'disabled'">
-                                            <a class="page-link"
-                                               th:href="@{'/books-manage/' + (${currentPage - 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                                               th:aria-disabled="${currentPage == 1}" aria-label="Previous">
+                                        <li class="page-item page-indicator" th:classappend="${currentPage == 1} ? 'disabled'">
+                                            <a class="page-link" th:href="@{'/books-manage/' + (${currentPage - 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&pageSize=' + ${pageSize}}" th:aria-disabled="${currentPage == 1}" aria-label="Previous">
                                                 <i class="la la-angle-left"></i>
                                             </a>
                                         </li>
 
                                         <!-- Page Numbers -->
-                                        <li th:each="i: ${#numbers.sequence(1, totalPages)}"
-                                            th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
-                                            <a class="page-link"
-                                               th:href="@{'/books-manage/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                                        <li th:each="i: ${#numbers.sequence(1, totalPages)}" th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
+                                            <a class="page-link" th:href="@{'/books-manage/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&pageSize=' + ${pageSize}}">[[${i}]]</a>
                                         </li>
 
                                         <!-- Next Page Link -->
-                                        <li class="page-item page-indicator"
-                                            th:classappend="${currentPage == totalPages} ? 'disabled'">
-                                            <a class="page-link"
-                                               th:href="@{'/books-manage/' + (${currentPage + 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                                               th:aria-disabled="${currentPage == totalPages}" aria-label="Next">
+                                        <li class="page-item page-indicator" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                            <a class="page-link" th:href="@{'/books-manage/' + (${currentPage + 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + '&pageSize=' + ${pageSize}}" th:aria-disabled="${currentPage == totalPages}" aria-label="Next">
                                                 <i class="la la-angle-right"></i>
                                             </a>
                                         </li>
@@ -934,8 +924,12 @@
 <script>
     document.getElementById('pageSize').addEventListener('change', function () {
         const pageSize = this.value;
-        window.location.href = `?pageSize=${pageSize}`;
+        const urlParams = new URLSearchParams(window.location.search);
+        const sortField = urlParams.get('sortField') || 'id'; // Default to 'id' if not present
+        const sortDir = urlParams.get('sortDir') || 'asc'; // Default to 'asc' if not present
+        window.location.href = `/books-manage/1?pageSize=${pageSize}&sortField=${sortField}&sortDir=${sortDir}`;
     });
+
 
     document.getElementById('searchInput').addEventListener('keyup', function () {
         const filter = this.value.toLowerCase();

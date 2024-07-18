@@ -172,7 +172,7 @@ public class BookController {
 
         book.setStatus(1);
         bookService.saveBook(book);
-        return "redirect:/book-manager/books-manage";
+        return "redirect:/books-manage";
     }
 
 
@@ -207,7 +207,7 @@ public class BookController {
         }
 
         this.bookService.deleteBookById(id);
-        return "redirect:/book-manager/books-manage";
+        return "redirect:/books-manage";
     }
 
     @GetMapping("/books-view/{pageNo}")
@@ -240,14 +240,10 @@ public class BookController {
                                     Model model, Principal principal,
                                     @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
 
-        // Check if the principal is null (user not authenticated)
         if (principal == null) {
             return "redirect:/login";
         }
-        // Get the current logged-in user's account ID
         AccountEntity accountEntity = accountService.findByUsername(principal.getName());
-
-        // Fetch books for the current account
         Page<BookEntity> page = bookService.findPaginatedByAccountId(accountEntity.getId(), pageNo, pageSize, sortField, sortDir);
         List<BookEntity> listBooks = page.getContent();
 
@@ -265,6 +261,7 @@ public class BookController {
         model.addAttribute("listBooks", listBooks);
         return "book-manager/books-manage";
     }
+
 
     @GetMapping("/books/{isbn}")
     public String showBookDetail(@PathVariable(value = "isbn") String isbn, Principal principal, Model model) {

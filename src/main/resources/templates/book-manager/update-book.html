@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
+
+
+<!-- Mirrored from w3admin.dexignzone.com/xhtml/form-wizard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2024 07:43:03 GMT -->
 <head>
 
     <!-- PAGE TITLE HERE -->
-    <title>Digital</title>
+    <title>Digital Tome</title>
 
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" href="../dashboard/images/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <!-- Form step -->
     <link href="/dashboard/css/smart_wizard.min.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="/dashboard/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="/dashboard/css/style.css" rel="stylesheet">
 
     <!-- Daterange picker -->
     <link href="/dashboard/vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
@@ -23,23 +25,19 @@
     <!-- Material color picker -->
     <link href="/dashboard/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
           rel="stylesheet">
-
+    <link href="/dashboard/css/style2.css" rel="stylesheet">
     <!-- Pick date -->
     <link rel="stylesheet" href="/user/vendor/pickadate/themes/default.css">
     <link rel="stylesheet" href="/user/vendor/pickadate/themes/default.date.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/dashboard/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-    <link href="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
-    <link href="/dashboard/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="/dashboard/vendor/select2/css/select2.min.css">
-
-
 
 </head>
 
 <body>
+
 <!--*******************
     Preloader start
 ********************-->
@@ -53,201 +51,919 @@
     Preloader end
 ********************-->
 
+
 <!--**********************************
-    Sidebar start
+    Main wrapper start
 ***********************************-->
-<div class="deznav">
-    <div class="deznav-scroll">
-        <ul class="metismenu" id="menu">
-            <li><a href="/books-manage" class="" aria-expanded="false">
-                <div class="menu-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/>
-                    </svg>
-                </div>
-                <span class="nav-text">Books Manage</span>
-            </a>
-            </li>
-            <li><a href="/upload" class="" aria-expanded="false">
-                <div class="menu-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
-                    </svg>
-                </div>
-                <span class="nav-text">Upload Book</span>
-            </a>
-            </li>
-            <li><a href="/books-chart" class="" aria-expanded="false">
-                <div class="menu-icon">
-                    <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5687 13.8887C18.2435 13.8887 18.8098 14.4455 18.7066 15.1118C18.1013 19.0318 14.7456 21.9423 10.6982 21.9423C6.22029 21.9423 2.59082 18.3129 2.59082 13.836C2.59082 10.1476 5.39293 6.71181 8.54766 5.93497C9.22556 5.7676 9.92029 6.24445 9.92029 6.94234C9.92029 11.6708 10.0792 12.8939 10.9771 13.5592C11.875 14.2244 12.9308 13.8887 17.5687 13.8887Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M21.9834 9.95121C22.0371 6.91331 18.3055 2.01647 13.7581 2.10068C13.4045 2.107 13.1213 2.40173 13.1055 2.75437C12.9908 5.25226 13.1455 8.4891 13.2318 9.95647C13.2581 10.4133 13.6171 10.7723 14.0729 10.7986C15.5813 10.8849 18.936 11.0028 21.3981 10.6302C21.7329 10.5796 21.9781 10.2891 21.9834 9.95121Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <span class="nav-text">Books Chart</span>
-            </a>
-            </li>
+<div id="main-wrapper">
 
-
-        </ul>
-        <div class="switch-btn">
-            <a th:href="@{/logout}">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18.36 6.63965C19.6184 7.89844 20.4753 9.50209 20.8223 11.2478C21.1693 12.9936 20.9909 14.803 20.3096 16.4474C19.6284 18.0918 18.4748 19.4972 16.9948 20.486C15.5148 21.4748 13.7749 22.0026 11.995 22.0026C10.2151 22.0026 8.47515 21.4748 6.99517 20.486C5.51519 19.4972 4.36164 18.0918 3.68036 16.4474C2.99909 14.803 2.82069 12.9936 3.16772 11.2478C3.51475 9.50209 4.37162 7.89844 5.63 6.63965"
-                          stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M12 2V12" stroke="#252525" stroke-width="2" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                </svg>
-                <span>Logout</span>
-            </a>
+    <!--**********************************
+        Nav header start
+    ***********************************-->
+    <div class="nav-header">
+        <a href="/" class="brand-logo">
+            <img src="../user/images/logo.png" alt="New Logo" class="logo-abbr brand-title"/>
+        </a>
+        <div class="nav-control">
+            <div class="hamburger">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
         </div>
     </div>
-</div>
-<!--**********************************
-    Sidebar end
-***********************************-->
+    <!--**********************************
+        Nav header end
+    ***********************************-->
 
-<!--**********************************
-    Content body start
-***********************************-->
-<div class="outer-body">
-    <div class="inner-body">
-        <div class="content-body">
-            <div class="container-fluid my-4">
-                <h1>Book List</h1>
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label>Show
-                            <select id="pageSize" class="form-select d-inline-block w-auto">
-                                <option value="10" th:selected="${pageSize == 10}">10</option>
-                                <option value="25" th:selected="${pageSize == 25}">25</option>
-                                <option value="50" th:selected="${pageSize == 50}">50</option>
-                                <option value="100" th:selected="${pageSize == 100}">100</option>
-                            </select> books
-                        </label>
-                    </div>
-                    <div class="col-md-6 text-end">
-                        <input type="text" id="searchInput" class="form-control d-inline-block w-auto"
-                               placeholder="Search">
-                    </div>
-                </div>
-                <table class="table table-striped table-responsive-md">
-                    <thead>
-                    <tr>
-                        <th>
-                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
-                                Id
+    <!--**********************************
+        Chat box start
+    ***********************************-->
+    <div class="chatbox">
+        <div class="chatbox-close"></div>
+        <div class="custom-tab-1">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#notes">Notes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#alerts">Alerts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#chat">Chat</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active show" id="chat" role="tabpanel">
+                    <div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
+                        <div class="card-header chat-list-header text-center">
+                            <a href="javascript:void(0);">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/>
+                                        <rect fill="#000000" opacity="1.0"
+                                              transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) "
+                                              x="4" y="11" width="16" height="2" rx="1"/>
+                                    </g>
+                                </svg>
                             </a>
-                        </th>
-                        <th>
-                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
-                                Title
+                            <div>
+                                <h6 class="mb-1">Chat List</h6>
+                                <p class="mb-0">Show All</p>
+                            </div>
+                            <a href="javascript:void(0);">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <circle fill="#000000" cx="5" cy="12" r="2"/>
+                                        <circle fill="#000000" cx="12" cy="12" r="2"/>
+                                        <circle fill="#000000" cx="19" cy="12" r="2"/>
+                                    </g>
+                                </svg>
                             </a>
-                        </th>
-                        <th>Images</th>
-                        <th>
-                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir}}">
-                                ISBN
-                            </a>
-                        </th>
-                        <th>Description</th>
-                        <th>
-                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=publicationDate&sortDir=' + ${reverseSortDir}}">
-                                Publication Date
-                            </a>
-                        </th>
-                        <th>
-                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=point&sortDir=' + ${reverseSortDir}}">
-                                Pricing
-                            </a>
-                        </th>
-                        <th>
-                            <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}">
-                                Status
-                            </a>
-                        </th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody id="bookTableBody" th:each="book : ${listBooks}">
-                    <tr>
-                        <td th:text="${book.id}"></td>
-                        <td th:text="${book.title}"></td>
-                        <td><img alt="book" th:src="${book.bookCover}" style="width:100px;height:auto;"></td>
-                        <td th:text="${book.isbn}"></td>
-                        <td style="display: block; overflow: auto; max-width: 200px" th:text="${book.description}"></td>
-                        <td th:text="${#dates.format(book.publicationDate, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${book.point}"></td>
-                        <td>
-                                <span th:classappend="${book.status == 1} ? 'badge badge-sm badge-warning light' : ''"
-                                      th:if="${book.status == 1}">Pending</span>
-                            <span th:classappend="${book.status == 2} ? 'badge badge-sm badge-success light' : ''"
-                                  th:if="${book.status == 2}">Successful</span>
-                            <span th:classappend="${book.status == 0} ? 'badge badge-sm badge-danger light' : ''"
-                                  th:if="${book.status == 0}">Canceled</span>
-                        </td>
-                        <td>
-                            <a th:href="@{/update/{id}(id=${book.id})}" class="btn btn-primary">Update</a>
-                            <a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-                <div class="footer-section">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p th:text="'Showing ' + ${startEntry} + ' to ' + ${endEntry} + ' of ' + ${totalItems} + ' entries'"></p>
                         </div>
-                        <div class="col-md-6">
-                            <nav>
-                                <ul class="pagination pagination-gutter pagination-primary no-bg float-end">
-                                    <!-- Previous Page Link -->
-                                    <li class="page-item page-indicator"
-                                        th:classappend="${currentPage == 1} ? 'disabled'">
-                                        <a class="page-link"
-                                           th:href="@{'/books-manage/' + (${currentPage - 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                                           th:aria-disabled="${currentPage == 1}" aria-label="Previous">
-                                            <i class="la la-angle-left"></i>
-                                        </a>
+                        <div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
+                            <ul class="contacts">
+                                <li class="name-first-letter">A</li>
+                                <li class="active dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Archie Parker</span>
+                                            <p>Kalid is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Alfie Mason</span>
+                                            <p>Taherah left 7 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>AharlieKane</span>
+                                            <p>Sami is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Athan Jacoby</span>
+                                            <p>Nargis left 30 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">B</li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Bashid Samim</span>
+                                            <p>Rashid left 50 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Breddie Ronan</span>
+                                            <p>Kalid is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Ceorge Carson</span>
+                                            <p>Taherah left 7 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">D</li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Darry Parker</span>
+                                            <p>Sami is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Denry Hunter</span>
+                                            <p>Nargis left 30 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">J</li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Jack Ronan</span>
+                                            <p>Rashid left 50 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/1.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Jacob Tucker</span>
+                                            <p>Kalid is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/2.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>James Logan</span>
+                                            <p>Taherah left 7 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/3.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Joshua Weston</span>
+                                            <p>Sami is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">O</li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/4.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Oliver Acker</span>
+                                            <p>Nargis left 30 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="images/avatar/5.jpg" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Oscar Weston</span>
+                                            <p>Rashid left 50 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card chat dz-chat-history-box d-none">
+                        <div class="card-header chat-list-header text-center">
+                            <a href="javascript:void(0);" class="dz-chat-history-back">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24"/>
+                                        <rect fill="#000000" opacity="0.3"
+                                              transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000) "
+                                              x="14" y="7" width="2" height="10" rx="1"/>
+                                        <path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z"
+                                              fill="#000000" fill-rule="nonzero"
+                                              transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "/>
+                                    </g>
+                                </svg>
+                            </a>
+                            <div>
+                                <h6 class="mb-1">Chat with Khelesh</h6>
+                                <p class="mb-0 text-success">Online</p>
+                            </div>
+                            <div class="dropdown">
+                                <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect x="0" y="0" width="24" height="24"/>
+                                            <circle fill="#000000" cx="5" cy="12" r="2"/>
+                                            <circle fill="#000000" cx="12" cy="12" r="2"/>
+                                            <circle fill="#000000" cx="19" cy="12" r="2"/>
+                                        </g>
+                                    </svg>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View
+                                        profile
                                     </li>
-
-                                    <!-- Page Numbers -->
-                                    <li th:each="i: ${#numbers.sequence(1, totalPages)}"
-                                        th:classappend="${i == currentPage} ? 'active' : ''" class="page-item">
-                                        <a class="page-link"
-                                           th:href="@{'/books-manage/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                                    <li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to
+                                        btn-close friends
                                     </li>
-
-                                    <!-- Next Page Link -->
-                                    <li class="page-item page-indicator"
-                                        th:classappend="${currentPage == totalPages} ? 'disabled'">
-                                        <a class="page-link"
-                                           th:href="@{'/books-manage/' + (${currentPage + 1}) + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
-                                           th:aria-disabled="${currentPage == totalPages}" aria-label="Next">
-                                            <i class="la la-angle-right"></i>
-                                        </a>
+                                    <li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group
                                     </li>
+                                    <li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
                                 </ul>
-                            </nav>
+                            </div>
+                        </div>
+                        <div class="card-body msg_card_body dz-scroll" id="DZ_W_Contacts_Body3">
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Hi, how are you samim?
+                                    <span class="msg_time">8:40 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Hi Khalid i am good tnx how about you?
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    I am good too, thank you for your chat template
+                                    <span class="msg_time">9:00 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    You are welcome
+                                    <span class="msg_time_send">9:05 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    I am looking for your next templates
+                                    <span class="msg_time">9:07 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Ok, thank you have a good day
+                                    <span class="msg_time_send">9:10 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Bye, see you
+                                    <span class="msg_time">9:12 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Hi, how are you samim?
+                                    <span class="msg_time">8:40 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Hi Khalid i am good tnx how about you?
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    I am good too, thank you for your chat template
+                                    <span class="msg_time">9:00 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    You are welcome
+                                    <span class="msg_time_send">9:05 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    I am looking for your next templates
+                                    <span class="msg_time">9:07 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Ok, thank you have a good day
+                                    <span class="msg_time_send">9:10 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Bye, see you
+                                    <span class="msg_time">9:12 AM, Today</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer type_msg">
+                            <div class="input-group">
+                                <textarea class="form-control" placeholder="Type your message..."></textarea>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary light"><i
+                                            class="fa fa-location-arrow"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="alerts" role="tabpanel">
+                    <div class="card mb-sm-3 mb-md-0 contacts_card">
+                        <div class="card-header chat-list-header text-center">
+                            <a href="javascript:void(0);">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <circle fill="#000000" cx="5" cy="12" r="2"/>
+                                        <circle fill="#000000" cx="12" cy="12" r="2"/>
+                                        <circle fill="#000000" cx="19" cy="12" r="2"/>
+                                    </g>
+                                </svg>
+                            </a>
+                            <div>
+                                <h6 class="mb-1">Notications</h6>
+                                <p class="mb-0">Show All</p>
+                            </div>
+                            <a href="javascript:void(0);">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                              fill="#000000" fill-rule="nonzero" opacity="1"/>
+                                        <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                              fill="#000000" fill-rule="nonzero"/>
+                                    </g>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="card-body contacts_body p-0 dz-scroll" id="DZ_W_Contacts_Body1">
+                            <ul class="contacts">
+                                <li class="name-first-letter">SEVER STATUS</li>
+                                <li class="active">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont primary">KK</div>
+                                        <div class="user_info">
+                                            <span>David Nester Birthday</span>
+                                            <p class="text-primary">Today</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">SOCIAL</li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont success">RU</div>
+                                        <div class="user_info">
+                                            <span>Perfection Simplified</span>
+                                            <p>Jame Smith commented on your status</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">SEVER STATUS</li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont primary">AU</div>
+                                        <div class="user_info">
+                                            <span>AharlieKane</span>
+                                            <p>Sami is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont info">MO</div>
+                                        <div class="user_info">
+                                            <span>Athan Jacoby</span>
+                                            <p>Nargis left 30 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="notes">
+                    <div class="card mb-sm-3 mb-md-0 note_card">
+                        <div class="card-header chat-list-header text-center">
+                            <a href="javascript:void(0);">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/>
+                                        <rect fill="#000000" opacity="1.0"
+                                              transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) "
+                                              x="4" y="11" width="16" height="2" rx="1"/>
+                                    </g>
+                                </svg>
+                            </a>
+                            <div>
+                                <h6 class="mb-1">Notes</h6>
+                                <p class="mb-0">Add New Nots</p>
+                            </div>
+                            <a href="javascript:void(0);">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     width="18px" height="18px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"/>
+                                        <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
+                                              fill="#000000" fill-rule="nonzero" opacity="1"/>
+                                        <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
+                                              fill="#000000" fill-rule="nonzero"/>
+                                    </g>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="card-body contacts_body p-0 dz-scroll" id="DZ_W_Contacts_Body2">
+                            <ul class="contacts">
+                                <li class="active">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>New order placed..</span>
+                                            <p>10 Aug 2020</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-primary light btn-xs sharp me-1"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i
+                                                    class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>Youtube, a video-sharing website..</span>
+                                            <p>10 Aug 2020</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-primary light btn-xs sharp me-1"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i
+                                                    class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>john just buy your product..</span>
+                                            <p>10 Aug 2020</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-primary light btn-xs sharp me-1"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i
+                                                    class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>Athan Jacoby</span>
+                                            <p>10 Aug 2020</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a href="javascript:void(0);"
+                                               class="btn btn-primary light btn-xs sharp me-1"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i
+                                                    class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer out-footer">
-            <div class="copyright">
-                <p>Copyright � by <a href="https://digitaltome.com/" target="_blank">Digital Tome</a> 2024</p>
+    </div>
+    <!--**********************************
+        Chat box End
+    ***********************************-->
+
+
+    <!--**********************************
+        Header start
+    ***********************************-->
+    <div class="header">
+        <div class="header-content">
+            <nav class="navbar navbar-expand">
+                <div class="collapse navbar-collapse justify-content-between">
+                    <div class="header-left">
+
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+    <!--**********************************
+        Sidebar start
+    ***********************************-->
+    <div class="deznav">
+        <div class="deznav-scroll">
+            <ul class="metismenu" id="menu">
+                <li><a href="/books-manage" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Books Manage</span>
+                </a>
+                </li>
+                <li><a href="/upload" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Upload Book</span>
+                </a>
+                </li>
+                <li><a href="/books-chart" class="" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.5687 13.8887C18.2435 13.8887 18.8098 14.4455 18.7066 15.1118C18.1013 19.0318 14.7456 21.9423 10.6982 21.9423C6.22029 21.9423 2.59082 18.3129 2.59082 13.836C2.59082 10.1476 5.39293 6.71181 8.54766 5.93497C9.22556 5.7676 9.92029 6.24445 9.92029 6.94234C9.92029 11.6708 10.0792 12.8939 10.9771 13.5592C11.875 14.2244 12.9308 13.8887 17.5687 13.8887Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M21.9834 9.95121C22.0371 6.91331 18.3055 2.01647 13.7581 2.10068C13.4045 2.107 13.1213 2.40173 13.1055 2.75437C12.9908 5.25226 13.1455 8.4891 13.2318 9.95647C13.2581 10.4133 13.6171 10.7723 14.0729 10.7986C15.5813 10.8849 18.936 11.0028 21.3981 10.6302C21.7329 10.5796 21.9781 10.2891 21.9834 9.95121Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Books Chart</span>
+                </a>
+                </li>
+
+
+            </ul>
+            <div class="switch-btn">
+                <a th:href="@{/logout}">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.36 6.63965C19.6184 7.89844 20.4753 9.50209 20.8223 11.2478C21.1693 12.9936 20.9909 14.803 20.3096 16.4474C19.6284 18.0918 18.4748 19.4972 16.9948 20.486C15.5148 21.4748 13.7749 22.0026 11.995 22.0026C10.2151 22.0026 8.47515 21.4748 6.99517 20.486C5.51519 19.4972 4.36164 18.0918 3.68036 16.4474C2.99909 14.803 2.82069 12.9936 3.16772 11.2478C3.51475 9.50209 4.37162 7.89844 5.63 6.63965"
+                              stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 2V12" stroke="#252525" stroke-width="2" stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                    <span>Logout</span>
+                </a>
             </div>
         </div>
     </div>
-</div>
+    <!--**********************************
+        Sidebar end
+    ***********************************-->
 
-<!--**********************************
-    Content body end
-***********************************-->
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="outer-body">
+        <div class="inner-body">
+            <div class="content-body">
+                <div th:if="${error}" class="alert alert-danger" role="alert">
+                    <p th:text="${error}"></p>
+                </div>
+                <div class="container-fluid">
+                    <!-- row -->
+                    <div class="row">
+                        <form action="#" th:action="@{/save}" th:object="${book}" method="POST"
+                              enctype="multipart/form-data">
+                            <div class="col-xl-12 col-xxl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Update Book</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="smartwizard" class="form-wizard order-create">
+                                            <ul class="nav nav-wizard">
+                                                <li><a class="nav-link" href="#book_Info">
+                                                    <span>1</span>
+                                                </a></li>
+                                                <li><a class="nav-link" href="#book_Description">
+                                                    <span>2</span>
+                                                </a></li>
+                                                <li><a class="nav-link" href="#book_Content">
+                                                    <span>3</span>
+                                                </a></li>
+                                                <li><a class="nav-link" href="#book_Pricing">
+                                                    <span>4</span>
+                                                </a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="book_Info" class="tab-pane" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">ISBN*</label>
+                                                                <input type="text" th:field="*{isbn}"
+                                                                       class="form-control"
+                                                                       placeholder="ISBN" required
+                                                                       pattern="^\d{10}|\d{13}$"
+                                                                       title="ISBN must be 10 or 13 digits long">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Language*</label>
+                                                                <select id="language-select" th:field="*{language}"
+                                                                        class="form-control"
+                                                                        required>
+                                                                    <option value="en">English</option>
+                                                                    <option value="vi">Vietnam</option>
+                                                                    <!-- Th�m c�c ng�n ng? kh�c n?u c?n -->
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Author*</label>
+                                                                <select id="authorList" class="form-control"
+                                                                        multiple="multiple"
+                                                                        th:field="*{authorEntityList}">
+                                                                    <option th:each="author : ${authors}"
+                                                                            th:value="${author.id}"
+                                                                            th:text="${author.name}"></option>
+                                                                </select>
+                                                                <input type="text" id="authorSearch"
+                                                                       placeholder="Input to add new author..."
+                                                                       class="form-control mt-2">
+                                                                <button type="button" id="addAuthor"
+                                                                        class="btn btn-primary sw-btn-sub mt-2">Add
+                                                                    Author
+                                                                </button>
+                                                                <!-- Trường ẩn để lưu các author dưới dạng chuỗi -->
+                                                                <input type="hidden" id="authorIds" name="authorIds">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Publication
+                                                                    Date*</label>
+                                                                <input type="date" th:field="*{publicationDate}"
+                                                                       class="form-control"
+                                                                       placeholder="2017-06-04" id="mdate" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Genres*</label>
+                                                                <select id="multi-value-select" multiple="multiple"
+                                                                        style="width: 100%;"
+                                                                        th:field="*{categoryEntityList}">
+                                                                    <option th:each="category : ${categories}"
+                                                                            th:value="${category.id}"
+                                                                            th:text="${category.name}"></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <label class="text-label form-label">Book Cover*</label>
+                                                                <input class="form-control" type="file" name="image"
+                                                                       id="formFile"
+                                                                       accept="image/x-png,image/jpeg,image/jpg"
+                                                                       required/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="book_Description" class="tab-pane" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="mb-3">
+                                                                <h4 class="card-title mx-auto">Title*</h4>
+                                                                <p>Title about your book.</p>
+                                                                <input type="text" th:field="*{title}"
+                                                                       class="form-control"
+                                                                       placeholder="title" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mx-auto">
+                                                            <div class="mb-3">
+                                                                <h4 class="card-title mx-auto">Description*</h4>
+                                                                <p>Description about your book.</p>
+                                                                <textarea class="form-txtarea form-control"
+                                                                          th:field="*{description}" rows="8"
+                                                                          id="comment"
+                                                                          style="height: 121px;"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="book_Content" class="tab-pane" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="mx-auto">
+                                                            <h4 class="card-title mx-auto">Content</h4>
+                                                            <p>Upload file for your book.</p>
+                                                            <input class="form-control form-control-lg" id="formFileLg"
+                                                                   type="file" name="bookP" accept="application/pdf"
+                                                                   required/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="book_Pricing" class="tab-pane" role="tabpanel">
+                                                    <div class="row emial-setup">
+                                                        <div class="mx-auto">
+                                                            <h4 class="card-title mx-auto">Poin*</h4>
+                                                            <p>Enter the point value for this book. Points are used
+                                                                as currency on our website, allowing users to
+                                                                purchase books using points.</p>
+                                                            <div class="input-group">
+                                                                <input type="number" id="pricing" name="pricing" class="form-control" th:value="*{point}" required />
+                                                                <span class="input-group-text">point</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary sw-btn-sub" style="text-align: right;"> Save
+                                Book
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer out-footer">
+                <div class="copyright">
+                    <p>Copyright � Developed by <a href="https://dexignzone.com/" target="_blank">DexignZone</a> 2023
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+
+
+    <!--**********************************
+        Footer start
+    ***********************************-->
+
+    <!--**********************************
+        Footer end
+    ***********************************-->
+
+    <!--**********************************
+       Support ticket button start
+    ***********************************-->
+
+    <!--**********************************
+       Support ticket button end
+    ***********************************-->
+
+
+</div>
 <!--**********************************
     Main wrapper end
 ***********************************-->
@@ -255,30 +971,8 @@
 <!--**********************************
     Scripts
 ***********************************-->
-<script>
-    document.getElementById('pageSize').addEventListener('change', function () {
-        const pageSize = this.value;
-        window.location.href = `?pageSize=${pageSize}`;
-    });
-
-    document.getElementById('searchInput').addEventListener('keyup', function () {
-        const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#bookTableBody tr');
-        rows.forEach(row => {
-            const title = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
-            if (title.includes(filter)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    });
-</script>
-
-
-
 <!-- Required vendors -->
-<script src="/dashboard/vendor/global/global.min.js"></script>
+<script src="/user/vendor/global/global.min.js"></script>
 
 <script src="/user/js/jquery.steps.min.js"></script>
 <script src="/user/js/jquery.validate.min.js"></script>
@@ -330,10 +1024,102 @@
 <!-- Pickdate -->
 <script src="/user/js/plugins-init/pickadate-init.js"></script>
 
-<script src="/dashboard/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
-<script src="/dashboard/js/plugins-init/sweetalert.init.js"></script>
-<!-- Datatable -->
-<script src="/dashboard/vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="/dashboard/js/plugins-init/datatables.init.js"></script>
+<!-- x�a c�i n�y l� k x�i select2 ???c ?�u -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
+
+<script>
+    $(document).ready(function () {
+        // SmartWizard initialize
+        $('#smartwizard').smartWizard();
+    });
+</script>
+
+
+//api cho n�t author v� search author
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#authorList').select2({
+            tags: false, // Cho phép người dùng thêm tag mới
+            tokenSeparators: [',', ' ']
+        });
+
+        document.getElementById('addAuthor').addEventListener('click', function () {
+            var authorName = document.getElementById('authorSearch').value;
+            if (authorName) {
+                var newOption = new Option(authorName, 'new-' + authorName, true, true);
+                $('#authorList').append(newOption).trigger('change');
+            }
+        });
+
+        // Trước khi submit form, chúng ta sẽ lấy tất cả các giá trị của tác giả và gán vào trường ẩn
+        document.querySelector('form').addEventListener('submit', function () {
+            var authorSelect = $('#authorList').select2('data');
+            var authorIds = authorSelect.map(function (author) {
+                return author.id;
+            });
+            document.getElementById('authorIds').value = authorIds.join(',');
+        });
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#authorSearch').on('input', function () {
+            var query = $(this).val();
+            if (query.length > 0) {
+                $('#addAuthor').prop('disabled', false);
+            } else {
+                $('#addAuthor').prop('disabled', true);
+            }
+        });
+    });
+</script>
+
+//api cho n�t category v� search category
+<script>
+    $(document).ready(function () {
+        $('#authorList').select2({
+            tags: true,
+            tokenSeparators: [',', ' '],
+            createTag: function (params) {
+                return {
+                    id: params.term,
+                    text: params.term,
+                    newOption: true
+                };
+            }
+        });
+
+        var newAuthors = [];
+
+        $('#addAuthor').click(function () {
+            var authorId = $('#authorSearch').val();
+            if (authorId) {
+                var newOption = new Option(authorId, authorId, true, true);
+                newOption.newOption = true;
+                $('#authorList').append(newOption).trigger('change');
+                newAuthors.push(parseInt(authorId));  // Chuyển đổi chuỗi thành số nguyên
+                $('#authorSearch').val('');
+            }
+        });
+
+        $('#multi-value-select').select2({
+            placeholder: 'Select a category',
+            allowClear: true
+        });
+
+        $('form').submit(function (e) {
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'newAuthors',
+                value: JSON.stringify(newAuthors),  // Chuyển danh sách thành chuỗi JSON
+            }).appendTo('form');
+        });
+    });
+</script>
+
 </body>
+
 </html>
