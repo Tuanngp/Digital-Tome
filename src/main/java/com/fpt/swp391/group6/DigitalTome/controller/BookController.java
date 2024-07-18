@@ -81,6 +81,7 @@ public class BookController {
         model.addAttribute("authors", existingAuthors);
         model.addAttribute("categories", catego);
 
+
         System.out.println("ID của sách khi cập nhật: " + book.getId());
         if (book.getId() != null) {
             BookEntity existingBook = bookService.findByIsbn(book.getIsbn());
@@ -167,6 +168,7 @@ public class BookController {
         } else {
             book.setRestricted(true);
         }
+        book.setPoint((long) pricing);
 
         book.setStatus(1);
         bookService.saveBook(book);
@@ -272,7 +274,12 @@ public class BookController {
         if (principal != null) {
             AccountEntity user = accountService.findByUsername(principal.getName());
             if (user != null) {
-                isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
+                MembershipEntity membership = user.getMembershipEntity();
+                if (membership != null) {
+                    isOwned = true;  // User has an upgraded account, can read the book
+                } else {
+                    isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
+                }
             }
         }
 
@@ -295,17 +302,12 @@ public class BookController {
             MembershipEntity membership = user.getMembershipEntity();
             long bookPrice = book.getPoint();
 
-            if ((membership == null && bookPrice <= 10000 && userPoints >= bookPrice) ||
-                    (membership != null &&
-                            ((membership.getName().equals("basic") && bookPrice <= 30000 && userPoints >= bookPrice) ||
-                                    (membership.getName().equals("standard") && bookPrice <= 50000 && userPoints >= bookPrice) ||
-                                    (membership.getName().equals("premium") && userPoints >= bookPrice)))) {
-
-                // Trừ điểm của người dùng
+            if (membership == null && userPoints >= bookPrice) {
+                // Deduct points from the user
                 user.setPoint(userPoints - bookPrice);
                 accountService.save(user);
 
-                // Lưu giao dịch vào bảng payment
+                // Save the transaction in the payment table
                 PaymentEntity payment = new PaymentEntity();
                 payment.setAccountEntity(user);
                 payment.setBookEntity(book);
@@ -314,15 +316,14 @@ public class BookController {
                 payment.setSuccess(true);
                 paymentService.save(payment);
 
-                // Chuyển đến trang đọc sách
+                // Redirect to the book reading page
                 return "redirect:/read-book/" + book.getId();
             } else {
-                model.addAttribute("error", "You don't have enough points or your membership level is insufficient to buy this book.");
+                model.addAttribute("error", "You don't have enough points to buy this book.");
             }
         } else {
             model.addAttribute("error", "Error processing your purchase. Please try again.");
         }
-
 
         boolean isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
         model.addAttribute("book", book);
@@ -340,8 +341,10 @@ public class BookController {
         AccountEntity user = accountService.findByUsername(principal.getName());
 
         if (book != null && user != null) {
+            MembershipEntity membership = user.getMembershipEntity();
             boolean isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
-            if (isOwned) {
+
+            if (membership != null || isOwned) {
                 model.addAttribute("book", book);
                 return "book-view/books-read";
             } else {
@@ -353,7 +356,5 @@ public class BookController {
             return "redirect:/error404";
         }
     }
-
-
 }
 
