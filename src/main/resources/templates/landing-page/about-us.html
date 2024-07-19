@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="~{layout/head :: head}"><title>Home</title></head>
+<head th:replace="~{layout/head :: head}">
+    <title>Home - Digital Tome</title>
+</head>
 
 <body>
-<div class="page-wraper">
+<div class="page-wrapper">
     <div class="preloader-wrapper-1" id="loading-area">
         <div class="preloader-inner">
             <div class="preloader-shade"></div>
@@ -24,11 +26,11 @@
              style="background-image:url(static/user/images/background/bg3.jpg);">
             <div class="container">
                 <div class="dz-bnr-inr-entry">
-                    <h1>About us</h1>
+                    <h1>About Us</h1>
                     <nav aria-label="breadcrumb" class="breadcrumb-row">
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a th:href="@{/}"> Home</a></li>
-                            <li class="breadcrumb-item">About us</li>
+                            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                            <li class="breadcrumb-item">About Us</li>
                         </ul>
                     </nav>
                 </div>
@@ -50,7 +52,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div class="split-box ">
+                                <div class="split-box">
                                     <div>
                                         <img alt="" class="m-b20 aos-item" data-aos="fade-up"
                                              data-aos-delay="500" data-aos-duration="800" th:src="@{../user/images/about/about2.jpg}">
@@ -80,27 +82,22 @@
                          data-aos-duration="800">
                         <div class="about-content px-lg-4">
                             <div class="section-head style-1">
-                                <h2 class="title">Book-land Is the Best Choice For Learners</h2>
-                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                                    suffered alteration that doesn’t look even slightly believable. It Is A
-                                    Long-Established Fact That A Reader Will Be Distracted</p>
+                                <h2 class="title">Digital Tome: Your Gateway to Online Reading</h2>
+                                <p>Explore a vast collection of books from various genres, accessible anytime and anywhere. Our mission is to make reading enjoyable and convenient for book lovers around the world.</p>
                             </div>
-                            <a class="btn btn-primary btnhover shadow-primary" th:href="@{/contact-us}">Contact Us</a>
+                            <a class="btn btn-primary btnhover shadow-primary" th:href="@{/advertisement}">Advertisement</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-
-        <!--icon-box3 section-->
+        <!--Our Mission Section-->
         <section class="content-inner-1 bg-light">
             <div class="container">
                 <div class="section-head text-center">
                     <h2 class="title">Our Mission</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris</p>
+                    <p>At Digital Tome, we strive to provide an unparalleled reading experience, making literature accessible to everyone. Join us in our journey to foster a love for reading across the globe.</p>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6">
@@ -109,9 +106,8 @@
                                 <i class="flaticon-open-book-1 icon-cell"></i>
                             </div>
                             <div class="icon-content">
-                                <h4 class="title">Best Bookstore</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. </p>
+                                <h4 class="title">Vast Library</h4>
+                                <p>Discover a diverse range of books and genres to suit every reader's taste.</p>
                                 <a th:href="@{/about-us}">Learn More <i class="fa-solid fa-angles-right"></i></a>
                             </div>
                         </div>
@@ -122,9 +118,8 @@
                                 <i class="flaticon-exclusive icon-cell"></i>
                             </div>
                             <div class="icon-content">
-                                <h4 class="title">Trusted Seller</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. </p>
+                                <h4 class="title">Trusted Platform</h4>
+                                <p>Read with confidence on a secure and reliable platform dedicated to your literary adventures.</p>
                                 <a th:href="@{/about-us}">Learn More <i class="fa-solid fa-angles-right"></i></a>
                             </div>
                         </div>
@@ -135,9 +130,8 @@
                                 <i class="flaticon-store icon-cell"></i>
                             </div>
                             <div class="icon-content">
-                                <h4 class="title">Expand Store</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna aliqua. </p>
+                                <h4 class="title">Growing Collection</h4>
+                                <p>Our library is constantly expanding with new titles and genres to explore.</p>
                                 <a th:href="@{/about-us}">Learn More <i class="fa-solid fa-angles-right"></i></a>
                             </div>
                         </div>
@@ -153,8 +147,7 @@
                     <div class="section-head book-align">
                         <div>
                             <h2 class="title mb-0">Testimonials</h2>
-                            <p class="m-b0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua</p>
+                            <p class="m-b0">Hear from our satisfied readers who have discovered a world of literature with Digital Tome.</p>
                         </div>
                         <div class="pagination-align style-1">
                             <div class="testimonial-button-prev swiper-button-prev"><i
@@ -178,8 +171,7 @@
                                     <li><i class="flaticon-star text-yellow"></i></li>
                                 </ul>
                                 <div class="testimonial-text">
-                                    <p>Very impresive store. Your book made studying for the ABC certification exams a
-                                        breeze. Thank you very much</p>
+                                    <p>Digital Tome has completely transformed my reading experience. I can now access my favorite books from anywhere!</p>
                                 </div>
                                 <div class="testimonial-detail">
                                     <div class="testimonial-pic">
@@ -187,262 +179,76 @@
                                     </div>
                                     <div class="info-right">
                                         <h6 class="testimonial-name">Jason Huang</h6>
-                                        <span class="testimonial-position">Book Lovers</span>
+                                        <span class="testimonial-position">Avid Reader</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-1">
-                            <div class="testimonial-info">
-                                <ul class="dz-rating">
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-muted"></i></li>
-                                </ul>
-                                <div class="testimonial-text">
-                                    <p>Very impresive store. Your book made studying for the ABC certification exams a
-                                        breeze. Thank you very much</p>
-                                </div>
-                                <div class="testimonial-detail">
-                                    <div class="testimonial-pic radius">
-                                        <img alt="" th:src="@{../user/images/testimonial/testimonial2.jpg}">
-                                    </div>
-                                    <div>
-                                        <h6 class="testimonial-name">Miranda Lee</h6>
-                                        <span class="testimonial-position">Book Lovers</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-1">
-                            <div class="testimonial-info">
-                                <ul class="dz-rating">
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-muted"></i></li>
-                                    <li><i class="flaticon-star text-muted"></i></li>
-                                </ul>
-                                <div class="testimonial-text">
-                                    <p>Very impresive store. Your book made studying for the ABC certification exams a
-                                        breeze. Thank you very much</p>
-                                </div>
-                                <div class="testimonial-detail">
-                                    <div class="testimonial-pic radius">
-                                        <img alt="" th:src="@{../user/images/testimonial/testimonial3.jpg}">
-                                    </div>
-                                    <div>
-                                        <h6 class="testimonial-name">Steve Henry</h6>
-                                        <span class="testimonial-position">Book Lovers</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-1">
-                            <div class="testimonial-info">
-                                <ul class="dz-rating">
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-muted"></i></li>
-                                </ul>
-                                <div class="testimonial-text">
-                                    <p>Thank you for filling a niche at an affordable price. Your book was just what I
-                                        was looking for. Thanks again</p>
-                                </div>
-                                <div class="testimonial-detail">
-                                    <div class="testimonial-pic radius">
-                                        <img alt="" th:src="@{../user/images/testimonial/testimonial4.jpg}">
-                                    </div>
-                                    <div>
-                                        <h6 class="testimonial-name">Angela Moss</h6>
-                                        <span class="testimonial-position">Book Lovers</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-1">
-                            <div class="testimonial-info">
-                                <ul class="dz-rating">
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-muted"></i></li>
-                                </ul>
-                                <div class="testimonial-text">
-                                    <p>Very impresive store. Your book made studying for the ABC certification exams a
-                                        breeze. Thank you very much</p>
-                                </div>
-                                <div class="testimonial-detail">
-                                    <div class="testimonial-pic radius">
-                                        <img alt="" th:src="@{../user/images/testimonial/testimonial2.jpg}">
-                                    </div>
-                                    <div>
-                                        <h6 class="testimonial-name">Miranda Lee</h6>
-                                        <span class="testimonial-position">Book Lovers</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="testimonial-1">
-                            <div class="testimonial-info">
-                                <ul class="dz-rating">
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-yellow"></i></li>
-                                    <li><i class="flaticon-star text-muted"></i></li>
-                                    <li><i class="flaticon-star text-muted"></i></li>
-                                </ul>
-                                <div class="testimonial-text">
-                                    <p>Very impresive store. Your book made studying for the ABC certification exams a
-                                        breeze. Thank you very much</p>
-                                </div>
-                                <div class="testimonial-detail">
-                                    <div class="testimonial-pic">
-                                        <img alt="" th:src="@{../user/images/testimonial/testimonial1.jpg}">
-                                    </div>
-                                    <div class="info-right">
-                                        <h6 class="testimonial-name">Jason Huang</h6>
-                                        <span class="testimonial-position">Book Lovers</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Additional testimonials go here -->
                 </div>
             </div>
         </section>
         <!-- Testimonial End -->
 
         <!-- Feature Box -->
-        <section class="content-inner bg-light">
-            <div class="container">
-                <div class="row sp15">
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                        <div class="icon-bx-wraper style-2 m-b30 text-center">
-                            <div class="icon-bx-lg">
-                                <i class="fa-solid fa-users icon-cell"></i>
-                            </div>
-                            <div class="icon-content">
-                                <h2 class="dz-title counter m-b0">125,663</h2>
-                                <p class="font-20">Happy Customers</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" col-lg-3 col-md-6 col-sm-6 col-6">
-                        <div class="icon-bx-wraper style-2 m-b30 text-center">
-                            <div class="icon-bx-lg">
-                                <i class="fa-solid fa-book icon-cell"></i>
-                            </div>
-                            <div class="icon-content">
-                                <h2 class="dz-title counter m-b0">50,672</h2>
-                                <p class="font-20">Book Collections</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                        <div class="icon-bx-wraper style-2 m-b30 text-center">
-                            <div class="icon-bx-lg">
-                                <i class="fa-solid fa-store icon-cell"></i>
-                            </div>
-                            <div class="icon-content">
-                                <h2 class="dz-title counter m-b0">1,562</h2>
-                                <p class="font-20">Our Stores</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">
-                        <div class="icon-bx-wraper style-2 m-b30 text-center">
-                            <div class="icon-bx-lg">
-                                <i class="fa-solid fa-leaf icon-cell"></i>
-                            </div>
-                            <div class="icon-content">
-                                <h2 class="dz-title counter m-b0">457</h2>
-                                <p class="font-20">Famous Writers</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!--        <section class="content-inner bg-light">-->
+<!--            <div class="container">-->
+<!--                <div class="row sp15">-->
+<!--                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">-->
+<!--                        <div class="icon-bx-wraper style-2 m-b30 text-center">-->
+<!--                            <div class="icon-bx-lg">-->
+<!--                                <i class="fa-solid fa-users icon-cell"></i>-->
+<!--                            </div>-->
+<!--                            <div class="icon-content">-->
+<!--                                <h2 class="dz-title counter m-b0">125,663</h2>-->
+<!--                                <p class="font-14">Satisfied Readers</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">-->
+<!--                        <div class="icon-bx-wraper style-2 m-b30 text-center">-->
+<!--                            <div class="icon-bx-lg">-->
+<!--                                <i class="fa-solid fa-book icon-cell"></i>-->
+<!--                            </div>-->
+<!--                            <div class="icon-content">-->
+<!--                                <h2 class="dz-title counter m-b0">12,124</h2>-->
+<!--                                <p class="font-14">Books Available</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">-->
+<!--                        <div class="icon-bx-wraper style-2 m-b30 text-center">-->
+<!--                            <div class="icon-bx-lg">-->
+<!--                                <i class="fa-solid fa-star icon-cell"></i>-->
+<!--                            </div>-->
+<!--                            <div class="icon-content">-->
+<!--                                <h2 class="dz-title counter m-b0">10,236</h2>-->
+<!--                                <p class="font-14">5 Star Reviews</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-lg-3 col-md-6 col-sm-6 col-6">-->
+<!--                        <div class="icon-bx-wraper style-2 m-b30 text-center">-->
+<!--                            <div class="icon-bx-lg">-->
+<!--                                <i class="fa-solid fa-globe icon-cell"></i>-->
+<!--                            </div>-->
+<!--                            <div class="icon-content">-->
+<!--                                <h2 class="dz-title counter m-b0">12</h2>-->
+<!--                                <p class="font-14">Global Partners</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
         <!-- Feature Box End -->
-
-        <!-- Client Start-->
-        <div class="py-5">
-            <div class="container">
-                <!--Client Swiper -->
-                <div class="swiper client-swiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img alt="client" th:src="@{../user/images/client/client1.svg}"></div>
-                        <div class="swiper-slide"><img alt="client" th:src="@{../user/images/client/client2.svg}"></div>
-                        <div class="swiper-slide"><img alt="client" th:src="@{../user/images/client/client3.svg}"></div>
-                        <div class="swiper-slide"><img alt="client" th:src="@{../user/images/client/client4.svg}"></div>
-                        <div class="swiper-slide"><img alt="client" th:src="@{../user/images/client/client5.svg}"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Client End-->
-        <!-- Newsletter -->
-        <section class="py-5 newsletter-wrapper"
-                 style="background-image: url('static/user/images/background/bg1.jpg'); background-size: cover;">
-            <div class="container">
-                <div class="subscride-inner">
-                    <div class="row style-1 justify-content-xl-between justify-content-lg-center align-items-center text-xl-start text-center">
-                        <div class="col-xl-7 col-lg-12">
-                            <div class="section-head mb-0">
-                                <h2 class="title text-white my-lg-3 mt-0">Subscribe to our newsletter for newest books
-                                    updates</h2>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-lg-6">
-                            <form action="https://bookland.dexignzone.com/xhtml/script/mailchamp.php"
-                                  class="dzSubscribe style-1" method="post">
-                                <div class="dzSubscribeMsg"></div>
-                                <div class="form-group">
-                                    <div class="input-group mb-0">
-                                        <label>
-                                            <input class="form-control bg-transparent text-white" name="dzEmail" placeholder="Your Email Address"
-                                                   required="required"
-                                                   type="email">
-                                        </label>
-                                        <div class="input-group-addon">
-                                            <button class="btn btn-primary btnhover" name="submit" type="submit"
-                                                    value="Submit">
-                                                <span>SUBSCRIBE</span>
-                                                <i class="fa-solid fa-paper-plane"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Newsletter End -->
-
     </div>
-    <!-- Body Content End -->
 
     <footer th:replace="~{layout/footer :: footer}"></footer>
 
-    <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
+    <!-- Scroll Top Button -->
+    <button class="scroltop icon-up" type="button"><i class="fa-solid fa-arrow-up-long"></i></button>
 </div>
 </body>
 </html>

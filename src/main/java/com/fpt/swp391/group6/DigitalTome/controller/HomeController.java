@@ -1,9 +1,11 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.service.AdsService;
 import com.fpt.swp391.group6.DigitalTome.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,14 +14,11 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    @GetMapping("/payment/premium")
-    public String upgrade() {
-        return "payment/premium";
-    }
     private final BookService bookService;
-
-    public HomeController(BookService bookService) {
+    private final AdsService adsService;
+    public HomeController(BookService bookService, AdsService adsService) {
         this.bookService = bookService;
+        this.adsService = adsService;
     }
 
     // api to get list book recommendation
@@ -29,6 +28,16 @@ public class HomeController {
         return ResponseEntity.ok(bookService.getRecommendation());
     }
 
+    @GetMapping(value = {"/","home", "index"})
+    public String defaultHome(Model model) {
+
+        return "landing-page/index";
+    }
+
+    @GetMapping("/payment/premium")
+    public String upgrade() {
+        return "payment/premium";
+    }
 
     @GetMapping("/about-us")
     public String aboutUs() {
@@ -85,20 +94,9 @@ public class HomeController {
         return "book-view/books-list-view-sidebar";
     }
 
-    //Test
-    @GetMapping("/books-test")
-    public String booksListViewSidebarTest() {
-        return "Deeply Books Seeking";
-    }
-
     @GetMapping("/coming-soon")
     public String comingSoon() {
         return "landing-page/coming-soon";
-    }
-
-    @GetMapping("publisher/ads")
-    public String ads() {
-        return "book-manager/ads";
     }
 
     @GetMapping("/faq")

@@ -14841,90 +14841,90 @@ strong,
   border: 1px solid #dee2e6 !important;
 }
 
-/*.preloader-wrapper-1,*/
-/*.preloader-wrapper-2 {*/
-/*  align-items: center;*/
-/*  position: fixed;*/
-/*  z-index: 999999;*/
-/*  left: 0;*/
-/*  top: 0;*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  background-color: #fff;*/
-/*  display: flex;*/
-/*  justify-content: center;*/
-/*  -webkit-transition: all 1s;*/
-/*  -ms-transition: all 1s;*/
-/*  transition: all 1s;*/
-/*}*/
+.preloader-wrapper-1,
+.preloader-wrapper-2 {
+  align-items: center;
+  position: fixed;
+  z-index: 999999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  -webkit-transition: all 1s;
+  -ms-transition: all 1s;
+  transition: all 1s;
+}
 
-/*.preloader-wrapper-1 .preloader-inner,*/
-/*.preloader-wrapper-2 .preloader-inner {*/
-/*  position: relative;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner,
+.preloader-wrapper-2 .preloader-inner {
+  position: relative;
+}
 
-/*.preloader-wrapper-1 .preloader-inner {*/
-/*  height: 100px;*/
-/*  width: 150px;*/
-/*  padding: 5px;*/
-/*  border-radius: 0;*/
-/*  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3), 0 0 0 5px var(--primary) inset;*/
-/*  perspective: 37.5rem;*/
-/*  transform-style: preserve-3d;*/
-/*  transform: translate3d(0, 0, 0);*/
-/*  animation: pre_ani_cover_1 7s ease-in-out infinite;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner {
+  height: 100px;
+  width: 150px;
+  padding: 5px;
+  border-radius: 0;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3), 0 0 0 5px var(--primary) inset;
+  perspective: 37.5rem;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+  animation: pre_ani_cover_1 7s ease-in-out infinite;
+}
 
-/*.preloader-wrapper-1 .preloader-inner .preloader-shade,*/
-/*.preloader-wrapper-1 .preloader-inner .preloader-wrap {*/
-/*  width: calc(50% - 0.25rem);*/
-/*  position: absolute;*/
-/*  left: 0.25rem;*/
-/*  animation: pre_ani_cover_1 7s ease-in-out infinite;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner .preloader-shade,
+.preloader-wrapper-1 .preloader-inner .preloader-wrap {
+  width: calc(50% - 0.25rem);
+  position: absolute;
+  left: 0.25rem;
+  animation: pre_ani_cover_1 7s ease-in-out infinite;
+}
 
-/*.preloader-wrapper-1 .preloader-inner .preloader-shade {*/
-/*  background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 50%);*/
-/*  height: 3.75rem;*/
-/*  filter: blur(0.25rem);*/
-/*  transform: scaleY(0);*/
-/*  transform-origin: 100% 0%;*/
-/*  top: calc(100% - 0.25rem);*/
-/*  animation-name: pre_ani_shadow_1;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner .preloader-shade {
+  background-image: linear-gradient(-45deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
+  height: 3.75rem;
+  filter: blur(0.25rem);
+  transform: scaleY(0);
+  transform-origin: 100% 0%;
+  top: calc(100% - 0.25rem);
+  animation-name: pre_ani_shadow_1;
+}
 
-/*.preloader-wrapper-1 .preloader-inner .preloader-wrap {*/
-/*  background-color: #fff;*/
-/*  background-image: linear-gradient(90deg, rgba(227, 228, 232, 0) 87.5%, #e3e4e8);*/
-/*  height: calc(100% - 0.5rem);*/
-/*  transform-origin: 100% 50%;*/
-/*  animation-name: pre_ani_wrap_1;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner .preloader-wrap {
+  background-color: #fff;
+  background-image: linear-gradient(90deg, rgba(227, 228, 232, 0) 87.5%, #e3e4e8);
+  height: calc(100% - 0.5rem);
+  transform-origin: 100% 50%;
+  animation-name: pre_ani_wrap_1;
+}
 
-/*.preloader-wrapper-1 .preloader-inner .wrap2,*/
-/*.preloader-wrapper-1 .preloader-inner .wrap3,*/
-/*.preloader-wrapper-1 .preloader-inner .wrap4 {*/
-/*  background-image: repeating-linear-gradient(#17181c 0 0.125rem, rgba(23, 24, 28, 0) 0.125rem 0.5rem), linear-gradient(90deg, rgba(227, 228, 232, 0) 87.5%, #e3e4e8);*/
-/*  background-repeat: no-repeat;*/
-/*  background-position: center;*/
-/*  background-size: 2.5rem 4.125rem, 100% 100%;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner .wrap2,
+.preloader-wrapper-1 .preloader-inner .wrap3,
+.preloader-wrapper-1 .preloader-inner .wrap4 {
+  background-image: repeating-linear-gradient(#17181c 0 0.125rem, rgba(23, 24, 28, 0) 0.125rem 0.5rem), linear-gradient(90deg, rgba(227, 228, 232, 0) 87.5%, #e3e4e8);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 2.5rem 4.125rem, 100% 100%;
+}
 
-/*.preloader-wrapper-1 .preloader-inner .wrap2 {*/
-/*  animation-name: pre_ani_wrap_2;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner .wrap2 {
+  animation-name: pre_ani_wrap_2;
+}
 
-/*.preloader-wrapper-1 .preloader-inner .wrap3 {*/
-/*  animation-name: pre_ani_wrap_3;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner .wrap3 {
+  animation-name: pre_ani_wrap_3;
+}
 
-/*.preloader-wrapper-1 .preloader-inner .wrap4 {*/
-/*  animation-name: pre_ani_wrap_4;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner .wrap4 {
+  animation-name: pre_ani_wrap_4;
+}
 
-/*.preloader-wrapper-1 .preloader-inner .wrap5 {*/
-/*  animation-name: pre_ani_wrap_5;*/
-/*}*/
+.preloader-wrapper-1 .preloader-inner .wrap5 {
+  animation-name: pre_ani_wrap_5;
+}
 
 @keyframes pre_ani_cover_1 {
 

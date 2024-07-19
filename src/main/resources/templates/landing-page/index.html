@@ -23,7 +23,43 @@
         <div class="main-slider style-1">
             <div class="main-swiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide bg-blue"
+                    <div th:if="${adsHomepage.size() > 0}" class="swiper-slide bg-blue"
+                         th:each="ads : ${adsHomepage}"
+                         style="background-image: url(static/user/images/background/waveelement.png);">
+                        <div class="container">
+                            <div class="banner-content" th:if="ads!=null">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="swiper-content">
+                                            <div class="content-info">
+                                                <h6 class="sub-title" data-swiper-parallax="-10">BEST MANAGEMENT </h6>
+                                                <h1 class="title mb-0" data-swiper-parallax="-20" th:text="${ads.getTitle()}">Think and Grow
+                                                    Rich</h1>
+<!--                                                <ul class="dz-tags" data-swiper-parallax="-30">-->
+<!--                                                    <li><a href="javascript:void(0);">Napoleon Hill</a></li>-->
+<!--                                                    <li><a href="javascript:void(0);">Business & Strategy</a></li>-->
+<!--                                                </ul>-->
+                                                <p class="text mb-0" data-swiper-parallax="-40" th:text="${ads.getContent()}">It is a long-established
+                                                    fact that a reader will be distracted by the readable content of a
+                                                    page when looking at its layout. The point of using Lorem Ipsum is
+                                                    that it has a more-or-less normal.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="banner-media" data-swiper-parallax="-100">
+                                            <a th:href="${ads.getLink()}">
+                                                <img alt="banner-media" style="max-height: 460px" th:src="@{${ads.getImageUrl()}}">
+                                            </a>
+                                        </div>
+<!--                                        <img alt="dots" class="pattern" data-swiper-parallax="-100"-->
+<!--                                             th:src="@{../user/images/Group.png}">-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${adsHomepage.size() == 0}" class="swiper-slide bg-blue"
                          style="background-image: url(static/user/images/background/waveelement.png);">
                         <div class="container">
                             <div class="banner-content">
@@ -76,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide bg-blue"
+                    <div th:if="${adsHomepage.size() == 0}" class="swiper-slide bg-blue"
                          style="background-image: url(static/user/images/background/waveelement.png);">
                         <div class="container">
                             <div class="banner-content">
@@ -133,37 +169,37 @@
                     <div class="swiper-pagination-five"></div>
                 </div>
             </div>
-            <div class="swiper main-swiper-thumb">
+            <div  class="swiper main-swiper-thumb" style="display: none">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="books-card">
                             <div class="dz-media">
-                                <img alt="book" th:src="@{../user/images/books/book16.png}">
+<!--                                <img alt="book" th:src="@{../user/images/books/book16.png}">-->
                             </div>
                             <div class="dz-content">
-                                <h5 class="title mb-0">Think and Grow Rich</h5>
+<!--                                <h5 class="title mb-0">Think and Grow Rich</h5>-->
                                 <div class="dz-meta">
                                     <ul>
-                                        <li>by Napoleon Hill</li>
+<!--                                        <li>by Napoleon Hill</li>-->
                                     </ul>
                                 </div>
                                 <div class="book-footer">
                                     <div class="price">
-                                        <span class="price-num">$9.5</span>
+<!--                                        <span class="price-num">$9.5</span>-->
                                     </div>
                                     <div class="rate">
-                                        <i class="flaticon-star text-yellow"></i>
-                                        <i class="flaticon-star text-yellow"></i>
-                                        <i class="flaticon-star text-yellow"></i>
-                                        <i class="flaticon-star text-yellow"></i>
-                                        <i class="flaticon-star text-yellow"></i>
+<!--                                        <i class="flaticon-star text-yellow"></i>-->
+<!--                                        <i class="flaticon-star text-yellow"></i>-->
+<!--                                        <i class="flaticon-star text-yellow"></i>-->
+<!--                                        <i class="flaticon-star text-yellow"></i>-->
+<!--                                        <i class="flaticon-star text-yellow"></i>-->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="books-card">
+                    <div th:if="${adsHomepage.size() == 0}" class="swiper-slide">
+                        <div class="books-card2">
                             <div class="dz-media">
                                 <img alt="book" th:src="@{../user/images/books/grid/book9.jpg}">
                             </div>
@@ -189,8 +225,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="books-card">
+                    <div th:if="${adsHomepage.size() == 0}" class="swiper-slide">
+                        <div class="books-card2">
                             <div class="dz-media">
                                 <img alt="book" th:src="@{../user/images/books/book16.png}">
                             </div>
@@ -216,8 +252,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="books-card">
+                    <div th:if="${adsHomepage.size() == 0}" class="swiper-slide">
+                        <div class="books-card2">
                             <div class="dz-media">
                                 <img alt="book" th:src="@{../user/images/books/grid/book9.jpg}">
                             </div>
@@ -507,198 +543,8 @@
         </section>
         <!-- Book Sale End -->
 
-<!--        &lt;!&ndash; Feature Product &ndash;&gt;-->
-<!--        <section class="content-inner-1 bg-grey reccomend">-->
-<!--            <div class="container">-->
-<!--                <div class="section-head text-center">-->
-<!--                    <div class="circle style-1"></div>-->
-<!--                    <h2 class="title">Featured Product</h2>-->
-<!--&lt;!&ndash;                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut&ndash;&gt;-->
-<!--&lt;!&ndash;                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco&ndash;&gt;-->
-<!--&lt;!&ndash;                        laboris </p>&ndash;&gt;-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="container">-->
-<!--                <div class="swiper-container books-wrapper-2 swiper-three">-->
-<!--                    <div class="swiper-wrapper">-->
-<!--                        <div class="swiper-slide">-->
-<!--                            <div class="books-card style-2">-->
-<!--                                <div class="dz-media">-->
-<!--                                    <img alt="book" th:src="@{../user/images/books/large/bigbook1.jpg}">-->
-<!--                                </div>-->
-<!--                                <div class="dz-content">-->
-<!--                                    <h6 class="sub-title">BEST SELLER</h6>-->
-<!--                                    <h2 class="title">A Heavy LIft</h2>-->
-<!--                                    <ul class="dz-tags">-->
-<!--                                        <li>Napoleon Hill</li>-->
-<!--                                        <li>Business & Strategy</li>-->
-<!--                                    </ul>-->
-<!--                                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
-<!--                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim-->
-<!--                                        veniam, quis nostrud exercitation ullamco laboris </p>-->
-<!--                                    <div class="price">-->
-<!--                                        <span class="price-num">$9.5</span>-->
-<!--                                        <del>$12.0</del>-->
-<!--                                        <span class="badge">20% OFF</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="bookcard-footer">-->
-<!--                                        -->
-<!--                                        <a class="btn btn-outline-secondary btnhover m-t15" th:href="@{books-detail}">See-->
-<!--                                            Details</a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="swiper-slide">-->
-<!--                            <div class="books-card style-2">-->
-<!--                                <div class="dz-media">-->
-<!--                                    <img alt="book" th:src="@{../user/images/books/large/bigbook2.jpg}">-->
-<!--                                </div>-->
-<!--                                <div class="dz-content">-->
-<!--                                    <h6 class="sub-title">BEST SELLER</h6>-->
-<!--                                    <h2 class="title">A Heavy LIft</h2>-->
-<!--                                    <ul class="dz-tags">-->
-<!--                                        <li>Napoleon Hill</li>-->
-<!--                                        <li>Business & Strategy</li>-->
-<!--                                    </ul>-->
-<!--                                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
-<!--                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim-->
-<!--                                        veniam, quis nostrud exercitation ullamco laboris </p>-->
-<!--                                    <div class="price">-->
-<!--                                        <span class="price-num">$9.5</span>-->
-<!--                                        <del>$12.0</del>-->
-<!--                                        <span class="badge">20% OFF</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="bookcard-footer">-->
-<!--                                        -->
-<!--                                        <a class="btn btn-outline-secondary btnhover m-t15" th:href="@{books-detail}">See-->
-<!--                                            Details</a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="swiper-slide">-->
-<!--                            <div class="books-card style-2">-->
-<!--                                <div class="dz-media">-->
-<!--                                    <img alt="book" th:src="@{../user/images/books/large/bigbook1.jpg}">-->
-<!--                                </div>-->
-<!--                                <div class="dz-content">-->
-<!--                                    <h6 class="sub-title">BEST SELLER</h6>-->
-<!--                                    <h2 class="title">A Heavy LIft</h2>-->
-<!--                                    <ul class="dz-tags">-->
-<!--                                        <li>Napoleon Hill</li>-->
-<!--                                        <li>Business & Strategy</li>-->
-<!--                                    </ul>-->
-<!--                                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
-<!--                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim-->
-<!--                                        veniam, quis nostrud exercitation ullamco laboris </p>-->
-<!--                                    <div class="price">-->
-<!--                                        <span class="price-num">$9.5</span>-->
-<!--                                        <del>$12.0</del>-->
-<!--                                        <span class="badge">20% OFF</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="bookcard-footer">-->
-<!--                                        -->
-<!--                                        <a class="btn btn-outline-secondary btnhover m-t15" th:href="@{books-detail}">See-->
-<!--                                            Details</a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="swiper-slide">-->
-<!--                            <div class="books-card style-2">-->
-<!--                                <div class="dz-media">-->
-<!--                                    <img alt="book" th:src="@{../user/images/books/large/bigbook2.jpg}">-->
-<!--                                </div>-->
-<!--                                <div class="dz-content">-->
-<!--                                    <h6 class="sub-title">BEST SELLER</h6>-->
-<!--                                    <h2 class="title">A Heavy LIft</h2>-->
-<!--                                    <ul class="dz-tags">-->
-<!--                                        <li>Napoleon Hill</li>-->
-<!--                                        <li>Business & Strategy</li>-->
-<!--                                    </ul>-->
-<!--                                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
-<!--                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim-->
-<!--                                        veniam, quis nostrud exercitation ullamco laboris </p>-->
-<!--                                    <div class="price">-->
-<!--                                        <span class="price-num">$9.5</span>-->
-<!--                                        <del>$12.0</del>-->
-<!--                                        <span class="badge">20% OFF</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="bookcard-footer">-->
-<!--                                        -->
-<!--                                        <a class="btn btn-outline-secondary btnhover m-t15" th:href="@{books-detail}">See-->
-<!--                                            Details</a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="swiper-slide">-->
-<!--                            <div class="books-card style-2">-->
-<!--                                <div class="dz-media">-->
-<!--                                    <img alt="book" th:src="@{../user/images/books/large/bigbook1.jpg}">-->
-<!--                                </div>-->
-<!--                                <div class="dz-content">-->
-<!--                                    <h6 class="sub-title">BEST SELLER</h6>-->
-<!--                                    <h2 class="title">A Heavy LIft</h2>-->
-<!--                                    <ul class="dz-tags">-->
-<!--                                        <li>Napoleon Hill</li>-->
-<!--                                        <li>Business & Strategy</li>-->
-<!--                                    </ul>-->
-<!--                                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
-<!--                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim-->
-<!--                                        veniam, quis nostrud exercitation ullamco laboris </p>-->
-<!--                                    <div class="price">-->
-<!--                                        <span class="price-num">$9.5</span>-->
-<!--                                        <del>$12.0</del>-->
-<!--                                        <span class="badge">20% OFF</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="bookcard-footer">-->
-<!--                                        -->
-<!--                                        <a class="btn btn-outline-secondary btnhover m-t15" th:href="@{books-detail}">See-->
-<!--                                            Details</a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="swiper-slide">-->
-<!--                            <div class="books-card style-2">-->
-<!--                                <div class="dz-media">-->
-<!--                                    <img alt="book" th:src="@{../user/images/books/large/bigbook2.jpg}">-->
-<!--                                </div>-->
-<!--                                <div class="dz-content">-->
-<!--                                    <h6 class="sub-title">BEST SELLER</h6>-->
-<!--                                    <h2 class="title">A Heavy LIft</h2>-->
-<!--                                    <ul class="dz-tags">-->
-<!--                                        <li>Napoleon Hill</li>-->
-<!--                                        <li>Business & Strategy</li>-->
-<!--                                    </ul>-->
-<!--                                    <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do-->
-<!--                                        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim-->
-<!--                                        veniam, quis nostrud exercitation ullamco laboris </p>-->
-<!--                                    <div class="price">-->
-<!--                                        <span class="price-num">$9.5</span>-->
-<!--                                        <del>$12.0</del>-->
-<!--                                        <span class="badge">20% OFF</span>-->
-<!--                                    </div>-->
-<!--                                    <div class="bookcard-footer">-->
-<!--                                        -->
-<!--                                        <a class="btn btn-outline-secondary btnhover m-t15" th:href="@{books-detail}">See-->
-<!--                                            Details</a>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="pagination-align style-2">-->
-<!--                        <div class="swiper-button-prev"><i class="fa-solid fa-angle-left"></i></div>-->
-<!--                        <div class="swiper-pagination-three"></div>-->
-<!--                        <div class="swiper-button-next"><i class="fa-solid fa-angle-right"></i></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </section>-->
-<!--        &lt;!&ndash; Feature Product End &ndash;&gt;-->
+
+        <!-- Feature Product End -->
 
 <!--        &lt;!&ndash; Special Offer&ndash;&gt;-->
 <!--        <section class="content-inner-2">-->

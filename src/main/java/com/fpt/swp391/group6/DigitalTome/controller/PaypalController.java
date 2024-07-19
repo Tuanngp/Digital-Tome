@@ -47,8 +47,8 @@ public class PaypalController {
             @RequestParam("description") String description
     ) {
         try {
-            String cancelUrl = "http://localhost:8080/payment/cancel";
             String successUrl = "http://localhost:8080/payment/success";
+            String cancelUrl = "http://localhost:8080/payment/cancel";
 
             Payment payment = paypalService.createPayment(
                     Double.valueOf(amount),
@@ -96,7 +96,6 @@ public class PaypalController {
             paymentEntity.setSuccess(true);
             paymentEntity.setDecimal(new BigDecimal(total));
 
-
             if (payment.getState().equals("approved")) {
                 return "payment/paymentSuccess";
             }
@@ -107,7 +106,6 @@ public class PaypalController {
             paymentRepository.save(paymentEntity);
         }
         return paymentEntity.isSuccess() ? "payment/paymentSuccess" : "redirect:/payment/error";
-
     }
 
     @GetMapping("/payment/cancel")

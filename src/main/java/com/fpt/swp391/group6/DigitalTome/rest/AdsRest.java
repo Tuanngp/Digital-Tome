@@ -2,9 +2,8 @@ package com.fpt.swp391.group6.DigitalTome.rest;
 
 import com.fpt.swp391.group6.DigitalTome.dto.AdsDto;
 import com.fpt.swp391.group6.DigitalTome.dto.AdsPackageDto;
-import com.fpt.swp391.group6.DigitalTome.entity.AdsAssignmentEntity;
-import com.fpt.swp391.group6.DigitalTome.entity.AdsPlacementEntity;
-import com.fpt.swp391.group6.DigitalTome.entity.AdsTypeEntity;
+import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentResponse;
+import com.fpt.swp391.group6.DigitalTome.entity.AdsEntity;
 import com.fpt.swp391.group6.DigitalTome.service.AdsService;
 import com.fpt.swp391.group6.DigitalTome.utils.DateUtils;
 import org.springframework.data.domain.Page;
@@ -15,9 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +48,7 @@ public class AdsRest {
     public ResponseEntity<AdsDto> saveAds(
             @RequestParam("title") String title,
             @RequestParam("content") String content,
+            @RequestParam("link") String link,
             @RequestParam("placementId") Long placementId,
             @RequestParam("typeId") Long typeId,
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
@@ -69,6 +67,7 @@ public class AdsRest {
                 .typeId(typeId)
                 .title(title)
                 .content(content)
+                .link(link)
                 .startDate(sdate)
                 .endDate(edate)
                 .status(status)
@@ -76,6 +75,27 @@ public class AdsRest {
                 .cost(new BigDecimal(cost))
                 .build();
         return ResponseEntity.ok(adsService.createAdsAssignment(adsDto));
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Void> deleteAds(@PathVariable Long id) {
+        adsService.deleteAdsAssignment(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/payment/create")
+    public ResponseEntity<?> createPayment(
+            @RequestParam("adsId") Long adsId,
+            @RequestParam("amount") String amount,
+            @RequestParam("currency") String currency,
+            @RequestParam("description") String description
+    ) {
+        return adsService.createPayAndRedirect(adsId, amount, currency, description);
+    }
+
+    @GetMapping("/homepage")
+    public ResponseEntity<List<AdsEntity>> getAdsHomepage() {
+        return ResponseEntity.ok(adsService.getAdsHomepage());
     }
 }
 
