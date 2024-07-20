@@ -28,6 +28,9 @@ public class AdsEntity extends BaseEntity{
     @Column(nullable = false, length = 100)
     private String title;
 
+    @Column(name = "content", length = 255)
+    private String content;
+
     @Column(name = "image_url", length = 255)
     private String imageUrl;
 

@@ -3,6 +3,8 @@ package com.fpt.swp391.group6.DigitalTome.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -31,4 +33,7 @@ public class AdsAssignmentEntity {
 
     @Column(name = "end_date", nullable = false)
     private Date endDate;
+
+    @Column(name = "cost", precision = 19, scale = 2)
+    private BigDecimal cost;
 }
