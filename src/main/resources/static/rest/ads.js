@@ -1,3 +1,5 @@
+let keyword = "";
+let status = "";
 $(document).ready(function () {
     $('#ads-file').on('change', function () {
         showPreview(this);
@@ -16,6 +18,15 @@ $(document).ready(function () {
         notify("alert-warning", "Payment was cancelled");
     }
 
+    $('#keyword').on('input', () => {
+        keyword = $('#keyword').val();
+        loadAds(1);
+    });
+
+    $('#adType').on('change', () => {
+        status = $('#adType').val();
+        loadAds(1);
+    });
 });
 document.addEventListener('DOMContentLoaded', function () {
     loadAdsPackage().then(r => console.log('Ads package loaded'));
@@ -33,10 +44,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const cost = document.getElementById('totalCost').textContent;
         const file = fileInput.files[0];
         const link = document.getElementById('adLink').value;
+        isSaved = false;
+        if(startDate > endDate) {
+            alert('Ngày bắt đầu không thể sau ngày kết thúc');
+            return
+        }
 
-        if (!file) {
-            alert('Vui lòng chọn hình ảnh');
-            return;
+        if (startDate < formatDate(new Date())) {
+            alert('Ngày bắt đầu không thể trước ngày hiện tại');
+            return
         }
 
         const formData = new FormData();
@@ -46,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('endDate', endDate.toISOString());
         formData.append('placementId', placementId);
         formData.append('typeId', typeId);
-        formData.append('status', 'PENDING');
         formData.append('cost', cost);
         formData.append('file', file);
         formData.append('link', link);
@@ -55,16 +70,19 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            notify("alert-success", "Campaign saved successfully");
-            clearModalData();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            notify("alert-danger", "Failed to save campaign data");
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                notify("alert-success", "Campaign saved successfully");
+                const modal = bootstrap.Modal.getInstance(document.getElementById('advertisingModal'));
+                modal.hide();
+                loadAds(1);
+                clearModalData();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                notify("alert-danger", "Failed to save campaign data");
+            });
 
     });
 
@@ -73,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('image-preview').src = ''; // Clear the image preview if any
     });
 });
-
 
 function clearModalData() {
     // Reset các trường input
@@ -101,7 +118,7 @@ function clearModalData() {
     var adsTypes = document.getElementById('ads-types');
     if (adsTypes) {
         var selectedItems = adsTypes.querySelectorAll('.selected');
-        selectedItems.forEach(function(item) {
+        selectedItems.forEach(function (item) {
             item.classList.remove('selected');
         });
     }
@@ -129,15 +146,22 @@ function showPreview(selectFile) {
 }
 
 let currentPage = 1;
-let isLoading = false;
+let size = 5;
+
 // Function to load books and pagination
-function loadAds(page) {
+function loadAds(number) {
+    let page = parseInt(number);
+    if (isNaN(page) || page < 1) {
+        page = 1; // Đặt giá trị mặc định nếu không hợp lệ
+    }
     $.ajax({
         url: '/api/ads',
         method: 'GET',
         data: {
-            page: page - 1,
-            size: 5
+            page: (page - 1),
+            size: size,
+            keyword: keyword,
+            status: status
         },
         dataType: 'json',
         success: function (data) {
@@ -147,9 +171,9 @@ function loadAds(page) {
                 row.append('<td><div class="form-check custom-checkbox checkbox-success check-lg me-3">' +
                     '<input type="checkbox" class="form-check-input" id="customCheckBox' + index + '" required="">' +
                     '<label class="form-check-label" for="customCheckBox' + index + '"></label></div></td>');
-                row.append('<td><strong>' + (ads.id || 'N/A') + '</strong></td>');
+                row.append('<td><strong>' + (((currentPage - 1) * size) + index + 1 || 'N/A') + '</strong></td>');
                 row.append('<td id="adsName" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">' + (ads.title || 'N/A') + '</td>');
-                row.append('<td><img src="' + (ads.imageUrl || '') + '" alt="image" style="max-height: 100px;"></td>');
+                row.append('<td><img src="' + (ads.imageUrl || '') + '" alt="image" style="max-height: 100px;max-width: 144px;"></td>');
                 row.append('<td id="adsType">' + (ads.adsType || 'N/A') + '</td>');
                 row.append('<td id="adsPlacement">' + (ads.adsPlacement || 'N/A') + '</td>');
                 row.append('<td id="startDate">' + (ads.startDate ? formatDate(ads.startDate) : 'N/A') + '</td>');
@@ -157,44 +181,43 @@ function loadAds(page) {
                 row.append('<td><div class="d-flex align-items-center">' +
                     '<i class="fa fa-circle ' +
                     (ads.status === 'PENDING' ? 'text-warning' :
-                    ads.status === 'AWAITING_PAYMENT' ? 'text-primary' :
-                    ads.status === 'ACTIVE' ? 'text-success' :
-                    ads.status === 'COMPLETED' ? 'text-info' :
-                    ads.status === 'CANCELLED' ? 'text-danger' :
-                    ads.status === 'REJECTED' ? 'text-dark' : '') +
+                        ads.status === 'AWAITING_PAYMENT' ? 'text-primary' :
+                            ads.status === 'ACTIVE' ? 'text-success' :
+                                ads.status === 'COMPLETED' ? 'text-info' :
+                                    ads.status === 'CANCELLED' ? 'text-danger' :
+                                        ads.status === 'REJECTED' ? 'text-dark' : '') +
                     ' me-1"></i> ' + ads.status + '</div></td>');
                 row.append('<td id="cost">' + (ads.cost.toLocaleString('vi-VN') + ' VND' || 'N/A') + '</td>');
                 row.append('<td><div class="d-flex">' +
                     (ads.status === 'PENDING' ?
                         // `<button id="requestBtn" value="${ads.id}" class="btn btn-success shadow btn-md sharp me-1">Request</button>` +
                         `<button id="deleteBtn" value="${ads.id}" class="btn btn-danger shadow btn-md sharp me-1">Delete</button>` :
-                    ads.status === 'AWAITING_PAYMENT' ?
-                        `<button id="payBtn" value="${ads.id}" class="btn btn-primary shadow btn-md sharp me-1">Pay</button>` +
-                        `<button id="deleteBtn" value="${ads.id}" class="btn btn-danger shadow btn-md sharp me-1">Delete</button>` :
-                    ads.status === 'ACTIVE' ?
-                        `<button id="activateBtn" value="${ads.id}" class="btn btn-info shadow btn-md sharp me-1">Deactivate</button>` :
-                    ads.status === 'COMPLETED' ?
-                    `<button id="viewBtn" value="${ads.id}" class="btn btn-light shadow btn-md sharp me-1">View</button>` :
-                    ads.status === 'CANCELLED' ?
-                        `<button id="relistBtn" value="${ads.id}" class="btn btn-warning shadow btn-md sharp me-1">Relist</button>` :
-                    ads.status === 'REJECTED' ?
-                        `<button id="appealBtn" value="${ads.id}" class="btn btn-dark shadow btn-md sharp me-1">Appeal</button>` :
-                        '') +
+                        ads.status === 'AWAITING_PAYMENT' ?
+                            `<button id="payBtn" value="${ads.id}" class="btn btn-primary shadow btn-md sharp me-1">Pay</button>` +
+                            `<button id="deleteBtn" value="${ads.id}" class="btn btn-danger shadow btn-md sharp me-1">Delete</button>` :
+                            // ads.status === 'ACTIVE' ?
+                            //     `<button id="activateBtn" value="${ads.id}" class="btn btn-info shadow btn-md sharp me-1">Deactivate</button>` :
+                                ads.status === 'COMPLETED' ?
+                                    `<button id="viewBtn" value="${ads.id}" class="btn btn-light shadow btn-md sharp me-1">View</button>` +
+                                    `<button id="deleteBtn" value="${ads.id}" class="btn btn-danger shadow btn-md sharp me-1">Delete</button>` :
+                                        ads.status === 'REJECTED' ?
+                                            `<button id="appealBtn" value="${ads.id}" class="btn btn-dark shadow btn-md sharp me-1">Appeal</button>` :
+                                            '') +
                     '</div></td>');
                 $('#adsList').append(row);
 
                 // Attach click event to the "Reject" button
-                row.find('#deleteBtn').on('click', function() {
+                row.find('#deleteBtn').on('click', function () {
                     const confirmAccept = confirm("Do you want to delete this campaign ?");
                     if (confirmAccept) {
                         $.ajax({
                             url: `/api/ads/delete/${ads.id}`,
                             method: 'DELETE',
-                            success: function(response) {
+                            success: function (response) {
                                 loadAds(data.currentPage)
                                 notify("alert-success", "Campaign deleted successfully")
                             },
-                            error: function(jqXHR, textStatus, errorThrown) {
+                            error: function (jqXHR, textStatus, errorThrown) {
                                 loadAds(data.currentPage)
                                 notify("alert-danger", "Delete campaign unsuccessfully")
                             }
@@ -202,7 +225,7 @@ function loadAds(page) {
                     }
                 });
 
-                row.find('#payBtn').on('click', function() {
+                row.find('#payBtn').on('click', function () {
                     const confirmAccept = confirm("Do you want to pay for this campaign ?");
                     if (confirmAccept) {
                         const formData = new FormData();
@@ -231,7 +254,6 @@ function loadAds(page) {
                 });
             });
 
-
             $('#pagination').twbsPagination({
                 totalPages: data.totalPages,
                 startPage: currentPage,
@@ -244,6 +266,7 @@ function loadAds(page) {
                     if (page !== currentPage) {
                         currentPage = page;
                         loadAds(page);
+                        window.scrollTo({top: 0, behavior: 'smooth'});
                     }
                 }
             });
@@ -256,14 +279,14 @@ function loadAds(page) {
     });
 }
 
-function notify(className, content){
+function notify(className, content) {
     $("#notify").removeClass();
     $('#notify').addClass("alert");
     $('#notify').addClass(className);
     $("#notify").css("padding", "10px");
     $('#notify').text(content).show();
     // Hide the notification after 5 seconds
-    setTimeout(function() {
+    setTimeout(function () {
         $('#notify').hide();
     }, 10000);
 }
@@ -279,7 +302,7 @@ async function loadAdsPackage() {
         data.forEach(placement => {
             placement.adsTypes.forEach(type => {
                 const div = document.createElement('div');
-                div.className = 'col-md-4 package-option';
+                div.className = 'col-md-12 package-option';
                 div.dataset.package = `${type.name}-${placement.adsPlacement.name}`;
                 div.dataset.price = type.price + placement.adsPlacement.price;
                 div.innerHTML = `
@@ -404,8 +427,10 @@ document.getElementById('endDate').addEventListener('change', function () {
     adForm.updateUI();
 });
 
-document.getElementById('saveAd').addEventListener('click', function() {
-    var modal = bootstrap.Modal.getInstance(document.getElementById('advertisingModal'));
-    modal.hide();
+document.getElementById('deleteBtn').addEventListener('click', function () {
+    loadAds(currentPage);
+});
+
+document.getElementById('keyword').addEventListener('input', function () {
     loadAds(1);
 });

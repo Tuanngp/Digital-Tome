@@ -6,8 +6,10 @@ import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentResponse;
 import com.fpt.swp391.group6.DigitalTome.entity.AdsEntity;
 import com.fpt.swp391.group6.DigitalTome.service.AdsService;
 import com.fpt.swp391.group6.DigitalTome.utils.DateUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,17 +29,14 @@ public class AdsRest {
         this.adsService = adsService;
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<AdsDto>> getAds() {
-//        return ResponseEntity.ok(adsService.getAdsAssignments());
-//    }
     @GetMapping
-    public ResponseEntity<Page<AdsDto>> getAds(
+    public ResponseEntity<Page<AdsDto>> searchAds(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size) {
-        return ResponseEntity.ok(adsService.getAdsAssignments(page, size));
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "all") String status) {
+        return ResponseEntity.ok(adsService.searchAdsAssignments(page, size, keyword, status));
     }
-
 
     @GetMapping("/ads-package")
     public ResponseEntity<List<AdsPackageDto>> getAdsPackage() {
@@ -53,7 +52,6 @@ public class AdsRest {
             @RequestParam("typeId") Long typeId,
             @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate,
-            @RequestParam("status") String status,
             @RequestParam("cost") String costString,
             @RequestParam("file") MultipartFile file) throws IOException {
         if (file.isEmpty()) {
@@ -70,7 +68,7 @@ public class AdsRest {
                 .link(link)
                 .startDate(sdate)
                 .endDate(edate)
-                .status(status)
+                .status(AdsEntity.AdsStatus.PENDING.toString())
                 .file(file)
                 .cost(new BigDecimal(cost))
                 .build();
@@ -88,14 +86,10 @@ public class AdsRest {
             @RequestParam("adsId") Long adsId,
             @RequestParam("amount") String amount,
             @RequestParam("currency") String currency,
-            @RequestParam("description") String description
+            @RequestParam("description") String description,
+            HttpServletRequest request
     ) {
-        return adsService.createPayAndRedirect(adsId, amount, currency, description);
-    }
-
-    @GetMapping("/homepage")
-    public ResponseEntity<List<AdsEntity>> getAdsHomepage() {
-        return ResponseEntity.ok(adsService.getAdsHomepage());
+        return adsService.createPayAndRedirect(adsId, amount, currency, description, request);
     }
 }
 

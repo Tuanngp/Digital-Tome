@@ -30,7 +30,7 @@ public class HomeController {
 
     @GetMapping(value = {"/","home", "index"})
     public String defaultHome(Model model) {
-
+        model.addAttribute("adsPopup", adsService.getAdsPopup());
         return "landing-page/index";
     }
 

@@ -11,15 +11,19 @@ import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsAssignmentRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsPlacementRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsTypeRepository;
+import com.fpt.swp391.group6.DigitalTome.utils.ImageUtils;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -35,34 +39,32 @@ public class AdsService {
     private final AdsRepository adsRepository;
     private final AdsMapper adsMapper;
     private final UserService userService;
-    private final Cloudinary cloudinary;
     private final PaypalService paypalService;
 
     @Autowired
-    public AdsService(AdsAssignmentRepository adsAssignmentRepository, AdsPlacementRepository adsPlacementRepository, AdsTypeRepository adsTypeRepository, AdsRepository adsRepository, AdsMapper adsMapper, UserService userService, Cloudinary cloudinary, PaypalService paypalService) {
+    public AdsService(AdsAssignmentRepository adsAssignmentRepository, AdsPlacementRepository adsPlacementRepository, AdsTypeRepository adsTypeRepository, AdsRepository adsRepository, AdsMapper adsMapper, UserService userService, PaypalService paypalService) {
         this.adsAssignmentRepository = adsAssignmentRepository;
         this.adsPlacementRepository = adsPlacementRepository;
         this.adsTypeRepository = adsTypeRepository;
         this.adsRepository = adsRepository;
         this.adsMapper = adsMapper;
         this.userService = userService;
-        this.cloudinary = cloudinary;
         this.paypalService = paypalService;
     }
-    private String uploadFile(MultipartFile file) throws IOException {
-        try{
-            var result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
-                    "folder", "/ads",
-                    "use_filename", true,
-                    "unique_filename", true,
-                    "resource_type","auto"
-            ));
-
-            return  result.get("secure_url").toString();
-        } catch (IOException io){
-            throw new RuntimeException("Image upload fail");
-        }
-    }
+//    private String uploadFile(MultipartFile file) {
+//        try{
+//            var result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
+//                    "folder", "/ads",
+//                    "use_filename", true,
+//                    "unique_filename", true,
+//                    "resource_type","auto"
+//            ));
+//
+//            return  result.get("secure_url").toString();
+//        } catch (IOException io){
+//            throw new RuntimeException("Image upload fail");
+//        }
+//    }
 
     private AdsEntity createAds(AdsDto adsDto) throws IOException {
         AccountEntity user = userService.getCurrentLogin();
@@ -72,7 +74,8 @@ public class AdsService {
         AdsEntity ads = adsMapper.toEntity(adsDto);
         ads.setAdsType(adsType);
         ads.setPublisher(user);
-        ads.setImageUrl(uploadFile(adsDto.getFile()));
+//        ads.setImageUrl(uploadFile(adsDto.getFile()));
+        ads.setImageUrl(ImageUtils.uploadImage(adsDto.getFile(), "ads"));
         return adsRepository.save(ads);
     }
 
@@ -108,17 +111,15 @@ public class AdsService {
         return adsMapper.toDto(adsAssignmentRepository.save(assignment));
     }
 
-    public List<AdsDto> getAdsAssignments() {
-        AccountEntity user = userService.getCurrentLogin();
-        return adsAssignmentRepository.findAllByAds_Publisher(user).stream()
-                .map(adsMapper::toDto)
-                .toList();
-    }
-
-    public Page<AdsDto> getAdsAssignments(int page, int size) {
+    public Page<AdsDto> getAdsAssignments(int page, int size, String status) {
         AccountEntity user = userService.getCurrentLogin();
         PageRequest pageRequest = PageRequest.of(page, size);
-        return adsAssignmentRepository.findAllByAds_Publisher(user, pageRequest)
+        if (status.equals("all")) {
+            return adsAssignmentRepository.findAllByAds_PublisherOrderByIdDesc(user, pageRequest)
+                    .map(adsMapper::toDto);
+        }
+        AdsEntity.AdsStatus adsStatus = AdsEntity.AdsStatus.valueOf(status);
+        return adsAssignmentRepository.findAllByAds_PublisherAndAds_StatusOrderByIdDesc(user, adsStatus, pageRequest)
                 .map(adsMapper::toDto);
     }
 
@@ -146,6 +147,8 @@ public class AdsService {
         if (!assignment.getAds().getPublisher().getId().equals(user.getId())) {
             throw new EntityNotFoundException("User is not the owner of this AdsAssignment");
         }
+        ImageUtils.destroyImage(assignment.getAds().getImageUrl(), "ads");
+        adsRepository.delete(assignment.getAds());
         adsAssignmentRepository.delete(assignment);
     }
 
@@ -156,11 +159,15 @@ public class AdsService {
         adsRepository.save(ads);
     }
 
-    public ResponseEntity<?> createPayAndRedirect(Long adsId, String amount, String currency, String description) {
+    private String getBaseUrl(HttpServletRequest request) {
+        return "https://digitaltome.azurewebsites.net" + request.getContextPath();
+    }
+
+    public ResponseEntity<?> createPayAndRedirect(Long adsId, String amount, String currency, String description, HttpServletRequest request) {
         try {
-            String cancelUrl = "http://localhost:8080/advertisement?status=cancel";
-            String successUrl = "http://localhost:8080/advertisement/success?adsId=" + adsId;
-            Double rate = 25128.0;
+            String cancelUrl = getBaseUrl(request) + "?status=cancel";
+            String successUrl = getBaseUrl(request) + "/success?adsId=" + adsId;
+            double rate = 25128.0;
             Payment payment = paypalService.createPayment(
                     Double.parseDouble(amount)/rate,
                     currency,
@@ -212,5 +219,38 @@ public class AdsService {
                                 ads.getPlacement().getName().equals("Footer")
                 )
                 .map(AdsAssignmentEntity::getAds).toList();
+    }
+
+    @Transactional
+    public void updateCompletedAdsStatus() {
+        List<AdsAssignmentEntity> assignments = adsAssignmentRepository.findAssignmentsWithPastEndDate(new Date());
+        for (AdsAssignmentEntity assignment : assignments) {
+            AdsEntity ads = assignment.getAds();
+            ads.setStatus(AdsEntity.AdsStatus.COMPLETED);
+            adsRepository.save(ads);
+        }
+    }
+
+    public List<AdsEntity> getAdsPopup() {
+        return adsAssignmentRepository.findByDateBetweenStartDateAndEndDate(new Date()).stream()
+                .filter(ads ->  ads.getAds().getStatus().equals(AdsEntity.AdsStatus.ACTIVE) &&
+                                ads.getPlacement().getName().equals("Pop-up")
+                )
+                .map(AdsAssignmentEntity::getAds).toList();
+    }
+
+    public Page<AdsDto> searchAdsAssignments(int page, int size, String keyword, String status) {
+        AccountEntity user = userService.getCurrentLogin();
+        PageRequest pageRequest = PageRequest.of(page, size);
+        if (keyword.trim().isEmpty()) {
+            return getAdsAssignments(page, size, status);
+        }
+        if (status.equals("all")) {
+            return adsAssignmentRepository.searchAdsAssignments(user, keyword, pageRequest)
+                    .map(adsMapper::toDto);
+        }
+        AdsEntity.AdsStatus adsStatus = AdsEntity.AdsStatus.valueOf(status);
+        return adsAssignmentRepository.searchAdsAssignments(user, keyword, adsStatus, pageRequest)
+                .map(adsMapper::toDto);
     }
 }

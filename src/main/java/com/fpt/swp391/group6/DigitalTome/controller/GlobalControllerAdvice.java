@@ -40,6 +40,7 @@ public class GlobalControllerAdvice {
     public void setAdsInGlobal(Model model) {
         model.addAttribute("adsHomepage", adsService.getAdsHomepage());
         model.addAttribute("adsFooter", adsService.getAdsFooter());
+        model.addAttribute("adsPopup", adsService.getAdsPopup());
     }
 
 }

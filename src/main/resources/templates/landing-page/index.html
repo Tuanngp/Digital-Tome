@@ -1,8 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout/head :: head}"><title>Home</title></head>
-<body>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<style>
+    /* styles.css */
+    body {
+        font-family: Arial, sans-serif;
+    }
 
+    .popup {
+        display: none; /* Ẩn popup */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Màu nền tối */
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    .popup-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+        max-width: 60%;
+        max-height: 90%;
+        overflow: hidden;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .ad-image {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<body>
 <section class="page-wraper">
     <div class="preloader-wrapper-1" id="loading-area">
         <div class="preloader-inner">
@@ -18,6 +71,24 @@
     <!-- Header -->
     <header th:replace="~{layout/header :: header}"></header>
 
+    <div id="popup" class="popup" th:if="${!adsPopup.isEmpty()}">
+        <div class="popup-content">
+            <span id="closePopupBtn" class="close-btn">&times;</span>
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <a th:each="adPopup : ${adsPopup}" th:href="${adPopup.getLink()}" class="swiper-slide">
+                        <div class="swiper-slide"><img th:src="${adPopup.getImageUrl()}" th:alt="${adPopup.getTitle()}" class="ad-image"></div>
+                    </a>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
     <div class="page-content bg-white">
         <!--Swiper Banner Start -->
         <div class="main-slider style-1">
@@ -25,14 +96,14 @@
                 <div class="swiper-wrapper">
                     <div th:if="${adsHomepage.size() > 0}" class="swiper-slide bg-blue"
                          th:each="ads : ${adsHomepage}"
-                         style="background-image: url(static/user/images/background/waveelement.png);">
+                         style="background-image: url(../user/images/background/waveelement.png);">
                         <div class="container">
                             <div class="banner-content" th:if="ads!=null">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="swiper-content">
                                             <div class="content-info">
-                                                <h6 class="sub-title" data-swiper-parallax="-10">BEST MANAGEMENT </h6>
+                                                <h6 class="sub-title" data-swiper-parallax="-10">HOT</h6>
                                                 <h1 class="title mb-0" data-swiper-parallax="-20" th:text="${ads.getTitle()}">Think and Grow
                                                     Rich</h1>
 <!--                                                <ul class="dz-tags" data-swiper-parallax="-30">-->
@@ -731,6 +802,40 @@
     <footer th:replace="~{layout/footer :: footer}"></footer>
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </section>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // script.js
+        document.addEventListener('DOMContentLoaded', function() {
+            var popup = document.getElementById('popup');
+            var closePopupBtn = document.getElementById('closePopupBtn');
 
+            // Tự động mở popup khi trang tải xong
+            popup.style.display = 'flex';
+
+            // Đóng popup khi người dùng nhấn nút đóng
+            closePopupBtn.addEventListener('click', function() {
+                popup.style.display = 'none';
+            });
+
+            // Đóng popup khi người dùng nhấn ra ngoài nội dung popup
+            window.addEventListener('click', function(event) {
+                if (event.target === popup) {
+                    popup.style.display = 'none';
+                }
+            });
+
+            // Initialize Swiper
+            var swiper = new Swiper('.swiper-container', {
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        });
+    </script>
 </body>
 </html>
