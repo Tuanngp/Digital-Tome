@@ -31,5 +31,7 @@ public interface PaymentRepository extends JpaRepository<PaymentEntity, Long> {
     List<PaymentEntity> findPaymentsByBookIdsAndDateRange(@Param("bookIds") List<Long> bookIds, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     boolean existsByAccountEntityAndBookEntity(AccountEntity user, BookEntity book);
+
+    List<PaymentEntity> findAllByCreatedDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }
 

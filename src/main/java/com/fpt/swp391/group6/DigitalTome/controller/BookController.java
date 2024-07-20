@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fpt.swp391.group6.DigitalTome.dto.CategoryDto;
 import com.fpt.swp391.group6.DigitalTome.entity.*;
 import com.fpt.swp391.group6.DigitalTome.service.*;
 import com.fpt.swp391.group6.DigitalTome.utils.BookUtils;
@@ -56,7 +57,7 @@ public class BookController {
 
     @GetMapping("/books-manage")
     public String bookListManage(Model model, Principal principal) {
-        return findPaginatedList(1, "id", "asc", model, principal, 10);
+        return findPaginatedList(1, "id", "desc", model, principal, 10);
     }
     @GetMapping("/upload")
     public String showAddBookForm(Model model) {
@@ -68,8 +69,8 @@ public class BookController {
 
     @PostMapping("/save")
     public String saveBook(@ModelAttribute("book") BookEntity book,
-                           @RequestParam("image") MultipartFile image,
-                           @RequestParam("bookP") MultipartFile bookP,
+                           @RequestParam(value = "image", required = false) MultipartFile image,
+                           @RequestParam(value = "bookP", required = false) MultipartFile bookP,
                            @RequestParam("authorIds") String authorIds,
                            @RequestParam("categoryEntityList") List<Long> categoryIds,
                            @RequestParam("pricing") double pricing,
@@ -77,39 +78,69 @@ public class BookController {
                            Model model) throws JsonProcessingException {
 
         List<AuthorEntity> existingAuthors = authorService.getAllAuthors();
-        List<CategoryEntity> catego = categoryService.getAllCategories();
+        List<CategoryDto> catego = categoryService.getAllCategories();
         model.addAttribute("authors", existingAuthors);
         model.addAttribute("categories", catego);
 
-
         System.out.println("ID của sách khi cập nhật: " + book.getId());
+
+        // Kiểm tra ISBN
         if (book.getId() != null) {
-            BookEntity existingBook = bookService.findByIsbn(book.getIsbn());
-            if (existingBook != null && !existingBook.getId().equals(book.getId())) {
+            BookEntity existingBook = bookService.getBookById(book.getId());
+            if (existingBook == null) {
+                model.addAttribute("error", "Book not found!");
+                return "book-manager/update-book";
+            }
+
+            // Kiểm tra ISBN trùng lặp
+            if (bookService.findByIsbn(book.getIsbn()) != null && !existingBook.getId().equals(book.getId())) {
                 model.addAttribute("error", "ISBN already exists in the system!");
                 return "book-manager/update-book";
+            }
+
+            // Giữ lại giá trị cũ nếu không có tệp mới
+            if (image != null && !image.isEmpty()) {
+                try {
+                    String imageUrl = ImageUtils.uploadImage(image, "image/books/");
+                    book.setBookCover(imageUrl);
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                    model.addAttribute("error", "An error occurred while saving the image!");
+                    return "book-manager/update-book";
+                }
+            } else {
+                book.setBookCover(existingBook.getBookCover());
+            }
+
+            if (bookP != null && !bookP.isEmpty()) {
+                try {
+                    String bookUrl = BookUtils.uploadBook(bookP, "books/");
+                    book.setBookPath(bookUrl);
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                    model.addAttribute("error", "An error occurred while saving the book file!");
+                    return "book-manager/update-book";
+                }
+            } else {
+                book.setBookPath(existingBook.getBookPath());
             }
         } else {
             if (bookService.isISBNAlreadyExists(book.getIsbn())) {
                 model.addAttribute("error", "ISBN already exists in the system!");
                 return "book-manager/books-upload";
             }
-        }
-        // check publication_date
-        LocalDate currentDate = LocalDate.now();
-        Date publicationDate = book.getPublicationDate();
-        if (publicationDate != null) {
-            LocalDate localPublicationDate = Instant.ofEpochMilli(publicationDate.getTime())
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-            if (localPublicationDate.isAfter(currentDate)) {
-                model.addAttribute("error", "The published date must be less than the current date!");
+
+            // Xử lý tệp ảnh và sách khi tạo mới
+            if (image == null || image.isEmpty()) {
+                model.addAttribute("error", "Please select an image file to upload!");
                 return "book-manager/books-upload";
             }
-        }
 
-        // Lưu file ảnh và sách
-        if (!image.isEmpty() && !bookP.isEmpty()) {
+            if (bookP == null || bookP.isEmpty()) {
+                model.addAttribute("error", "Please select a book file to upload!");
+                return "book-manager/books-upload";
+            }
+
             try {
                 String imageUrl = ImageUtils.uploadImage(image, "image/books/");
                 String bookUrl = BookUtils.uploadBook(bookP, "books/");
@@ -120,9 +151,19 @@ public class BookController {
                 model.addAttribute("error", "An error occurred while saving the file!");
                 return "book-manager/books-upload";
             }
-        } else {
-            model.addAttribute("error", "Please select a file to upload!!");
-            return "book-manager/books-upload";
+        }
+
+        // Kiểm tra ngày xuất bản
+        LocalDate currentDate = LocalDate.now();
+        Date publicationDate = book.getPublicationDate();
+        if (publicationDate != null) {
+            LocalDate localPublicationDate = Instant.ofEpochMilli(publicationDate.getTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            if (localPublicationDate.isAfter(currentDate)) {
+                model.addAttribute("error", "The published date must be less than the current date!");
+                return "book-manager/books-upload";
+            }
         }
 
         // Xử lý danh sách tác giả
@@ -153,27 +194,22 @@ public class BookController {
 
         // Xử lý contribution
         AccountEntity accountEntity = accountService.findByUsername(principal.getName());
-//            Long accountId = accountEntity.getId();
         ContributionEntity contribution = new ContributionEntity();
-//            contribution.setId(accountId);
         contribution.setAccountEntity(accountEntity);
         contribution.setBookEntity(book);
         contribution.setBookCertificate("Book uploaded by " + principal.getName());
 
         contributionService.saveContribution(contribution);
 
-        // pricing và set free
-        if (pricing == 0) {
-            book.setRestricted(false);
-        } else {
-            book.setRestricted(true);
-        }
+        // Pricing và set free
+        book.setRestricted(pricing > 0);
         book.setPoint((long) pricing);
-
         book.setStatus(1);
+
         bookService.saveBook(book);
         return "redirect:/books-manage";
     }
+
 
 
     @GetMapping("/update/{id}")
@@ -187,11 +223,12 @@ public class BookController {
             return "error/error403";
         }
 
-        List<CategoryEntity> categories = categoryService.getAllCategories();
+        List<CategoryDto> categories = categoryService.getAllCategories();
         List<AuthorEntity> authors = book.getAuthorEntityList();
         model.addAttribute("authors", authors);
         model.addAttribute("categories", categories);
         model.addAttribute("book", book);
+        System.out.println("Loaded book id for update: " + book.getId());
         return "book-manager/update-book";
     }
 

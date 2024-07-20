@@ -174,4 +174,9 @@ public class AdminController {
         model.addAttribute("page", "register-publisher");
         return "admin/manager";
     }
+
+    @GetMapping("/admin-chart")
+    public String showAdminStatisticsPage() {
+        return "admin/admin-chart";
+    }
 }

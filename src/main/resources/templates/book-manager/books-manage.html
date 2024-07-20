@@ -802,11 +802,13 @@
                                     Title
                                 </a>
                             </th>
+                            <th>Book Cover</th>
                             <th>
                                 <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir} + '&pageSize=' + ${pageSize}}">
                                     ISBN
                                 </a>
                             </th>
+                            <th>Description</th>
                             <th>
                                 <a th:href="@{'/books-manage/' + ${currentPage} + '?sortField=publicationDate&sortDir=' + ${reverseSortDir} + '&pageSize=' + ${pageSize}}">
                                     Publication Date
@@ -828,10 +830,18 @@
                         <tbody id="bookTableBody" th:each="book : ${listBooks}">
                         <tr>
                             <td th:text="${book.id}"></td>
-                            <td th:text="${book.title}"></td>
+                            <td style="max-width: 200px; max-height: 100px; overflow: hidden; white-space: normal; word-wrap: break-word; text-overflow: ellipsis;">
+                                <div style="max-height: 100px; overflow-y: auto;">
+                                    <span th:text="${book.title}"></span>
+                                </div>
+                            </td>
                             <td><img alt="book" th:src="${book.bookCover}" style="width:100px;height:auto;"></td>
                             <td th:text="${book.isbn}"></td>
-                            <td style="display: block; overflow: auto; max-width: 200px" th:text="${book.description}"></td>
+                            <td style="max-width: 200px; max-height: 100px; overflow: hidden; white-space: normal; word-wrap: break-word; text-overflow: ellipsis;">
+                                <div style="max-height: 100px; overflow-y: auto;">
+                                    <span th:text="${book.description}"></span>
+                                </div>
+                            </td>
                             <td th:text="${#dates.format(book.publicationDate, 'yyyy-MM-dd')}"></td>
                             <td th:text="${book.point}"></td>
                             <td>
