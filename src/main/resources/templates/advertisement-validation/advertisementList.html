@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="W3Admin:Dashboard Bootstrap 5 Template">
+    <meta property="og:title" content="W3Admin:Dashboard Bootstrap 5 Template">
+    <meta property="og:description" content="W3Admin:Dashboard Bootstrap 5 Template">
+    <meta property="og:image" content="page-error-404.html">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- PAGE TITLE HERE -->
+    <title>Advertisement List</title>
+
+
+
+    <!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" th:href="@{../censor/images/favicon.png}">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link th:href="@{../censor/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
+    <link th:href="@{../censor/vendor/lightgallery/css/lightgallery.min.css}" rel="stylesheet">
+    <link th:href="@{../censor/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
+    <link th:href="@{../censor/css/style.css}" rel="stylesheet">
+
+    <!--Bootstrap-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom Stylesheet -->
+    <link  th:href="@{../censor/css/style.css}" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<!--*******************
+    Preloader start
+********************-->
+<div id="preloader">
+    <div class="dz-ripple">
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!--*******************
+    Preloader end
+********************-->
+
+
+<!--**********************************
+    Main wrapper start
+***********************************-->
+<div id="main-wrapper">
+
+    <!--**********************************
+        Nav header start
+    ***********************************-->
+    <div class="nav-header">
+        <a href="index.html" class="brand-logo">
+            <svg class="logo-abbr" width="51" height="51" viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="logo-react" d="M35.1455 0.990723H15.1455C6.86124 0.990723 0.145508 7.70645 0.145508 15.9907V35.9907C0.145508 44.275 6.86124 50.9907 15.1455 50.9907H35.1455C43.4298 50.9907 50.1455 44.275 50.1455 35.9907V15.9907C50.1455 7.70645 43.4298 0.990723 35.1455 0.990723Z" fill="white"/>
+                <path d="M15.6963 36.6899L6.64551 19.4641H11.0249C11.4921 19.4641 11.9981 19.8534 12.1928 20.048C13.7499 23.065 17.0394 29.3908 17.7401 30.5587C18.4408 31.7265 18.2267 32.4078 18.032 32.6024L15.6963 36.6899Z" fill="var(--primary)"/>
+                <path d="M13.9443 19.4641L22.9952 36.6899L32.9219 16.8365C31.6567 16.7392 28.9512 16.6029 28.2505 16.8365C27.5498 17.0701 27.1799 17.7124 27.0826 18.0043L22.9952 26.7632C22.0219 24.9141 20.0171 21.0407 19.7836 20.34C19.55 19.6393 18.5184 19.4641 18.0318 19.4641H13.9443Z" fill="var(--primary)"/>
+                <path opacity="0.5" d="M36.7175 37.2738H24.4551L25.9149 34.3542C26.382 33.4199 27.3747 33.4783 27.6667 33.4783H35.8416C39.6371 32.6024 37.8853 28.5149 36.1336 28.5149H28.8345L30.8782 24.7194H35.2577C37.3014 23.5516 36.4255 21.5078 35.2577 21.2159H33.7979C32.8636 21.2159 33.0193 20.2427 33.2139 19.7561L34.3818 17.1284C43.1406 17.4204 40.9023 23.3569 39.3451 26.1792C44.7172 32.4856 39.3451 37.2738 36.7175 37.2738Z" fill="var(--primary)"/>
+            </svg>
+            <svg class="brand-title" width="130" height="22" viewBox="0 0 130 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.32533 20.9908L0.145325 1.39081H3.98132L7.50932 16.9868L11.6533 1.39081H15.6013L19.6333 16.9868L23.1613 1.39081H27.0253L21.7053 20.9908H17.4493L13.5573 6.45881L9.55332 20.9908H5.32533ZM35.4332 21.3268C34.1452 21.3268 32.9785 21.1028 31.9332 20.6548C30.8879 20.1882 30.0479 19.4788 29.4132 18.5268C28.7785 17.5748 28.4425 16.3802 28.4052 14.9428H31.9332C31.9519 15.8948 32.2599 16.6975 32.8572 17.3508C33.4732 17.9855 34.3319 18.3028 35.4332 18.3028C36.4785 18.3028 37.2812 18.0135 37.8412 17.4348C38.4012 16.8562 38.6812 16.1282 38.6812 15.2508C38.6812 14.2242 38.3079 13.4495 37.5612 12.9268C36.8332 12.3855 35.8905 12.1148 34.7332 12.1148H33.2772V9.17481H34.7612C35.7132 9.17481 36.5065 8.95081 37.1412 8.50281C37.7759 8.05481 38.0932 7.39221 38.0932 6.51481C38.0932 5.78681 37.8505 5.20821 37.3652 4.77881C36.8985 4.33081 36.2452 4.10681 35.4052 4.10681C34.4905 4.10681 33.7719 4.37751 33.2492 4.91881C32.7452 5.46021 32.4652 6.12281 32.4092 6.90681H28.9092C28.9839 5.09621 29.6092 3.66821 30.7852 2.62281C31.9799 1.57751 33.5199 1.05481 35.4052 1.05481C36.7492 1.05481 37.8785 1.29751 38.7932 1.78281C39.727 2.24951 40.427 2.87481 40.893 3.65881C41.379 4.44281 41.621 5.31081 41.621 6.26281C41.621 7.36421 41.313 8.29751 40.697 9.06281C40.1 9.80951 39.353 10.3135 38.4572 10.5748C39.559 10.7988 40.455 11.3402 41.145 12.1988C41.836 13.0388 42.181 14.1028 42.181 15.3908C42.181 16.4735 41.92 17.4628 41.397 18.3588C40.875 19.2548 40.109 19.9735 39.101 20.5148C38.1119 21.0562 36.8892 21.3268 35.4332 21.3268ZM43.457 20.9908L50.625 1.39081H54.657L61.825 20.9908H58.017L56.449 16.4548H48.805L47.209 20.9908H43.457ZM49.785 13.6548H55.469L52.613 5.50681L49.785 13.6548ZM69.993 21.3268C68.686 21.3268 67.52 21.0095 66.493 20.3748C65.466 19.7402 64.654 18.8722 64.057 17.7708C63.46 16.6695 63.161 15.4188 63.161 14.0188C63.161 12.6188 63.46 11.3775 64.057 10.2948C64.654 9.19351 65.466 8.33481 66.493 7.71881C67.52 7.08421 68.686 6.76681 69.993 6.76681C71.038 6.76681 71.953 6.96281 72.737 7.35481C73.521 7.74681 74.156 8.29751 74.641 9.00681V0.830811H78.225V20.9908H75.033L74.641 19.0028C74.193 19.6188 73.596 20.1602 72.849 20.6268C72.121 21.0935 71.169 21.3268 69.993 21.3268ZM70.749 18.1908C71.906 18.1908 72.849 17.8082 73.577 17.0428C74.324 16.2588 74.697 15.2602 74.697 14.0468C74.697 12.8335 74.324 11.8442 73.577 11.0788C72.849 10.2948 71.906 9.90281 70.749 9.90281C69.61 9.90281 68.668 10.2855 67.921 11.0508C67.174 11.8162 66.801 12.8055 66.801 14.0188C66.801 15.2322 67.174 16.2308 67.921 17.0148C68.668 17.7988 69.61 18.1908 70.749 18.1908ZM81.875 20.9908V7.10281H85.039L85.347 8.97881C85.795 8.30681 86.383 7.77481 87.111 7.38281C87.857 6.97221 88.716 6.76681 89.687 6.76681C91.833 6.76681 93.355 7.59751 94.251 9.25881C94.755 8.49351 95.427 7.88681 96.267 7.43881C97.125 6.99081 98.059 6.76681 99.067 6.76681C100.877 6.76681 102.268 7.30821 103.239 8.39081C104.209 9.47351 104.695 11.0602 104.695 13.1508V20.9908H101.111V13.4868C101.111 12.2922 100.877 11.3775 100.411 10.7428C99.963 10.1082 99.263 9.79081 98.311 9.79081C97.34 9.79081 96.556 10.1455 95.959 10.8548C95.38 11.5642 95.091 12.5535 95.091 13.8228V20.9908H91.507V13.4868C91.507 12.2922 91.273 11.3775 90.807 10.7428C90.34 10.1082 89.621 9.79081 88.651 9.79081C87.699 9.79081 86.924 10.1455 86.327 10.8548C85.748 11.5642 85.459 12.5535 85.459 13.8228V20.9908H81.875ZM110.029 4.94681C109.376 4.94681 108.835 4.75081 108.405 4.35881C107.995 3.96681 107.789 3.47221 107.789 2.87481C107.789 2.27751 107.995 1.79221 108.405 1.41881C108.835 1.02681 109.376 0.830811 110.029 0.830811C110.683 0.830811 111.215 1.02681 111.625 1.41881C112.055 1.79221 112.269 2.27751 112.269 2.87481C112.269 3.47221 112.055 3.96681 111.625 4.35881C111.215 4.75081 110.683 4.94681 110.029 4.94681ZM108.237 20.9908V7.10281H111.821V20.9908H108.237ZM115.562 20.9908V7.10281H118.726L119.006 9.45481C119.436 8.63351 120.052 7.98021 120.854 7.49481C121.676 7.00951 122.637 6.76681 123.738 6.76681C125.456 6.76681 126.79 7.30821 127.742 8.39081C128.694 9.47351 129.17 11.0602 129.17 13.1508V20.9908H125.586V13.4868C125.586 12.2922 125.344 11.3775 124.858 10.7428C124.373 10.1082 123.617 9.79081 122.59 9.79081C121.582 9.79081 120.752 10.1455 120.098 10.8548C119.464 11.5642 119.146 12.5535 119.146 13.8228V20.9908H115.562Z" fill="white"/>
+            </svg>
+        </a>
+        <div class="nav-control">
+            <div class="hamburger">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Nav header end
+    ***********************************-->
+
+    <!--**********************************
+        Chat box start
+    ***********************************-->
+    <div class="chatbox">
+        <div class="chatbox-close"></div>
+        <div class="custom-tab-1">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#notes">Notes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#alerts">Alerts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#chat">Chat</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade active show" id="chat" role="tabpanel">
+                    <div class="card mb-sm-3 mb-md-0 contacts_card dz-chat-user-box">
+                        <div class="card-header chat-list-header text-center">
+                            <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/><rect fill="#000000" opacity="1.0" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="4" y="11" width="16" height="2" rx="1"/></g></svg></a>
+                            <div>
+                                <h6 class="mb-1">Chat List</h6>
+                                <p class="mb-0">Show All</p>
+                            </div>
+                            <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
+                        </div>
+                        <div class="card-body contacts_body p-0 dz-scroll  " id="DZ_W_Contacts_Body">
+                            <ul class="contacts">
+                                <li class="name-first-letter">A</li>
+                                <li class="active dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Archie Parker</span>
+                                            <p>Kalid is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Alfie Mason</span>
+                                            <p>Taherah left 7 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/3.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>AharlieKane</span>
+                                            <p>Sami is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/4.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Athan Jacoby</span>
+                                            <p>Nargis left 30 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">B</li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/5.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Bashid Samim</span>
+                                            <p>Rashid left 50 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Breddie Ronan</span>
+                                            <p>Kalid is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Ceorge Carson</span>
+                                            <p>Taherah left 7 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">D</li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/3.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Darry Parker</span>
+                                            <p>Sami is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/4.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Denry Hunter</span>
+                                            <p>Nargis left 30 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">J</li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/5.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Jack Ronan</span>
+                                            <p>Rashid left 50 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Jacob Tucker</span>
+                                            <p>Kalid is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>James Logan</span>
+                                            <p>Taherah left 7 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/3.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Joshua Weston</span>
+                                            <p>Sami is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">O</li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/4.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Oliver Acker</span>
+                                            <p>Nargis left 30 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dz-chat-user">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img th:href="@{../admin/images/avatar/5.jpg}" class="rounded-circle user_img" alt="">
+                                            <span class="online_icon offline"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>Oscar Weston</span>
+                                            <p>Rashid left 50 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card chat dz-chat-history-box d-none">
+                        <div class="card-header chat-list-header text-center">
+                            <a href="javascript:void(0);" class="dz-chat-history-back">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><polygon points="0 0 24 0 24 24 0 24"/><rect fill="#000000" opacity="0.3" transform="translate(15.000000, 12.000000) scale(-1, 1) rotate(-90.000000) translate(-15.000000, -12.000000) " x="14" y="7" width="2" height="10" rx="1"/><path d="M3.7071045,15.7071045 C3.3165802,16.0976288 2.68341522,16.0976288 2.29289093,15.7071045 C1.90236664,15.3165802 1.90236664,14.6834152 2.29289093,14.2928909 L8.29289093,8.29289093 C8.67146987,7.914312 9.28105631,7.90106637 9.67572234,8.26284357 L15.6757223,13.7628436 C16.0828413,14.136036 16.1103443,14.7686034 15.7371519,15.1757223 C15.3639594,15.5828413 14.7313921,15.6103443 14.3242731,15.2371519 L9.03007346,10.3841355 L3.7071045,15.7071045 Z" fill="#000000" fill-rule="nonzero" transform="translate(9.000001, 11.999997) scale(-1, -1) rotate(90.000000) translate(-9.000001, -11.999997) "/></g></svg>
+                            </a>
+                            <div>
+                                <h6 class="mb-1">Chat with Khelesh</h6>
+                                <p class="mb-0 text-success">Online</p>
+                            </div>
+                            <div class="dropdown">
+                                <a href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
+                                    <li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+                                    <li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+                                    <li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body msg_card_body dz-scroll" id="DZ_W_Contacts_Body3">
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Hi, how are you samim?
+                                    <span class="msg_time">8:40 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Hi Khalid i am good tnx how about you?
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    I am good too, thank you for your chat template
+                                    <span class="msg_time">9:00 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    You are welcome
+                                    <span class="msg_time_send">9:05 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    I am looking for your next templates
+                                    <span class="msg_time">9:07 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Ok, thank you have a good day
+                                    <span class="msg_time_send">9:10 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Bye, see you
+                                    <span class="msg_time">9:12 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Hi, how are you samim?
+                                    <span class="msg_time">8:40 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Hi Khalid i am good tnx how about you?
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    I am good too, thank you for your chat template
+                                    <span class="msg_time">9:00 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    You are welcome
+                                    <span class="msg_time_send">9:05 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    I am looking for your next templates
+                                    <span class="msg_time">9:07 AM, Today</span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mb-4">
+                                <div class="msg_cotainer_send">
+                                    Ok, thank you have a good day
+                                    <span class="msg_time_send">9:10 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/2.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-start mb-4">
+                                <div class="img_cont_msg">
+                                    <img th:href="@{../admin/images/avatar/1.jpg}" class="rounded-circle user_img_msg" alt="">
+                                </div>
+                                <div class="msg_cotainer">
+                                    Bye, see you
+                                    <span class="msg_time">9:12 AM, Today</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer type_msg">
+                            <div class="input-group">
+                                <textarea class="form-control" placeholder="Type your message..."></textarea>
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-primary light"><i class="fa fa-location-arrow"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="alerts" role="tabpanel">
+                    <div class="card mb-sm-3 mb-md-0 contacts_card">
+                        <div class="card-header chat-list-header text-center">
+                            <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg></a>
+                            <div>
+                                <h6 class="mb-1">Notications</h6>
+                                <p class="mb-0">Show All</p>
+                            </div>
+                            <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="1"/><path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"/></g></svg></a>
+                        </div>
+                        <div class="card-body contacts_body p-0 dz-scroll" id="DZ_W_Contacts_Body1">
+                            <ul class="contacts">
+                                <li class="name-first-letter">SEVER STATUS</li>
+                                <li class="active">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont primary">KK</div>
+                                        <div class="user_info">
+                                            <span>David Nester Birthday</span>
+                                            <p class="text-primary">Today</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">SOCIAL</li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont success">RU</div>
+                                        <div class="user_info">
+                                            <span>Perfection Simplified</span>
+                                            <p>Jame Smith commented on your status</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="name-first-letter">SEVER STATUS</li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont primary">AU</div>
+                                        <div class="user_info">
+                                            <span>AharlieKane</span>
+                                            <p>Sami is online</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont info">MO</div>
+                                        <div class="user_info">
+                                            <span>Athan Jacoby</span>
+                                            <p>Nargis left 30 mins ago</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="notes">
+                    <div class="card mb-sm-3 mb-md-0 note_card">
+                        <div class="card-header chat-list-header text-center">
+                            <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect fill="#000000" x="4" y="11" width="16" height="2" rx="1"/><rect fill="#000000" opacity="1.0" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="4" y="11" width="16" height="2" rx="1"/></g></svg></a>
+                            <div>
+                                <h6 class="mb-1">Notes</h6>
+                                <p class="mb-0">Add New Nots</p>
+                            </div>
+                            <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="1"/><path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"/></g></svg></a>
+                        </div>
+                        <div class="card-body contacts_body p-0 dz-scroll" id="DZ_W_Contacts_Body2">
+                            <ul class="contacts">
+                                <li class="active">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>New order placed..</span>
+                                            <p>10 Aug 2020</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a href="javascript:void(0);" class="btn btn-primary light btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>Youtube, a video-sharing website..</span>
+                                            <p>10 Aug 2020</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a href="javascript:void(0);" class="btn btn-primary light btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>john just buy your product..</span>
+                                            <p>10 Aug 2020</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a href="javascript:void(0);" class="btn btn-primary light btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>Athan Jacoby</span>
+                                            <p>10 Aug 2020</p>
+                                        </div>
+                                        <div class="ms-auto">
+                                            <a href="javascript:void(0);" class="btn btn-primary light btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-danger btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Chat box End
+    ***********************************-->
+
+
+
+
+    <!--**********************************
+        Header start
+    ***********************************-->
+    <div class="header">
+        <div class="header-content">
+            <nav class="navbar navbar-expand">
+                <div class="collapse navbar-collapse justify-content-between">
+                    <div class="header-left">
+                        <form>
+                            <div class="input-group search-area">
+									<span class="input-group-text">
+                                        <a href="javascript:void(0)">
+                                            <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="10.7861" cy="11.2859" r="8.23951" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                                <path d="M16.5168 17.4443L19.7472 20.6663" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </a>
+                                    </span>
+                                <label>
+                                    <input id="keyword" type="text" class="form-control" placeholder="Search">
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="navbar-nav header-right">
+                        <li class="nav-item dropdown notification_dropdown">
+                            <a class="nav-link open-cal">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.09253 9.40445H20.9165" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16.442 13.3097H16.4512" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12.0047 13.3097H12.014" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7.55793 13.3097H7.5672" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16.442 17.1964H16.4512" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12.0047 17.1964H12.014" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7.55793 17.1964H7.5672" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16.0438 2V5.29078" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M7.9654 2V5.29078" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.2383 3.5791H7.77096C4.83427 3.5791 3 5.21504 3 8.22213V17.2718C3 20.3261 4.83427 21.9999 7.77096 21.9999H16.229C19.175 21.9999 21 20.3545 21 17.3474V8.22213C21.0092 5.21504 19.1842 3.5791 16.2383 3.5791Z" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown notification_dropdown">
+                            <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                                <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 8.5C18 6.9087 17.3679 5.38258 16.2426 4.25736C15.1174 3.13214 13.5913 2.5 12 2.5C10.4087 2.5 8.88258 3.13214 7.75736 4.25736C6.63214 5.38258 6 6.9087 6 8.5C6 15.5 3 17.5 3 17.5H21C21 17.5 18 15.5 18 8.5Z" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M13.73 21.5C13.5542 21.8031 13.3019 22.0547 12.9982 22.2295C12.6946 22.4044 12.3504 22.4965 12 22.4965C11.6496 22.4965 11.3054 22.4044 11.0018 22.2295C10.6982 22.0547 10.4458 21.8031 10.27 21.5" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
+                                    <ul class="timeline">
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2">
+                                                    <img alt="image" width="50" th:href="@{../admin/images/avatar/1.jpg}">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2 media-info">
+                                                    KG
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Resport created successfully</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2 media-success">
+                                                    <i class="fa fa-home"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2">
+                                                    <img alt="image" width="50" th:href="@{../admin/images/avatar/1.jpg}">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2 media-danger">
+                                                    KG
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Resport created successfully</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2 media-primary">
+                                                    <i class="fa fa-home"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2">
+                                                    <img alt="image" width="50" th:href="@{../admin/images/avatar/1.jpg}">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2 media-info">
+                                                    KG
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Resport created successfully</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2 media-success">
+                                                    <i class="fa fa-home"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2">
+                                                    <img alt="image" width="50" th:href="@{../admin/images/avatar/1.jpg}">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Dr sultads Send you Photo</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2 media-danger">
+                                                    KG
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Resport created successfully</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-panel">
+                                                <div class="media me-2 media-primary">
+                                                    <i class="fa fa-home"></i>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">Reminder : Treatment Time!</h6>
+                                                    <small class="d-block">29 July 2020 - 02:26 PM</small>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown notification_dropdown">
+                            <a class="nav-link bell-link" href="javascript:void(0);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.9026 8.85156L13.4593 12.4646C12.6198 13.1306 11.4387 13.1306 10.5992 12.4646L6.11841 8.85156" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16.9089 21C19.9502 21.0084 22 18.5095 22 15.4384V8.57001C22 5.49883 19.9502 3 16.9089 3H7.09114C4.04979 3 2 5.49883 2 8.57001V15.4384C2 18.5095 4.04979 21.0084 7.09114 21H16.9089Z" stroke="#130F26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="nav-item align-items-center header-border"><a href="analytics.html" class="btn btn-primary">Analytics</a></li>
+                        <li class="nav-item ps-3">
+                            <div class="header-profile2">
+                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="header-info2 d-flex align-items-center">
+                                        <div class="header-media">
+                                            <img th:href="@{../admin/images/user.jpg}" class="avatar avatar-lg" alt="">
+                                        </div>
+                                        <div class="header-info">
+                                            <h6>Thomas Fleming</h6>
+                                            <p>info@gmail.com</p>
+                                        </div>
+
+                                    </div>
+                                </a>
+                                <div class=" profile-box">
+                                    <div class="products">
+                                        <div class="border-img">
+                                            <img th:href="@{../admin/images/user.jpg}" class="avatar " alt="">
+                                        </div>
+                                        <div class="ms-3">
+                                            <h6 class="mb-0">Thomas Fleming</h6>
+                                            <span class="d-block mb-1">demo@gmail.com</span>
+                                            <span class="badge border-0 rounded">Pro Mamber</span>
+                                        </div>
+                                    </div>
+                                    <div class="account-setting">
+                                        <a href="app-profile-2.html" class="ai-icon">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M16.6666 17.5V15.8333C16.6666 14.9493 16.3154 14.1014 15.6903 13.4763C15.0652 12.8512 14.2173 12.5 13.3333 12.5H6.66658C5.78253 12.5 4.93468 12.8512 4.30956 13.4763C3.68444 14.1014 3.33325 14.9493 3.33325 15.8333V17.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M10.0001 9.16667C11.841 9.16667 13.3334 7.67428 13.3334 5.83333C13.3334 3.99238 11.841 2.5 10.0001 2.5C8.15913 2.5 6.66675 3.99238 6.66675 5.83333C6.66675 7.67428 8.15913 9.16667 10.0001 9.16667Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <span class="ms-2">Account Settings</span>
+                                        </a>
+                                        <a href="app-profile-1.html" class="ai-icon ">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3.33341 3.33301H16.6667C17.5834 3.33301 18.3334 4.08301 18.3334 4.99967V14.9997C18.3334 15.9163 17.5834 16.6663 16.6667 16.6663H3.33341C2.41675 16.6663 1.66675 15.9163 1.66675 14.9997V4.99967C1.66675 4.08301 2.41675 3.33301 3.33341 3.33301Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M18.3334 5L10.0001 10.8333L1.66675 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <span class="ms-2">Subscription</span>
+                                        </a>
+                                        <div class="d-flex align-items-center">
+                                            <a href="javascript:void(0);" class="dropdown-item ai-icon ">
+                                                <div>
+                                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M17.4999 10.6583C17.3688 12.0768 16.8365 13.4287 15.9651 14.5557C15.0938 15.6826 13.9195 16.5382 12.5797 17.0221C11.2398 17.5061 9.7899 17.5984 8.3995 17.2884C7.0091 16.9784 5.73575 16.2788 4.72844 15.2715C3.72113 14.2642 3.02153 12.9908 2.71151 11.6004C2.40148 10.21 2.49385 8.76007 2.9778 7.42025C3.46175 6.08042 4.31728 4.90614 5.44426 4.03479C6.57125 3.16345 7.92308 2.63109 9.34158 2.5C8.51109 3.62356 8.11146 5.00787 8.21536 6.40118C8.31926 7.79448 8.9198 9.10421 9.90775 10.0922C10.8957 11.0801 12.2054 11.6807 13.5987 11.7846C14.992 11.8885 16.3764 11.4888 17.4999 10.6583Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    </svg>
+                                                    <span class="ms-2">Dark Mode</span>
+                                                </div>
+                                            </a>
+                                            <div class="dz-layout">
+                                                <i class="fas fa-sun sun"></i>
+                                                <i class="fas fa-moon moon"></i>
+                                            </div>
+                                        </div>
+                                        <a href="page-login.html" class="ai-icon">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M13.3333 14.1663L17.4999 9.99967L13.3333 5.83301" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M17.5 10H7.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <span class="ms-2">Logout </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!--**********************************
+        Header end ti-comment-alt
+    ***********************************-->
+
+    <!--**********************************
+        Sidebar start
+    ***********************************-->
+    <div class="deznav">
+        <div class="deznav-scroll">
+            <ul class="metismenu" id="menu">
+                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.29077 9L12.2908 2L21.2908 9V20C21.2908 20.5304 21.0801 21.0391 20.705 21.4142C20.3299 21.7893 19.8212 22 19.2908 22H5.29077C4.76034 22 4.25163 21.7893 3.87656 21.4142C3.50149 21.0391 3.29077 20.5304 3.29077 20V9Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.29077 22V12H15.2908V22" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Book</span>
+                </a>
+                    <ul aria-expanded="false">
+                        <li><a href="/censor/contribution/acception">Acception List</a></li>
+                        <li><a href="/censor/contribution/rejection">Rejection List</a></li>
+                    </ul>
+                </li>
+                <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <div class="menu-icon">
+                        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.007 16.2236H8.78699" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M16.007 12.0371H8.78699" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M11.5421 7.86035H8.78711" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16.1994 2.75C16.1994 2.75 8.52238 2.754 8.51038 2.754C5.75038 2.771 4.04138 4.587 4.04138 7.357V16.553C4.04138 19.337 5.76338 21.16 8.54738 21.16C8.54738 21.16 16.2234 21.157 16.2364 21.157C18.9964 21.14 20.7064 19.323 20.7064 16.553V7.357C20.7064 4.573 18.9834 2.75 16.1994 2.75Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                    <span class="nav-text">Advertisement</span>
+                </a>
+                    <ul aria-expanded="false">
+                        <li><a href="/censor/advertisement">Advertisement List</a></li>
+                        <li><a href="/censor/advertisement/acception">Acception List</a></li>
+                        <li><a href="/censor/advertisement/rejection">Rejection List</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="switch-btn">
+                <a href="page-login.html">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.36 6.63965C19.6184 7.89844 20.4753 9.50209 20.8223 11.2478C21.1693 12.9936 20.9909 14.803 20.3096 16.4474C19.6284 18.0918 18.4748 19.4972 16.9948 20.486C15.5148 21.4748 13.7749 22.0026 11.995 22.0026C10.2151 22.0026 8.47515 21.4748 6.99517 20.486C5.51519 19.4972 4.36164 18.0918 3.68036 16.4474C2.99909 14.803 2.82069 12.9936 3.16772 11.2478C3.51475 9.50209 4.37162 7.89844 5.63 6.63965" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 2V12" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--**********************************
+        Sidebar end
+    ***********************************-->
+
+    <!--**********************************
+        Content body start
+    ***********************************-->
+    <div class="outer-body">
+        <div class="inner-body">
+
+            <div class="container-fluid" style="min-height: 535px; padding-top: 86px;">
+                <div class="container-fluid" style="height: 100%;">
+                    <!-- Bootstrap Spinner -->
+                    <div id="loading-spinner" class="text-center" style="display: none;">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+
+                    <!-- row -->
+                    <div id="notify"  role="alert">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group" style="margin: 12px 0; display: flex; align-items: center; justify-content: space-between;">
+                                <label for="orderByDate" class="form-label" style="width: 100%">Loại quảng cáo</label>
+                                <select class="form-select" id="orderByDate" name="orderByDate">
+                                    <option value="desc">Down</option>
+                                    <option value="asc">Up</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="height: 100%;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Validation</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
+                                    <!--ads List-->
+                                    <div class="table-responsive">
+                                        <table class="table table-responsive-md">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:50px;">
+                                                    <div class="form-check custom-checkbox checkbox-success check-lg me-3">
+                                                        <input type="checkbox" class="form-check-input" id="checkAll" required="">
+                                                        <label class="form-check-label" for="checkAll"></label>
+                                                    </div>
+                                                </th>
+                                                <th><strong>Id</strong></th>
+                                                <th><strong>Advertisement Name</strong></th>
+                                                <th><strong>Image</strong></th>
+                                                <th><strong>Type</strong></th>
+                                                <th><strong>Placement</strong></th>
+                                                <th><strong>Customer</strong></th>
+                                                <th><strong>Status</strong></th>
+                                                <th><strong>Make</strong></th>
+                                                <th><strong>Action</strong></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="adsList">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--End Ads List-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <ul id="pagination" class="pagination pagination-gutter justify-content-center"></ul>
+            </nav>
+            <!--End Pagination-->
+
+            <div class="footer out-footer">
+                <div class="copyright">
+                    <p>Copyright © Developed by <a href="https://dexignzone.com/" target="_blank">Quang Hau</a> 2024</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--**********************************
+        Content body end
+    ***********************************-->
+
+    <!--Profile Modal-->
+    <div class="modal fade" id="profileModal" style="--bs-modal-width: 80vw;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4">
+                            <div class="clearfix">
+                                <div class="card card-bx profile-card author-profile m-b30">
+                                    <div class="card-body">
+                                        <div class="p-5">
+                                            <div class="author-profile">
+                                                <div class="author-media">
+                                                    <img id="userImg" alt="">
+                                                </div>
+                                                <div class="author-info">
+                                                    <h6 class="title" id="fullnameUser"></h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="info-list">
+                                            <ul>
+                                                <li><a href="app-profile-2.html">Sex</a><span id="sexUser"></span></li>
+                                                <li><a href="uc-lightgallery.html">Date Of Birth</a><span id="dobUser"></span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="card profile-card card-bx m-b30">
+                                <div class="card-header">
+                                    <h6 class="card-title">Information Details</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-6 m-b30">
+                                            <label class="form-label">description</label>
+                                            <input type="text" class="form-control" id="desUser" readonly>
+                                        </div>
+                                        <div class="col-sm-6 m-b30">
+                                            <label class="form-label">Email</label>
+                                            <input type="text" class="form-control" id="emailUser" readonly>
+                                        </div>
+                                        <div class="col-sm-6 m-b30">
+                                            <label class="form-label">Address</label>
+                                            <input type="text" class="form-control" id="adrressUser" readonly>
+                                        </div>
+                                        <div class="col-sm-6 m-b30">
+                                            <label class="form-label">Phone</label>
+                                            <input type="text" class="form-control" id="phoneUser" readonly>
+                                        </div>
+                                        <div class="col-sm-6 m-b30">
+                                            <label class="form-label">Point</label>
+                                            <input type="text" class="form-control" id="pointUser" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Profile Modal-->
+
+    <!--Advertisement Modal-->
+    <div class="modal fade" id="advertisingModal" style="--bs-modal-width: 80vw">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Advertisement Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xl-9 col-lg-9">
+                            <div class="clearfix">
+                                <div class="card card-bx profile-card author-profile m-b30" style="min-height: 440px;">
+                                    <div class="card-body">
+                                        <div class="info-list">
+                                            <ul class="row ads-types">
+                                                <li>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="adTitle" class="form-label">Title</label>
+                                                        <input type="text" class="form-control" id="adTitle" name="title" readonly >
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="adLink" class="form-label">Advertisement link</label>
+                                                        <textarea class="form-control" id="adLink" name="adLink" readonly></textarea>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="adContent" class="form-label">Content</label>
+                                                        <textarea class="form-control" id="adContent" name="content" rows="5" readonly></textarea>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="startDate" class="form-label">Start Date</label>
+                                                        <input type="date" class="form-control" id="startDate" name="startDate" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="endDate" class="form-label">End Date</label>
+                                                        <input type="date" class="form-control" id="endDate" name="endDate" readonly>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="col-md-6">
+                                                        <p>Total Date: <span id="totalDays">0</span></p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>Total fee: <span id="totalCost">0 VND</span></p>
+                                                    </div>
+                                                </li>
+                                                <li></li>
+                                            </ul>
+                                        </div>
+                                        <div class="p-5">
+                                            <div class="author-profile">
+                                                <div class="my-image">
+                                                    <a href="javascript:void(0);">
+                                                        <img alt="" id="image-preview" src="" style="max-width: 380px; margin-bottom: 12px">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3">
+                            <h6>Advertisement package:</h6>
+                            <div id="ads-types" class="row">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 id="adsType"></h5>
+                                        <p>Location:<span id="location"></span></p>
+                                        <p>Description:<span id="typeDes"></span></p>
+                                        <p>Price:<span id="placementPrice"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Advertisement Modal-->
+
+    <!--Appointment Modal-->
+    <div class="modal fade" id="appointmentModal" style="--bs-modal-width: 80vw;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="email-right-box ms-0 ">
+                        <div class="compose-wrapper mt-3 " id="compose-content">
+                            <div class="compose-content">
+                                <form id="emailForm">
+                                    <div class="mb-3">
+                                        <input id="emailTo" type="text" class="form-control bg-transparent" placeholder=" To:" readonly>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input id="emailSubject" type="text" class="form-control bg-transparent" placeholder=" Subject:">
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea id="email-compose-editor" style="height: 250px !important;" class="textarea_editor form-control bg-transparent" rows="5" placeholder="Enter text ..."></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="text-start mt-4 mb-3">
+                                <button class="btn btn-primary light light btn-sl-sm me-2" type="button"><span class="me-2"><i class="fa fa-paper-plane"></i></span>Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Appointment Modal-->
+</div>
+<!--**********************************
+    Main wrapper end
+***********************************-->
+
+<!--**********************************
+    Scripts
+***********************************-->
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Required vendors -->
+<script src="/censor/vendor/global/global.min.js"></script>
+<script src="/censor/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+<script src="/censor/js/custom.js"></script>
+<script src="/censor/js/deznav-init.js"></script>
+<script src="/censor/js/demo.js"></script>
+<script src="/censor/js/styleSwitcher.js"></script>
+
+<script src="/pagination/jquery.twbsPagination.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        let size = 5;
+        let currentPage = 1;
+        let isLoading = false;
+        let keyword ="" ;
+        let status = "PENDING";
+        let orderByDate = "desc";
+
+        // Function to format date as "dd-MM-yyyy"
+        function formatDate(date) {
+            const d = new Date(date);
+            const day = ('0' + d.getDate()).slice(-2);
+            const month = ('0' + (d.getMonth() + 1)).slice(-2);
+            const year = d.getFullYear();
+            return `${day}-${month}-${year}`;
+        }
+
+        // Function to notify the result
+        function notify(className, content){
+            $("#notify").removeClass();
+            $('#notify').addClass("alert");
+            $('#notify').addClass(className);
+            $('#notify').text(content).show();
+            // Hide the notification after 5 seconds
+            setTimeout(function() {
+                $('#notify').hide();
+            }, 5000);
+        }
+
+        // Function to calculate the total days
+        function calculateTotalDays(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffTime = Math.abs(end - start);
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+
+        // Function to validate the form fields
+        function validateForm() {
+            const emailTo = $('#emailTo').val();
+            const subject = $('#emailSubject').val();
+            const message = $('#email-compose-editor').val();
+
+            if (!emailTo || !subject || !message) {
+                alert("Please fill out all fields before sending the email.");
+                return false;
+            }
+            return true;
+        }
+
+        // Attach click event to the "Send" button in the modal
+        $('.btn-primary.light.light').on('click', function() {
+
+            if (!validateForm()) {
+                return; // Stop if the form is not valid
+            }
+
+            const emailTo = $('#emailTo').val();
+            const subject = $('#emailSubject').val();
+            const message = $('#email-compose-editor').val();
+
+            // Show the loading spinner
+            $('#loading-spinner').show();
+
+            // Perform form submission using AJAX
+            $.ajax({
+                url: '/api/send-email',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    emailTo: emailTo,
+                    subject: subject,
+                    message: message
+                }),
+                success: function(response) {
+                    notify("alert-success", response+"")
+
+                    // Clear the form fields
+                    $('#emailTo').val('');
+                    $('#emailSubject').val('');
+                    $('#email-compose-editor').val('');
+
+                    // Close the modal
+                    $('#appointmentModal').modal('hide');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Clear the form fields
+                    $('#emailTo').val('');
+                    $('#emailSubject').val('');
+                    $('#email-compose-editor').val('');
+
+                    // Close the modal
+                    $('#appointmentModal').modal('hide');
+                    notify("alert-danger", "Sending email unsuccessfully")
+                },
+                complete: function () {
+                    // Hide the loading spinner
+                    $('#loading-spinner').hide();
+                }
+            });
+        });
+
+        function loadAds(page) {
+            if (isLoading) return;
+            isLoading = true;
+
+            $.ajax({
+                url: '/api/ads/filter',
+                method: 'GET',
+                data: {
+                    page: (page - 1),
+                    size: size,
+                    keyword: keyword,
+                    status: status,
+                    orderByDate: orderByDate
+                },
+                dataType: 'json',
+                success: function (data) {
+                    currentPage = (data.number+1);
+                    $('#adsList').empty();
+                    data.content.forEach(function (ads, index) {
+                        const row = $('<tr>');
+                        row.append('<td><div class="form-check custom-checkbox checkbox-success check-lg me-3">' +
+                            '<input type="checkbox" class="form-check-input" id="customCheckBox' + index + '" required="">' +
+                            '<label class="form-check-label" for="customCheckBox' + index + '"></label></div></td>');
+                        row.append('<td><strong>' + (ads.id || 'N/A') + '</strong></td>');
+                        row.append('<td id="adsName" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;" class="bookTitleCell"><a class="adsInfo" data-bs-toggle="modal" data-bs-target="#advertisingModal"><div class="d-flex align-items-center">' + (ads.title || 'N/A') + '</div></a></td>');
+                        row.append('<td><img src="' + (ads.imageUrl || '') + '" alt="image" style="max-height: 50px;"></td>');
+                        row.append('<td id="adsType">' + (ads.adsType || 'N/A') + '</td>');
+                        row.append('<td id="adsPlacement">' + (ads.adsPlacement || 'N/A') + '</td>');
+                        row.append('<td class="authorCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#profileModal"><div class="d-flex align-items-center"><img id="publisherImg" '+"src={"+ads.urlCustomer+"}" +' class="rounded-lg me-2" width="24" alt=""><span id="publisherName" class="w-space-no">' + (ads.customer || 'N/A') + '</span></div></a></td>');
+                        row.append('<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i> ' + ads.status + '</div></td>');
+                        row.append('<td><button class="btn btn-info shadow btn-md sharp me-1 btn-make" data-bs-toggle="modal" data-bs-target="#appointmentModal">Make</button></td>');
+                        row.append('<td><div class="d-flex">' +
+                            '<button id="acceptBtn" class="btn btn-success shadow btn-md sharp me-1">Accept</button>' +
+                            '<button id="rejectBtn" class="btn btn-danger shadow btn-md sharp me-1">Reject</button>' +
+                            '</div></td>');
+                        $('#adsList').append(row);
+
+                        // Attach click event to the fifth td (Publisher cell)
+                        row.find('.adsInfo').on('click', function() {
+                            $.ajax({
+                                url: '/api/ads/infor',
+                                method: 'GET',
+                                data: { id: ads.id},
+                                success: function(data) {
+                                    $('#adTitle').val(data.title);
+                                    $('#adLink').val(data.link);
+                                    $('#adContent').val(data.content);
+                                    $('#startDate').val(data.startDate.split('T')[0]);
+                                    $('#endDate').val(data.endDate.split('T')[0]);
+                                    $('#totalDays').text(calculateTotalDays(data.startDate, data.endDate));
+                                    $('#totalCost').text(`${data.cost.toLocaleString()} VND`);
+                                    $('#image-preview').attr('src', data.imageUrl);
+
+                                    // Populate the advertisement package information
+                                    $('#adsType').text(data.adsType);
+                                    $('#location').text(data.adsPlacement);
+                                    $('#typeDes').text(data.typeDes);  // Assuming status is the description for ads placement
+                                    $('#placementPrice').text(`${data.placementPrice.toLocaleString()} VND`);
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    notify("alert-danger", "Error show advertisement information popup")
+                                }
+                            });
+                        });
+
+                        // Attach click event to the fifth td (Publisher cell)
+                        row.find('.authorCell').on('click', function() {
+                            $.ajax({
+                                url: '/api/user',
+                                method: 'GET',
+                                data: { username: ads.customer},
+                                success: function(response) {
+                                    // Map response data to HTML elements
+                                    $('#userImg').attr('src', response.userDto.avatarPath);
+                                    $('#fullnameUser').text(response.userDto.fullName);
+                                    $('#sexUser').text(response.userDto.gender);
+                                    $('#dobUser').text(response.userDto.dateOfBirth ? formatDate(response.userDto.dateOfBirth) : "N/A");
+                                    $('#desUser').val(response.userDto.description);
+                                    $('#emailUser').val(response.userDto.email);
+                                    $('#adrressUser').val(response.userDto.address);
+                                    $('#phoneUser').val(response.userDto.phone);
+                                    $('#pointUser').val(response.userDto.point);
+
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    notify("alert-danger", "Error show user information popup")
+                                }
+                            });
+                        });
+
+                        // Attach click event to the "Make" button
+                        row.find('.btn-make').on('click', function() {
+                            $.ajax({
+                                url: '/api/user',
+                                method: 'GET',
+                                data: { username: ads.customer },
+                                success: function(response) {
+                                    $('#emailTo').val(response.userDto.email);
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    notify("alert-danger", "Error show email popup")
+                                }
+                            });
+                        });
+
+                        // Attach click event to the "Accept" button
+                        row.find('#acceptBtn').on('click', function() {
+                            const confirmAccept = confirm("Do you want to accept "+ads.title+" advertisement");
+                            if (confirmAccept) {
+                                // Show the loading spinner
+                                $('#loading-spinner').show();
+
+                                $.ajax({
+                                    url: '/api/ads/acceptation',
+                                    method: 'PUT',
+                                    data: { adsId: ads.id },
+                                    success: function(response) {
+                                        currentPage = (data.totalElements % size === 1)?currentPage-1:currentPage;
+                                        loadAds(currentPage)
+                                        notify("alert-success", response+"Accepting advertisement successfully")
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        loadAds(currentPage)
+                                        notify("alert-danger", "Accepting advertisement unsuccessfully")
+                                    },
+                                    complete: function () {
+                                        // Hide the loading spinner
+                                        $('#loading-spinner').hide();
+                                    }
+                                });
+                            }
+                        });
+
+                        // Attach click event to the "Reject" button
+                        row.find('#rejectBtn').on('click', function() {
+                            const confirmAccept = confirm("Do you want to reject "+ads.title+" advertisement");
+                            if (confirmAccept) {
+                                // Show the loading spinner
+                                $('#loading-spinner').show();
+
+                                $.ajax({
+                                    url: '/api/ads/rejection',
+                                    method: 'PUT',
+                                    data: { adsId: ads.adsId },
+                                    success: function(response) {
+                                        currentPage = (data.totalElements % size === 1)?currentPage-1:currentPage;
+                                        loadAds(currentPage)
+                                        notify("alert-success", response+"Rejecting advertisement successfully")
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        loadAds(currentPage)
+                                        notify("alert-danger", "Rejecting advertisement unsuccessfully")
+                                    },
+                                    complete: function () {
+                                        // Hide the loading spinner
+                                        $('#loading-spinner').hide();
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+                    // Pagination setup
+                    $('#pagination').twbsPagination('destroy');
+                    $('#pagination').twbsPagination({
+                        totalPages: data.totalPages,
+                        startPage: currentPage,
+                        visiblePages: 5,
+                        first: 'First',
+                        prev: '<<',
+                        next: '>>',
+                        last: 'Last',
+                        onPageClick: function (event, page) {
+                            if (page !== currentPage) {
+                                currentPage = page;
+                                loadAds(page);
+                            }
+                        }
+                    });
+                    isLoading = false;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error loading Ads:", textStatus, errorThrown);
+                    console.error("Response Text:", jqXHR.responseText);
+                    console.error("Status Code:", jqXHR.status);
+                    isLoading = false;
+                }
+            });
+        }
+
+
+        $('#keyword').on('input', () => {
+            keyword = $('#keyword').val();
+            loadAds(1);
+        });
+
+        $('#orderByDate').on('change', () => {
+            orderByDate = $('#orderByDate').val();
+            loadAds(1);
+        });
+
+        // Function to validate the form fields
+        function validateForm() {
+            const emailTo = $('#emailTo').val();
+            const subject = $('#emailSubject').val();
+            const message = $('#email-compose-editor').val();
+
+            if (!emailTo || !subject || !message) {
+                alert("Please fill out all fields before sending the email.");
+                return false;
+            }
+            return true;
+        }
+
+        // Attach click event to the "Send" button in the modal
+        $('.btn-primary.light.light').on('click', function() {
+
+            if (!validateForm()) {
+                return; // Stop if the form is not valid
+            }
+
+            const emailTo = $('#emailTo').val();
+            const subject = $('#emailSubject').val();
+            const message = $('#email-compose-editor').val();
+
+            // Show the loading spinner
+            $('#loading-spinner').show();
+
+            // Perform form submission using AJAX
+            $.ajax({
+                url: '/api/send-email',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    emailTo: emailTo,
+                    subject: subject,
+                    message: message
+                }),
+                success: function(response) {
+                    notify("alert-success", response+"")
+
+                    // Clear the form fields
+                    $('#emailTo').val('');
+                    $('#emailSubject').val('');
+                    $('#email-compose-editor').val('');
+
+                    // Close the modal
+                    $('#appointmentModal').modal('hide');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Clear the form fields
+                    $('#emailTo').val('');
+                    $('#emailSubject').val('');
+                    $('#email-compose-editor').val('');
+
+                    // Close the modal
+                    $('#appointmentModal').modal('hide');
+                    notify("alert-danger", "Sending email unsuccessfully")
+                },
+                complete: function () {
+                    // Hide the loading spinner
+                    $('#loading-spinner').hide();
+                }
+            });
+        });
+
+        loadAds(1)
+
+    });
+</script>
+
+</body>
+
+<!-- Mirrored from w3admin.dexignzone.com/xhtml/form-element.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 13 May 2024 07:43:03 GMT -->
+</html>
