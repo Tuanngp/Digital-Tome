@@ -14,6 +14,8 @@ public interface AdsMapper {
     @Mapping(target = "adsType", source = "adsType.name")
     @Mapping(target = "adsId", source = "id")
     @Mapping(target = "content", source = "content")
+    @Mapping(target = "customer", source = "publisher.username")
+    @Mapping(target = "urlCustomer", source = "publisher.avatarPath")
     AdsDto toDto(AdsEntity adsEntity);
 
     @Mapping(target = "adsType.id", source = "typeId")
@@ -37,5 +39,11 @@ public interface AdsMapper {
     @Mapping(target = "typeId", source = "ads.adsType.id")
     @Mapping(target = "cost", source = "cost")
     @Mapping(target = "adsPlacement", source = "placement.name")
+    @Mapping(target = "link", source = "ads.link")
+    @Mapping(target = "customer", source = "ads.publisher.username")
+    @Mapping(target = "urlCustomer", source = "ads.publisher.avatarPath")
+    @Mapping(target = "content", source = "ads.content")
+    @Mapping(target = "typeDes", source = "ads.adsType.description")
+    @Mapping(target = "placementPrice", source = "ads.adsType.price")
     AdsDto toDto(AdsAssignmentEntity adsAssignmentEntity);
 }

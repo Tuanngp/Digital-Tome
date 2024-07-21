@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface AdsAssignmentRepository extends JpaRepository<AdsAssignmentEntity, Long> {
     List<AdsAssignmentEntity> findAllByAds_Publisher(AccountEntity account);
@@ -38,4 +39,7 @@ public interface AdsAssignmentRepository extends JpaRepository<AdsAssignmentEnti
                                                    @Param("keyword") String keyword,
                                                    @Param("adsStatus") AdsEntity.AdsStatus adsStatus,
                                                    Pageable pageRequest);
+
+    @Query("SELECT a from AdsAssignmentEntity a where a.ads.id = :adsId ")
+    Optional<AdsAssignmentEntity> findByAdsId(@Param("adsId") Long adsId);
 }

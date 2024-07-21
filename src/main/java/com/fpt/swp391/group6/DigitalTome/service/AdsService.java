@@ -7,18 +7,27 @@ import com.fpt.swp391.group6.DigitalTome.dto.AdsPackageDto;
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentResponse;
 import com.fpt.swp391.group6.DigitalTome.entity.*;
 import com.fpt.swp391.group6.DigitalTome.mapper.AdsMapper;
+import com.fpt.swp391.group6.DigitalTome.repository.IAdsRepositoryCustom;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsAssignmentRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsPlacementRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsTypeRepository;
+import com.fpt.swp391.group6.DigitalTome.rest.input.EmailRequest;
 import com.fpt.swp391.group6.DigitalTome.utils.ImageUtils;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
+import com.sun.jdi.InternalException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +36,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AdsService {
@@ -40,9 +51,11 @@ public class AdsService {
     private final AdsMapper adsMapper;
     private final UserService userService;
     private final PaypalService paypalService;
+    private final IAdsRepositoryCustom adsRepositoryCustom;
+    private final EmailService emailService;
 
     @Autowired
-    public AdsService(AdsAssignmentRepository adsAssignmentRepository, AdsPlacementRepository adsPlacementRepository, AdsTypeRepository adsTypeRepository, AdsRepository adsRepository, AdsMapper adsMapper, UserService userService, PaypalService paypalService) {
+    public AdsService(AdsAssignmentRepository adsAssignmentRepository, AdsPlacementRepository adsPlacementRepository, AdsTypeRepository adsTypeRepository, AdsRepository adsRepository, AdsMapper adsMapper, UserService userService, PaypalService paypalService, IAdsRepositoryCustom adsRepositoryCustom, EmailService emailService) {
         this.adsAssignmentRepository = adsAssignmentRepository;
         this.adsPlacementRepository = adsPlacementRepository;
         this.adsTypeRepository = adsTypeRepository;
@@ -50,6 +63,8 @@ public class AdsService {
         this.adsMapper = adsMapper;
         this.userService = userService;
         this.paypalService = paypalService;
+        this.adsRepositoryCustom = adsRepositoryCustom;
+        this.emailService = emailService;
     }
 //    private String uploadFile(MultipartFile file) {
 //        try{
@@ -159,6 +174,55 @@ public class AdsService {
         adsRepository.save(ads);
     }
 
+    public ResponseEntity<?> rejectAds(Long adsId){
+        try {
+            updateAdsStatus(adsId, AdsEntity.AdsStatus.REJECTED);
+            EmailRequest emailRequest = new EmailRequest();
+            AdsEntity adsEntity = this.adsRepository.findById(adsId).orElse(null);
+            emailRequest.setEmailTo(adsEntity.getPublisher().getEmail());
+            emailRequest.setSubject("Advertisement Rejection");
+            emailRequest.setMessage("Dear ,"+adsEntity.getPublisher().getUsername()+"\n" +
+                    "\n" +
+                    "Thank you for your recent advertisement registration. After a thorough review, we regret to inform you that your advertisement cannot be approved as it does not meet our current criteria. We encourage you to review our advertising guidelines and consider revising your submission to better align with our requirements. We appreciate your interest in partnering with us and are happy to provide further assistance if needed. Please feel free to reach out with any questions or concerns.\n" +
+                    "\n" +
+                    "Thank you for your understanding.\n" +
+                    "\n" +
+                    "Best regards,\n" +
+                    "Digital Tome");
+            emailService.sendEmail(emailRequest);
+            return ResponseEntity.ok().build();
+        }catch(Exception ex){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    public ResponseEntity<?> acceptAds(Long adsId){
+        try {
+            updateAdsStatus(adsId, AdsEntity.AdsStatus.AWAITING_PAYMENT);
+            EmailRequest emailRequest = new EmailRequest();
+            AdsEntity adsEntity = this.adsRepository.findById(adsId).orElse(null);
+            emailRequest.setEmailTo(adsEntity.getPublisher().getEmail());
+            emailRequest.setSubject("Advertisement Acception");
+            emailRequest.setMessage("Dear ,"+adsEntity.getPublisher().getUsername()+"\n" +
+                    "\n" +
+                    "We are pleased to inform you that your advertisement has been approved and will be featured with Digital Tome. Your submission meets our criteria and aligns well with our advertising standards. We look forward to showcasing your advertisement and working together to achieve great results. Should you need any further assistance or have any questions regarding the next steps, please do not hesitate to reach out to us.\n" +
+                    "\n" +
+                    "Thank you for choosing to advertise with us.\n" +
+                    "\n" +
+                    "Best regards,\n" +
+                    "Digital Tome\n");
+            emailService.sendEmail(emailRequest);
+            return ResponseEntity.ok().build();
+        }catch(Exception ex){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    /*public void rejectAds(Long adsId){
+        updateAdsStatus(adsId, AdsEntity.AdsStatus.REJECTED);
+    }*/
+
+
     private String getBaseUrl(HttpServletRequest request) {
         return "https://digitaltome.azurewebsites.net" + request.getContextPath();
     }
@@ -253,4 +317,51 @@ public class AdsService {
         return adsAssignmentRepository.searchAdsAssignments(user, keyword, adsStatus, pageRequest)
                 .map(adsMapper::toDto);
     }
+
+/*    public List<AdsDto> filterAds(int page, int size, String keyword, String orderByDate, String status) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<AdsEntity> rs = adsRepositoryCustom.filterAds(pageable, keyword, orderByDate, status);
+        return rs.stream().map(adsMapper::toDto).collect(Collectors.toList());
+    }*/
+
+
+    public AdsDto findById(Long id){
+        return adsAssignmentRepository.findByAdsId(id)
+                .map(adsMapper::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Requested advertisement not found"));
+    }
+
+    public Page<AdsDto> filterAds(int page, int size, String keyword, String orderByDate, String status) {
+        PageRequest pageable = PageRequest.of(page, size);
+        Specification<AdsEntity> spec = filterAdsSpecification(keyword, status, orderByDate);
+        return adsRepository.findAll(spec, pageable).map(adsMapper::toDto);
+    }
+
+    private  Specification<AdsEntity> filterAdsSpecification(String keyword, String status, String orderByDate) {
+        return (Root<AdsEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (status != null && !status.isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("status"), status));
+            }
+
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                Predicate titlePredicate = criteriaBuilder.like(root.get("title"), "%" + keyword + "%");
+                Predicate contentPredicate = criteriaBuilder.like(root.get("content"), "%" + keyword + "%");
+                predicates.add(criteriaBuilder.or(titlePredicate, contentPredicate));
+            }
+
+            if (orderByDate != null && !orderByDate.isEmpty()) {
+                if (orderByDate.equalsIgnoreCase("asc")) {
+                    query.orderBy(criteriaBuilder.asc(root.get("createdDate")));
+                } else if (orderByDate.equalsIgnoreCase("desc")) {
+                    query.orderBy(criteriaBuilder.desc(root.get("createdDate")));
+                }
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+
+
 }

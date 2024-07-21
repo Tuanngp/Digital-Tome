@@ -14,7 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "contribution")
+@Table(name = "contribution", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"account_id", "book_id"})
+})
 public class ContributionEntity extends BaseEntity
 {
     @Id
