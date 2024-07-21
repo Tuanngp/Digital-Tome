@@ -47,8 +47,8 @@ public class PaypalController {
             @RequestParam("description") String description
     ) {
         try {
-            String cancelUrl = "http://localhost:8080/payment/cancel";
             String successUrl = "http://localhost:8080/payment/success";
+            String cancelUrl = "http://localhost:8080/payment/cancel";
 
 //            String cancelUrl = "https://digitaltome.azurewebsites.net/payment/cancel";
 //            String successUrl = "https://digitaltome.azurewebsites.net/payment/success";
@@ -99,7 +99,6 @@ public class PaypalController {
             paymentEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
             paymentEntity.setSuccess(true);
             paymentEntity.setDecimal(new BigDecimal(total));
-
 
             if (payment.getState().equals("approved")) {
                 return "payment/paymentSuccess";

@@ -1,9 +1,8 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -12,13 +11,14 @@ import java.time.LocalDate;
 @Builder
 @Entity
 @Table(name = "ads")
-public class AdsEntity extends BaseEntity{
+public class AdsEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id", nullable = false)
+    @JsonBackReference
     private AccountEntity publisher;
 
     @ManyToOne
@@ -28,7 +28,10 @@ public class AdsEntity extends BaseEntity{
     @Column(nullable = false, length = 100)
     private String title;
 
-    @Column(name = "content", length = 255)
+    @Column(name = "link")
+    private String link;
+
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "image_url", length = 255)
@@ -40,9 +43,10 @@ public class AdsEntity extends BaseEntity{
 
     public enum AdsStatus {
         PENDING,
+        AWAITING_PAYMENT,
         ACTIVE,
-        PAUSED,
         COMPLETED,
-        CANCELLED
+        CANCELLED,
+        REJECTED
     }
 }

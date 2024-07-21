@@ -9,7 +9,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto extends AccountEntity {
@@ -17,7 +18,6 @@ public class UserDto extends AccountEntity {
     private String username;
     private String email;
     private String address;
-
 
     @Pattern(regexp = "^[\\p{L} ]+$", message = "Name should contain only alphabetic characters and spaces")
     private String fullName;
@@ -28,12 +28,10 @@ public class UserDto extends AccountEntity {
     private String avatarPath;
     private String description;
     private long point;
-
     private Gender gender;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    @PastOrPresent(message = "Date of birth must be greater than 1950 and less than current")
     @ValidDateOfBirth
     private Date dateOfBirth;
-
 }

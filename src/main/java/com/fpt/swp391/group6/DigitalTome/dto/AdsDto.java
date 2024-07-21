@@ -21,6 +21,7 @@ public class AdsDto {
     private Long typeId;//
     private String title; //
     private String content; //
+    private String link; //
     private Date startDate; //
     private Date endDate; //
     private String status; //

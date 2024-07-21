@@ -210,7 +210,7 @@ var Bookland = function(){
 		}
 
 		if(jQuery('.popup-youtube, .popup-vimeo, .popup-gmaps').length > 0)
-		{	
+		{
 			/* magnificPopup for Play video function end */
 			$('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
 				disableOn: 700,
@@ -221,7 +221,7 @@ var Bookland = function(){
 
 				fixedContentPos: false
 			});
-		
+
 		}
 		
 	}

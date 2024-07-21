@@ -26,15 +26,15 @@ import java.util.Set;
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-    @Autowired
-    private HttpServletRequest request;
-
+    private final HttpServletRequest request;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public CustomOAuth2UserService(EmailService emailService, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    @Autowired
+    public CustomOAuth2UserService(HttpServletRequest request, EmailService emailService, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.request = request;
         this.emailService = emailService;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
