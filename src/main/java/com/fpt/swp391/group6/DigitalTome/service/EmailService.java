@@ -1,5 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
+import com.fpt.swp391.group6.DigitalTome.exception.exceptionDefinition.EmailErrorException;
 import com.fpt.swp391.group6.DigitalTome.rest.input.EmailRequest;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -33,10 +34,14 @@ public class EmailService {
     }
 
     public void sendEmail(EmailRequest emailRequest) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(emailRequest.getEmailTo());
-        mailMessage.setSubject(emailRequest.getSubject());
-        mailMessage.setText(emailRequest.getMessage());
-        mailSender.send(mailMessage);
+        try {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(emailRequest.getEmailTo());
+            mailMessage.setSubject(emailRequest.getSubject());
+            mailMessage.setText(emailRequest.getMessage());
+            mailSender.send(mailMessage);
+        }catch (Exception ex){
+            throw new EmailErrorException("Sending email unsuccessfully");
+        }
     }
 }

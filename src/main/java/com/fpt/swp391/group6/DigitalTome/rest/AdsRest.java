@@ -38,6 +38,32 @@ public class AdsRest {
         return ResponseEntity.ok(adsService.searchAdsAssignments(page, size, keyword, status));
     }
 
+    @GetMapping("infor")
+    public ResponseEntity<AdsDto> getAdsInfo(
+            @RequestParam Long id) {
+        return ResponseEntity.ok(adsService.findById(id));
+    }
+
+    @PutMapping("/acceptation")
+    public ResponseEntity<?> acceptAds(@RequestParam Long adsId) {
+        return adsService.acceptAds(adsId) ;
+    }
+
+    @PutMapping("/rejection")
+    public ResponseEntity<?> reject(@RequestParam Long adsId) {
+        return adsService.rejectAds(adsId);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Page<AdsDto>> filterAds(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = " ") String keyword,
+            @RequestParam(defaultValue = "") String status,
+            @RequestParam(defaultValue = "desc") String orderByDate) {
+        return ResponseEntity.ok(adsService.filterAds(page, size, keyword, orderByDate, status));
+    }
+
     @GetMapping("/ads-package")
     public ResponseEntity<List<AdsPackageDto>> getAdsPackage() {
         return ResponseEntity.ok(adsService.getAdsPackages());
