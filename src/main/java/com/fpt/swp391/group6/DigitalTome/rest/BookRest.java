@@ -3,6 +3,7 @@ package com.fpt.swp391.group6.DigitalTome.rest;
 import com.fpt.swp391.group6.DigitalTome.dto.BookDetailDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.rest.input.SearchPageableRequest;
 import com.fpt.swp391.group6.DigitalTome.rest.input.SearchRequest;

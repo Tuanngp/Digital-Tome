@@ -28,7 +28,6 @@ public class PaymentEntity {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "account_id")
-    @JsonManagedReference
     private AccountEntity accountEntity;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {

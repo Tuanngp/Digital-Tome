@@ -308,6 +308,8 @@ public class BookService {
         }
     }
 
-
+    public Set<Integer> getAllPublicationYears() {
+        return bookRepository.findAll().stream().map(BookEntity::getPublicationYear).collect(Collectors.toSet());
+    }
 }
 

@@ -148,8 +148,8 @@ public class AdsService {
             throw new EntityNotFoundException("User is not the owner of this AdsAssignment");
         }
         ImageUtils.destroyImage(assignment.getAds().getImageUrl(), "ads");
-        adsRepository.delete(assignment.getAds());
         adsAssignmentRepository.delete(assignment);
+        adsRepository.delete(assignment.getAds());
     }
 
     private void updateAdsStatus(Long adsId, AdsEntity.AdsStatus status) {

@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
 import com.fpt.swp391.group6.DigitalTome.service.AdsService;
 import com.fpt.swp391.group6.DigitalTome.service.BookService;
 import org.springframework.http.ResponseEntity;
@@ -87,11 +88,6 @@ public class HomeController {
     @GetMapping("/books-list")
     public String booksList() {
         return "book-view/books-list";
-    }
-
-    @GetMapping("/books-list-view-sidebar")
-    public String booksListViewSidebar() {
-        return "book-view/books-list-view-sidebar";
     }
 
     @GetMapping("/coming-soon")

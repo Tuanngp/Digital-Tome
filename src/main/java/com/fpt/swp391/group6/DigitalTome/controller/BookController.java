@@ -392,5 +392,12 @@ public class BookController {
             return "redirect:/error404";
         }
     }
+
+    @GetMapping("/books-list-view-sidebar")
+    public String booksListViewSidebar(Model model) {
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("years", bookService.getAllPublicationYears());
+        return "book-view/books-list-view-sidebar";
+    }
 }
 

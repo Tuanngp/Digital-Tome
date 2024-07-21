@@ -115,7 +115,6 @@ public class AccountEntity extends BaseEntity implements Serializable {
     private List<ContributionEntity> contributionEntityList;
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
     private List<PaymentEntity> paymentEntityList;
 
     @OneToMany(mappedBy = "userFirst", cascade = {

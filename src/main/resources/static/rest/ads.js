@@ -214,6 +214,7 @@ function loadAds(number) {
                             url: `/api/ads/delete/${ads.id}`,
                             method: 'DELETE',
                             success: function (response) {
+                                currentPage = (currentPage%5===1)?currentPage-1:currentPage;
                                 loadAds(data.currentPage)
                                 notify("alert-success", "Campaign deleted successfully")
                             },
@@ -310,9 +311,9 @@ async function loadAdsPackage() {
                     <div class="card">
                         <div class="card-body">
                             <h5>${type.name}</h5>
-                            <p>Vị trí: ${placement.adsPlacement.name}</p>
-                            <p>Loại: ${type.description}</p>
-                            <p>Giá: ${(type.price + placement.adsPlacement.price).toLocaleString('vi-VN')} VND/ngày</p>
+                            <p>Placement: ${placement.adsPlacement.name}</p>
+                            <p>Type: ${type.description}</p>
+                            <p>Price: ${(type.price + placement.adsPlacement.price).toLocaleString('vi-VN')} VND/ngày</p>
                         </div>
                     </div>
                 `;
