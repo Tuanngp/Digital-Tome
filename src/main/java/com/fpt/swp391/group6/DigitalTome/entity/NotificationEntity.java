@@ -38,4 +38,5 @@ public class NotificationEntity {
     private String avatarUrl;
 
     private LocalDateTime createdAt;
+    
 }

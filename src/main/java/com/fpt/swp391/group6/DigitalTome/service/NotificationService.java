@@ -66,5 +66,4 @@ public class NotificationService {
         notification.setIsRead(true);
         notificationRepository.save(notification);
     }
-
 }
