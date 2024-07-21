@@ -66,6 +66,7 @@ public class BookController {
         return "book-manager/books-upload";
     }
 
+
     @PostMapping("/save")
     public String saveBook(@ModelAttribute("book") BookEntity book,
                            @RequestParam(value = "image", required = false) MultipartFile image,
@@ -83,7 +84,7 @@ public class BookController {
 
         System.out.println("ID của sách khi cập nhật: " + book.getId());
 
-        // Kiểm tra ISBN
+        // Kiểm tra tồn taij
         if (book.getId() != null) {
             BookEntity existingBook = bookService.getBookById(book.getId());
             if (existingBook == null) {
@@ -92,12 +93,13 @@ public class BookController {
             }
 
             // Kiểm tra ISBN trùng lặp
-            if (bookService.findByIsbn(book.getIsbn()) != null && !existingBook.getId().equals(book.getId())) {
+            BookEntity bookWithSameIsbn = bookService.findByIsbn(book.getIsbn());
+            if (bookWithSameIsbn != null && !bookWithSameIsbn.getId().equals(book.getId())) {
                 model.addAttribute("error", "ISBN already exists in the system!");
                 return "book-manager/update-book";
             }
 
-            // Giữ lại giá trị cũ nếu không có tệp mới
+            // Giữ lại link cũ nếu không có tệp mới
             if (image != null && !image.isEmpty()) {
                 try {
                     String imageUrl = ImageUtils.uploadImage(image, "image/books/");
@@ -124,6 +126,7 @@ public class BookController {
                 book.setBookPath(existingBook.getBookPath());
             }
         } else {
+            // Kiểm tra ISBN trùng lặp khi tạo mới
             if (bookService.isISBNAlreadyExists(book.getIsbn())) {
                 model.addAttribute("error", "ISBN already exists in the system!");
                 return "book-manager/books-upload";
@@ -152,7 +155,7 @@ public class BookController {
             }
         }
 
-        // Kiểm tra ngày xuất bản
+        // check ngày xuất bản
         LocalDate currentDate = LocalDate.now();
         Date publicationDate = book.getPublicationDate();
         if (publicationDate != null) {
@@ -211,11 +214,12 @@ public class BookController {
 
 
 
+
     @GetMapping("/update/{id}")
     public String showEditBookForm(@PathVariable(value = "id") long id, Model model, Principal principal) {
         BookEntity book = bookService.getBookById(id);
 
-        // Check if the logged-in user is the author of the book
+        // check account có phải là tác giả của sách k
         AccountEntity accountEntity = accountService.findByUsername(principal.getName());
         boolean isAuthor = contributionService.isAuthorOfBook(accountEntity.getId(), id);
         if (!isAuthor) {
@@ -235,7 +239,7 @@ public class BookController {
 
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable(value = "id") long id, Principal principal) {
-        // Check if the logged-in user is the author of the book
+        // check account có phải là tác giả của sách k
         AccountEntity accountEntity = accountService.findByUsername(principal.getName());
         boolean isAuthor = contributionService.isAuthorOfBook(accountEntity.getId(), id);
         if (!isAuthor) {
@@ -309,7 +313,7 @@ public class BookController {
             if (user != null) {
                 MembershipEntity membership = user.getMembershipEntity();
                 if (membership != null) {
-                    isOwned = true;  // User has an upgraded account, can read the book
+                    isOwned = true;  // account nâng cấp và đã mua
                 } else {
                     isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
                 }
@@ -336,11 +340,11 @@ public class BookController {
             long bookPrice = book.getPoint();
 
             if (membership == null && userPoints >= bookPrice) {
-                // Deduct points from the user
+                // Trừ điểm người dùng
                 user.setPoint(userPoints - bookPrice);
                 accountService.save(user);
 
-                // Save the transaction in the payment table
+                // Lưu giao dịch vào bảng payment
                 PaymentEntity payment = new PaymentEntity();
                 payment.setAccountEntity(user);
                 payment.setBookEntity(book);
@@ -349,7 +353,6 @@ public class BookController {
                 payment.setSuccess(true);
                 paymentService.save(payment);
 
-                // Redirect to the book reading page
                 return "redirect:/read-book/" + book.getId();
             } else {
                 model.addAttribute("error", "You don't have enough points to buy this book.");

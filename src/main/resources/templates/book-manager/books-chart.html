@@ -852,6 +852,11 @@
         const booksSoldContext = document.getElementById('booksSoldChart').getContext('2d');
         const revenueContext = document.getElementById('revenueChart').getContext('2d');
 
+        // Create gradient for bar chart
+        const barGradient = booksSoldContext.createLinearGradient(0, 0, 0, 400);
+        barGradient.addColorStop(0, 'rgba(255, 206, 86, 1)'); // Yellow with full opacity
+        barGradient.addColorStop(1, 'rgba(255, 206, 86, 0.2)'); // Yellow with low opacity
+
         let booksSoldChart = new Chart(booksSoldContext, {
             type: 'bar',
             data: {
@@ -860,8 +865,8 @@
                     {
                         label: 'Books Sold',
                         data: [],
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: barGradient,
+                        borderColor: 'rgba(255, 206, 86, 1)', // Yellow border color
                         borderWidth: 1,
                         fill: true
                     }
@@ -882,6 +887,11 @@
             }
         });
 
+        // Create gradient for area chart
+        const areaGradient = revenueContext.createLinearGradient(0, 0, 0, 400);
+        areaGradient.addColorStop(0, 'rgba(255, 99, 132, 0.5)'); // Pink-red with medium opacity
+        areaGradient.addColorStop(1, 'rgba(255, 99, 132, 0)'); // Transparent
+
         let revenueChart = new Chart(revenueContext, {
             type: 'line',
             data: {
@@ -890,9 +900,10 @@
                     {
                         label: 'Revenue',
                         data: [],
-                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderColor: 'rgba(255, 99, 132, 1)', // Pink-red border color
+                        backgroundColor: areaGradient, // Gradient background
                         borderWidth: 1,
-                        fill: false
+                        fill: true
                     }
                 ]
             },
@@ -934,8 +945,8 @@
         // Trigger change event to load initial data
         document.getElementById('timePeriod').dispatchEvent(new Event('change'));
     });
-
 </script>
+
 
 
 
