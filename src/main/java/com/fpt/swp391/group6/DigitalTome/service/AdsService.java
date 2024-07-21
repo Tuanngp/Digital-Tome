@@ -165,8 +165,8 @@ public class AdsService {
 
     public ResponseEntity<?> createPayAndRedirect(Long adsId, String amount, String currency, String description, HttpServletRequest request) {
         try {
-            String cancelUrl = getBaseUrl(request) + "?status=cancel";
-            String successUrl = getBaseUrl(request) + "/success?adsId=" + adsId;
+            String cancelUrl = getBaseUrl(request) + "/advertisement?status=cancel";
+            String successUrl = getBaseUrl(request) + "/advertisement/success?adsId=" + adsId;
             double rate = 25128.0;
             Payment payment = paypalService.createPayment(
                     Double.parseDouble(amount)/rate,

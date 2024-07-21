@@ -12,8 +12,12 @@ import java.util.List;
 @RestController
 public class CategoryRest {
 
+    private final CategoryService categoryService;
+
     @Autowired
-    private CategoryService categoryService;
+    public CategoryRest(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/api/categories")
     public List<CategoryEntity> getCategories(@RequestParam(required = false) String search) {

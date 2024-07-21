@@ -7,8 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AdsScheduler {
+    private final AdsService adsService;
+
     @Autowired
-    private AdsService adsService;
+    public AdsScheduler(AdsService adsService) {
+        this.adsService = adsService;
+    }
 
     @Scheduled(cron = "*/10 * * * * *")
 //    @Scheduled(cron = "0 0 0 * * *")

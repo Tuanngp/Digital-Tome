@@ -109,23 +109,7 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
-    @JsonManagedReference
-    private List<CommentEntity> commentEntityList;
-
-    @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
-    private List<RateEntity> rateEntityList;
-
-    @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
     private List<ContributionEntity> contributionEntityList;
-
-    @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
-            CascadeType.REFRESH, CascadeType.DETACH})
-    private List<FavoriteEntity> favoriteEntities;
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PaymentEntity> paymentEntityList;
@@ -140,49 +124,14 @@ public class AccountEntity extends BaseEntity implements Serializable {
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<UserRelationship> relationshipsReceived;
 
-
-//    @OneToMany(mappedBy = "publisher", cascade = {
-//            CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-//    private Set<NotificationEntity> registerations;
-
-//    @OneToMany(mappedBy = "publisher", cascade = {
-//            CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-//    private Set<NotificationEntity> notifications;
-
     @OneToMany(mappedBy = "user", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     private Set<NotificationEntity> registrationsReceived;
-
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
     @JsonManagedReference
     private Set<NotificationEntity> notifications;
-
-
-//
-//    @PrePersist
-//    protected void onCreate() {
-//        startUpdate = new Date();
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(startUpdate);
-//        calendar.add(Calendar.MINUTE, 1);
-//        membershipExpiryDate = calendar.getTime();
-//    }
-
-
-//    @PreUpdate
-//    protected void onUpdate() {
-//        startUpdate = new Date();
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(startUpdate);
-//        calendar.add(Calendar.MINUTE, 1);
-//        membershipExpiryDate = calendar.getTime();
-//    }
 }

@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PaymentService {
+    private final PaymentRepository paymentRepository;
+
     @Autowired
-    private PaymentRepository paymentRepository;
+    public PaymentService(PaymentRepository paymentRepository) {
+        this.paymentRepository = paymentRepository;
+    }
 
     public void save(PaymentEntity payment) {
         paymentRepository.save(payment);
