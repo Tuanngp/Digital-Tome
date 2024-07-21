@@ -1,15 +1,14 @@
 package com.fpt.swp391.group6.DigitalTome.rest;
 
 import com.fpt.swp391.group6.DigitalTome.dto.ContributionDto;
+import com.fpt.swp391.group6.DigitalTome.entity.ContributionEntity;
 import com.fpt.swp391.group6.DigitalTome.rest.output.AbstractOutput;
 import com.fpt.swp391.group6.DigitalTome.service.BookService;
 import com.fpt.swp391.group6.DigitalTome.service.ContributionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,32 +25,31 @@ public class ContributionRest {
         this.bookService = bookService;
     }
 
-    @GetMapping()
+    @GetMapping
     public AbstractOutput<ContributionDto> getPublishedBooks(@RequestParam int page, @RequestParam int limit) {
-        AbstractOutput<ContributionDto> result = new AbstractOutput<ContributionDto>();
-        result.setListResults(contributionService.
-                getContributionByStatus(1, PageRequest.of(page-1,limit)));
-        result.setTotalPages((int)Math.ceil((double)contributionService.countContributionByStatus(1)/(double)limit));
-        result.setCurrentPage(page);
-        return result;
+        return getBooksByStatus(1, page, limit);
     }
 
     @GetMapping("/rejection")
-    public AbstractOutput getRejectedBooks(@RequestParam int page, @RequestParam int limit) {
-        AbstractOutput result = new AbstractOutput();
-        result.setListResults(contributionService.
-                getContributionByStatus(3, PageRequest.of(page-1,limit)));
-        result.setTotalPages((int)Math.ceil((double)contributionService.countContributionByStatus(3)/(double)limit));
-        result.setCurrentPage(page);
-        return result;
+    public AbstractOutput<ContributionDto> getRejectedBooks(@RequestParam int page, @RequestParam int limit) {
+        return getBooksByStatus(3, page, limit);
     }
 
     @GetMapping("/acception")
-    public AbstractOutput getAcceptedBooks(@RequestParam int page, @RequestParam int limit) {
-        AbstractOutput result = new AbstractOutput();
-        result.setListResults(contributionService.
-                getContributionByStatus(2, PageRequest.of(page-1,limit)));
-        result.setTotalPages((int)Math.ceil((double)contributionService.countContributionByStatus(2)/(double)limit));
+    public AbstractOutput<ContributionDto> getAcceptedBooks(@RequestParam int page, @RequestParam int limit) {
+        return getBooksByStatus(2, page, limit);
+    }
+
+  /*  @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteContributionBookById(@PathVariable(name = "id") long id) {
+        contributionService.deleteContributionBook(id);
+        return ResponseEntity.noContent().build();
+    }*/
+
+    private AbstractOutput<ContributionDto> getBooksByStatus(int status, int page, int limit) {
+        AbstractOutput<ContributionDto> result = new AbstractOutput<>();
+        result.setListResults(contributionService.getContributionByStatus(status, PageRequest.of(page - 1, limit)));
+        result.setTotalPages((int) Math.ceil((double) contributionService.countContributionByStatus(status) / limit));
         result.setCurrentPage(page);
         return result;
     }

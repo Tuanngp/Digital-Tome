@@ -1,5 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import jakarta.persistence.*;
@@ -80,6 +82,7 @@ public class AccountEntity extends BaseEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "membership_id")
+    @JsonIgnore
     private MembershipEntity membershipEntity;
 
 
@@ -109,35 +112,41 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
-    @JsonManagedReference
+    @JsonIgnore
     private List<CommentEntity> commentEntityList;
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
+    @JsonIgnore
     private List<RateEntity> rateEntityList;
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
+    @JsonIgnore
     private List<ContributionEntity> contributionEntityList;
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
+    @JsonIgnore
     private List<FavoriteEntity> favoriteEntities;
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<PaymentEntity> paymentEntityList;
 
     @OneToMany(mappedBy = "userFirst", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @JsonIgnore
     private Set<UserRelationship> relationshipsInitiated;
 
     @OneToMany(mappedBy = "userSecond", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @JsonIgnore
     private Set<UserRelationship> relationshipsReceived;
 
 
@@ -154,13 +163,14 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "user", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @JsonIgnore
     private Set<NotificationEntity> registrationsReceived;
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
-    @JsonManagedReference
+    @JsonIgnore
     private Set<NotificationEntity> notifications;
 
 

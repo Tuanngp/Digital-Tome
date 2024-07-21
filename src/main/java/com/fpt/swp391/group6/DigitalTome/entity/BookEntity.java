@@ -66,7 +66,6 @@ public class BookEntity extends BaseEntity {
     private List<ContributionEntity> contributionEntityList;  // Một sách có nhiều đóng góp
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<CommentEntity> commentEntityList;   // Một sách có nhiều bình luận
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

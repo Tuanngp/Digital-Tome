@@ -29,4 +29,5 @@ public class AdsDto {
     private BigDecimal cost;
     private String imageUrl;
     private MultipartFile file;//
+    private String customer;
 }
