@@ -214,6 +214,9 @@ function loadAds(number) {
                             url: `/api/ads/delete/${ads.id}`,
                             method: 'DELETE',
                             success: function (response) {
+                                if (data.totalItems <= (currentPage - 1) * size && currentPage > 1) {
+                                    currentPage -= 1;
+                                }
                                 currentPage = (currentPage%5===1)?currentPage-1:currentPage;
                                 loadAds(data.currentPage)
                                 notify("alert-success", "Campaign deleted successfully")
@@ -255,7 +258,7 @@ function loadAds(number) {
                 });
             });
 
-            // $('#pagination').destroy();
+            $('#pagination').twbsPagination('destroy');
             $('#pagination').twbsPagination({
                 totalPages: data.totalPages,
                 startPage: currentPage,

@@ -25,7 +25,7 @@ public class AdsEntity extends BaseEntity {
     @JoinColumn(name = "ads_type_id", nullable = false)
     private AdsTypeEntity adsType;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String title;
 
     @Column(name = "link")
