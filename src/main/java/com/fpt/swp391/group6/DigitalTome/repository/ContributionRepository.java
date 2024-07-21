@@ -34,7 +34,9 @@ public interface ContributionRepository extends JpaRepository<ContributionEntity
     @Query("UPDATE ContributionEntity c " +
             "SET c.modifiedDate = CURRENT_TIMESTAMP  " +
             "where c.bookEntity.isbn = :isbn")
+
     public  void updateModifiedDateByBookEntity_ISBN(@Param("isbn") String isbn);
+
     @Query("SELECT c.bookEntity.id FROM ContributionEntity c WHERE c.accountEntity.id = :accountId")
     List<Long> findBookIdsByAccountId(@Param("accountId") Long accountId);
 }

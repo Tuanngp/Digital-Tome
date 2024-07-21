@@ -1,5 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.rest;
 
+import com.fpt.swp391.group6.DigitalTome.dto.CategoryDto;
 import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
 import com.fpt.swp391.group6.DigitalTome.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class CategoryRest {
     }
 
     @GetMapping("/api/categories")
-    public List<CategoryEntity> getCategories(@RequestParam(required = false) String search) {
+    public List<CategoryDto> getCategories(@RequestParam(required = false) String search) {
         if (search != null && !search.isEmpty()) {
             return categoryService.searchCategories(search);
         } else {
