@@ -1,5 +1,45 @@
 <!-- Footer -->
 <footer class="site-footer style-1" th:fragment="footer">
+    <!-- Feature Product -->
+    <section class="content-inner-1 bg-grey reccomend" th:if="${!adsFooter.isEmpty()}">
+        <div class="container">
+            <div class="section-head text-center">
+                <div class="circle style-1"></div>
+                <h2 class="title">Featured News</h2>
+                <p>Discover the latest updates in the world of literature. From new book releases and author interviews to literary awards and book reviews, stay informed about everything happening in the book community. Whether you're a casual reader or a dedicated bibliophile, our featured news will keep you in the loop with the most exciting and noteworthy events in the literary world.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="swiper-container books-wrapper-2 swiper-three">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" th:each="adsfooter : ${adsFooter}">
+                        <div class="books-card style-2" th:if="adsFooter!=null">
+                            <div class="dz-media">
+                                <img alt="book" th:src="${adsfooter.getImageUrl()}">
+                            </div>
+                            <div class="dz-content">
+                                <h6 class="sub-title">HOT NEWS</h6>
+                                <h2 class="title" th:text="${adsfooter.getTitle()}">A Heavy LIft</h2>
+                                <p class="text" th:text="${adsfooter.getContent()}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                    veniam, quis nostrud exercitation ullamco laboris </p>
+                                <div class="bookcard-footer">
+                                    <a class="btn btn-outline-secondary btnhover m-t15" th:href="${adsfooter.getLink()}">See
+                                        Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination-align style-2">
+                    <div class="swiper-button-prev"><i class="fa-solid fa-angle-left"></i></div>
+                    <div class="swiper-pagination-three"></div>
+                    <div class="swiper-button-next"><i class="fa-solid fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Footer Category -->
 <!--    <div class="footer-category">-->
 <!--        <div class="container">-->

@@ -1,5 +1,6 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,6 +28,7 @@ public class PaymentEntity {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "account_id")
+    @JsonManagedReference
     private AccountEntity accountEntity;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {

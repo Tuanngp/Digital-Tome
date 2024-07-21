@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
+import com.fpt.swp391.group6.DigitalTome.service.AdsService;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,8 +14,16 @@ import java.security.Principal;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
+
+    private final UserService userService;
+    private final AdsService adsService;
+
     @Autowired
-    private UserService userService;
+    public GlobalControllerAdvice(UserService userService, AdsService adsService) {
+        this.userService = userService;
+        this.adsService = adsService;
+    }
+
     @ModelAttribute
     public void setAccountInGlobal(@AuthenticationPrincipal OAuth2User oAuth2User, Principal principal, Model model) {
         AccountEntity accountEntity = null;
@@ -26,4 +35,12 @@ public class GlobalControllerAdvice {
         }
         model.addAttribute("account", accountEntity);
     }
+
+    @ModelAttribute
+    public void setAdsInGlobal(Model model) {
+        model.addAttribute("adsHomepage", adsService.getAdsHomepage());
+        model.addAttribute("adsFooter", adsService.getAdsFooter());
+        model.addAttribute("adsPopup", adsService.getAdsPopup());
+    }
+
 }

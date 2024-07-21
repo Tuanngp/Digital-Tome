@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthorRest {
-    @Autowired
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
+    @Autowired
+    public AuthorRest(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 }

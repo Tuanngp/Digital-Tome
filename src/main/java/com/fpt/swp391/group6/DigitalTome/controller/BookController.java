@@ -27,23 +27,22 @@ import java.util.Optional;
 @Controller
 public class BookController {
 
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
+    private final AuthorService authorService;
+    private final CategoryService categoryService;
+    private final AccountService accountService;
+    private final ContributionService contributionService;
+    private final PaymentService paymentService;
 
     @Autowired
-    private AuthorService authorService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private ContributionService contributionService;
-
-    @Autowired
-    private PaymentService paymentService;
+    public BookController(BookService bookService, AuthorService authorService, CategoryService categoryService, AccountService accountService, ContributionService contributionService, PaymentService paymentService) {
+        this.bookService = bookService;
+        this.authorService = authorService;
+        this.categoryService = categoryService;
+        this.accountService = accountService;
+        this.contributionService = contributionService;
+        this.paymentService = paymentService;
+    }
 
     @GetMapping("/books-grid-view")
     public String bookListView(Model model) {

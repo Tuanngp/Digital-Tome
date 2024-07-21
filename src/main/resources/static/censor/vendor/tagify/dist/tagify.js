@@ -151,7 +151,7 @@
    * https://stackoverflow.com/a/6234804/104380
    */
   function escapeHTML(s) {
-    return typeof s == 'string' ? s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/`|'/g, "&#039;") : s;
+    return typeof s == 'string' ? s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/[`']/g, "&#039;") : s;
   }
 
   /**

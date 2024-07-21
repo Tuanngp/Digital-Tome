@@ -24,13 +24,14 @@ import java.util.List;
 
 @Controller
 public class MessageController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
     private final SimpMessagingTemplate template;
     private final MessageService messageService;
     private final MessageMapper messageMapper;
 
-    public MessageController(SimpMessagingTemplate template, MessageService messageService, MessageMapper messageMapper) {
+    @Autowired
+    public MessageController(UserService userService, SimpMessagingTemplate template, MessageService messageService, MessageMapper messageMapper) {
+        this.userService = userService;
         this.template = template;
         this.messageService = messageService;
         this.messageMapper = messageMapper;

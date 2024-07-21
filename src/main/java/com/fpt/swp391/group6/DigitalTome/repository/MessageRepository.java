@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface MessageRepository extends JpaRepository<MessageEntity, Long>{
     void deleteAllByReceiver(AccountEntity receiver);
-    List<MessageEntity> findAllBySenderAndReceiver(AccountEntity sender, AccountEntity receiver);
+    List<MessageEntity> findAllBySenderAndReceiverAndStatus(AccountEntity sender, AccountEntity receiver, String status);
     List<MessageEntity> findBySenderOrReceiver(AccountEntity sender, AccountEntity receiver);
     int countByReceiverAndStatus(AccountEntity receiver, String status);
     List<MessageEntity> findTop5ByReceiverOrderByCreatedDateDesc(AccountEntity receiver);
+    List<MessageEntity> findAllBySenderAndReceiver(AccountEntity sender, AccountEntity receiver);
 }

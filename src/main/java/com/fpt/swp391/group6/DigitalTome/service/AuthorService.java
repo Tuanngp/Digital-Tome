@@ -10,8 +10,12 @@ import java.util.Optional;
 
 @Service
 public class AuthorService {
+    private final AuthorRepository authorRepository;
+
     @Autowired
-    private AuthorRepository authorRepository;
+    public AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
     public Optional<AuthorEntity> findById(Long id) {
         return authorRepository.findById(id);
