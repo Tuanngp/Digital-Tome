@@ -2,15 +2,13 @@ package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.dto.BookDetailDto;
 import com.fpt.swp391.group6.DigitalTome.dto.BookDto;
-import com.fpt.swp391.group6.DigitalTome.entity.AuthorEntity;
-import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
-import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
-import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
+import com.fpt.swp391.group6.DigitalTome.entity.*;
 import com.fpt.swp391.group6.DigitalTome.exception.exceptionDefinition.ChangingStatusException;
 import com.fpt.swp391.group6.DigitalTome.exception.exceptionDefinition.FindingBookException;
 import com.fpt.swp391.group6.DigitalTome.mapper.BookDetailMapper;
 import com.fpt.swp391.group6.DigitalTome.mapper.BookMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.BookRepository;
+import com.fpt.swp391.group6.DigitalTome.repository.ContributionRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.IBookDetailRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
 import com.fpt.swp391.group6.DigitalTome.rest.input.SearchRequest;
@@ -34,14 +32,16 @@ public class BookService {
     private final BookDetailMapper bookDetailMapper;
     private final IBookDetailRepository bookDetailRepositoryImpl;
     private final PaymentRepository paymentRepository;
+    private final ContributionRepository contributionRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, BookMapper bookMapper, PaymentRepository paymentRepository,BookDetailMapper bookDetailMapper, IBookDetailRepository bookDetailRepositoryImpl) {
+    public BookService(BookRepository bookRepository, BookMapper bookMapper, PaymentRepository paymentRepository, BookDetailMapper bookDetailMapper, IBookDetailRepository bookDetailRepositoryImpl, ContributionRepository contributionRepository) {
         this.bookRepository = bookRepository;
         this.bookMapper = bookMapper;
         this.bookDetailMapper = bookDetailMapper;
         this.bookDetailRepositoryImpl = bookDetailRepositoryImpl;
         this.paymentRepository = paymentRepository;
+        this.contributionRepository = contributionRepository;
     }
 
     public void saveBook(BookDto bookDto){

@@ -1,5 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,11 +30,13 @@ public class CommentEntity extends BaseEntity
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "account_id")
+    @JsonBackReference
     private AccountEntity accountEntity;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
+    @JsonBackReference
     private BookEntity bookEntity;
 }

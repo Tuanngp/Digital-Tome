@@ -67,6 +67,8 @@ public class BookController {
     }
 
 
+
+
     @PostMapping("/save")
     public String saveBook(@ModelAttribute("book") BookEntity book,
                            @RequestParam(value = "image", required = false) MultipartFile image,
@@ -196,12 +198,8 @@ public class BookController {
 
         // Xử lý contribution
         AccountEntity accountEntity = accountService.findByUsername(principal.getName());
-        ContributionEntity contribution = new ContributionEntity();
-        contribution.setAccountEntity(accountEntity);
-        contribution.setBookEntity(book);
-        contribution.setBookCertificate("Book uploaded by " + principal.getName());
 
-        contributionService.saveContribution(contribution);
+
 
         // Pricing và set free
         book.setRestricted(pricing > 0);
@@ -209,6 +207,17 @@ public class BookController {
         book.setStatus(1);
 
         bookService.saveBook(book);
+
+        ContributionEntity contribution = contributionService.findByAccountAndBook(accountEntity, book);
+        if (contribution == null) {
+            contribution = new ContributionEntity();
+            contribution.setAccountEntity(accountEntity);
+            contribution.setBookEntity(book);
+            contribution.setBookCertificate("Book uploaded by " + principal.getName());
+        }
+
+        contributionService.saveContribution(contribution);
+
         return "redirect:/books-manage";
     }
 

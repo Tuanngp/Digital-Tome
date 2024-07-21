@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
 import com.fpt.swp391.group6.DigitalTome.dto.ContributionDto;
+import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.exception.exceptionDefinition.ContributionGeneralErrorException;
 import com.fpt.swp391.group6.DigitalTome.exception.exceptionDefinition.ContributionNotFoundException;
 import com.fpt.swp391.group6.DigitalTome.exception.exceptionDefinition.UpdatingBookException;
@@ -78,6 +79,10 @@ public class ContributionService {
 
     public List<Long> getBookIdsByAccountId(Long accountId) {
         return contributionRepository.findBookIdsByAccountId(accountId);
+    }
+
+    public ContributionEntity findByAccountAndBook(AccountEntity account, BookEntity book) {
+        return contributionRepository.findByAccountEntityAndBookEntity(account, book);
     }
 
     /*public void deleteContributionBook(Long id){

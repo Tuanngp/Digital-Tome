@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto extends AccountEntity {
+public class UserDto{
     private Long id;
     private String username;
     private String email;

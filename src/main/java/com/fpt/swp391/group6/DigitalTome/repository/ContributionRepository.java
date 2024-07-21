@@ -38,4 +38,6 @@ public interface ContributionRepository extends JpaRepository<ContributionEntity
 
     @Query("SELECT c.bookEntity.id FROM ContributionEntity c WHERE c.accountEntity.id = :accountId")
     List<Long> findBookIdsByAccountId(@Param("accountId") Long accountId);
+
+    ContributionEntity findByAccountEntityAndBookEntity(AccountEntity accountEntity, BookEntity bookEntity);
 }
