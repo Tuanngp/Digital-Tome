@@ -15,17 +15,17 @@
     <meta name="format-detection" content="telephone=no">
 
     <!-- PAGE TITLE HERE -->
-    <title>Acception Book List</title>
+    <title>Advertisement List</title>
 
 
 
     <!-- FAVICONS ICON -->
-    <link rel="shortcut icon" type="image/png" th:href="@{../images/favicon.png}">
+    <link rel="shortcut icon" type="image/png" th:href="@{../censor/images/favicon.png}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-    <link th:href="@{../vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
-    <link th:href="@{../vendor/lightgallery/css/lightgallery.min.css}" rel="stylesheet">
-    <link th:href="@{../vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
-    <link th:href="@{../css/style.css}" rel="stylesheet">
+    <link th:href="@{../censor/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
+    <link th:href="@{../censor/vendor/lightgallery/css/lightgallery.min.css}" rel="stylesheet">
+    <link th:href="@{../censor/vendor/bootstrap-select/dist/css/bootstrap-select.min.css}" rel="stylesheet">
+    <link th:href="@{../censor/css/style.css}" rel="stylesheet">
 
     <!--Bootstrap-->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -33,7 +33,7 @@
 
 
     <!-- Custom Stylesheet -->
-    <link  th:href="@{../css/style.css}" rel="stylesheet">
+    <link  th:href="@{../censor/css/style.css}" rel="stylesheet">
 
 
 </head>
@@ -601,13 +601,17 @@
                     <div class="header-left">
                         <form>
                             <div class="input-group search-area">
-									<span class="input-group-text"><a href="javascript:void(0)">
-										<svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<circle cx="10.7861" cy="11.2859" r="8.23951" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-											<path d="M16.5168 17.4443L19.7472 20.6663" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-										</svg>
-									</a></span>
-                                <input type="text" class="form-control" placeholder="Search">
+									<span class="input-group-text">
+                                        <a href="javascript:void(0)">
+                                            <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="10.7861" cy="11.2859" r="8.23951" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                                <path d="M16.5168 17.4443L19.7472 20.6663" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                        </a>
+                                    </span>
+                                <label>
+                                    <input id="keyword" type="text" class="form-control" placeholder="Search">
+                                </label>
                             </div>
                         </form>
                     </div>
@@ -876,7 +880,7 @@
                     <span class="nav-text">Book</span>
                 </a>
                     <ul aria-expanded="false">
-                        <li><a href="/censor/contribution">Contribution List</a></li>
+                        <li><a href="/censor/contribution/acception">Acception List</a></li>
                         <li><a href="/censor/contribution/rejection">Rejection List</a></li>
                     </ul>
                 </li>
@@ -918,26 +922,38 @@
     ***********************************-->
     <div class="outer-body">
         <div class="inner-body">
-            <!-- Bootstrap Spinner -->
-            <div id="loading-spinner" class="text-center" style="display: none;">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
 
-            <div class="container-fluid" style="height: 560px; padding-top: 86px;">
+            <div class="container-fluid" style="min-height: 535px; padding-top: 86px;">
                 <div class="container-fluid" style="height: 100%;">
+                    <!-- Bootstrap Spinner -->
+                    <div id="loading-spinner" class="text-center" style="display: none;">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+
                     <!-- row -->
                     <div id="notify"  role="alert">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group" style="margin: 12px 0; display: flex; align-items: center; justify-content: space-between;">
+                                <label for="orderByDate" class="form-label" style="width: 100%">Loại quảng cáo</label>
+                                <select class="form-select" id="orderByDate" name="orderByDate">
+                                    <option value="desc">Down</option>
+                                    <option value="asc">Up</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="row" style="height: 100%;">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Acception Books</h4>
+                                <h4 class="card-title">Validation</h4>
                             </div>
                             <div class="card-body">
                                 <div class="basic-form">
-                                    <!--Book List-->
+                                    <!--ads List-->
                                     <div class="table-responsive">
                                         <table class="table table-responsive-md">
                                             <thead>
@@ -948,22 +964,22 @@
                                                         <label class="form-check-label" for="checkAll"></label>
                                                     </div>
                                                 </th>
-                                                <th><strong>ISBN</strong></th>
-                                                <th><strong>Book</strong></th>
-                                                <th><strong>Description</strong></th>
-                                                <th><strong>Pubication Date</strong></th>
-                                                <th><strong>Provider</strong></th>
+                                                <th><strong>Id</strong></th>
+                                                <th><strong>Advertisement Name</strong></th>
+                                                <th><strong>Image</strong></th>
+                                                <th><strong>Type</strong></th>
+                                                <th><strong>Placement</strong></th>
+                                                <th><strong>Customer</strong></th>
                                                 <th><strong>Status</strong></th>
-                                                <th><strong>Acception Date</strong></th>
+                                                <th><strong>Make</strong></th>
+                                                <th><strong>Action</strong></th>
                                             </tr>
                                             </thead>
-                                            <tbody id="booksList">
+                                            <tbody id="adsList">
                                             </tbody>
                                         </table>
                                     </div>
-                                    <!--End Book List-->
-
-
+                                    <!--End Ads List-->
                                 </div>
                             </div>
                         </div>
@@ -977,7 +993,7 @@
 
             <div class="footer out-footer">
                 <div class="copyright">
-                    <p>Copyright © Developed by <a href="https://dexignzone.com/" target="_blank">Quang Hau</a> 2023</p>
+                    <p>Copyright © Developed by <a href="https://dexignzone.com/" target="_blank">Quang Hau</a> 2024</p>
                 </div>
             </div>
         </div>
@@ -1064,68 +1080,81 @@
     </div>
     <!--End Profile Modal-->
 
-    <!--Book Modal-->
-    <div class="modal fade" id="bookModal" style="--bs-modal-width: 80vw;">
+    <!--Advertisement Modal-->
+    <div class="modal fade" id="advertisingModal" style="--bs-modal-width: 80vw">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Book</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
+                    <h5 class="modal-title">Advertisement Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xl-3 col-lg-4">
+                        <div class="col-xl-9 col-lg-9">
                             <div class="clearfix">
-                                <div class="card card-bx profile-card author-profile m-b30">
+                                <div class="card card-bx profile-card author-profile m-b30" style="min-height: 440px;">
                                     <div class="card-body">
-                                        <div class="p-5">
-                                            <div class="author-profile" style="display: flex; justify-content: center; align-items: center; flex-direction: column; overflow: hidden;">
-                                                <img id="bookCover" src="" alt="" style="max-width: 100%; max-height: 100%;">
-                                            </div>
-                                        </div>
                                         <div class="info-list">
-                                            <ul>
-                                                <li><span>ISBN</span><span id="isbn"></span></li>
-                                                <li><span>Category</span><span id="categories"></span></li>
-                                                <li><span >Author</span><span id="authors"></span></li>
-                                                <li><span>Language</span><span id="language"></span></li>
-                                                <li><span>Publication Date</span><span id="publicationDate"></span></li>
+                                            <ul class="row ads-types">
+                                                <li>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="adTitle" class="form-label">Title</label>
+                                                        <input type="text" class="form-control" id="adTitle" name="title" readonly >
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="adLink" class="form-label">Advertisement link</label>
+                                                        <textarea class="form-control" id="adLink" name="adLink" readonly></textarea>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="col-md-12 mb-3">
+                                                        <label for="adContent" class="form-label">Content</label>
+                                                        <textarea class="form-control" id="adContent" name="content" rows="5" readonly></textarea>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="startDate" class="form-label">Start Date</label>
+                                                        <input type="date" class="form-control" id="startDate" name="startDate" readonly>
+                                                    </div>
+                                                    <div class="col-md-6 mb-3">
+                                                        <label for="endDate" class="form-label">End Date</label>
+                                                        <input type="date" class="form-control" id="endDate" name="endDate" readonly>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="col-md-6">
+                                                        <p>Total Date: <span id="totalDays">0</span></p>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>Total fee: <span id="totalCost">0 VND</span></p>
+                                                    </div>
+                                                </li>
+                                                <li></li>
                                             </ul>
                                         </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="input-group">
-                                            <a  class="form-control text-primary rounded text-start bg-white" id="bookPath">Download</a>
+                                        <div class="p-5">
+                                            <div class="author-profile">
+                                                <div class="my-image">
+                                                    <a href="javascript:void(0);">
+                                                        <img alt="" id="image-preview" src="" style="max-width: 380px; margin-bottom: 12px">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-9 col-lg-8">
-                            <div class="card profile-card card-bx m-b30">
-                                <div class="card-header">
-                                    <h6 class="card-title" >Description</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div id="description" style="padding: 10px;
-													font-family: 'Arial', sans-serif;
-													font-size: 16px;
-													line-height: 1.6;
-													color: #333;
-													background-color: #f9f9f9;
-													border: 1px solid #ddd;
-													border-radius: 8px;
-													box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div  style="    font-size: 16px;
-														display: flex;
-														width: 100px;
-														justify-content: space-around;">
-                                        <span style="font-weight: bold;">Point</span><span id="point">18</span>
+                        <div class="col-xl-3 col-lg-3">
+                            <h6>Advertisement package:</h6>
+                            <div id="ads-types" class="row">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 id="adsType"></h5>
+                                        <p>Location:<span id="location"></span></p>
+                                        <p>Description:<span id="typeDes"></span></p>
+                                        <p>Price:<span id="placementPrice"></span></p>
                                     </div>
                                 </div>
                             </div>
@@ -1133,12 +1162,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
-    <!--End Book Modal-->
+    <!--End Advertisement Modal-->
 
     <!--Appointment Modal-->
     <div class="modal fade" id="appointmentModal" style="--bs-modal-width: 80vw;">
@@ -1202,8 +1231,12 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        let size = 5;
         let currentPage = 1;
         let isLoading = false;
+        let keyword ="" ;
+        let status = "PENDING";
+        let orderByDate = "desc";
 
         // Function to format date as "dd-MM-yyyy"
         function formatDate(date) {
@@ -1224,68 +1257,154 @@
             setTimeout(function() {
                 $('#notify').hide();
             }, 5000);
-
         }
 
-        // Function to load books and pagination
-        function loadBooks(page) {
+        // Function to calculate the total days
+        function calculateTotalDays(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffTime = Math.abs(end - start);
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+
+        // Function to validate the form fields
+        function validateForm() {
+            const emailTo = $('#emailTo').val();
+            const subject = $('#emailSubject').val();
+            const message = $('#email-compose-editor').val();
+
+            if (!emailTo || !subject || !message) {
+                alert("Please fill out all fields before sending the email.");
+                return false;
+            }
+            return true;
+        }
+
+        // Attach click event to the "Send" button in the modal
+        $('.btn-primary.light.light').on('click', function() {
+
+            if (!validateForm()) {
+                return; // Stop if the form is not valid
+            }
+
+            const emailTo = $('#emailTo').val();
+            const subject = $('#emailSubject').val();
+            const message = $('#email-compose-editor').val();
+
+            // Show the loading spinner
+            $('#loading-spinner').show();
+
+            // Perform form submission using AJAX
+            $.ajax({
+                url: '/api/send-email',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    emailTo: emailTo,
+                    subject: subject,
+                    message: message
+                }),
+                success: function(response) {
+                    notify("alert-success", response+"")
+
+                    // Clear the form fields
+                    $('#emailTo').val('');
+                    $('#emailSubject').val('');
+                    $('#email-compose-editor').val('');
+
+                    // Close the modal
+                    $('#appointmentModal').modal('hide');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Clear the form fields
+                    $('#emailTo').val('');
+                    $('#emailSubject').val('');
+                    $('#email-compose-editor').val('');
+
+                    // Close the modal
+                    $('#appointmentModal').modal('hide');
+                    notify("alert-danger", "Sending email unsuccessfully")
+                },
+                complete: function () {
+                    // Hide the loading spinner
+                    $('#loading-spinner').hide();
+                }
+            });
+        });
+
+        function loadAds(page) {
             if (isLoading) return;
             isLoading = true;
 
             $.ajax({
-                url: '/api/contribution/acception',
+                url: '/api/ads/filter',
                 method: 'GET',
-                dataType: 'json',
                 data: {
-                    page: page,
-                    limit: 5
+                    page: (page - 1),
+                    size: size,
+                    keyword: keyword,
+                    status: status,
+                    orderByDate: orderByDate
                 },
-                success: function(data) {
-                    $('#booksList').empty();
-                    data.listResults.forEach(function(book, index) {
+                dataType: 'json',
+                success: function (data) {
+                    currentPage = (data.number+1);
+                    $('#adsList').empty();
+                    data.content.forEach(function (ads, index) {
                         const row = $('<tr>');
-                        row.append('<td><div class="form-check custom-checkbox checkbox-success check-lg me-3"><input type="checkbox" class="form-check-input" id="customCheckBox' + index + '" required=""><label class="form-check-label" for="customCheckBox' + index + '"></label></div></td>');
-                        row.append('<td><strong>' + (book.isbn || 'N/A') + '</strong></td>');
-                        row.append('<td class="bookTitleCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#bookModal"><div class="d-flex align-items-center"><img id="bookImg" class="rounded-lg me-2" width="24" alt="" src="'+book.bookCoverPath+'"><span id="bookTitle" class="w-space-no">' + (book.title || 'N/A') + '</span></div></a></td>');
-                        row.append('<td id="bookDes" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;">' + (book.description || 'N/A') + '</td>');
-                        row.append('<td id="publishedDate">' + (book.publicationDate ? formatDate(book.publicationDate) : 'N/A') + '</td>');
-                        row.append('<td class="authorCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#profileModal"><div class="d-flex align-items-center"><img id="publisherImg" ' + "src={" + book.publisherAvatarPath + "}" + ' class="rounded-lg me-2" width="24" alt=""><span id="publisherName" class="w-space-no">' + (book.publisherName || 'N/A') + '</span></div></a></td>');
-                        row.append('<td><div class="d-flex align-items-center"><i class="fa fa-circle text-success me-1"></i> ' + "Accepted" + '</div></td>');
-                        row.append('<td id="acceptionDate">' + (book.modifiedDate ? formatDate(book.modifiedDate) : 'N/A') + '</td>');
-                        $('#booksList').append(row);
+                        row.append('<td><div class="form-check custom-checkbox checkbox-success check-lg me-3">' +
+                            '<input type="checkbox" class="form-check-input" id="customCheckBox' + index + '" required="">' +
+                            '<label class="form-check-label" for="customCheckBox' + index + '"></label></div></td>');
+                        row.append('<td><strong>' + (ads.id || 'N/A') + '</strong></td>');
+                        row.append('<td id="adsName" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px;" class="bookTitleCell"><a class="adsInfo" data-bs-toggle="modal" data-bs-target="#advertisingModal"><div class="d-flex align-items-center">' + (ads.title || 'N/A') + '</div></a></td>');
+                        row.append('<td><img src="' + (ads.imageUrl || '') + '" alt="image" style="max-height: 50px;"></td>');
+                        row.append('<td id="adsType">' + (ads.adsType || 'N/A') + '</td>');
+                        row.append('<td id="adsPlacement">' + (ads.adsPlacement || 'N/A') + '</td>');
+                        row.append('<td class="authorCell"><a class="authorInfo" data-bs-toggle="modal" data-bs-target="#profileModal"><div class="d-flex align-items-center"><img id="publisherImg" '+"src={"+ads.urlCustomer+"}" +' class="rounded-lg me-2" width="24" alt=""><span id="publisherName" class="w-space-no">' + (ads.customer || 'N/A') + '</span></div></a></td>');
+                        row.append('<td><div class="d-flex align-items-center"><i class="fa fa-circle text-warning me-1"></i> ' + ads.status + '</div></td>');
+                        row.append('<td><button class="btn btn-info shadow btn-md sharp me-1 btn-make" data-bs-toggle="modal" data-bs-target="#appointmentModal">Make</button></td>');
+                        row.append('<td><div class="d-flex">' +
+                            '<button id="acceptBtn" class="btn btn-success shadow btn-md sharp me-1">Accept</button>' +
+                            '<button id="rejectBtn" class="btn btn-danger shadow btn-md sharp me-1">Reject</button>' +
+                            '</div></td>');
+                        $('#adsList').append(row);
 
-                        // Attach click event to the third td (book title cell)
-                        row.find('.bookTitleCell').on('click', function () {
+                        // Attach click event to the fifth td (Publisher cell)
+                        row.find('.adsInfo').on('click', function() {
                             $.ajax({
-                                url: '/api/book/detail',
+                                url: '/api/ads/infor',
                                 method: 'GET',
-                                data: {isbn: book.isbn},
-                                success: function (response) {
-                                    // Map response data to HTML elements
-                                    $('#bookCover').attr('src', response.bookDetailDto.bookCover);
-                                    $('#isbn').text(response.bookDetailDto.isbn);
-                                    $('#categories').text(response.bookDetailDto.categories);
-                                    $('#authors').text(response.bookDetailDto.authors);
-                                    $('#language').text(response.bookDetailDto.language);
-                                    $('#publicationDate').text(response.bookDetailDto.publicationDate ? formatDate(response.bookDetailDto.publicationDate) : "N/A");
-                                    $('#description').text(response.bookDetailDto.description);
-                                    $('#point').text(response.bookDetailDto.point);
-                                    // Assuming 'bookPath' is a link to the book
-                                    $('#bookPath').attr('href', response.bookDetailDto.bookPath);
+                                data: { id: ads.id},
+                                success: function(data) {
+                                    $('#adTitle').val(data.title);
+                                    $('#adLink').val(data.link);
+                                    $('#adContent').val(data.content);
+                                    $('#startDate').val(data.startDate.split('T')[0]);
+                                    $('#endDate').val(data.endDate.split('T')[0]);
+                                    $('#totalDays').text(calculateTotalDays(data.startDate, data.endDate));
+                                    $('#totalCost').text(`${data.cost.toLocaleString()} VND`);
+                                    $('#image-preview').attr('src', data.imageUrl);
+
+                                    // Populate the advertisement package information
+                                    $('#adsType').text(data.adsType);
+                                    $('#location').text(data.adsPlacement);
+                                    $('#typeDes').text(data.typeDes);  // Assuming status is the description for ads placement
+                                    $('#placementPrice').text(`${data.placementPrice.toLocaleString()} VND`);
                                 },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    notify("alert-danger", "Error show book information popup")
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    notify("alert-danger", "Error show advertisement information popup")
                                 }
                             });
                         });
 
                         // Attach click event to the fifth td (Publisher cell)
-                        row.find('.authorCell').on('click', function () {
+                        row.find('.authorCell').on('click', function() {
                             $.ajax({
                                 url: '/api/user',
                                 method: 'GET',
-                                data: {username: book.publisherName},
-                                success: function (response) {
+                                data: { username: ads.customer},
+                                success: function(response) {
                                     // Map response data to HTML elements
                                     $('#userImg').attr('src', response.userDto.avatarPath);
                                     $('#fullnameUser').text(response.userDto.fullName);
@@ -1296,20 +1415,91 @@
                                     $('#adrressUser').val(response.userDto.address);
                                     $('#phoneUser').val(response.userDto.phone);
                                     $('#pointUser').val(response.userDto.point);
+
                                 },
-                                error: function (jqXHR, textStatus, errorThrown) {
+                                error: function(jqXHR, textStatus, errorThrown) {
                                     notify("alert-danger", "Error show user information popup")
                                 }
                             });
                         });
 
+                        // Attach click event to the "Make" button
+                        row.find('.btn-make').on('click', function() {
+                            $.ajax({
+                                url: '/api/user',
+                                method: 'GET',
+                                data: { username: ads.customer },
+                                success: function(response) {
+                                    $('#emailTo').val(response.userDto.email);
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    notify("alert-danger", "Error show email popup")
+                                }
+                            });
+                        });
+
+                        // Attach click event to the "Accept" button
+                        row.find('#acceptBtn').on('click', function() {
+                            const confirmAccept = confirm("Do you want to accept "+ads.title+" advertisement");
+                            if (confirmAccept) {
+                                // Show the loading spinner
+                                $('#loading-spinner').show();
+
+                                $.ajax({
+                                    url: '/api/ads/acceptation',
+                                    method: 'PUT',
+                                    data: { adsId: ads.id },
+                                    success: function(response) {
+                                        currentPage = (data.totalElements % size === 1)?currentPage-1:currentPage;
+                                        loadAds(currentPage)
+                                        notify("alert-success", response+"Accepting advertisement successfully")
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        loadAds(currentPage)
+                                        notify("alert-danger", "Accepting advertisement unsuccessfully")
+                                    },
+                                    complete: function () {
+                                        // Hide the loading spinner
+                                        $('#loading-spinner').hide();
+                                    }
+                                });
+                            }
+                        });
+
+                        // Attach click event to the "Reject" button
+                        row.find('#rejectBtn').on('click', function() {
+                            const confirmAccept = confirm("Do you want to reject "+ads.title+" advertisement");
+                            if (confirmAccept) {
+                                // Show the loading spinner
+                                $('#loading-spinner').show();
+
+                                $.ajax({
+                                    url: '/api/ads/rejection',
+                                    method: 'PUT',
+                                    data: { adsId: ads.adsId },
+                                    success: function(response) {
+                                        currentPage = (data.totalElements % size === 1)?currentPage-1:currentPage;
+                                        loadAds(currentPage)
+                                        notify("alert-success", response+"Rejecting advertisement successfully")
+                                    },
+                                    error: function(jqXHR, textStatus, errorThrown) {
+                                        loadAds(currentPage)
+                                        notify("alert-danger", "Rejecting advertisement unsuccessfully")
+                                    },
+                                    complete: function () {
+                                        // Hide the loading spinner
+                                        $('#loading-spinner').hide();
+                                    }
+                                });
+                            }
+                        });
                     });
 
                     // Pagination setup
                     $('#pagination').twbsPagination('destroy');
                     $('#pagination').twbsPagination({
                         totalPages: data.totalPages,
-                        startPage: data.currentPage,
+                        startPage: currentPage,
                         visiblePages: 5,
                         first: 'First',
                         prev: '<<',
@@ -1318,22 +1508,99 @@
                         onPageClick: function (event, page) {
                             if (page !== currentPage) {
                                 currentPage = page;
-                                loadBooks(page);
+                                loadAds(page);
                             }
                         }
                     });
-
                     isLoading = false;
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("Error loading books:", textStatus, errorThrown);
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Error loading Ads:", textStatus, errorThrown);
+                    console.error("Response Text:", jqXHR.responseText);
+                    console.error("Status Code:", jqXHR.status);
                     isLoading = false;
                 }
             });
         }
 
-        // Initial load of books
-        loadBooks(1);
+
+        $('#keyword').on('input', () => {
+            keyword = $('#keyword').val();
+            loadAds(1);
+        });
+
+        $('#orderByDate').on('change', () => {
+            orderByDate = $('#orderByDate').val();
+            loadAds(1);
+        });
+
+        // Function to validate the form fields
+        function validateForm() {
+            const emailTo = $('#emailTo').val();
+            const subject = $('#emailSubject').val();
+            const message = $('#email-compose-editor').val();
+
+            if (!emailTo || !subject || !message) {
+                alert("Please fill out all fields before sending the email.");
+                return false;
+            }
+            return true;
+        }
+
+        // Attach click event to the "Send" button in the modal
+        $('.btn-primary.light.light').on('click', function() {
+
+            if (!validateForm()) {
+                return; // Stop if the form is not valid
+            }
+
+            const emailTo = $('#emailTo').val();
+            const subject = $('#emailSubject').val();
+            const message = $('#email-compose-editor').val();
+
+            // Show the loading spinner
+            $('#loading-spinner').show();
+
+            // Perform form submission using AJAX
+            $.ajax({
+                url: '/api/send-email',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    emailTo: emailTo,
+                    subject: subject,
+                    message: message
+                }),
+                success: function(response) {
+                    notify("alert-success", response+"")
+
+                    // Clear the form fields
+                    $('#emailTo').val('');
+                    $('#emailSubject').val('');
+                    $('#email-compose-editor').val('');
+
+                    // Close the modal
+                    $('#appointmentModal').modal('hide');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Clear the form fields
+                    $('#emailTo').val('');
+                    $('#emailSubject').val('');
+                    $('#email-compose-editor').val('');
+
+                    // Close the modal
+                    $('#appointmentModal').modal('hide');
+                    notify("alert-danger", "Sending email unsuccessfully")
+                },
+                complete: function () {
+                    // Hide the loading spinner
+                    $('#loading-spinner').hide();
+                }
+            });
+        });
+
+        loadAds(1)
+
     });
 </script>
 

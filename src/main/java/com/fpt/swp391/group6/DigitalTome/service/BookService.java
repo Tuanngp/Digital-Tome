@@ -6,6 +6,8 @@ import com.fpt.swp391.group6.DigitalTome.entity.AuthorEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.CategoryEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
+import com.fpt.swp391.group6.DigitalTome.exception.exceptionDefinition.ChangingStatusException;
+import com.fpt.swp391.group6.DigitalTome.exception.exceptionDefinition.FindingBookException;
 import com.fpt.swp391.group6.DigitalTome.mapper.BookDetailMapper;
 import com.fpt.swp391.group6.DigitalTome.mapper.BookMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.BookRepository;
@@ -102,20 +104,30 @@ public class BookService {
     }
 
     public BookDetailDto findByIsbnIncludeCategoriesAndAuthors(String isbn){
-        BookEntity bookEntity = this.bookDetailRepositoryImpl.findByIsbnIncludeCategoriesAndAuthors(isbn);
-        return mapToDto(bookEntity) ;
+        try {
+            BookEntity bookEntity = this.bookDetailRepositoryImpl.findByIsbnIncludeCategoriesAndAuthors(isbn);
+            return mapToDto(bookEntity) ;
+        }catch (Exception e){
+            throw new FindingBookException("Requested finding the book does not exist");
+        }
     }
 
     public void updateStatusByIsbn(int status,String isbn){
-        BookEntity bookEntity = bookRepository.findByIsbn(isbn);
-        if(bookEntity != null){
-            List<String> args = new ArrayList<>();
-            args.add("Book_Collection_Digital_Tome");
-            args.add(bookEntity.getIsbn());
-            args.add(bookEntity.getTitle());
-            args.add(bookEntity.getDescription());
-            if(insertToQdrant(args)) this.bookRepository.updateStatusByIsbn(status, isbn);
-        }
+       try {
+           BookEntity bookEntity = bookRepository.findByIsbn(isbn);
+           if(bookEntity != null && status == 2){
+               List<String> args = new ArrayList<>();
+               args.add("Book_Collection_Digital_Tome");
+               args.add(bookEntity.getIsbn());
+               args.add(bookEntity.getTitle());
+               args.add(bookEntity.getDescription());
+               if(insertToQdrant(args)) this.bookRepository.updateStatusByIsbn(status, isbn);
+           }else{
+               this.bookRepository.updateStatusByIsbn(status, isbn);
+           }
+       }catch (Exception exception){
+           throw new ChangingStatusException("Errors occur when changing status of the book");
+       }
     }
 
     public List<BookDetailDto>  findByStatus(int status, Pageable pageable){

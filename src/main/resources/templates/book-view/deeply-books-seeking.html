@@ -7,12 +7,7 @@
 </head>
 <body>
 <div class="page-wraper">
-    <!-- Bootstrap Spinner -->
-    <div id="loading-spinner" class="text-center" style="display: none;">
-        <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
+
 
     <div class="preloader-wrapper-1" id="loading-area">
         <div class="preloader-inner">
@@ -29,6 +24,12 @@
     <header th:replace="~{layout/header :: header}"></header>
     <!-- Header End -->
     <div class="page-content bg-grey">
+        <!-- Bootstrap Spinner -->
+        <div id="loading-spinner" class="text-center" style="display: none;">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
         <section class="content-inner-1 border-bottom">
             <div class="container">
                 <div class="row">

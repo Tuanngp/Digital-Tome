@@ -82,6 +82,7 @@ public class AccountEntity extends BaseEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "membership_id")
+    @JsonIgnore
     private MembershipEntity membershipEntity;
 
 
@@ -120,16 +121,19 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "userFirst", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @JsonIgnore
     private Set<UserRelationship> relationshipsInitiated;
 
     @OneToMany(mappedBy = "userSecond", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @JsonIgnore
     private Set<UserRelationship> relationshipsReceived;
 
     @OneToMany(mappedBy = "user", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
+    @JsonIgnore
     private Set<NotificationEntity> registrationsReceived;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
