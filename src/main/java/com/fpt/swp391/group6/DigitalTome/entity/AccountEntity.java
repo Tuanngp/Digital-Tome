@@ -1,5 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import jakarta.persistence.*;
@@ -109,9 +111,11 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
+    @JsonIgnore
     private List<ContributionEntity> contributionEntityList;
 
     @OneToMany(mappedBy = "accountEntity",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<PaymentEntity> paymentEntityList;
 
     @OneToMany(mappedBy = "userFirst", cascade = {

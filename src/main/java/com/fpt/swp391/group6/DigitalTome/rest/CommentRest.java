@@ -39,6 +39,7 @@ public class CommentRest {
     }
 
     @PostMapping("/{bookId}")
+    @ResponseBody
     public ResponseEntity<Map<String, Object>> createComment(@PathVariable Long bookId, CommentDto comment) throws IOException {
         return commentService.createComment(bookId, comment);
     }
@@ -60,5 +61,10 @@ public class CommentRest {
             @RequestParam(value = "size", defaultValue = "5") int size
     ) {
         return commentService.showComment(bookId, page, size);
+    }
+
+    @GetMapping("all")
+    public ResponseEntity<List<CommentEntity>> getAllComment() {
+        return commentService.getAllComment();
     }
 }

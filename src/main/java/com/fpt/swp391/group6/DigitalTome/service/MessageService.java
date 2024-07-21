@@ -65,7 +65,7 @@ public class MessageService {
     public void setMessageToRead(MessageDto message) {
         AccountEntity sender = userService.findByUsername(message.getSender());
         AccountEntity receiver = userService.findByUsername(message.getReceiver());
-        List<MessageEntity> messages = messageRepository.findAllBySenderAndReceiver(receiver, sender);
+        List<MessageEntity> messages = messageRepository.findAllBySenderAndReceiverAndStatus(receiver, sender, "unread");
         messages.forEach(messageToRead -> {
             messageToRead.setStatus("read");
             messageRepository.save(messageToRead);
