@@ -4,10 +4,7 @@ import com.fpt.swp391.group6.DigitalTome.dto.PublisherDTO;
 import com.fpt.swp391.group6.DigitalTome.dto.UserBanDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
-import com.fpt.swp391.group6.DigitalTome.service.AdminService;
-import com.fpt.swp391.group6.DigitalTome.service.EmailService;
-import com.fpt.swp391.group6.DigitalTome.service.PublisherService;
-import com.fpt.swp391.group6.DigitalTome.service.UserService;
+import com.fpt.swp391.group6.DigitalTome.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,10 +26,22 @@ public class AdminController {
     private final UserRepository userRepository;
     private final UserService userService;
     private final PublisherService publisherService;
+    private final PaymentService paymentService;
 
 
     @GetMapping("/admin")
-    public String homeAdmin() {
+    public String homeAdmin(Model model) {
+        BigDecimal totalAmount = paymentService.calculateTotalAmount();
+        model.addAttribute("totalAmount", totalAmount);
+
+        BigDecimal male = userService.getMalePercentage();
+        BigDecimal female = userService.getFemalePercentage();
+        BigDecimal other = userService.getOtherPercentage();
+
+        model.addAttribute("malePercentage", male);
+        model.addAttribute("femalePercentage", female);
+        model.addAttribute("otherPercentage", other);
+
         return "admin/index_admin";
     }
 
@@ -46,12 +56,16 @@ public class AdminController {
                 .filter(t -> "ROLE_PUBLISHER".equals(t.getRoleEntity().getName()))
                 .count();
 
+        long censorCount = accounts.stream()
+                .filter(t -> "ROLE_CENSOR".equals(t.getRoleEntity().getName()))
+                .count();
+
         model.addAttribute("userCount", userCount);
         model.addAttribute("publisherCount", publisherCount);
+        model.addAttribute("censorCount", censorCount);
         model.addAttribute("page", "dashboard");
         return "admin/manager";
     }
-
 
     @GetMapping("/user-manager")
     public String userManager(Model model) {
@@ -69,102 +83,13 @@ public class AdminController {
         return "admin/manager";
     }
 
-    @GetMapping("/employee-manager")
-    public String employeeManager(Model model) {
-        List<AccountEntity> employees = userRepository.findByRoleName("ROLE_EMPLOYEE");
-        model.addAttribute("users", employees);
-        model.addAttribute("page", "employee-manager");
+
+    @GetMapping("/censor-manager")
+    public String censorManager(Model model){
+        List<AccountEntity> censor = userRepository.findByRoleName("ROLE_CENSOR");
+        model.addAttribute("users", censor);
+        model.addAttribute("page", "censor-manager");
         return "admin/manager";
-    }
-
-    @PostMapping("/user/ban")
-    @ResponseBody
-    public String banUser(@RequestBody UserBanDto userDto) {
-        adminService.banUser(userDto.getId());
-        String userEmail = userService.getEmailById(userDto.getId());
-        try {
-            String subject = "Account Banned Notification";
-            emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
-            return "User banned successfully";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Email sending failed.";
-        }
-    }
-
-    @PostMapping("/user/unban")
-    @ResponseBody
-    public String unbanUser(@RequestBody UserBanDto userDto) {
-        adminService.unbanUser(userDto.getId());
-        String userEmail = userService.getEmailById(userDto.getId());
-        try {
-            String subject = "Account Unbanned Notification";
-            emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
-            return "User unbanned successfully";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Email sending failed.";
-        }
-    }
-
-    @PostMapping("/publisher/ban")
-    @ResponseBody
-    public String banPublisher(@RequestBody UserBanDto userDto) {
-        adminService.banPublisher(userDto.getId());
-        String userEmail = userService.getEmailById(userDto.getId());
-        try {
-            String subject = "Account Banned Notification";
-            emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
-            return "Publisher banned successfully";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Email sending failed.";
-        }
-    }
-
-    @PostMapping("/publisher/unban")
-    @ResponseBody
-    public String unbanPublisher(@RequestBody UserBanDto userDto) {
-        adminService.unbanPublisher(userDto.getId());
-
-        String userEmail = userService.getEmailById(userDto.getId());
-        try {
-            String subject = "Account Unbanned Notification";
-            emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
-            return "Publisher unbanned successfully";
-        } catch (Exception e) {
-            return "Email sending failed.";
-        }
-    }
-
-    @PostMapping("/employee/ban")
-    @ResponseBody
-    public String banEmployee(@RequestBody UserBanDto userDto) {
-        adminService.banEmployee(userDto.getId());
-        String userEmail = userService.getEmailById(userDto.getId());
-        try {
-            String subject = "Account Banned Notification";
-            emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
-            return "Employee banned successfully";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Email sending failed.";
-        }
-    }
-
-    @PostMapping("/employee/unban")
-    @ResponseBody
-    public String unbanEmployee(@RequestBody UserBanDto userDto) {
-        adminService.unbanEmployee(userDto.getId());
-        String userEmail = userService.getEmailById(userDto.getId());
-        try {
-            String subject = "Account Unbanned Notification";
-            emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
-            return "Employee unbanned successfully";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Email sending failed.";
-        }
     }
 
     @GetMapping("/register-publisher-details")
@@ -178,5 +103,81 @@ public class AdminController {
     @GetMapping("/admin-chart")
     public String showAdminStatisticsPage() {
         return "admin/admin-chart";
+    }
+
+
+    @PostMapping("/user/ban")
+    @ResponseBody
+    public String banUser(@RequestBody UserBanDto userDto) {
+        return processUserBanUnban(userDto, true);
+    }
+
+    @PostMapping("/user/unban")
+    @ResponseBody
+    public String unbanUser(@RequestBody UserBanDto userDto) {
+        return processUserBanUnban(userDto, false);
+    }
+
+    @PostMapping("/publisher/ban")
+    @ResponseBody
+    public String banPublisher(@RequestBody UserBanDto userDto) {
+        return processPublisherBanUnban(userDto, true);
+    }
+
+    @PostMapping("/publisher/unban")
+    @ResponseBody
+    public String unbanPublisher(@RequestBody UserBanDto userDto) {
+        return processPublisherBanUnban(userDto, false);
+    }
+
+    @PostMapping("/censor/ban")
+    @ResponseBody
+    public String banEmployee(@RequestBody UserBanDto userDto) {
+        return processEmployeeBanUnban(userDto, true);
+    }
+
+    @PostMapping("/censor/unban")
+    @ResponseBody
+    public String unbanEmployee(@RequestBody UserBanDto userDto) {
+        return processEmployeeBanUnban(userDto, false);
+    }
+
+
+    private String processUserBanUnban(UserBanDto userDto, boolean ban) {
+        if (ban) {
+            adminService.banUser(userDto.getId());
+        } else {
+            adminService.unbanUser(userDto.getId());
+        }
+        return sendNotification(userDto, ban ? "Account Banned Notification" : "Account Unbanned Notification");
+    }
+
+    private String processPublisherBanUnban(UserBanDto userDto, boolean ban) {
+        if (ban) {
+            adminService.banPublisher(userDto.getId());
+        } else {
+            adminService.unbanPublisher(userDto.getId());
+        }
+        return sendNotification(userDto, ban ? "Account Banned Notification" : "Account Unbanned Notification");
+    }
+
+    private String processEmployeeBanUnban(UserBanDto userDto, boolean ban) {
+        if (ban) {
+            adminService.banEmployee(userDto.getId());
+        } else {
+            adminService.unbanEmployee(userDto.getId());
+        }
+        return sendNotification(userDto, ban ? "Account Banned Notification" : "Account Unbanned Notification");
+    }
+
+    private String sendNotification(UserBanDto userDto, String subject) {
+        String userEmail = userService.getEmailById(userDto.getId());
+        try {
+            emailService.sendEmail(subject, userDto.getReason(), Collections.singletonList(userEmail));
+            return subject + " successfully";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Email sending failed.";
+        }
     }
 }

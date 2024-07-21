@@ -33,7 +33,6 @@ public class NotificationService {
 
     public List<NotificationEntity> getNotificationsForCurrentUser() {
         AccountEntity account = userService.getCurrentLogin();
-
         if (account != null) {
             String username = account.getUsername();
             List<NotificationEntity> notifications = notificationRepository.findByUserIdOrderByIdDesc(account.getId());

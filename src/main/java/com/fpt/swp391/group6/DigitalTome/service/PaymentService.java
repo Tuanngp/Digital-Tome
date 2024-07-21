@@ -4,17 +4,16 @@ import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.BookEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.PaymentEntity;
 import com.fpt.swp391.group6.DigitalTome.repository.PaymentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
+@RequiredArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
-
-    @Autowired
-    public PaymentService(PaymentRepository paymentRepository) {
-        this.paymentRepository = paymentRepository;
-    }
 
     public void save(PaymentEntity payment) {
         paymentRepository.save(payment);
@@ -24,4 +23,7 @@ public class PaymentService {
         return paymentRepository.existsByAccountEntityAndBookEntity(user, book);
     }
 
+    public BigDecimal calculateTotalAmount() {
+        return paymentRepository.sumPrice();
+    }
 }
