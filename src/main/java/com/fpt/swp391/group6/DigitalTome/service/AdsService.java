@@ -1,13 +1,10 @@
 package com.fpt.swp391.group6.DigitalTome.service;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.fpt.swp391.group6.DigitalTome.dto.AdsDto;
 import com.fpt.swp391.group6.DigitalTome.dto.AdsPackageDto;
 import com.fpt.swp391.group6.DigitalTome.dto.paymentResponse.PaymentResponse;
 import com.fpt.swp391.group6.DigitalTome.entity.*;
 import com.fpt.swp391.group6.DigitalTome.mapper.AdsMapper;
-import com.fpt.swp391.group6.DigitalTome.repository.IAdsRepositoryCustom;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsAssignmentRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsPlacementRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.ads.AdsRepository;
@@ -16,7 +13,6 @@ import com.fpt.swp391.group6.DigitalTome.rest.input.EmailRequest;
 import com.fpt.swp391.group6.DigitalTome.utils.ImageUtils;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-import com.sun.jdi.InternalException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -26,21 +22,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AdsService {
@@ -51,11 +43,10 @@ public class AdsService {
     private final AdsMapper adsMapper;
     private final UserService userService;
     private final PaypalService paypalService;
-    private final IAdsRepositoryCustom adsRepositoryCustom;
     private final EmailService emailService;
 
     @Autowired
-    public AdsService(AdsAssignmentRepository adsAssignmentRepository, AdsPlacementRepository adsPlacementRepository, AdsTypeRepository adsTypeRepository, AdsRepository adsRepository, AdsMapper adsMapper, UserService userService, PaypalService paypalService, IAdsRepositoryCustom adsRepositoryCustom, EmailService emailService) {
+    public AdsService(AdsAssignmentRepository adsAssignmentRepository, AdsPlacementRepository adsPlacementRepository, AdsTypeRepository adsTypeRepository, AdsRepository adsRepository, AdsMapper adsMapper, UserService userService, PaypalService paypalService, EmailService emailService) {
         this.adsAssignmentRepository = adsAssignmentRepository;
         this.adsPlacementRepository = adsPlacementRepository;
         this.adsTypeRepository = adsTypeRepository;
@@ -63,7 +54,6 @@ public class AdsService {
         this.adsMapper = adsMapper;
         this.userService = userService;
         this.paypalService = paypalService;
-        this.adsRepositoryCustom = adsRepositoryCustom;
         this.emailService = emailService;
     }
 //    private String uploadFile(MultipartFile file) {
