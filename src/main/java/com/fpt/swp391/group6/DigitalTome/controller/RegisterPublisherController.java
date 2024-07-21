@@ -21,7 +21,7 @@ public class RegisterPublisherController {
     private final PublisherService publisherService;
 
     @GetMapping("/register-publisher")
-    public String registerPublisher( Model model) {
+    public String registerPublisher(Model model) {
         AccountEntity currentUser = userService.getCurrentLogin();
         if (currentUser != null) {
             model.addAttribute("id", currentUser.getId());
@@ -30,8 +30,9 @@ public class RegisterPublisherController {
         }
         return "admin/register-publisher";
     }
+
     @PostMapping("/submit-register-publisher")
     public String submitRegisterPublisher(@ModelAttribute RegisterPublisherDTO registerPublisherDTO, RedirectAttributes redirectAttributes) {
-        return publisherService.registerPublisher(registerPublisherDTO,redirectAttributes);
+        return publisherService.registerPublisher(registerPublisherDTO, redirectAttributes);
     }
 }

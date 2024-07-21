@@ -12,6 +12,4 @@ import lombok.Setter;
 public class UserBanDto {
     private Long id;
     private String reason;
-
-
 }

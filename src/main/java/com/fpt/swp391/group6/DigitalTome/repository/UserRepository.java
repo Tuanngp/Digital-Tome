@@ -3,6 +3,7 @@ package com.fpt.swp391.group6.DigitalTome.repository;
 import com.fpt.swp391.group6.DigitalTome.dto.UserDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
+import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -38,6 +39,12 @@ public interface UserRepository extends JpaRepository<AccountEntity, Long> {
 
     @Query("SELECT a FROM AccountEntity a WHERE a.membershipExpiryDate <= :currentDate")
     List<AccountEntity> findAccountsByExpiredMembership(@Param("currentDate") Date currentDate);
+
+    @Query("SELECT COUNT(a) FROM AccountEntity a WHERE a.gender = :gender")
+    long countByGender(Gender gender);
+
+    @Query("SELECT COUNT(a) FROM AccountEntity a")
+    long countTotalUsers();
 
     AccountEntity findByPhone(String keyword);
 }

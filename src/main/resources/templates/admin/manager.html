@@ -207,12 +207,13 @@
                     <span class="nav-text">Publishers</span>
                 </a>
             </li>
+
             <li>
-                <a href="/employee-manager" class="" aria-expanded="false">
+                <a href="/censor-manager" class="" aria-expanded="false">
                     <div class="menu-icon">
                         <i class="fa-solid fa-building-user" style="font-size: 18px"></i>
                     </div>
-                    <span class="nav-text">Employees</span>
+                    <span class="nav-text">Censor</span>
                 </a>
             </li>
 
@@ -266,8 +267,8 @@
                                 </div>
                                 <div class="card-single">
                                     <div>
-                                        <h3>10</h3>
-                                        <span>Staff</span>
+                                        <h3 th:text="${censorCount}"></h3>
+                                        <span>Censor</span>
                                     </div>
                                     <div>
                                         <span class="las la-briefcase"></span>
@@ -278,7 +279,7 @@
                     </div>
                     <!-- Dashboard Content End -->
                     <!-- Điều kiện hiển thị bảng dữ liệu người dùng -->
-                    <div th:if="${page == 'user-manager' || page == 'publisher-manager' || page == 'employee-manager'}">
+                    <div th:if="${page == 'user-manager' || page == 'publisher-manager' || page == 'censor-manager'}">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
@@ -359,7 +360,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <script>
                         function goBack() {
