@@ -936,7 +936,7 @@
         const pageSize = this.value;
         const urlParams = new URLSearchParams(window.location.search);
         const sortField = urlParams.get('sortField') || 'id'; // Default to 'id' if not present
-        const sortDir = urlParams.get('sortDir') || 'asc'; // Default to 'asc' if not present
+        const sortDir = urlParams.get('sortDir') || 'desc'; // Default to 'asc' if not present
         window.location.href = `/books-manage/1?pageSize=${pageSize}&sortField=${sortField}&sortDir=${sortDir}`;
     });
 
