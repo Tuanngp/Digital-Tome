@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.fpt.swp391.group6.DigitalTome.dto.RegisterDto;
 import com.fpt.swp391.group6.DigitalTome.entity.AccountEntity;
 import com.fpt.swp391.group6.DigitalTome.entity.RoleEntity;
+import com.fpt.swp391.group6.DigitalTome.enums.Gender;
 import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
 import com.fpt.swp391.group6.DigitalTome.repository.RoleRepository;
 import com.fpt.swp391.group6.DigitalTome.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -240,5 +242,29 @@ public class UserService {
     }
     public List<AccountEntity> getAdminUsers() {
         return userRepository.findByRoleName("ADMIN");
+    }
+
+    public BigDecimal getPercentageByGender(Gender gender){
+        long totalUsers = userRepository.countTotalUsers(); // Lấy tổng số người dùng
+        if(totalUsers == 0){
+            return BigDecimal.ZERO;
+        }
+
+        long genderCount = userRepository.countByGender(gender); // Lấy số lượng người dùng theo giới tính
+
+        return BigDecimal.valueOf(genderCount).divide(BigDecimal.valueOf(totalUsers), 2, BigDecimal.ROUND_HALF_UP)
+                .multiply(BigDecimal.valueOf(100));
+    }
+
+    public BigDecimal getMalePercentage() {
+        return getPercentageByGender(Gender.MALE);
+    }
+
+    public BigDecimal getFemalePercentage() {
+        return getPercentageByGender(Gender.FEMALE);
+    }
+
+    public BigDecimal getOtherPercentage() {
+        return getPercentageByGender(Gender.OTHER);
     }
 }
