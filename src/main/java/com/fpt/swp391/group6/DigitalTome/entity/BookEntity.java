@@ -66,16 +66,7 @@ public class BookEntity extends BaseEntity {
     private List<ContributionEntity> contributionEntityList;  // Một sách có nhiều đóng góp
 
     @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CommentEntity> commentEntityList;   // Một sách có nhiều bình luận
-
-    @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RateEntity> rateEntityList; // Một sách có nhiều đánh giá
-
-    @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<FavoriteEntity> favoriteEntityList;  // Một sách có nhiều lượt yêu thích
-
-    @OneToMany(mappedBy = "bookEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<PaymentEntity> paymentEntityList;  // Một sách có nhiều lượt thanh toán
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,

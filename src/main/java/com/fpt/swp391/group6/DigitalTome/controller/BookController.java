@@ -1,6 +1,7 @@
 package com.fpt.swp391.group6.DigitalTome.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fpt.swp391.group6.DigitalTome.dto.CategoryDto;
 import com.fpt.swp391.group6.DigitalTome.entity.*;
 import com.fpt.swp391.group6.DigitalTome.service.*;
 import com.fpt.swp391.group6.DigitalTome.utils.BookUtils;
@@ -26,23 +27,22 @@ import java.util.Optional;
 @Controller
 public class BookController {
 
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
+    private final AuthorService authorService;
+    private final CategoryService categoryService;
+    private final AccountService accountService;
+    private final ContributionService contributionService;
+    private final PaymentService paymentService;
 
     @Autowired
-    private AuthorService authorService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private ContributionService contributionService;
-
-    @Autowired
-    private PaymentService paymentService;
+    public BookController(BookService bookService, AuthorService authorService, CategoryService categoryService, AccountService accountService, ContributionService contributionService, PaymentService paymentService) {
+        this.bookService = bookService;
+        this.authorService = authorService;
+        this.categoryService = categoryService;
+        this.accountService = accountService;
+        this.contributionService = contributionService;
+        this.paymentService = paymentService;
+    }
 
     @GetMapping("/books-grid-view")
     public String bookListView(Model model) {
@@ -56,7 +56,7 @@ public class BookController {
 
     @GetMapping("/books-manage")
     public String bookListManage(Model model, Principal principal) {
-        return findPaginatedList(1, "id", "asc", model, principal, 10);
+        return findPaginatedList(1, "id", "desc", model, principal, 10);
     }
     @GetMapping("/upload")
     public String showAddBookForm(Model model) {
@@ -68,8 +68,8 @@ public class BookController {
 
     @PostMapping("/save")
     public String saveBook(@ModelAttribute("book") BookEntity book,
-                           @RequestParam("image") MultipartFile image,
-                           @RequestParam("bookP") MultipartFile bookP,
+                           @RequestParam(value = "image", required = false) MultipartFile image,
+                           @RequestParam(value = "bookP", required = false) MultipartFile bookP,
                            @RequestParam("authorIds") String authorIds,
                            @RequestParam("categoryEntityList") List<Long> categoryIds,
                            @RequestParam("pricing") double pricing,
@@ -77,38 +77,69 @@ public class BookController {
                            Model model) throws JsonProcessingException {
 
         List<AuthorEntity> existingAuthors = authorService.getAllAuthors();
-        List<CategoryEntity> catego = categoryService.getAllCategories();
+        List<CategoryDto> catego = categoryService.getAllCategories();
         model.addAttribute("authors", existingAuthors);
         model.addAttribute("categories", catego);
 
         System.out.println("ID của sách khi cập nhật: " + book.getId());
+
+        // Kiểm tra ISBN
         if (book.getId() != null) {
-            BookEntity existingBook = bookService.findByIsbn(book.getIsbn());
-            if (existingBook != null && !existingBook.getId().equals(book.getId())) {
+            BookEntity existingBook = bookService.getBookById(book.getId());
+            if (existingBook == null) {
+                model.addAttribute("error", "Book not found!");
+                return "book-manager/update-book";
+            }
+
+            // Kiểm tra ISBN trùng lặp
+            if (bookService.findByIsbn(book.getIsbn()) != null && !existingBook.getId().equals(book.getId())) {
                 model.addAttribute("error", "ISBN already exists in the system!");
                 return "book-manager/update-book";
+            }
+
+            // Giữ lại giá trị cũ nếu không có tệp mới
+            if (image != null && !image.isEmpty()) {
+                try {
+                    String imageUrl = ImageUtils.uploadImage(image, "image/books/");
+                    book.setBookCover(imageUrl);
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                    model.addAttribute("error", "An error occurred while saving the image!");
+                    return "book-manager/update-book";
+                }
+            } else {
+                book.setBookCover(existingBook.getBookCover());
+            }
+
+            if (bookP != null && !bookP.isEmpty()) {
+                try {
+                    String bookUrl = BookUtils.uploadBook(bookP, "books/");
+                    book.setBookPath(bookUrl);
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                    model.addAttribute("error", "An error occurred while saving the book file!");
+                    return "book-manager/update-book";
+                }
+            } else {
+                book.setBookPath(existingBook.getBookPath());
             }
         } else {
             if (bookService.isISBNAlreadyExists(book.getIsbn())) {
                 model.addAttribute("error", "ISBN already exists in the system!");
                 return "book-manager/books-upload";
             }
-        }
-        // check publication_date
-        LocalDate currentDate = LocalDate.now();
-        Date publicationDate = book.getPublicationDate();
-        if (publicationDate != null) {
-            LocalDate localPublicationDate = Instant.ofEpochMilli(publicationDate.getTime())
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
-            if (localPublicationDate.isAfter(currentDate)) {
-                model.addAttribute("error", "The published date must be less than the current date!");
+
+            // Xử lý tệp ảnh và sách khi tạo mới
+            if (image == null || image.isEmpty()) {
+                model.addAttribute("error", "Please select an image file to upload!");
                 return "book-manager/books-upload";
             }
-        }
 
-        // Lưu file ảnh và sách
-        if (!image.isEmpty() && !bookP.isEmpty()) {
+            if (bookP == null || bookP.isEmpty()) {
+                model.addAttribute("error", "Please select a book file to upload!");
+                return "book-manager/books-upload";
+            }
+
             try {
                 String imageUrl = ImageUtils.uploadImage(image, "image/books/");
                 String bookUrl = BookUtils.uploadBook(bookP, "books/");
@@ -119,9 +150,19 @@ public class BookController {
                 model.addAttribute("error", "An error occurred while saving the file!");
                 return "book-manager/books-upload";
             }
-        } else {
-            model.addAttribute("error", "Please select a file to upload!!");
-            return "book-manager/books-upload";
+        }
+
+        // Kiểm tra ngày xuất bản
+        LocalDate currentDate = LocalDate.now();
+        Date publicationDate = book.getPublicationDate();
+        if (publicationDate != null) {
+            LocalDate localPublicationDate = Instant.ofEpochMilli(publicationDate.getTime())
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+            if (localPublicationDate.isAfter(currentDate)) {
+                model.addAttribute("error", "The published date must be less than the current date!");
+                return "book-manager/books-upload";
+            }
         }
 
         // Xử lý danh sách tác giả
@@ -152,26 +193,22 @@ public class BookController {
 
         // Xử lý contribution
         AccountEntity accountEntity = accountService.findByUsername(principal.getName());
-//            Long accountId = accountEntity.getId();
         ContributionEntity contribution = new ContributionEntity();
-//            contribution.setId(accountId);
         contribution.setAccountEntity(accountEntity);
         contribution.setBookEntity(book);
         contribution.setBookCertificate("Book uploaded by " + principal.getName());
 
         contributionService.saveContribution(contribution);
 
-        // pricing và set free
-        if (pricing == 0) {
-            book.setRestricted(false);
-        } else {
-            book.setRestricted(true);
-        }
-
+        // Pricing và set free
+        book.setRestricted(pricing > 0);
+        book.setPoint((long) pricing);
         book.setStatus(1);
+
         bookService.saveBook(book);
-        return "redirect:/book-manager/books-manage";
+        return "redirect:/books-manage";
     }
+
 
 
     @GetMapping("/update/{id}")
@@ -185,11 +222,12 @@ public class BookController {
             return "error/error403";
         }
 
-        List<CategoryEntity> categories = categoryService.getAllCategories();
+        List<CategoryDto> categories = categoryService.getAllCategories();
         List<AuthorEntity> authors = book.getAuthorEntityList();
         model.addAttribute("authors", authors);
         model.addAttribute("categories", categories);
         model.addAttribute("book", book);
+        System.out.println("Loaded book id for update: " + book.getId());
         return "book-manager/update-book";
     }
 
@@ -205,7 +243,7 @@ public class BookController {
         }
 
         this.bookService.deleteBookById(id);
-        return "redirect:/book-manager/books-manage";
+        return "redirect:/books-manage";
     }
 
     @GetMapping("/books-view/{pageNo}")
@@ -238,14 +276,10 @@ public class BookController {
                                     Model model, Principal principal,
                                     @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize) {
 
-        // Check if the principal is null (user not authenticated)
         if (principal == null) {
             return "redirect:/login";
         }
-        // Get the current logged-in user's account ID
         AccountEntity accountEntity = accountService.findByUsername(principal.getName());
-
-        // Fetch books for the current account
         Page<BookEntity> page = bookService.findPaginatedByAccountId(accountEntity.getId(), pageNo, pageSize, sortField, sortDir);
         List<BookEntity> listBooks = page.getContent();
 
@@ -254,7 +288,7 @@ public class BookController {
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("startEntry", (pageNo - 1) * pageSize + 1);
-        model.addAttribute("endEntry", Math.min(pageNo * pageSize, page.getTotalElements()));
+        model.addAttribute("endEntry", Math.min((long) pageNo * pageSize, page.getTotalElements()));
 
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
@@ -264,6 +298,7 @@ public class BookController {
         return "book-manager/books-manage";
     }
 
+
     @GetMapping("/books/{isbn}")
     public String showBookDetail(@PathVariable(value = "isbn") String isbn, Principal principal, Model model) {
         BookEntity book = bookService.getBookByIsbn(isbn);
@@ -272,7 +307,12 @@ public class BookController {
         if (principal != null) {
             AccountEntity user = accountService.findByUsername(principal.getName());
             if (user != null) {
-                isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
+                MembershipEntity membership = user.getMembershipEntity();
+                if (membership != null) {
+                    isOwned = true;  // User has an upgraded account, can read the book
+                } else {
+                    isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
+                }
             }
         }
 
@@ -295,17 +335,12 @@ public class BookController {
             MembershipEntity membership = user.getMembershipEntity();
             long bookPrice = book.getPoint();
 
-            if ((membership == null && bookPrice <= 10000 && userPoints >= bookPrice) ||
-                    (membership != null &&
-                            ((membership.getName().equals("basic") && bookPrice <= 30000 && userPoints >= bookPrice) ||
-                                    (membership.getName().equals("standard") && bookPrice <= 50000 && userPoints >= bookPrice) ||
-                                    (membership.getName().equals("premium") && userPoints >= bookPrice)))) {
-
-                // Trừ điểm của người dùng
+            if (membership == null && userPoints >= bookPrice) {
+                // Deduct points from the user
                 user.setPoint(userPoints - bookPrice);
                 accountService.save(user);
 
-                // Lưu giao dịch vào bảng payment
+                // Save the transaction in the payment table
                 PaymentEntity payment = new PaymentEntity();
                 payment.setAccountEntity(user);
                 payment.setBookEntity(book);
@@ -314,15 +349,14 @@ public class BookController {
                 payment.setSuccess(true);
                 paymentService.save(payment);
 
-                // Chuyển đến trang đọc sách
+                // Redirect to the book reading page
                 return "redirect:/read-book/" + book.getId();
             } else {
-                model.addAttribute("error", "You don't have enough points or your membership level is insufficient to buy this book.");
+                model.addAttribute("error", "You don't have enough points to buy this book.");
             }
         } else {
             model.addAttribute("error", "Error processing your purchase. Please try again.");
         }
-
 
         boolean isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
         model.addAttribute("book", book);
@@ -340,8 +374,10 @@ public class BookController {
         AccountEntity user = accountService.findByUsername(principal.getName());
 
         if (book != null && user != null) {
+            MembershipEntity membership = user.getMembershipEntity();
             boolean isOwned = paymentService.existsByAccountEntityAndBookEntity(user, book);
-            if (isOwned) {
+
+            if (membership != null || isOwned) {
                 model.addAttribute("book", book);
                 return "book-view/books-read";
             } else {
@@ -353,7 +389,5 @@ public class BookController {
             return "redirect:/error404";
         }
     }
-
-
 }
 

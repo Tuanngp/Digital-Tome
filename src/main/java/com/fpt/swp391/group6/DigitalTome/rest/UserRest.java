@@ -5,17 +5,14 @@ import com.fpt.swp391.group6.DigitalTome.mapper.UserMapper;
 import com.fpt.swp391.group6.DigitalTome.rest.output.UserOutput;
 import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserRest {
 
-    private UserService userService;
-    private UserMapper userMapper;
+    private final UserService userService;
+    private final UserMapper userMapper;
 
     @Autowired
     public UserRest(UserService userService, UserMapper userMapper) {
@@ -31,7 +28,7 @@ public class UserRest {
     }
 
     @GetMapping("/{id}")
-    public UserOutput getUser(@RequestParam Long id) {
+    public UserOutput getUser(@PathVariable Long id) {
         UserOutput result = new UserOutput();
         result.setUserDto(userMapper.toDto(userService.findById(id)));
         return result;

@@ -50,6 +50,7 @@ public class SpringSecurity {
                         .requestMatchers("/buypoint/**").authenticated()
                         .requestMatchers("/chat").authenticated()
                         .requestMatchers("favorites/**").authenticated()
+                        .requestMatchers("advertisement/**").authenticated()
                         .requestMatchers("/api/favorites/**").authenticated()
                         .requestMatchers("/transaction/**").permitAll()
                         .requestMatchers("/api/**").permitAll()

@@ -23,10 +23,6 @@ public class NotificationEntity {
     @JsonBackReference
     private AccountEntity user;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "sender_id")
-//    private AccountEntity sender;
-
     private String title;
 
     private String message;

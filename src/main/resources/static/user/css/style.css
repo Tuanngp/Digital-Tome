@@ -37578,10 +37578,6 @@ body.woo-variation-swatches .variable-items-wrapper .variable-item:not(.radio-va
   color: var(--primary);
 }
 
-footer {
-  background-image: url();
-}
-
 @media only screen and (max-width: 767px) {
   footer .row {
     --bs-gutter-x: 10px;

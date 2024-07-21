@@ -33,16 +33,10 @@ public class AuthController {
     private final UserService userService;
     private final PublisherService publisherService;
 
-
-    @GetMapping(value = {"/","home", "index"})
-    public String defaultHome() { return "landing-page/index"; }
-
     @GetMapping("/login")
     public String loginForm() {
         return "authentication/shop-login";
     }
-
-
 
     @GetMapping("register")
     public String showRegistrationForm(Model model){

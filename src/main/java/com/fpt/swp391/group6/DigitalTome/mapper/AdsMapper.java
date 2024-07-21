@@ -20,18 +20,13 @@ public interface AdsMapper {
     @Mapping(target = "title", source = "title")
     @Mapping(target = "imageUrl", source = "imageUrl")
     @Mapping(target = "content", source = "content")
+    @Mapping(target = "link", source = "link")
+    @Mapping(target = "status", source = "status")
+    @Mapping(target = "id", source = "adsId")
     AdsEntity toEntity(AdsDto adsDto);
 
-    @Mapping(target = "ads.id", source = "adsId")
-    @Mapping(target = "placement.id", source = "placementId")
-    @Mapping(target = "startDate", source = "startDate")
-    @Mapping(target = "endDate", source = "endDate")
-    @Mapping(target = "ads.status", source = "status")
-    @Mapping(target = "ads.title", source = "title")
-    @Mapping(target = "ads.imageUrl", source = "imageUrl")
-    AdsAssignmentEntity toAssignmentEntity(AdsDto adsDto);
-
-    @Mapping(target = "adsId", source = "id")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "adsId", source = "ads.id")
     @Mapping(target = "placementId", source = "placement.id")
     @Mapping(target = "startDate", source = "startDate")
     @Mapping(target = "endDate", source = "endDate")

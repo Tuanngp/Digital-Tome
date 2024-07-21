@@ -18,15 +18,11 @@ import java.util.Optional;
 
 @Service
 public class PublisherService {
-
-
     private final NotificationService notificationService;
     private final UserRepository userRepository;
     private final UserService userService;
     private final EmailService emailService;
     private final RoleRepository roleRepository;
-
-
 
 
     @Autowired

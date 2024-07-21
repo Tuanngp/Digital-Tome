@@ -149,50 +149,15 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @JsonIgnore
     private Set<UserRelationship> relationshipsReceived;
 
-
-//    @OneToMany(mappedBy = "publisher", cascade = {
-//            CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-//    private Set<NotificationEntity> registerations;
-
-//    @OneToMany(mappedBy = "publisher", cascade = {
-//            CascadeType.PERSIST, CascadeType.MERGE,
-//            CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
-//    private Set<NotificationEntity> notifications;
-
     @OneToMany(mappedBy = "user", cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH}, orphanRemoval = true)
     @JsonIgnore
     private Set<NotificationEntity> registrationsReceived;
 
-
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH, CascadeType.DETACH})
     @JsonIgnore
     private Set<NotificationEntity> notifications;
-
-
-//
-//    @PrePersist
-//    protected void onCreate() {
-//        startUpdate = new Date();
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(startUpdate);
-//        calendar.add(Calendar.MINUTE, 1);
-//        membershipExpiryDate = calendar.getTime();
-//    }
-
-
-//    @PreUpdate
-//    protected void onUpdate() {
-//        startUpdate = new Date();
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(startUpdate);
-//        calendar.add(Calendar.MINUTE, 1);
-//        membershipExpiryDate = calendar.getTime();
-//    }
 }

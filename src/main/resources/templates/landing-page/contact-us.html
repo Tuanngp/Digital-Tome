@@ -17,10 +17,9 @@
     <header th:replace="~{layout/header :: header}"></header>
 
 
-    <div class="page-content">
+    <div id="main-wrapper" class="page-content">
         <!-- inner page banner -->
-        <div class="dz-bnr-inr overlay-secondary-dark dz-bnr-inr-sm"
-             style="background-image:url(static/user/images/background/bg3.jpg);">
+        <div class="dz-bnr-inr overlay-secondary-dark dz-bnr-inr-sm">
             <div class="container">
                 <div class="dz-bnr-inr-entry">
                     <h1>Contact</h1>
@@ -41,7 +40,7 @@
             </div>
         </div>
 
-        <section class="contact-wraper1" style="background-image: url(static/user/images/background/bg2.jpg);">
+        <section class="contact-wraper1">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-5">
@@ -113,20 +112,18 @@
                                 </div>
                                 <div class="input-group">
                                     <label>
-                                        <textarea class="form-control" name="dzMessage" required rows="5">Message</textarea>
+                                        <textarea class="form-control" name="dzMessage" style="width: 543px" required rows="5">Message</textarea>
                                     </label>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="g-recaptcha" data-callback="verifyRecaptchaCallback"
-                                         data-expired-callback="expiredRecaptchaCallback"
-                                         data-sitekey="6LefsVUUAAAAADBPsLZzsNnETChealv6PYGzv3ZN"></div>
                                     <label>
                                         <input class="form-control d-none" data-error="Please complete the Captcha" data-recaptcha="true"
                                                required>
                                     </label>
                                 </div>
                                 <div>
-                                    <button class="btn w-100 btn-primary btnhover" name="submit" type="submit"
+                                    <button class="btn btn-primary btnhover" name="submit" type="submit"
+                                            style="width: 543px"
                                             value="submit">SUBMIT
                                     </button>
                                 </div>
@@ -189,47 +186,6 @@
             </div>
         </section>
         <!-- Feature Box End -->
-
-        <!-- Newsletter -->
-        <section class="py-5 newsletter-wrapper"
-                 style="background-image: url('static/user/images/background/bg1.jpg'); background-size: cover;">
-            <div class="container">
-                <div class="subscride-inner">
-                    <div class="row style-1 justify-content-xl-between justify-content-lg-center align-items-center text-xl-start text-center">
-                        <div class="col-xl-7 col-lg-12">
-                            <div class="section-head mb-0">
-                                <h2 class="title text-white my-lg-3 mt-0">Subscribe our newsletter for newest books
-                                    updates</h2>
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-lg-6">
-                            <form action="https://bookland.dexignzone.com/xhtml/script/mailchamp.php"
-                                  class="dzSubscribe style-1" method="post">
-                                <div class="dzSubscribeMsg"></div>
-                                <div class="form-group">
-                                    <div class="input-group mb-0">
-                                        <label>
-                                            <input class="form-control bg-transparent text-white" name="dzEmail" placeholder="Your Email Address"
-                                                   required="required"
-                                                   type="email">
-                                        </label>
-                                        <div class="input-group-addon">
-                                            <button class="btn btn-primary btnhover" name="submit" type="submit"
-                                                    value="Submit">
-                                                <span>SUBSCRIBE</span>
-                                                <i class="fa-solid fa-paper-plane"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Newsletter End -->
-
     </div>
 
 
@@ -238,6 +194,5 @@
 
     <button class="scroltop" type="button"><i class="fas fa-arrow-up"></i></button>
 </div>
-<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 </body>
 </html>
