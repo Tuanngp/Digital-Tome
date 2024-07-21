@@ -86,28 +86,36 @@ public class CommentService {
 
     public ResponseEntity<Map<String, Object>> createComment(Long bookId, CommentDto comment) throws IOException {
         Map<String, Object> response = new HashMap<>();
-        if (contentModeratorService.isContentInappropriate(comment.getContent())) {
-            response.put("error", "Content is inappropriate");
-            return new ResponseEntity<>(response, HttpStatus.METHOD_NOT_ALLOWED);
+
+        if (isContentInappropriateOrSpam(comment.getContent(), response)) {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-        if (contentModeratorService.isSpam(comment.getContent())) {
-            response.put("error", "Content is spam");
-            return new ResponseEntity<>(response, HttpStatus.TOO_MANY_REQUESTS);
-        }
-        AccountEntity account;
-        BookEntity book;
-        try {
-            account = userService.findById(comment.getAccountId());
-            book = bookService.getBookById(bookId);
-        } catch (Exception e) {
+
+        Optional<AccountEntity> accountOpt = Optional.ofNullable(userService.findById(comment.getAccountId()));
+        Optional<BookEntity> bookOpt = Optional.ofNullable(bookService.getBookById(bookId));
+        if (accountOpt.isEmpty() || bookOpt.isEmpty()) {
             response.put("error", "Bad request");
             return ResponseEntity.badRequest().body(response);
         }
-        comment.setAccountEntity(account);
-        comment.setBookEntity(book);
+
+        comment.setAccountEntity(accountOpt.get());
+        comment.setBookEntity(bookOpt.get());
+
         CommentEntity savedComment = saveComment(commentMapper.toCommentEntity(comment));
         response.put("comment", savedComment);
         return ResponseEntity.ok(response);
+    }
+
+    private boolean isContentInappropriateOrSpam(String content, Map<String, Object> response) throws IOException {
+        if (contentModeratorService.isContentInappropriate(content)) {
+            response.put("error", "Content is inappropriate");
+            return true;
+        }
+        if (contentModeratorService.isSpam(content)) {
+            response.put("error", "Content is spam");
+            return true;
+        }
+        return false;
     }
 
     public ResponseEntity<Void> deleteComment(Long commentId) {
@@ -197,5 +205,9 @@ public class CommentService {
                 .append("</div>")
                 .append("<div class='reply-session'></div>")
                 .append("</div>");
+    }
+
+    public ResponseEntity<List<CommentEntity>> getAllComment() {
+        return ResponseEntity.ok(commentRepository.findAll());
     }
 }

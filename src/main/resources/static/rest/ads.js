@@ -197,9 +197,9 @@ function loadAds(number) {
                             `<button id="deleteBtn" value="${ads.id}" class="btn btn-danger shadow btn-md sharp me-1">Delete</button>` :
                             // ads.status === 'ACTIVE' ?
                             //     `<button id="activateBtn" value="${ads.id}" class="btn btn-info shadow btn-md sharp me-1">Deactivate</button>` :
-                                ads.status === 'COMPLETED' ?
-                                    `<button id="viewBtn" value="${ads.id}" class="btn btn-light shadow btn-md sharp me-1">View</button>` +
-                                    `<button id="deleteBtn" value="${ads.id}" class="btn btn-danger shadow btn-md sharp me-1">Delete</button>` :
+                            //     ads.status === 'COMPLETED' ?
+                                    // `<button id="viewBtn" value="${ads.id}" class="btn btn-light shadow btn-md sharp me-1">View</button>` +
+                                    // `<button id="deleteBtn" value="${ads.id}" class="btn btn-danger shadow btn-md sharp me-1">Delete</button>` :
                                         ads.status === 'REJECTED' ?
                                             `<button id="appealBtn" value="${ads.id}" class="btn btn-dark shadow btn-md sharp me-1">Appeal</button>` :
                                             '') +
@@ -254,6 +254,7 @@ function loadAds(number) {
                 });
             });
 
+            // $('#pagination').destroy();
             $('#pagination').twbsPagination({
                 totalPages: data.totalPages,
                 startPage: currentPage,

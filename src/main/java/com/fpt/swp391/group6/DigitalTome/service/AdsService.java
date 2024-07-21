@@ -160,13 +160,23 @@ public class AdsService {
     }
 
     private String getBaseUrl(HttpServletRequest request) {
-        return "https://digitaltome.azurewebsites.net" + request.getContextPath();
+        String scheme = request.getScheme();             // http or https
+        String serverName = request.getServerName();     // hostname or IP address
+        int serverPort = request.getServerPort();        // port number
+        String contextPath = request.getContextPath();   // application name
+
+        if (serverName.equals("localhost")) {
+            return scheme + "://" + serverName + ":" + serverPort + contextPath;
+        } else {
+            return "https://digitaltome.azurewebsites.net" + contextPath;
+        }
     }
 
     public ResponseEntity<?> createPayAndRedirect(Long adsId, String amount, String currency, String description, HttpServletRequest request) {
         try {
             String cancelUrl = getBaseUrl(request) + "/advertisement?status=cancel";
             String successUrl = getBaseUrl(request) + "/advertisement/success?adsId=" + adsId;
+
             double rate = 25128.0;
             Payment payment = paypalService.createPayment(
                     Double.parseDouble(amount)/rate,
