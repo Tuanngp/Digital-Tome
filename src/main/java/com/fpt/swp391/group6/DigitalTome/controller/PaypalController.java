@@ -9,6 +9,7 @@ import com.fpt.swp391.group6.DigitalTome.service.UserService;
 import com.paypal.api.payments.Payment;
 import com.paypal.api.payments.Transaction;
 import com.paypal.base.rest.PayPalRESTException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,20 +40,17 @@ public class PaypalController {
         return "payment/buypoint";
     }
 
-
     @PostMapping("/payment/create")
     public RedirectView createPayment(
+            HttpServletRequest request,
             @RequestParam("amount") String amount,
             @RequestParam("currency") String currency,
             @RequestParam("description") String description
     ) {
         try {
-            String successUrl = "http://localhost:8080/payment/success";
-            String cancelUrl = "http://localhost:8080/payment/cancel";
-
-//            String cancelUrl = "https://digitaltome.azurewebsites.net/payment/cancel";
-//            String successUrl = "https://digitaltome.azurewebsites.net/payment/success";
-
+            String baseUrl = getBaseUrl(request);
+            String successUrl = baseUrl + "/payment/success";
+            String cancelUrl = baseUrl + "/payment/cancel";
 
             Payment payment = paypalService.createPayment(
                     Double.valueOf(amount),
@@ -157,5 +155,16 @@ public class PaypalController {
         return "payment/history";
     }
 
+    private String getBaseUrl(HttpServletRequest request) {
+        String scheme = request.getScheme();             // http or https
+        String serverName = request.getServerName();     // hostname or IP address
+        int serverPort = request.getServerPort();        // port number
+        String contextPath = request.getContextPath();   // application name
 
+        if (serverName.equals("localhost")) {
+            return scheme + "://" + serverName + ":" + serverPort + contextPath;
+        } else {
+            return "https://digitaltome.azurewebsites.net" + contextPath;
+        }
+    }
 }
